@@ -63,6 +63,11 @@
 	   	
    	<!-- z_YJ : 부트스트랩테마 적용을 위해서 설정 -->
    	<mvc:resources mapping="/cinema/**" location="/cinema/" />
+   	
+   	<!-- new theme -->
+   	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+   	<mvc:resources mapping="/js/**" location="/js/" />
+   	<mvc:resources mapping="/revolution/**" location="/revolution/" />
 	 
 	<bean id="viewResolver"
 	 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"/> 
