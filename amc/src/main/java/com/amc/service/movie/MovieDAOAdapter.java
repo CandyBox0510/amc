@@ -95,9 +95,9 @@ public abstract class MovieDAOAdapter implements MovieDAO {
 		return 0;
 	}
 
-	@Override
-	public int addWish(int movieNo) {
-		// TODO Auto-generated method stub
+	
+	public int addWish(WishList wishList) {
+		// TODO Auto-generated wishListmethod stub
 		return 0;
 	}
 

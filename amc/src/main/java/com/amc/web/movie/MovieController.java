@@ -236,11 +236,10 @@ public class MovieController {
 		}
 	}
 	
-	/*private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";*/
-	private final String PATH = "http://127.0.0.1:8080/images/movie/";
+	//private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";
+	//private final String PATH = "http://127.0.0.1:8080/images/movie/";
 	//private final String PATH = "C:/amcPoster/";
-		
-	
+
 	
 	@RequestMapping (value ="updateMovie", method=RequestMethod.POST)
 	public String updateMovie( 						
@@ -248,10 +247,13 @@ public class MovieController {
 									 MultipartHttpServletRequest multiPartRequest,
 									 HttpServletRequest httpReq,												
 									 Model model,
-									 HttpSession session
+									 HttpSession session									
 								   ) throws Exception {
 		
-				
+		
+		// Tomcat 서버가 실제 구동되는 위치 파일 
+		// D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\amc\images\movie
+		String PATH = session.getServletContext().getRealPath("/")+"\\images\\movie\\";
 		/**
 		 * Upload Multi-files using Spring Controller
 		 * 
@@ -281,7 +283,6 @@ public class MovieController {
 		
         if(itr.hasNext()) {
         	List<MultipartFile> mpf = multiPartRequest.getFiles(itr.next());
-        	
                        
             for(int i = 0; i < mpf.size(); i++) {
             	
@@ -354,10 +355,10 @@ public class MovieController {
 		//modelAndView.setViewName("/movie/updateMovie.jsp");
 		//return modelAndView;
 		
-		return "forward:/movie/updateMovie.jsp";
+		return "forward:/movie/getMovieList?menu=manage";
 		
 	}
-        return "forward:/movie/updateMovie.jsp";
+        return "forward:/movie/getMovieList?menu=manage";
   }
 
 
@@ -378,7 +379,7 @@ public class MovieController {
 		//modelAndView.setViewName("/movie/listMovieManage.jsp");
 		//return modelAndView;
 		
-		return "/movie/listMovieManage.jsp";
+		return "forward:/movie/getMovieList?menu=manage";
 		
 	}
 

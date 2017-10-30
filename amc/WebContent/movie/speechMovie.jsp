@@ -43,6 +43,15 @@
 	    		text-shadow: 1px 1px 1px #ccc;
 	    		font-size: 2.5em;
 	        }
+	        
+	        .center {
+			    margin: auto;
+			    width: 40%;
+			    /* border: 3px solid #73AD21; */
+			    padding: 10px;
+			}
+			
+		
 	         
         </style>
         
@@ -102,9 +111,12 @@
 
 	<br/> <br/> <br/> <br/> <br/> <br/>
 	
-
+	
+	<div class="center">
+	
+  	
     <noscript>Please <a href="http://www.enable-javascript.com/" target="_blank">enable JavaScript</a>. Thank You! :D</noscript>
-    <div class="content">
+    <div class="content" >
         <h3 class="yes">영화 음성 검색 중....</h3>
         <h3 class="no">인터넷 익스플로우는 지원되지 않는 Browser 입니다.</h3>
     
@@ -138,6 +150,9 @@
         <input type="hidden" class="form-control" id="searchKeyword" name="searchKeyword"      value="" > 
     			
     </div>
+    
+    
+   </div>
     
  </div>
  </form>

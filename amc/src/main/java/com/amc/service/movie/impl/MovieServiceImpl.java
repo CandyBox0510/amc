@@ -482,9 +482,24 @@ public class MovieServiceImpl implements MovieService {
 	}
 	
 	@Override
-	public int addWish(int movieNo) {
+	public int addWish(WishList wishList) {
 		
-		return 0;
+		// 위시 리스트 테이블에 movieNo가 같은 wishList No가 존재하는 지 확인
+		
+		System.out.println("MovieServieceImpl의 addWish 시작");
+		
+		System.out.println("wishList movieNo " + wishList.getMovieNo());
+		
+		int rtn = movieDAO.getWish(wishList.getMovieNo());
+		
+		if (rtn == 1 ) {
+			return (movieDAO.delWish(wishList.getMovieNo()));
+			
+		} else {
+			
+			return (movieDAO.addWish(wishList));
+		}
+		
 	}
 
 	@Override
@@ -569,5 +584,6 @@ public class MovieServiceImpl implements MovieService {
 		return 0;
 	}
 
+	
 	
 }

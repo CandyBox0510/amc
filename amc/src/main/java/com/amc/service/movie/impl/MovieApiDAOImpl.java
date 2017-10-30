@@ -146,13 +146,25 @@ public class MovieApiDAOImpl implements MovieDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
-	@Override
-	public int addWish(int movieNo) {
+	public int addWish(WishList wishList) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public int getWish(int movieNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delWish(int movieNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
 
 	@Override
 	public int addMoiveComment(MovieComment movieComment) {

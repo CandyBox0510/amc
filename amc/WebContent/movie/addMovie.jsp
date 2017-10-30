@@ -362,18 +362,7 @@
 			}
         	
         	
-		/*     $("#export").on("click", function(){
-					alert("called ");
-				$("#movie_list").jqGrid("exportToExcel",{
-					includeLabels : true,
-					includeGroupHeader : true,
-					includeFooter: true,
-					fileName : "jqGridExport.xlsx",
-					maxlength : 2000 // maxlength for visible string data 
-				})
-			});
- */
-   
+	   
         	function ajaxFileUpload(id) 	{
         	
         	 console.log("ajaxFileUpload called");
@@ -428,10 +417,16 @@
         	}
        	 
         	function formatImage(cellValue, options, rowObject) {
+
+        		
+        		 alert("cellValue" + cellValue)
                  //var imageHtml = "<img src='images/" + cellValue + "' originalValue='" + cellValue + "' />";
+                 //var imageHtml = "<img src='cellValue'/>";
                  
-                 var imageHtml = "<img src='images/149747_P25_095225.jpg' originalValue='149747_P25_095225.jpg' />";
+                 //var imageHtml = "<img src='../images/movie/tax1.jpg' originalValue='tax1.jpg'/>";
                  
+                 var imageHtml = "<img src='cellValue'/>";
+                  
                  return imageHtml;
             }
 
@@ -462,8 +457,7 @@
                 return '';
             };
         
-            
-        
+                   
         
          $("#movie_list").jqGrid( 
         		{         			
@@ -503,22 +497,29 @@
                                     return year+"-"+month + "-"+day; 
                                   } 
                                 }                	     
-                          },
-                    
+                          },                   
+                          
+                          //{name:'postUrl', index:'postUrl', width:60, align:'center',
+                          // formatter:formatImage},                        	 
+                          
+                          
+                        
                           {name:'synopsis', index:'synopsis',align:"left", width:90,sortable:true, editable:true, 
                         	     edittype: "textarea",editoptions: { rows: 3, wrap: "off",style: 'overflow-x: hidden',}},                     
                           {name:'trailer', index:'trailer',align:"left", width:90,editable:true}
                           ],
                           
+                          
+                       
          
-           // 네비게이션 도구를 보여줄 div요소
+         	  // 네비게이션 도구를 보여줄 div요소
                 hidegrid : true,                        // grid 전체를 접는 오른쪽 상단 아이콘 disable
             	beforeSelectRow : function(invid) {                // 선택한 로우 색상 변경
                   setClickRowColor('movie_list', invid);
                     return true;
                }, 
- 
- 
+               
+          
 
                	sortable: true,
                 sortname: 'movieCd',
@@ -536,16 +537,11 @@
                 mtype:"post",
                 // 결과물 받을 데이터 타입
                 datatype:"json",
-                enctype: "multipart/form-data",
-                
           
                 //sortable: true 
                 sortorder: "desc",
                 loadonce : true,
-                
-                //afterSubmit: Result_From_Server,         
                
-                
                 jSonReader : {
                 	root:"rows",
                 	page:"page",
@@ -555,85 +551,81 @@
                 	cell:"cell",
                 	id:"movieCd"
                 },
-                
-                afterSubmit : function(response, postdata) {
-                	alert("aaa");
-                    return [false, response.responseText, ""];
-                    // Tried with return [true, response.responseText, ""]; and few more
-                 } ,
                  
-                 beforeSubmit : function( postdata, formid ) {
-                	 
-                	 alert("aaa");
-                     if(someconditionOK) {
-                         return [true,''];
-                     } else {
-                         return [false,'Error submiting data'];
-                     }
-                 },
-        
-           		loadComplete: function(data) {
-          			alert ("records="+$("#movie_list").getGridParam("records"));
+               	loadComplete: function(data) {
+          			// alert ("records="+$("#movie_list").getGridParam("records"));
                 },  
                 
                 
-    	       
-        	});
+          		loadError: function (jqXHR, textStatus, errorThrown) {
+                    alert('HTTP status code: ' + jqXHR.status + '\n' +
+                          'textStatus: ' + textStatus + '\n' +
+                          'errorThrown: ' + errorThrown);
+                    alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+                },
+
+        		});
          
         
-       
-/* jQuery("#movie_list").jqGrid('navGrid','#pager777',
-     		 {}, //options
-     		 {height:280,reloadAfterSubmit:false}, // edit options
-     		 {height:280,reloadAfterSubmit:false}, // add options
-     		 {reloadAfterSubmit:false}, // del options
-     		 {}, // search options   		 
-     	
-     		 
-     	
-     		{
-     		 afterSubmit: function (response) {
-			             // you should return from server OK in sucess, any other message on error
-			             alert("after Submit");
-			             if (response.responseText == true) {
-			                 alert("Update is succefully")
-			                 return [true, "", ""]
-			             }
-			             else {
-			                 alert("Update failed")
-			                 return [false, "", ""]
-			             }
-			           },
-			    	 }
-      		   );
-      		});     */
- 
-      		
-      	  // 네비게시션 도구 설정
-      	/*   $("#movie_list").jqGrid(
-      	         		"navGrid",
-      	                "#pager777"                 
-      	     );
-      	    });  
-      	     */
- 
-
-       
-      // 네비게시션 도구 설정
-	  $("#movie_list").jqGrid(
+  
+         
+	  // 네비게시션 도구 설정
+	  
+	 /*  $("#movie_list").jqGrid(
 	         		"navGrid",
 	                "#pager777",
 	                
 	                
 	                {search:true, edit:true, add:true, del:true},
-	                {closeAfterEdit: true, reloadAfterSubmit: true},
-	                {closeAfterAdd: true, reloadAfterSubmit: true},
-	                {reloadAfterSubmit: true}
-	     );
-	    })
-	    
-	
-
+	               	    
+	                
+	                {   //EDIT
+	                	
+	               	    reloadAfterSubmit: true,
+	                	closeAfterAdd: true,
+	                	closeAfterEdit: true, reloadAfterSubmit: true,
+	                    closeOnEscape: true,//Closes the popup on pressing escape key
+	                    closeAfterEdit: true,
+	                    afterSubmit: function (response, postdata) {
+	                    	//alert("성공적으로 입력되었습니다.");
+	                    	alert('After Submit \n' +'statusText: '+ response.statusText);
+	                    }
+	                 }
+	              
+			  );
+		  }) 
+		   */
+  	    
+	      // 네비게시션 도구 설정
+	  $("#movie_list").jqGrid(
+	         		"navGrid",
+	                "#pager777",
+	                 
+	                {search:true, edit:true, add:true, del:true},
+	                
+	                {   //EDIT
+	               	    reloadAfterSubmit: true,
+	                	closeAfterAdd: true,
+	                	closeAfterEdit: true, reloadAfterSubmit: true,
+	                    closeOnEscape: true,//Closes the popup on pressing escape key
+	                    closeAfterEdit: true,
+	                    
+	                 	afterSubmit: function (response, postdata) {
+	                 		
+	                 		if (response.statusText = "OK")
+	                    	alert("성공적으로 입력되었습니다 !!!" + response.statusText); 
+	                 		else 
+	                 		alert("오류 발생 " +response.statusText);
+                   
+	                    }
+	                 
+	                
+	                 }
+	              
+			  );
+		  }) 
+		  
+		  
     </script>
 
 <body>
@@ -647,10 +639,7 @@
 	<table id="movie_list"></table>    
     <div id="pager777" class="scroll" style="text-align:center"></div>
     <div id="load_time" class="scroll" style="text-align:center"></div>
-
-	
-	<!-- <button id="export">Export to Excel</button> 
-	 -->
+ 
 
 </form>
 </body>

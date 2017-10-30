@@ -5,12 +5,21 @@ public class WishList {
 	int wishNo;
 	String userId;
 	int movieNo;
+	boolean wishListAddChk;
 	
 	
 	public WishList() {
 		super();
 	}
 	
+	public boolean isWishListAddChk() {
+		return wishListAddChk;
+	}
+
+	public void setWishListAddChk(boolean wishListAddChk) {
+		this.wishListAddChk = wishListAddChk;
+	}
+
 	public int getWishNo() {
 		return wishNo;
 	}
@@ -37,7 +46,8 @@ public class WishList {
 
 	@Override
 	public String toString() {
-		return "WishList [wishNo=" + wishNo + ", userId=" + userId + ", movieNo=" + movieNo + "]";
+		return "WishList [wishNo=" + wishNo + ", userId=" + userId + ", movieNo=" + movieNo + ", wishListAddChk="
+				+ wishListAddChk + "]";
 	}
 		
 }

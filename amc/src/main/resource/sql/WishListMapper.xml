@@ -6,10 +6,32 @@
 
 <mapper namespace="WishListMapper">
  	
- 	<resultMap id="alarmSelectMap" type="com.amc.service.domain.Alarm">
-  			<result property="wishNo" column="alarm_no" jdbcType="NUMERIC"/>
+ 	<resultMap id="wishListSelectMap" type="wishList">
+  			<result property="wishNo" column="wish_no" jdbcType="NUMERIC"/>
   			<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-  			<result property="movieNo" column="movieNo" jdbcType="NUMERIC"/>
+  			<result property="movieNo" column="movie_no" jdbcType="NUMERIC"/>
 	</resultMap>
+	
+	<insert 	id="addWish" 	 parameterType="wishList">
+  		INSERT
+		INTO  wishlist ( wish_no,  user_id, movie_no)
+		VALUES (seq_wish_no.nextval,userId,#{movieNo})		
+  	</insert>
 
+
+	<select 	id="getWish" 	parameterType="java.lang.String" resultMap="wishListSelectMap" >
+  		SELECT
+		movie_no, 	
+		user_id,
+		wish_no	
+		FROM wishlist   
+		WHERE movie_no = #{movieNo}											
+  	</select>
+  	
+  	<delete id="deleteWishList" parameterType="int">
+		DELETE FROM 
+			wishlist
+		WHERE movie_no = #{movieNo}		
+	</delete>   
+  	
 </mapper>
