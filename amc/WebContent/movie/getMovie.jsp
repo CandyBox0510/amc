@@ -111,6 +111,29 @@ window.fbAsyncInit = function() {
 					}
 				});
 	} //end of addOpenAlarm function
+	
+	function addWishList() {
+		if(userId == null || userId == ''){
+			alert("로그인 후 이용 가능합니다.");
+			return;
+		}
+		$.ajax(
+						{
+							/* url : "/movie/json/switchWishList?screenContent.screenContentNo="+screenContentNo+"&user.userId="
+									+ "${sessionScope.user.userId}", //서버로 알림 체크 요청 */
+							
+						url : "/movie/json/switchWishList?screenContent.screenContentNo=10337&user.userId=a@a.a",									
+							type : 'GET',
+						}).done(function(data) {
+					//정상 통신인 경우
+					if (data == 'add') {
+						var msg = '찜하기 신청';
+						alert(msg);
+					} else {
+						alert("찜하기 취소");
+					}
+				});
+	} //end of addOpenAlarm function
 
 	function fncAddMovieComment() {
 		
@@ -448,16 +471,13 @@ window.fbAsyncInit = function() {
 			
 		})
 		
-		$("button[name='wish']").on("click", function() {
+		/* $("button[name='wish']").on("click", function() {
 			if(userId == ""){
 				alert('로그인 후 이용가능합니다')
 			}else{
 				//$(self.location).attr("href","/booking/getScreenMovieList");
-				
-
-
 			}
-		})
+		}) */
 
 		
 		
@@ -575,7 +595,7 @@ color:#065a69;
 					<div class="row center-block col-md-12" >
 						&emsp;&emsp;
 						<div id='wishAfter'></div>
-						<button class="btn btn-link btn-lg" name="wish" ><h3><i class="glyphicon glyphicon-heart-empty" id="heartempty" style="color:#f06060; text-align : center; margin:0 auto;"></i></h3></button>
+						<button class="btn btn-link btn-lg" name="wish" onClick="javascript:addWishList()"><h3><i class="glyphicon glyphicon-heart-empty" id="heartempty" style="color:#f06060; text-align : center; margin:0 auto;"></i></h3></button>
 						<button class="btn btn-pinterest" style="width:100px" name="booking">예매하기</button>
 						<button class="btn btn-facebook" style="width:100px"  onClick="javascript:posting()"  ><i class="fa fa-facebook"> &nbsp; </i>공유하기</button>
 						<c:if test="${screenContent.screenContentNo != 0 }">

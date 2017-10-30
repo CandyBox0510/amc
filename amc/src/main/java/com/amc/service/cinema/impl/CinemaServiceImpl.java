@@ -108,7 +108,7 @@ public class CinemaServiceImpl implements CinemaService {
 		
 		return index;
 	}
-
+	
 	@Override
 	public String getPanorama(int theaterNo) {
 		// TODO Auto-generated method stub

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%-- <c:if test="${ indexList eq null }">
+ 	<jsp:forward page="/cinema/index"/>
+</c:if> --%>
+
 <!doctype html>
 <html>
 <head>
@@ -41,15 +47,24 @@
 
         Modernizr 
         <script src="js/external/modernizr.custom.js"></script> -->
-    
-    
+
 </head>
 
 <body>
     <div class="wrapper">
+    	<c:set var="who" value=""/>
+    	<c:if test="${sessionScope.user.role ne 'admin'}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user eq null || sessionScope.user eq ''}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user.role eq 'admin'}">
+    		<c:set var="who" value="admin"/>	
+    	</c:if>
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="images/banners/bra.jpg">
+            <img alt='top banner' src="../images/banners/space.jpg">
         </div>
         <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
@@ -65,10 +80,10 @@
                 <!-- BEGIN SLIDES LIST -->
                 <ul>
                     <!-- SLIDE 1 -->
-                    <li data-transition="fade" class="slide" data-title='Rush.'>
+                    <li data-transition="fade" class="slide" data-title='JAVA 95.'>
  
                         <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
-                        <img class="rev-slidebg" alt='' src="images/slides/first-slide.jpg">
+                        <img class="rev-slidebg" alt='' src="../images/slides/cinema.jpg">
 
                         <div class="tp-caption slide__name margin-slider" 
                              data-x="right" 
@@ -90,12 +105,11 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                            RUSH
+                            AMC
                         </div>
-
                         <div class="tp-caption n slide__time margin-slider" 
                             data-x="right" 
-                            data-hoffset='250' 
+                            data-hoffset='230' 
                             data-y="186" 
                             data-frames='[{
                                "delay":1200,
@@ -132,7 +146,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             October 18
+                             May 31
                         </div>
                         <div class="tp-caption slide__time margin-slider" 
                              data-x="right" 
@@ -171,7 +185,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             November 01
+                             November 24
                         </div>
                         <div class="tp-caption slide__text margin-slider text-right" 
                              data-x="right" 
@@ -190,7 +204,8 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             Two-time Academy Award winner Ron Howard, teams once again with fellow two-time Academy<br> Award nominee, writer Peter Morgan , on Rush, a spectacular big-screen re-creation of the merciless<br> 1970s rivalry between James Hunt and Niki Lauda
+                             <!-- Two-time Academy Award winner Ron Howard, teams once again with fellow two-time Academy<br> Award nominee, writer Peter Morgan , on Rush, a spectacular big-screen re-creation of the merciless<br> 1970s rivalry between James Hunt and Niki Lauda -->
+                             Made in Room number 403
                         </div>
                         <div class="tp-caption margin-slider" 
                              data-x="right" 
@@ -209,22 +224,23 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             <a href="#" class="slide__link">check out cinemas &amp; time</a>
+                             <a href="#" class="btn btn-md btn--danger slider--btn">Sign in</a>
+                             <!-- <a href="#" class="slide__link">Sign in</a> -->
                         </div>
  
                     </li>
  
                     <!-- SLIDE 2 -->
-                    <li data-transition="fade" class="slide" data-title='Travel worldwide. Create trip film.'>
+                    <li data-transition="fade" class="slide" data-title='Comming Cinema. Travel MovieWorld.'>
  
                         <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
-                        <img class="rev-slidebg" alt='' src="images/bg-video.jpg">
+                        <img class="rev-slidebg" alt='' src="../images/bg-video.jpg">
                         <div class="rs-background-video-layer" 
                              data-forcerewind="on" 
                              data-volume="mute" 
                              data-videowidth="100%" 
                              data-videoheight="100%" 
-                             data-videomp4="video/TravelIs.mp4" 
+                             data-videomp4="../video/zutopia.mp4" 
                              data-videopreload="auto" 
                              data-videoloop="loop" 
                              data-forceCover="1" 
@@ -259,11 +275,11 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                            Travel, Admire, Remember.
+                            Movie, Watch, Touched.
                         </div>
                         <div class="tp-caption slide__time" 
                              data-x="center"
-                             data-hoffset='-115' 
+                             data-hoffset='-130' 
                              data-y="242" 
                              data-frames='[{
                                "delay":1800,
@@ -283,7 +299,7 @@
                         </div>
                         <div class="tp-caption slide__date position-center postion-place--two lfb ltb" 
                              data-x="center"                              
-                             data-hoffset='-50'                                       
+                             data-hoffset='-65'                                       
                              data-y="242" 
                              data-frames='[{
                                "delay":2200,
@@ -299,11 +315,11 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             April 18 
+                             May 31 
                         </div>
                         <div class="tp-caption slide__time" 
                              data-x="center" 
-                             data-hoffset='5' 
+                             data-hoffset='-10' 
                              data-y="242" 
                              data-frames='[{
                                "delay":1800,
@@ -339,7 +355,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             May 01
+                             November 24
                         </div>
 
                         <div class="tp-caption slider-wrap-btn" 
@@ -359,15 +375,15 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                             <a href="#" class="btn btn-md btn--danger btn--wide slider--btn">learn more</a>
+                             <a href="#" class="btn btn-md btn--danger btn--wide slider--btn">Browse Now Playing</a>
                         </div>
                     </li>
 
                     <!-- SLIDE 3 -->
-                    <li data-transition="fade" class="slide" data-title='Stop wishing. Start doing.'>
+                    <li data-transition="fade" class="slide" data-title='Sanck and, Goods sales.'>
  
                         <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
-                        <img class="rev-slidebg" alt='' src="images/slides/next-slide.jpg">
+                        <img class="rev-slidebg" alt='' src="../images/slides/pop_corn.jpg">
                         <div class="tp-caption slide__name slide__name--smaller slide__name--specific" 
                           data-x="center" 
                           data-y="160" 
@@ -386,7 +402,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                            Stop <span class="highlight">wishing.</span> Start <span class="highlight">doing.</span> 
+                            Snack <span class="highlight">and,</span> Goods <span class="highlight"> sales.</span> 
                         </div>
 
                         <div class="tp-caption slide__descript" 
@@ -407,7 +423,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                            find your best match movie with A.MOVIE
+                            find your goods and snack with Store
                         </div>
 
                         <div class="tp-caption slider-wrap-btn" 
@@ -428,7 +444,7 @@
                                "to":"opacity:0;",
                                "ease":"Power3.easeInOut"
                              }]'>
-                            <a href="#" class="btn btn-md btn--danger slider--btn">check out movies</a>
+                            <a href="#" class="btn btn-md btn--danger slider--btn">visit Store</a>
                         </div>
                     </li>
 
@@ -442,14 +458,19 @@
         
         
         <!-- Main content -->
-        <section class="container">
+        <div class="container">
             <div class="movie-best">
                  <div class="col-sm-10 col-sm-offset-1 movie-best__rating">Today Best choice</div>
                  <div class="col-sm-12 change--col">
+                 <c:forEach var="count" begin="1" end="6">
+                 <c:if test="${count <=2 }">
                      <div class="movie-beta__item ">
-                        <img alt='' src="images/movie/movie-sample1.jpg">
-                         <span class="best-rate">5.0</span>
-
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	</c:if>
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
                              <li>
@@ -462,26 +483,15 @@
                              </li>
                          </ul>
                      </div>
-                     <div class="movie-beta__item second--item">
-                         <img alt='' src="images/movie/movie-sample2.jpg">
-                         <span class="best-rate">5.0</span>
-
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
-                             <li>
-                                <p class="movie__time">169 min</p>
-                                <p>Adventure | Drama | Fantasy </p>
-                                <p>38 comments</p>
-                             </li>
-                             <li class="last-block">
-                                 <a href="movie-page-left.html" class="slide__link">more</a>
-                             </li>
-                         </ul>
-                     </div>
+                 </c:if>
+                 <c:if test="${count == 3 }">
                      <div class="movie-beta__item third--item">
-                         <img alt='' src="images/movie/movie-sample3.jpg">
-                         <span class="best-rate">5.0</span>
-
+                        <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	</c:if>
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
                              <li>
@@ -494,10 +504,15 @@
                              </li>
                          </ul>
                      </div>
+                 </c:if>
+				 <c:if test="${count == 4}">
                      <div class="movie-beta__item hidden-xs">
-                         <img alt='' src="images/movie/movie-sample4.jpg">
-                         <span class="best-rate">5.0</span>
-
+                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	</c:if>
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
                              <li>
@@ -510,10 +525,15 @@
                              </li>
                          </ul>
                      </div>
+                </c:if>
+                <c:if test="${count > 4 }">
                      <div class="movie-beta__item hidden-xs hidden-sm">
-                         <img alt='' src="images/movie/movie-sample5.jpg">
-                         <span class="best-rate">5.0</span>
-
+                        <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	</c:if>
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
                              <li>
@@ -526,23 +546,9 @@
                              </li>
                          </ul>
                      </div>
-                     <div class="movie-beta__item hidden-xs hidden-sm">
-                         <img alt='' src="images/movie/movie-sample6.jpg">
-                         <span class="best-rate">5.0</span>
-
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
-                             <li>
-                                <p class="movie__time">169 min</p>
-                                <p>Adventure | Drama | Fantasy </p>
-                                <p>38 comments</p>
-                             </li>
-                             <li class="last-block">
-                                 <a href="movie-page-left.html" class="slide__link">more</a>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
+				</c:if>
+                </c:forEach>
+                </div>
                 <div class="col-sm-10 col-sm-offset-1 movie-best__check">check all movies now playing</div>
             </div>
 
@@ -663,18 +669,24 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-8 col-md-9">
-                        <!-- Movie variant with time -->
+                    <c:set var="i" value="0"/>
+                    <c:set var="count" value="1"/>
+                    <c:forEach var="movie" items="${indexList.mainMovieList }">
+                    <c:set var="i" value="${i+1}"/>
+                    	<c:if test="${count == 1}">
+                    	<!-- Movie variant with time -->
                             <div class="movie movie--test movie--test--dark movie--test--left">
                                 <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                        <img alt='' src="images/movie/movie-time8.jpg">
+                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
+                                        <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                        <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">Gravity (2013)  </a>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
 
-                                    <p class="movie__time">91 min</p>
+                                    <p class="movie__time">${movie.showTm}</p>
 
                                     <p class="movie__option"><a href="#">Sci-Fi</a> | <a href="#">Thriller</a> | <a href="#">Drama</a></p>
                                     
@@ -685,42 +697,46 @@
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
-
-                         <!-- Movie variant with time -->
+                    	</c:if>
+                	    <c:if test="${count == 2}">
+                    	<!-- Movie variant with time -->
                             <div class="movie movie--test movie--test--light movie--test--left">
                                 <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time1.jpg">
+                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
+                                        <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                        <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">The Hobbit: The Desolation of Smaug (2013)  </a>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
 
-                                    <p class="movie__time">169 min</p>
+                                    <p class="movie__time">${movie.showTm}</p>
 
-                                    <p class="movie__option"><a href="#">Adventure</a> | <a href="#">Fantasy</a> | <a href="#">Drama</a></p>
+                                    <p class="movie__option"><a href="#">Sci-Fi</a> | <a href="#">Thriller</a> | <a href="#">Drama</a></p>
                                     
                                     <div class="movie__rate">
                                         <div class="score"></div>
-                                        <span class="movie__rating">5.0</span>
+                                        <span class="movie__rating">4.1</span>
                                     </div>               
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
-
+                    	</c:if>
+						<c:if test="${count == 3}">
                          <!-- Movie variant with time -->
                             <div class="movie movie--test movie--test--light movie--test--right">
                                 <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time9.jpg">
+                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
+                                    <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                    <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">The Hunger Games: Catching Fire (2013)   </a>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
 
-                                    <p class="movie__time">146 min</p>
+                                    <p class="movie__time">${movie.showTm}</p>
 
                                     <p class="movie__option"><a href="#">Action</a> | <a href="#">Adventure</a> | <a href="#">Sci-Fi</a></p>
                                     
@@ -731,90 +747,23 @@
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
-
+                         </c:if>
+                         <c:if test="${count == 4}">
                          <!-- Movie variant with time -->
                             <div class="movie movie--test movie--test--dark movie--test--right">
                                 <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time10.jpg">
+                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
+                                    <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                    <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">Thor: The Dark World (2013) </a>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
 
-                                    <p class="movie__time">112 min</p>
+                                    <p class="movie__time">${movie.showTm}</p>
 
-                                    <p class="movie__option"><a href="#">Action</a> | <a href="#">Adventure</a> | <a href="#">Fantasy</a></p>
-                                    
-                                    <div class="movie__rate">
-                                        <div class="score"></div>
-                                        <span class="movie__rating">5.0</span>
-                                    </div>               
-                                </div>
-                            </div>
-                         <!-- Movie variant with time -->
-
-                         <!-- Movie variant with time -->
-                            <div class="movie movie--test movie--test--dark movie--test--left">
-                                <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time11.jpg">
-                                    </a>
-                                </div>
-
-                                <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">World War Z (2013)  </a>
-
-                                    <p class="movie__time">116 min</p>
-
-                                    <p class="movie__option"><a href="#">Action</a> | <a href="#">Adventure</a> | <a href="#">Horror</a></p>
-                                    
-                                    <div class="movie__rate">
-                                        <div class="score"></div>
-                                        <span class="movie__rating">4.1</span>
-                                    </div>               
-                                </div>
-                            </div>
-                         <!-- Movie variant with time -->
-
-                         <!-- Movie variant with time -->
-                            <div class="movie movie--test movie--test--light movie--test--left">
-                                <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time12.jpg">
-                                    </a>
-                                </div>
-
-                                <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">Prisoners (2013) </a>
-
-                                    <p class="movie__time">153 min</p>
-
-                                    <p class="movie__option"><a href="#">Crime</a> | <a href="#">Thriller</a> | <a href="#">Drama</a></p>
-                                    
-                                    <div class="movie__rate">
-                                        <div class="score"></div>
-                                        <span class="movie__rating">5.0</span>
-                                    </div>               
-                                </div>
-                            </div>
-                         <!-- Movie variant with time -->
-
-                         <!-- Movie variant with time -->
-                            <div class="movie movie--test movie--test--light movie--test--right">
-                                <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time13.jpg">
-                                    </a>
-                                </div>
-
-                                <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">This Is the End (2013)   </a>
-
-                                    <p class="movie__time">107 min</p>
-
-                                    <p class="movie__option"><a href="#">Comedy</a> | <a href="#">Fantasy</a></p>
+                                    <p class="movie__option"><a href="#">Action</a> | <a href="#">Adventure</a> | <a href="#">Sci-Fi</a></p>
                                     
                                     <div class="movie__rate">
                                         <div class="score"></div>
@@ -823,67 +772,29 @@
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
-
-                         <!-- Movie variant with time -->
-                            <div class="movie movie--test movie--test--dark movie--test--right">
-                                <div class="movie__images">
-                                    <a href="movie-page-left.html" class="movie-beta__link">
-                                    <img alt='' src="images/movie/movie-time14.jpg">
-                                    </a>
-                                </div>
-
-                                <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">The Internship (2013)  </a>
-
-                                    <p class="movie__time">112 min</p>
-
-                                    <p class="movie__option"><a href="#">Comedy</a></p>
-                                    
-                                    <div class="movie__rate">
-                                        <div class="score"></div>
-                                        <span class="movie__rating">5.0</span>
-                                    </div>               
-                                </div>
-                            </div>
-                         <!-- Movie variant with time -->
-
-
+                         </c:if>
+                         <c:set var="count" value="${count+1}"/>
+                         <c:if test="${count == 5}">
+                         	<c:set var="count" value="1"/>
+                         </c:if>
+                         </c:forEach>
                         <div class="row">
-                            <div class="social-group">
-                              <div class="col-sm-6 col-md-4 col-sm-push-6 col-md-push-4">
-                                    <div class="social-group__head">Join <br>our social groups</div>
-                                    <div class="social-group__content">A lot of fun, discussions, queezes and contests among members. <br class="hidden-xs"><br>Always be first to know about best offers from cinemas and our partners</div>
-                                </div>
 
-                                <div class="col-sm-6 col-md-4 col-sm-pull-6 col-md-pull-4">
-                                     <div class="facebook-group">
-
-                                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fenvato&tabs=timeline&width=240px&height=330px&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId=353861661473733" width="240px" height="330px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                                    </div>
-                                </div>
-                                
-                                <div class="clearfix visible-sm"></div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="twitter-group">
-                                        <div id="twitter-feed"></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
                     <aside class="col-sm-4 col-md-3">
                         <div class="sitebar first-banner--left">
                             <div class="banner-wrap first-banner--left">
-                                <img alt='banner' src="images/banners/sale.jpg">
+                                <img alt='banner' src="../images/banners/sale.jpg">
                             </div>
 
                              <div class="banner-wrap">
-                                <img alt='banner' src="images/banners/sport.jpg">
+                                <img alt='banner' src="../images/banners/sport.jpg">
                             </div>
 
                              <div class="banner-wrap banner-wrap--last">
-                                <img alt='banner' src="images/banners/boots.jpg">
+                                <img alt='banner' src="../images/banners/boots.jpg">
                             </div>
 
                             <div class="promo marginb-sm">
@@ -891,9 +802,9 @@
                               <div class="promo__describe">for all smartphones<br> and tablets</div>
                               <div class="promo__content">
                                   <ul>
-                                      <li class="store-variant"><a href="#"><img alt='' src="images/apple-store.svg"></a></li>
-                                      <li class="store-variant"><a href="#"><img alt='' src="images/google-play.svg"></a></li>
-                                      <li class="store-variant"><a href="#"><img alt='' src="images/windows-store.svg"></a></li>
+                                      <li class="store-variant"><a href="#"><img alt='' src="../images/apple-store.svg"></a></li>
+                                      <li class="store-variant"><a href="#"><img alt='' src="../images/google-play.svg"></a></li>
+                                      <li class="store-variant"><a href="#"><img alt='' src="../images/windows-store.svg"></a></li>
                                   </ul>
                               </div>
                           </div>
@@ -909,7 +820,7 @@
                 <div class="col-sm-4 similar-wrap col--remove">
                     <div class="post post--preview post--preview--wide">
                         <div class="post__image">
-                            <img alt='' src="images/client-photo/post-thor.jpg">
+                            <img alt='' src="../images/client-photo/post-thor.jpg">
                             <div class="social social--position social--hide">
                                 <span class="social__name">Share:</span>
                                 <a href='#' class="social__variant social--first fa fa-facebook"></a>
@@ -925,7 +836,7 @@
                 <div class="col-sm-4 similar-wrap col--remove">
                     <div class="post post--preview post--preview--wide">
                         <div class="post__image">
-                            <img alt='' src="images/client-photo/post-annual.jpg">
+                            <img alt='' src="../images/client-photo/post-annual.jpg">
                             <div class="social social--position social--hide">
                                 <span class="social__name">Share:</span>
                                 <a href='#' class="social__variant social--first fa fa-facebook"></a>
@@ -941,7 +852,7 @@
                 <div class="col-sm-4 similar-wrap col--remove">
                     <div class="post post--preview post--preview--wide">
                         <div class="post__image">
-                            <img alt='' src="images/client-photo/post-awards.jpg">
+                            <img alt='' src="../images/client-photo/post-awards.jpg">
                             <div class="social social--position social--hide">
                                 <span class="social__name">Share:</span>
                                 <a href='#' class="social__variant social--first fa fa-facebook"></a>
@@ -956,7 +867,7 @@
                 </div>
             </div>
                 
-        </section>
+        </div>
         
         <div class="clearfix"></div>
 
@@ -1091,6 +1002,7 @@
               });
 		    </script> -->
 		    <script src="/js/custom.js"></script>
+		    
 
 </body>
 </html>

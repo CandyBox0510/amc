@@ -96,12 +96,6 @@ public abstract class MovieDAOAdapter implements MovieDAO {
 	}
 
 	@Override
-	public int addWish(int movieNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int addMoiveComment(MovieComment movieComment) {
 		// TODO Auto-generated method stub
 		return 0;
