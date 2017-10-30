@@ -140,15 +140,13 @@ public class AlarmServiceImpl implements AlarmService {
 	}
 
 	@Override
-	public List<Alarm> getCancelAlarmList(Search search) {
-
-		return null;
+	public Map<String,Object> getCancelAlarmList(Map<String,Object> map) {
+		return alarmDAO.getCancelAlarmList(map);
 	}
 
 	@Override
-	public List<Alarm> getOpenAlarmList(Search search) {
-
-		return null;
+	public Map<String,Object> getOpenAlarmList(Map<String,Object> map) {
+		return alarmDAO.getOpenAlarmList(map);
 	}
 
 	@Override
@@ -261,7 +259,7 @@ public class AlarmServiceImpl implements AlarmService {
 		
 		switch (type) {
 		case "openAlarm":
-			for (Alarm alarmInfo : alarmDAO.getOpenAlarmList(map)) {
+			for (Alarm alarmInfo : alarmDAO.getPushOpenAlarmList(map)) {
 				phone.add(alarmInfo.getUser().getPhone1()+alarmInfo.getUser().getPhone2()+alarmInfo.getUser().getPhone3());
 				uuid.add(alarmInfo.getUser().getUuId());
 			}
@@ -270,7 +268,7 @@ public class AlarmServiceImpl implements AlarmService {
 			break;
 
 		case "cancelAlarm":
-			for (Alarm alarmInfo : alarmDAO.getCancelAlarmList(map)){
+			for (Alarm alarmInfo : alarmDAO.getPushCancelAlarmList(map)){
 				phone.add(alarmInfo.getUser().getPhone1()+alarmInfo.getUser().getPhone2()+alarmInfo.getUser().getPhone3());
 				uuid.add(alarmInfo.getUser().getUuId());
 			}

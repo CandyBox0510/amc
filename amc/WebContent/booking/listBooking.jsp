@@ -53,10 +53,15 @@
 		
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
-			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+			 $( "button:contains('예')" ).on("click" , function() {
+			 self.location ="/booking/getBookingList?searchCondition=past";
+			 });
+		 });
+		
+		 $(function() {
+			 $( "button:contains('지난')" ).on("click" , function() {
+			 self.location ="/booking/getBookingList?searchCondition=now";
+			 });
 		 });
 		
 		
@@ -67,9 +72,10 @@
 			$( "td:nth-child(3)" ).on("click" , function() {
 				 self.location ="/booking/getBooking?bookingNo="+$(this).text().trim();
 			});
-						
-			//==> userId LINK Event End User 에게 보일수 있도록 
-			//$( "td:nth-child(2)" ).css("color" , "red");
+			
+			$( "td:nth-child(5)" ).on("click" , function() {
+				 self.location ="/booking/getBooking?bookingNo="+$(this).parent().find('input[type="hidden"]').val();
+			});
 			
 		});	
 		
@@ -77,37 +83,6 @@
 		//============= 예매목록에 예매정보보기  Event  처리 (double Click)=============
 		 $(function() {
 			 
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$(  "td:nth-child(5) > i" ).on("click" , function() {
-
-					var userId = $(this).next().val();
-				
-					$.ajax( 
-							{
-								url : "/user/json/getUser/"+userId ,
-								method : "GET" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData , status) {
-
-									var displayValue = "<h6>"
-																+"아이디 : "+JSONData.userId+"<br/>"
-																+"이  름 : "+JSONData.userName+"<br/>"
- 																+"주소 : "+JSONData.addr+"<br/>"
-																+"ROLE : "+JSONData.role+"<br/>"
-																+"등록일 : "+JSONData.regDate+"<br/>"
-																+"</h6>";
-									$("h6").remove();
-									$( "#"+userId+"" ).html(displayValue);
-								}
-						});
-						////////////////////////////////////////////////////////////////////////////////////////////
-					
-			});
-			
 			//==> userId LINK Event End User 에게 보일수 있도록 
 			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
 			$("h7").css("color" , "red");
@@ -143,28 +118,12 @@
 		    </div>
 		    
 		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>영화제목</option>
-						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>시사회여부</option>
-						<option value="3"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>시사회제목</option>
-					</select>
-				  </div>
 				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
+				  <button type="button" class="label label-info">예매</button>
+				  <button type="button" class="label label-info">지난예매</button>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
 	    	</div>
 	    	
 		</div>
@@ -189,7 +148,7 @@
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="booking" items="${bookingList}">
+		  <c:forEach var="booking" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
@@ -197,10 +156,12 @@
 			  <td align="left" title="Click : 예매 상세 조회">${booking.bookingNo}</td>
 			  <td align="left">${booking.screenContent.previewFlag}</td>
 			  <c:if test="${booking.screenContent.previewFlag eq 'Y'}">
-			  	<td align="left">${booking.screenContent.previewtitle}</td>
+			  	<td align="left">${booking.screenContent.previewTitle}</td>
+			  	<input type="hidden" value="${booking.bookingNo}">
 			  </c:if>
 			  <c:if test="${booking.screenContent.previewFlag eq 'N'}">
 			  	<td align="left">${booking.movie.movieNm}</td>
+			  	<input type="hidden" value="${booking.bookingNo}">
 			  </c:if>
 			  <td align="left">${booking.screenContent.screenDate}</td>
 			  <td align="left">${booking.headCount} (${booking.bookingSeatNo})</td>

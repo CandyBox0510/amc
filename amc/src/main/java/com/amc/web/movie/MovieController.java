@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import com.amc.common.Search;
 import com.amc.common.util.CommonUtil;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
+import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 
@@ -236,10 +238,11 @@ public class MovieController {
 		}
 	}
 	
-	//private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";
-	//private final String PATH = "http://127.0.0.1:8080/images/movie/";
+	/*private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";*/
+	private final String PATH = "http://127.0.0.1:8080/images/movie/";
 	//private final String PATH = "C:/amcPoster/";
-
+		
+	
 	
 	@RequestMapping (value ="updateMovie", method=RequestMethod.POST)
 	public String updateMovie( 						
@@ -247,13 +250,10 @@ public class MovieController {
 									 MultipartHttpServletRequest multiPartRequest,
 									 HttpServletRequest httpReq,												
 									 Model model,
-									 HttpSession session									
+									 HttpSession session
 								   ) throws Exception {
 		
-		
-		// Tomcat 서버가 실제 구동되는 위치 파일 
-		// D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\amc\images\movie
-		String PATH = session.getServletContext().getRealPath("/")+"\\images\\movie\\";
+				
 		/**
 		 * Upload Multi-files using Spring Controller
 		 * 
@@ -283,6 +283,7 @@ public class MovieController {
 		
         if(itr.hasNext()) {
         	List<MultipartFile> mpf = multiPartRequest.getFiles(itr.next());
+        	
                        
             for(int i = 0; i < mpf.size(); i++) {
             	
@@ -355,10 +356,10 @@ public class MovieController {
 		//modelAndView.setViewName("/movie/updateMovie.jsp");
 		//return modelAndView;
 		
-		return "forward:/movie/getMovieList?menu=manage";
+		return "forward:/movie/updateMovie.jsp";
 		
 	}
-        return "forward:/movie/getMovieList?menu=manage";
+        return "forward:/movie/updateMovie.jsp";
   }
 
 
@@ -379,7 +380,7 @@ public class MovieController {
 		//modelAndView.setViewName("/movie/listMovieManage.jsp");
 		//return modelAndView;
 		
-		return "forward:/movie/getMovieList?menu=manage";
+		return "/movie/listMovieManage.jsp";
 		
 	}
 
@@ -431,6 +432,37 @@ public class MovieController {
 		System.out.println("MovieController의 getMovieCommentList메소드 끝");
 
 		return "forward:/movie/getMovie.jsp";
+	}
+	
+	@RequestMapping( value="getWishList", method=RequestMethod.GET)
+	public String getWishList(@ModelAttribute("Search")Search search, 
+										HttpSession session,Model model) throws Exception {
+		
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		User user = (User)session.getAttribute("user");
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		
+		Map<String, Object> map = movieService.getWishList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		System.out.println("■■■위시리스트 확인■■■ : "+map.get("list"));
+		
+		model.addAttribute("search",search);
+		model.addAttribute("resultPage",resultPage);
+		model.addAttribute("list", map.get("list"));
+		
+	    return "forward:/booking/listWishList.jsp";
 	}
 
 }

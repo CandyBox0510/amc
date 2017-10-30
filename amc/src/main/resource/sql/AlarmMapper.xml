@@ -96,7 +96,7 @@
 	</select>
 	
 	
-	<select  id="getOpenAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
+	<select  id="getPushOpenAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
 		
 		<!-- sms용 id,uuid 뽑기 -->
 		<if test="search.searchCondition == 'openAlarm'">
@@ -117,7 +117,7 @@
 		</if> 
  	</select>
  	
- 	<select  id="getCancelAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
+ 	<select  id="getPushCancelAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
 		
 		<!-- sms용 id,uuid 뽑기 -->
 		<if test="search.searchCondition == 'cancelAlarm'">
@@ -138,5 +138,38 @@
 			</if>
 		</if> 
  	</select>
+ 	
+ 	
+ 	<select  id="getAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
+ 	SELECT *							
+	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
+		 	 FROM 		(SELECT m.movie_title, s.preview_title, s.screen_opentime, s.ticket_opendate, 
+		 	 					s.screen_theater, s.invite_actor, s.preview_flag ,a.alarmseat_no, 
+		 	 					a.alarm_regdate, a.alarm_no, m.poster
+						FROM alarm a, screencontent s, movie m 
+						WHERE a.screencontent_no = s.screencontent_no AND s.movie_no = m.movie_no 
+							  AND user_id = #{user.userId}
+							  <if test="alamFlag == 'C'">
+							  AND alarm_flag = 'C' 
+							  </if>
+							  <if test="alamFlag == 'O'">
+							  AND alarm_flag = 'O'
+							  </if> 
+										) inner_table
+						WHERE ROWNUM &lt;=#{search.endRowNum} )
+	WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+ 	</select>
+ 	
+ 	<select id="getTotalCount" parameterType="map" resultType="int">
+ 		SELECT COUNT(*) 
+		FROM alarm 
+		WHERE user_id = #{user.userId}
+		  <if test="alamFlag == 'C'">
+		  AND alarm_flag = 'C' 
+		  </if>
+		  <if test="alamFlag == 'O'">
+		  AND alarm_flag = 'O'
+		  </if> 
+	</select>
 
 </mapper>

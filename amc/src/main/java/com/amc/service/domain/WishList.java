@@ -3,51 +3,40 @@ package com.amc.service.domain;
 public class WishList {
 
 	int wishNo;
-	String userId;
-	int movieNo;
-	boolean wishListAddChk;
+	User user;
+	ScreenContent screenContent;
+	String wishRegDate;
 	
-	
-	public WishList() {
-		super();
-	}
-	
-	public boolean isWishListAddChk() {
-		return wishListAddChk;
-	}
-
-	public void setWishListAddChk(boolean wishListAddChk) {
-		this.wishListAddChk = wishListAddChk;
-	}
-
 	public int getWishNo() {
 		return wishNo;
 	}
-	
 	public void setWishNo(int wishNo) {
 		this.wishNo = wishNo;
 	}
-	
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
-
-	public int getMovieNo() {
-		return movieNo;
+	public ScreenContent getScreenContent() {
+		return screenContent;
 	}
-
-	public void setMovieNo(int movieNo) {
-		this.movieNo = movieNo;
+	public void setScreenContent(ScreenContent screenContent) {
+		this.screenContent = screenContent;
 	}
-
+	public String getWishRegDate() {
+		return wishRegDate;
+	}
+	public void setWishRegDate(String wishRegDate) {
+		this.wishRegDate = wishRegDate;
+	}
 	@Override
 	public String toString() {
-		return "WishList [wishNo=" + wishNo + ", userId=" + userId + ", movieNo=" + movieNo + ", wishListAddChk="
-				+ wishListAddChk + "]";
+		return "WishList [wishNo=" + wishNo + ", user=" + user + ", screenContent=" + screenContent + ", wishRegDate="
+				+ wishRegDate + "]";
 	}
+	
+	
 		
 }

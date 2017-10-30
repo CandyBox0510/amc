@@ -6,32 +6,67 @@
 
 <mapper namespace="WishListMapper">
  	
- 	<resultMap id="wishListSelectMap" type="wishList">
-  			<result property="wishNo" column="wish_no" jdbcType="NUMERIC"/>
-  			<result property="userId" column="user_id" jdbcType="VARCHAR"/>
-  			<result property="movieNo" column="movie_no" jdbcType="NUMERIC"/>
-	</resultMap>
+  	<resultMap id="wishListSelectMap" 			type="wishList">
+  		<result property="wishNo" 							column="wish_no"			jdbcType="NUMERIC"/>
+  		<result property="userId"							column="user_id" 			jdbcType="VARCHAR"/>
+  		<result property="wishRegDate"  					column="wish_regdate" 		jdbcType="DATE"/>  		
+  		<result property="screenContent.movie.movieNm" 		column="movie_title" 	jdbcType="VARCHAR"/>
+  		<result property="screenContent.previewTitle" 		column="preview_title" 	jdbcType="VARCHAR"/>
+  		<result property="screenContent.screenOpenTime" 	column="screen_opentime" 	jdbcType="VARCHAR"/>
+  		<result property="screenContent.ticketOpenDate" 	column="ticket_opendate" 	jdbcType="VARCHAR"/>
+  		<result property="screenContent.screenTheater" 		column="screen_theater" 	jdbcType="VARCHAR"/>
+  		<result property="screenContent.inviteActor" 		column="invite_actor" 		jdbcType="VARCHAR"/>
+  		<result property="screenContent.previewFlag" 		column="preview_flag" 		jdbcType="VARCHAR"/>
+  		<result property="screenContent.movie.postUrl" 		column="poster" 			jdbcType="VARCHAR"/>
+  		<result property="screenContent.movie.movieNo" 		column="movie_no" 			jdbcType="NUMERIC"/>
+  		
+  		
+  	</resultMap>
 	
-	<insert 	id="addWish" 	 parameterType="wishList">
-  		INSERT
-		INTO  wishlist ( wish_no,  user_id, movie_no)
-		VALUES (seq_wish_no.nextval,userId,#{movieNo})		
-  	</insert>
+	<select id="checkWishList"	parameterType="wishList" resultType="string">
+	 	SELECT count(*) 
+	 	FROM wishlist 
+	 	WHERE screencontent_no = #{screenContent.screenContentNo} AND 
+	 		  user_id = #{user.userId}
+	</select>
+	
+	<insert id="addWishList"	parameterType="wishList" >
+	 	INSERT
+		INTO wishlist	( wish_no, screencontent_no, user_id, wish_regdate)
+		VALUES	 	( seq_wish_no.nextval, #{screenContent.screenContentNo}, #{user.userId}, SYSDATE)
+	</insert>
+	
+	<delete id="deleteWishList" parameterType="wishList">
+		DELETE
+		FROM wishlist
+		WHERE screencontent_no = #{screenContent.screenContentNo} AND user_id = #{user.userId}
+	</delete>
+	
+ 	<select  id="getWishList"  parameterType="map"	 resultMap="wishListSelectMap">
+ 	SELECT *							
+	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
+		 	 FROM 		(SELECT m.movie_title, s.preview_title, s.screen_opentime, s.ticket_opendate, 
+		 	 					s.screen_theater, s.invite_actor, s.preview_flag ,w.wish_no, 
+		 	 					w.wish_regdate, m.poster, m.movie_no, s.screencontent_no
+						FROM wishlist w, screencontent s, movie m 
+						WHERE w.screencontent_no = s.screencontent_no AND s.movie_no = m.movie_no 
+							  AND user_id = #{user.userId}) inner_table
+			 WHERE ROWNUM &lt;=#{search.endRowNum} )
+	WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+ 	</select>
+	
+	<select id="getTotalCount" parameterType="map" resultType="int">
+ 		SELECT COUNT(*) 
+		FROM wishlist
+		WHERE user_id = #{user.userId}
+	</select>
+	
+ 	<select  id="getAllWishList"  parameterType="map"	 resultMap="wishListSelectMap">
+ 	SELECT m.movie_title, s.preview_title, s.screen_opentime, s.ticket_opendate, 
+		   s.screen_theater, s.invite_actor, s.preview_flag ,w.wish_no, 
+		   w.wish_regdate, m.poster, m.movie_no, s.screencontent_no
+	FROM wishlist w, screencontent s, movie m 
+	WHERE w.screencontent_no = s.screencontent_no AND s.movie_no = m.movie_no AND user_id = #{user.userId}
+ 	</select>
 
-
-	<select 	id="getWish" 	parameterType="java.lang.String" resultMap="wishListSelectMap" >
-  		SELECT
-		movie_no, 	
-		user_id,
-		wish_no	
-		FROM wishlist   
-		WHERE movie_no = #{movieNo}											
-  	</select>
-  	
-  	<delete id="deleteWishList" parameterType="int">
-		DELETE FROM 
-			wishlist
-		WHERE movie_no = #{movieNo}		
-	</delete>   
-  	
 </mapper>

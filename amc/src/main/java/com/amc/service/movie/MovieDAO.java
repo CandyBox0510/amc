@@ -1,6 +1,7 @@
 package com.amc.service.movie;
 
 import java.util.List;
+import java.util.Map;
 
 import com.amc.common.Search;
 import com.amc.service.domain.Movie;
@@ -60,15 +61,6 @@ public interface MovieDAO {
 	
 	// 관리목록에서 클릭한경우는 수정화면으로, 영화목록에서 클릭한경우는 상세정보화면으로
 
-	// 회원이 하트를 눌렀을때 위시리스트에  add
-	public int addWish(WishList wishList);
-	
-	// 회원이 하트를 눌렀을때 위시리스트에 존재 하는지 안하는지 확인
-	public int getWish(int movieNo);
-	
-	// 존재하면 delete 존재하지않으면
-	public int delWish(int movieNo);
-
 	// 영화에 대한 감상평 입력
 	public int addMoiveComment(MovieComment movieComment);
 
@@ -102,5 +94,12 @@ public interface MovieDAO {
 	int dupMovieChk(Search search) throws Exception;
 
 	public MovieComment getMovieComment(int movieCommentNo);
+	
+	public String checkWishList(WishList wishList);
+	
+	public int addWishList(WishList wishList);
+	
+	public int deleteWishList(WishList wishList);
 
+	public Map<String, Object> getWishList(Map<String,Object> map);
 }

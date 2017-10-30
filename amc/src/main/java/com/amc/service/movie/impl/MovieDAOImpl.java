@@ -1,6 +1,5 @@
 package com.amc.service.movie.impl;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,24 +147,9 @@ public class MovieDAOImpl implements MovieDAO {
 	// 관리목록에서 클릭한경우는 수정화면으로, 영화목록에서 클릭한경우는 상세정보화면으로
 
 	// 회원이 하트를 눌렀을때 위시리스트에 존재 하는지 안하는지 확인(Count로), 존재하면 delete 존재하지않으면 add
-	public int addWish(WishList wishList) {
-		System.out.println("MovieDAOImpl addWishList ===>>>>"  + wishList);
-		return sqlSession.insert("WishListMapper.addWish",wishList);	
-	}
-	
-	@Override
-	public int getWish(int movieNo) {
-		return movieNo;
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public int delWish(int movieNo) {
-		// TODO Auto-generated method stub
+	public int addWish(int movieNo) {
 		return 0;
 	}
-
-	
 
 	// 영화에 대한 감상평 입력
 	@Override	
@@ -320,6 +304,32 @@ public class MovieDAOImpl implements MovieDAO {
 		return sqlSession.selectList("MovieMapper.uniMovieList",search);
 	}
 
+	@Override
+	public String checkWishList(WishList wishList) {
+		return sqlSession.selectOne("WishListMapper.checkWishList",wishList);
+	}
+
+	@Override
+	public int addWishList(WishList wishList) {
+		return sqlSession.insert("WishListMapper.addWishList",wishList);
+	}
+
+	@Override
+	public int deleteWishList(WishList wishList) {
+		return sqlSession.delete("WishListMapper.deleteWishList",wishList);
+	}
 	
-	
+	@Override
+	public Map<String, Object> getWishList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(map.get("search")!=null){
+		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
+			return tempMap;
+		}else{
+			tempMap.put("list", sqlSession.selectList("WishListMapper.getAllWishList",map));
+			return tempMap;
+		}
+	}
 }

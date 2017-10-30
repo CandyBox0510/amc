@@ -1,5 +1,6 @@
 package com.amc.service.alarm.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,13 +32,29 @@ public class AlarmDAOImpl implements AlarmDAO {
 	}
 
 	@Override
-	public List<Alarm> getCancelAlarmList(Map<String,Object> map) {
-		return sqlSession.selectList("AlarmMapper.getCancelAlarmList",map);
+	public Map<String, Object> getCancelAlarmList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		tempMap.put("totalCount", sqlSession.selectOne("AlarmMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("AlarmMapper.getAlarmList",map));
+		return tempMap;
 	}
 
 	@Override
-	public List<Alarm> getOpenAlarmList(Map<String, Object> map) {
-		return sqlSession.selectList("AlarmMapper.getOpenAlarmList",map);
+	public Map<String, Object> getOpenAlarmList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		tempMap.put("totalCount", sqlSession.selectOne("AlarmMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("AlarmMapper.getAlarmList",map));
+		return tempMap;
+	}
+
+	@Override
+	public List<Alarm> getPushCancelAlarmList(Map<String,Object> map) {
+		return sqlSession.selectList("AlarmMapper.getPushCancelAlarmList",map);
+	}
+
+	@Override
+	public List<Alarm> getPushOpenAlarmList(Map<String, Object> map) {
+		return sqlSession.selectList("AlarmMapper.getPushOpenAlarmList",map);
 	}
 
 	@Override

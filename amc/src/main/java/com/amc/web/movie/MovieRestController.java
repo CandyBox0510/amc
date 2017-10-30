@@ -5,17 +5,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +33,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
+import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
 import com.amc.service.domain.User;
@@ -40,11 +41,10 @@ import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.movie.MovieService;
-import com.amc.service.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-
+import net.sf.json.JSONSerializer;
 
 //==> MovieAPI RestController
 @RestController
@@ -56,10 +56,6 @@ public class MovieRestController {
 	@Autowired
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
-	
-	@Autowired
-	@Qualifier("userServiceImpl")
-	private UserService userService;
 	
 
 	
@@ -108,7 +104,7 @@ public class MovieRestController {
 	}
 
 	@RequestMapping(value = "json/addMovie", method = RequestMethod.POST)
-	public void addMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public int addMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Enumeration<?> em = request.getParameterNames();
 		List<String> prodList = new ArrayList<String>();
@@ -201,27 +197,14 @@ public class MovieRestController {
 		if (oper.equals("del")) {
 			System.out.println("/movie/json/delMovie : POST");
 			// return productService.deleteProductBatch(prodList);
-			//return 0;
+			return 0;
 
 		} else if (oper.equals("add")) {
 			System.out.println("/movie/json/addMovie : POST");
-			//return 0;
+			return 0;
 		} else
-			
-			//return rtn = movieService.addMovie(movie);
 
-			rtn = movieService.addMovie(movie);
-		
-			response.setContentType("text/xml");
-	        response.setCharacterEncoding("UTF-8");
-			
-			if (rtn == 1) {
-		        response.sendError(200, "성공적으로 입력되었습니다. ");
-		        
-			} 
-			else {
-				response.sendError(700, "failer...");
-			}
+			return rtn = movieService.addMovie(movie);
 	}
 
 	private final String PATH = "C:/amcPoster/";
@@ -454,33 +437,8 @@ public class MovieRestController {
 	        e.printStackTrace();
 	    }   
 	}
- 	
-	// JM Son 작업 내용
-	/*@RequestMapping(value = "json/addWish/{movieNo}", method = RequestMethod.POST)
-	public String addWish(@ModelAttribute("user") User user,  @PathVariable Integer movieNo, HttpSession session) {
-		
-		String userId = "";
-		
-		if (session != null) {
-			userId=((User)session.getAttribute("user")).getUserId();
-			System.out.println("userId " + userId);
-		} 
-	
-		System.out.println("movieRestController의 addWish시작 ");
+ 
 
-		System.out.println("1.wishList movieNo ==> " + movieNo);
-		
-		WishList wishList = new WishList();
-		wishList.setMovieNo(movieNo);
-		wishList.setUserId(userId);
-			
-		movieService.addWish(wishList);
-		
-		return null;
-	
-	};
-	 */
-	
 	// 해림 추가
 	@RequestMapping(value = "json/addMovieComment", method = RequestMethod.POST)
 	public int addMovieComment(@RequestBody MovieComment movieComment) {
@@ -570,6 +528,46 @@ public class MovieRestController {
 		
 		System.out.println("4. list ==> " + list);
 		return list;
+	}
+	
+	@RequestMapping(value = "/json/switchWishList")
+	public String switchWishList(@ModelAttribute("wishList")WishList wishList){
+		return movieService.switchWishList(wishList);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/wishList/{userId:.+}")
+	public String wishList(@PathVariable String userId){
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		List<WishList> list = new ArrayList<WishList>();
+		User user = new User();
+		user.setUserId(userId);
+		tempMap.put("user", user);
+		
+		list = ((List<WishList>)movieService.getWishList(tempMap).get("list"));
+		
+		JSONObject jsonObject = new JSONObject();
+		JSONObject response = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		for(int i = 0; i<list.size(); i++){
+			jsonObject.put("movie_title", list.get(i).getScreenContent().getMovie().getMovieNm());
+			jsonObject.put("previewTitle", list.get(i).getScreenContent().getPreviewTitle());
+			jsonObject.put("screenOpenTime", list.get(i).getScreenContent().getScreenOpenTime());
+			jsonObject.put("ticketOpenDate", list.get(i).getScreenContent().getTicketOpenDate());
+			jsonObject.put("screenTheater", list.get(i).getScreenContent().getScreenTheater());
+			jsonObject.put("inviteActor", list.get(i).getScreenContent().getInviteActor());
+			jsonObject.put("previewFlag", list.get(i).getScreenContent().getPreviewFlag());
+			jsonObject.put("wishNo", list.get(i).getWishNo());
+			jsonObject.put("wishRegDate", list.get(i).getWishRegDate());
+			jsonObject.put("poster", list.get(i).getScreenContent().getMovie().getPostUrl());
+			jsonObject.put("movieNo", list.get(i).getScreenContent().getMovie().getMovieNo());
+			jsonObject.put("screencontentNo", list.get(i).getScreenContent().getScreenContentNo());
+			
+			jsonArray.add(jsonObject);
+		}
+		response.put("wishList", jsonArray);
+		return response.toString();
 	}
 
 }

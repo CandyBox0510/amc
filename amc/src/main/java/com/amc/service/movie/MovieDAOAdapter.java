@@ -76,12 +76,6 @@ public abstract class MovieDAOAdapter implements MovieDAO {
 
 	}
 
-	@Override
-	public List<WishList> getWishList(Search search, String userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public List<MovieList> getAPIMoiveList() throws Exception{
 
@@ -94,13 +88,8 @@ public abstract class MovieDAOAdapter implements MovieDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 	
-	public int addWish(WishList wishList) {
-		// TODO Auto-generated wishListmethod stub
-		return 0;
-	}
-
+	
 	@Override
 	public int addMoiveComment(MovieComment movieComment) {
 		// TODO Auto-generated method stub
@@ -136,12 +125,7 @@ public abstract class MovieDAOAdapter implements MovieDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public int deleteWish(int moiveNo, String userId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public List<Movie> getChart(int movieNo) {
