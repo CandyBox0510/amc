@@ -36,6 +36,7 @@ import com.amc.common.Search;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
@@ -515,13 +516,49 @@ public class MovieRestController {
 	};
 	
 	// 해림 추가
-	@RequestMapping(value = "json/getMovieCommentList/{movieNo}")
+@RequestMapping(value = "json/getMovieCommentList/{movieNo}",  method = RequestMethod.GET)
 	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
 		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
 		System.out.println("1. search ==> "+ search);
 		System.out.println("2. movieNo ==> "+ movieNo);
 		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
 		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
+		System.out.println("3. map ==> "+ map); 
+		
+		List<MovieComment> list = (List<MovieComment>)map.get("list");
+
+		
+		
+		System.out.println("4. list ==> ?" + list);
+		return list;
+	}
+	
+	@RequestMapping(value = "json/getMovieCommentList",  method = RequestMethod.POST)
+	public  List<MovieComment> getMovieCommentList( @RequestBody MovieComment movieComment) throws Exception {
+		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		Search search = movieComment.getSearch();
+	
+		System.out.println("1. search ==> "+search);
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		int movieNo = movieComment.getMovie().getMovieNo();
+
+		search.setPageSize(pageSize);
+
+		System.out.println("1-1. search ==> "+ search);
+		//System.out.println("2. movieNo ==> "+ movieNo);
+		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
+		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
+		
 		System.out.println("3. map ==> "+ map); 
 		
 		List<MovieComment> list = (List<MovieComment>)map.get("list");
@@ -551,18 +588,11 @@ public class MovieRestController {
 		JSONArray jsonArray = new JSONArray();
 
 		for(int i = 0; i<list.size(); i++){
-			jsonObject.put("movie_title", list.get(i).getScreenContent().getMovie().getMovieNm());
-			jsonObject.put("previewTitle", list.get(i).getScreenContent().getPreviewTitle());
-			jsonObject.put("screenOpenTime", list.get(i).getScreenContent().getScreenOpenTime());
-			jsonObject.put("ticketOpenDate", list.get(i).getScreenContent().getTicketOpenDate());
-			jsonObject.put("screenTheater", list.get(i).getScreenContent().getScreenTheater());
-			jsonObject.put("inviteActor", list.get(i).getScreenContent().getInviteActor());
-			jsonObject.put("previewFlag", list.get(i).getScreenContent().getPreviewFlag());
+			jsonObject.put("movie_title", list.get(i).getMovie().getMovieNm());
 			jsonObject.put("wishNo", list.get(i).getWishNo());
 			jsonObject.put("wishRegDate", list.get(i).getWishRegDate());
-			jsonObject.put("poster", list.get(i).getScreenContent().getMovie().getPostUrl());
-			jsonObject.put("movieNo", list.get(i).getScreenContent().getMovie().getMovieNo());
-			jsonObject.put("screencontentNo", list.get(i).getScreenContent().getScreenContentNo());
+			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
+			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
 			
 			jsonArray.add(jsonObject);
 		}
