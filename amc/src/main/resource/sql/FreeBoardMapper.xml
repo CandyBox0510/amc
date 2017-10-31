@@ -12,12 +12,90 @@
   	
   		<result property="freeBoardNo" 		column="freeboard_no" 		jdbcType="NUMERIC"/>
   		<result property="freeBoardTitle" 	column="freeboard_title" 	jdbcType="VARCHAR"/>
-  		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+  		<result property="user.userId" 			column="user_id" 			jdbcType="VARCHAR"/>
   		<result property="freeBoardRegDate" column="freeboard_regdate"	jdbcType="DATE"/>
   		<result property="freeBoardViews" 	column="freeboard_views" 	jdbcType="NUMERIC"/>
   		<result property="freeBoardImage" 	column="freeboard_image" 	jdbcType="VARCHAR"/>
   		<result property="freeBoardContent" column="freeboard_content" 	jdbcType="VARCHAR"/>
 	 
   	</resultMap>	
+  	
+  	<insert id="addFreeBoard" parameterType="freeBoard">
+	INSERT INTO freeboard(freeboard_no, freeboard_title, user_id, freeboard_regdate, freeboard_content, freeboard_views, freeboard_image)
+	VALUES(seq_freeboard_no.nextval, #{freeBoardTitle}, #{user.userId}, TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'), #{freeBoardContent},0, #{freeBoardImage})
+	</insert>
+	
+	<select id="getFreeBoard" parameterType="int" resultMap="freeBoardMap"> 
+		SELECT freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+		FROM freeboard
+		WHERE freeboard_no = #{freeBoardNo} 
+	</select>
+	
+	<update id="updateFreeBoard" parameterType="FreeBoard">
+	UPDATE freeboard
+		<set>
+			freeboard_title = #{freeBoardTitle},
+			freeboard_content = #{freeBoardContent},
+			 freeboard_image = #{freeBoardImage}
+		</set>
+		WHERE freeboard_no = #{freeBoardNo}
+	</update>
+	
+	
+	<delete id="deleteFreeBoard" parameterType="int">
+		DELETE FROM freeboard
+		WHERE freeboard_no = #{freeBoardNo}
+	</delete>
+	
+	
+	<select id="getFreeBoardList" parameterType="search" resultMap="freeBoardMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+						FROM freeboard	  			    
+		<if test="searchCondition != null">
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE freeboard_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE freeboard_content LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 3 and searchKeyword != '' ">
+					WHERE user_id LIKE '%${searchKeyword}%'
+				</if>
+				
+		</if>
+		ORDER BY freeboard_regdate DESC) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+
+	</select>
+	
+	<select id="getTotalCount" parameterType="search" resultType="int">
+	SELECT count(*)
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+						FROM freeboard	  			    
+		<if test="searchCondition != null">
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE freeboard_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE freeboard_content LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 3 and searchKeyword != '' ">
+					WHERE user_id LIKE '%${searchKeyword}%'
+				</if>
+				
+		</if>
+		ORDER BY freeboard_regdate DESC) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	
+	</select>
+	
 
 </mapper>

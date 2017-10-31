@@ -1,451 +1,509 @@
-<%@ page import="com.amc.service.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-
+    pageEncoding="EUC-KR"%>
+    <%@ page contentType="text/html; charset=EUC-KR" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+            <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
- 
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	
-	<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
-	<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css" />
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css" />
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
     
-	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	
-<script type="text/javascript">
-var movieNo
-var userId 
-var screenContentNo
-var movieNm 
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
-window.fbAsyncInit = function() {
-    FB.init({
-     // appId      : '688547171338913',
-      xfbml      : true,
-      version    : 'v2.10'
-    });
-    FB.AppEvents.logPageView();
-  };
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
 
+		  <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
+	<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css" />
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.10&appId=688547171338913';
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-  
-  function posting() {
-	  FB.ui({
-		    method: 'share_open_graph',
-		    action_type: 'og.shares',
-		    action_properties: JSON.stringify({
-		    	   object:{
-	                    
-	                    'og:title': 'AMC',
-	                    'og:description': '영화 '+movieNm+'상세보기',
-	                    'og:url':  'http://192.168.0.32:8080/movie/getMovie?movieNo='+movieNo+'&menu=search',
-	              
-	                    'og:image': 'http://192.168.0.32:8080/images/common/AMC_Logo.png'
-	                    
-	                }
-		      }),
-		 
-		    mobile_iframe: true,
-		  
-		  }, function(response){});
 		
-}
-  
-  
-	var targetDiv;
-		function fncGetPageList(currentPage) {
-		    $("#currentPage").val(currentPage)
-		    console.log( "ddd"+ $("#currentPage").val());
-		    $("form").attr("method", "POST").attr("action", "/movie/getMovie?movieNo="+movieNo+"&menu=search").submit();
+		<!-- 우리가 가지고 있던 javaScript (현재 별문제 안됨)-->
+    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	
+		
+         <script src="/js/external/modernizr.custom.js"></script> 
+         
+         <script type="text/javascript">
+         window.fbAsyncInit = function() {
+        	    FB.init({
+        	     // appId      : '688547171338913',
+        	      xfbml      : true,
+        	      version    : 'v2.10'
+        	    });
+        	    FB.AppEvents.logPageView();
+        	  };
+
+
+        	  (function(d, s, id){
+        	     var js, fjs = d.getElementsByTagName(s)[0];
+        	     if (d.getElementById(id)) {return;}
+        	     js = d.createElement(s); js.id = id;
+        	      js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.10&appId=688547171338913';
+        	     fjs.parentNode.insertBefore(js, fjs);
+        	   }(document, 'script', 'facebook-jssdk'));
+        	  
+        	  function posting() {
+        		  FB.ui({
+        			    method: 'share_open_graph',
+        			    action_type: 'og.shares',
+        			    action_properties: JSON.stringify({
+        			    	   object:{
+        		                    
+        		                    'og:title': 'AMC',
+        		                    'og:description': '영화 '+movieNm+'상세보기',
+        		                    'og:url':  'http://192.168.0.32:8080/movie/getMovie?movieNo='+movieNo+'&menu=search',
+        		              
+        		                    'og:image': 'http://192.168.0.32:8080/images/common/AMC_Logo.png'
+        		                    
+        		                }
+        			      }),
+        			 
+        			    mobile_iframe: true,
+        			  
+        			  }, function(response){});
+        			
+        	}
+        	  
+
+        		function addOpenAlarm() {
+        			$.ajax(
+        							{
+        								url : "/alarm/json/switchOpenAlarm?screenContent.screenContentNo="+screenContentNo+"&user.userId="
+        										+ "${sessionScope.user.userId}", //서버로 알림 체크 요청
+        										
+        								type : 'GET',
+        							}).done(function(data) {
+        						//정상 통신인 경우
+        						if (data == 'add') {
+        							var msg = '오픈알림이 신청되었습니다.';
+        							/* msg += '\n무슨영화 : ' + movie정보;
+        							 */
+        							alert(msg);
+        						} else {
+        							alert("오픈알림이 취소되었습니다.");
+        						}
+        					});
+        		} //end of addOpenAlarm function
+
+        		
+        	  
+         function fncGetPageList(currentPage) {
+        	 
+
+		        var movieNo = $("input[name='movieNo']").val();
+		        
+		   
+		        $.ajax({
+				url : "/movie/json/getMovieCommentList/",
+				type : 'POST',
+
+				headers : {
+
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					search : {
+						currentPage : currentPage
+						},
+					movie : {
+							movieNo : movieNo
+					}
+					
+
+				}),
+				dataType : "json",
+
+				success : function(JSONData, status) { 					
+					console.log("fncGetPageList()");
+					console.log("success"+JSON.stringify(JSONData.data));
+		            console.log("ㅇ난녕" );
+
+             	   //console.log("fncMovieCommentList() JSONData "+ JSONData.movieComment);
+             	   var result = JSONData;
+             console.log(result);console.log(result.length);
+             	   userId = $("input[name='userId']").val();
+             	   userRole = $("input[name='userRole']").val();
+             	   
+         
+             	   
+             	 
+             	  
+             	
+             	  
+     
+             	   //displayValue ='<div class="comment"> <div class ="tatalCount">전체  ${resultPage.totalCount } 건</div> '
+             		displayValue =''
+             	   $.each(result, function(idx, val) {
+             		
+                 	   displayValue += '<p class="comment__user">'+val.user.userId+'</p>'+
+                 	    '<p class="comment__movieComment" id="movieComment'+val.movieCommentNo+'" >'               
+                 	   if(val.blindCommentFlag =='Y'){
+                 		   displayValue +=' <span style="color:gray">블라인드 처리된 게시글입니다.</span>'
+                 		   if(userRole == 'admin'){
+                 			   displayValue +='<br> '+val.movieComment
+                 		   }
+                 	   }else{
+                 		   displayValue +=val.movieComment
+                 	   }
+                 	    displayValue+= '</p>'+
+                 	   ' <span class="comment__regDate">'+val.movieCommentRegDate+' </span>'
+
+                 	   
+                 	   if(userId == val.user.userId || userRole == 'admin'){
+                 		   displayValue += '<span class="comment__update" >'
+                 		   if(val.blindCommentFlag =='N'){
+                 			   displayValue +='<i class="fa fa-eraser">  </i>'
+                 		   }
+                 		   displayValue +=  '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> '+
+                     	   '<input type="hidden" id="movieComment" value="'+val.movieComment+'"></span>'+
+                            '<span class="comment__delete" ><i class="fa fa-trash-o">  </i>'+
+                            '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
+                            if(userRole == 'admin'){
+                         	   displayValue += '<span class="comment__blind" >'+
+                                ' <input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'">'+
+                                '<input type="hidden" id="blindCommentFlag" value="'+val.blindCommentFlag+'">'
+                                if(val.blindCommentFlag =='Y'){
+                             	   displayValue +=  '<i class="fa fa-eye"> </i>'
+                                }else{
+                             	   displayValue +=  '<i class="fa fa-eye-slash"> </i>'
+                                }
+                         	   displayValue += ' </span>'
+                            }
+                           
+                 	 	}
+                 	   displayValue += ' <hr>'
+                 	})          	
+                 	//displayValue +=' </div>'
+                  	                    	   
+                         $(".comment").append(displayValue);
+                 	
+                         currentPage = parseInt(currentPage) +1;
+                   		
+      
+             		 
+             		 if(result.length !=10){
+             			currentPage = parseInt(currentPage) -1;
+                  		$(".comment-more").remove();
+                  	
+             			 
+             		 }
+                        
+             		$("#currentPage").val(currentPage);
+
+				}
+ 			}) 
+
+    			
+    			
+    			
+		        //$("form").attr("method", "POST").attr("action", ").submit();
+		    }
+         
+         
+         function fncGetMovieComment() {
+        	 $("div[name='update"+$("input[name='movieCommentNo2']").val()+"']").html($("input[name='movieComment2']").val());
+        	 
+        	 	
+				console.log(movieCommentNo);
+				console.log(movieComment);
+				
+				var dispaly =  '<div id="comment-form" class="movieComment" name="update'+movieCommentNo+'">'+
+				'<input type="hidden" id="movieCommentNo" value="'+movieCommentNo+'">'+
+				'<textarea class="movieComment__text" id="updateMovieCommentText" value="">'+movieComment+'</textarea>'+
+				'<button type="submit" class="btn btn-md btn--shine movieComment__btn" id="updateButton">수정</button></div>'
+			//movieComment${movieComment.movieCommentNo }
+			$("input[name='movieCommentNo2']").val(movieCommentNo);
+			$("input[name='movieComment2']").val(movieComment);
+			 $("#movieComment"+movieCommentNo).html(dispaly);
+
 		}
 
+         function fncAddMovieComment() {
+        	
+        		 var movieComment = $("#addMovieCommentText").val();          	
+            	 if(movieComment == ""){
+            		 alert("감상평을 입력해 주세요");
+            		 return;
+            	 }
+            		 $.ajax({
+            				url : "/movie/json/addMovieComment/",
+            				type : 'POST',
 
-	function addOpenAlarm() {
-		$.ajax(
-						{
-							url : "/alarm/json/switchOpenAlarm?screenContent.screenContentNo="+screenContentNo+"&user.userId="
-									+ "${sessionScope.user.userId}", //서버로 알림 체크 요청
-									
-							type : 'GET',
-						}).done(function(data) {
-					//정상 통신인 경우
-					if (data == 'add') {
-						var msg = '오픈알림이 신청되었습니다.';
-						/* msg += '\n무슨영화 : ' + movie정보;
-						 */
-						alert(msg);
-					} else {
-						alert("오픈알림이 취소되었습니다.");
+            				headers : {
+
+            					"Content-Type" : "application/json"
+            				},
+            				data : JSON.stringify({
+            					movie : {
+            						movieNo : movieNo
+            					},
+            					user : {
+            						userId : userId
+            					},
+            					movieComment : movieComment
+
+            				}),
+            				dataType : "json",
+
+            				success : function(JSONData, status) { 					
+            					console.log("fncAddMovieComment()");
+            					$("#addMovieCommentText").val(null);
+            					fncMovieCommentList()
+            				}
+            			}) 
+    	     }
+		 function fncMovieCommentList() {
+        	 
+        	 var movieNo = $("input[name='movieNo']").val();
+        	 
+        	 
+        	   $.ajax({
+                   url: "/movie/json/getMovieCommentList/" + movieNo,
+                   method: "GET",
+                   dataType: "json",
+                   headers: {
+                       "Accept": "application/json",
+                       "Content-Type": "application/json"
+                   },
+                   success: function(JSONData, status) {
+                	   //console.log("fncMovieCommentList() JSONData "+ JSONData.movieComment);
+                	   var result = JSONData;
+                
+                	   userId = $("input[name='userId']").val();
+                	   userRole = $("input[name='userRole']").val();
+                	   
+                	   $(".comment-sets").html("");
+                	   
+                	   displayValue ='<div class="comment">'
+                		
+                	   $.each(result, function(idx, val) {
+                		
+                    	   displayValue += '<p class="comment__user">'+val.user.userId+'</p>'+
+                    	    '<p class="comment__movieComment" id="movieComment'+val.movieCommentNo+'" >'               
+                    	   if(val.blindCommentFlag =='Y'){
+                    		   displayValue +=' <span style="color:gray">블라인드 처리된 게시글입니다.</span>'
+                    		   if(userRole == 'admin'){
+                    			   displayValue +='<br> '+val.movieComment
+                    		   }
+                    	   }else{
+                    		   displayValue +=val.movieComment
+                    	   }
+                    	    displayValue+= '</p>'+
+                    	   ' <span class="comment__regDate">'+val.movieCommentRegDate+' </span>'
+
+                    	   
+                    	   if(userId == val.user.userId || userRole == 'admin'){
+                    		   displayValue += '<span class="comment__update" >'
+                    		   if(val.blindCommentFlag =='N'){
+                    			   displayValue +='<i class="fa fa-eraser">  </i>'
+                    		   }
+                    		   displayValue +=  '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> '+
+                        	   '<input type="hidden" id="movieComment" value="'+idx+':'+val.movieComment+'"></span>'+
+                               '<span class="comment__delete" ><i class="fa fa-trash-o">  </i>'+
+                               '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
+                               if(userRole == 'admin'){
+                            	   displayValue += '<span class="comment__blind" >'+
+                                   ' <input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'">'+
+                                   '<input type="hidden" id="blindCommentFlag" value="'+val.blindCommentFlag+'">'
+                                   if(val.blindCommentFlag =='Y'){
+                                	   displayValue +=  '<i class="fa fa-eye"> </i>'
+                                   }else{
+                                	   displayValue +=  '<i class="fa fa-eye-slash"> </i>'
+                                   }
+                            	   displayValue += ' </span>'
+                               }
+                              
+                    	 	}
+                    	   displayValue += ' <hr>'
+                    	})          	
+               
+                    	displayValue +=' </div><div class="comment-more">'+
+                            '<a href="#" class="watchlist">Show more comments</a>'
+                            +'</div>'
+                     	                    	   
+                            $(".comment-sets").html(displayValue);
+          	
+                   }
+
+               });
+ 
+		}
+		 
+		 function fncUpdateMovieComment() {
+     	
+				
+				
+				$.ajax({
+					url : "/movie/json/updateMovieComment/",
+					type : 'POST',
+
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						movieComment : movieComment,
+						movieCommentNo : movieCommentNo
+					}),
+					dataType : "text",
+
+					success : function(JSONData, status) {
+						 
+						var	display ='<input type="hidden" id="movieComment" value="ㅇ나녕">'+movieComment;
+
+						//$("#movieComment"+movieCommentNo).html(dispaly);
+							
+							
+							$("#movieComment"+movieCommentNo).html(movieComment);
+							
+							
+
+							$("#movieComment2").val(movieComment);
+							
+							fncMovieCommentList()
 					}
-				});
-	} //end of addOpenAlarm function
-
-	function fncAddMovieComment() {
-		
-		var movieComment = $("textarea[name='movieComment']").val();
-
-		console.log("adMovieComment()의 movieNo ==> " + movieNo);
-		console.log("adMovieComment()의 userId ==> " + userId);
-		console.log("adMovieComment()의 movieComment ==> " + movieComment);
-
-		$.ajax({
-			url : "/movie/json/addMovieComment/",
-			type : 'POST',
-
-			headers : {
-
-				"Content-Type" : "application/json"
-			},
-			data : JSON.stringify({
-				movie : {
-					movieNo : movieNo
-				},
-				user : {
-					userId : userId
-				},
-				movieComment : movieComment
-
-			}),
-			dataType : "json",
-
-			success : function(JSONData, status) {
-				console.log("fncAddMovieComment()");
-			}
-		})
-	}
-	
-	function fncGetMovieComment(){
-		var movieCommentNo;
-		var movieComment;
-		$(".movieCommentList:nth-child(4)").on("click", function () {
-			movieComment = $(this).parent().find("#movieComment").find("span").find("input").val();
-			movieCommentNo = $("input[name='movieCommentNo']", $(this)).val();
+				})
 			
-			$("input:hidden[name='movieComment']").val(movieComment);
-			
-			movieComment = $("input:hidden[name='movieComment']").val();
-			
-			
-			displayValue = "<div id='test02'>"+movieComment+"</div>";
-			console.log(displayValue);
-			
-			if( targetDiv != null){
-			
-				targetDiv.find('#movieComment').html(displayValue);
-			}
-				targetDiv = $(this).parent();
-				
-				
+		}
+ 
+ 
+		 function fncDeleteMovieComment() {
 				
 				 
-				
-				
-				var	displayValue = "<div class='row' id='updateMovieComment'>"
-					+ "<div class='col-xs-11'>"
-					+ "<textarea class='form-control' name='movieComment2' placeholder='400자이하의 감상평만 입력가능합니다.' rows=3 cols=140 >"
-					+ movieComment
-					+ "</textarea>"
-					+ "</div>"
-					+ " <div>"
-					+ "<button class='btn btn-primary col-xs-1' name='updateMovieComment' style='width:70px ;height:75px'>수정</button>"
-					+ "</div>" + "</div>";
-
-					
-					
-				$(	"div[name='movieComment"+ movieCommentNo+ "']").html(displayValue);
-
-				console.log("div[name='movieComment"+ movieCommentNo+ "']");
-				
-				 
-					
-
-				$("button[name='updateMovieComment']").on("click", function() {
-									$("input:hidden[name='movieCommentNo']").val(movieCommentNo);
-									$("input:hidden[name='movieComment']").val($("textarea[name='movieComment2']").val());
-									
-									fncUpdateMovieComment();
-			})
-
-								
-					
-				
-			
-			
-			
-			
-		})
-	}
-	
-	
-	
-	
-	
-/* 
-	function fncGetMovieComment2() {
-		var movieCommentNo;
-		var movieComment;
+				 if(confirm("정말 삭제하시겠습니까?") ==true){
+					 $.ajax({
+							url : "/movie/json/deleteMovieComment/"+ movieCommentNo,
+							type : 'GET',
 		
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
 		
-		$(".movieCommentList:nth-child(4)").on(	"click",	function() {
-							movieCommentNo = $("input[name='movieCommentNo']", $(this)).val();
-							movieComment = $("textarea[name='movieComment']", $(this)).val();
-							movieComment2 = $("input[name='movieCommentNo2']", $(this)).val();
-							console.log("fncUpdateMovieComment()의 movieCommentNo ==> "	+ movieCommentNo)
-							console.log("fncUpdateMovieComment()의 movieComment2 ==> "	+ movieComment2)
-							
-						
-							
-								displayValue2 = "<div id='test02'>"+movieComment2+"</div>";
-
-							if( targetDiv != null){
-								console.log(displayValue2)
-								alert("까꿍")
-								alert(targetDiv.find('#test03').html());
-								targetDiv.find('#test03').html(displayValue2);
+							dataType : "json",
+		
+							success : function(JSONData, status) {
+								console.log("fncDeleteMovieComment() JSONData "+ JSONData);
+								 fncMovieCommentList()
 							}
-								targetDiv = $(this).parent();
+						})
+				 }else{
+					 return;
+				 }
+		}
+		 
+		function fncBlindCommentFlag() {
 
-						
-							$.ajax({
-										url : "/movie/json/getMovieComment/" + movieCommentNo,
-										type : 'GET',
+        		 blindComment = "";
+        		 if(blindCommentFlag == 'Y'){
+        			 blindComment = '취소 '
+        		 }
+     			
+     			console.log("fncBlindCommentFlag()의 movieCommentNo ==> "+ movieCommentNo)
+     			console.log("fncBlindCommentFlag()의 blindCommentFlag ==> "+ blindCommentFlag)
 
-										headers : {
-											"Accept" : "application/json",
-											"Content-Type" : "application/json"
-										},
-
-										dataType : "json",
-
-										success : function(JSONData, status) {
-											console.log("fncAddMovieComment() JSONData " + JSONData);
-						
-											
-													$(	"#test").remove();
-											
-											var	displayValue = "<div class='row' id='test'>"
-													+ "<div class='col-xs-11'>"
-													+ "<textarea class='form-control' name='movieComment2' placeholder='400자이하의 감상평만 입력가능합니다.' rows=3 cols=140 >"
-													+ JSONData.movieComment
-													+ "</textarea>"
-													+ "</div>"
-													+ " <div>"
-													+ "<button class='btn btn-primary col-xs-1' name='updateMovieComment' style='width:70px ;height:75px'>수정</button>"
-													+ "</div>" + "</div>";
-
-											$(	"div[name='movieComment"+ movieCommentNo+ "']").html(displayValue);
-
-											console.log("div[name='movieComment"+ movieCommentNo+ "']");
-											
-											 
-												
-
-											$("button[name='updateMovieComment']").on("click", function() {
-																$("input:hidden[name='movieCommentNo']").val(JSONData.movieCommentNo);
-																$("input:hidden[name='movieComment']").val($("textarea[name='movieComment2']").val());
-																fncUpdateMovieComment();
-															})
-
-															
-										}
-									}) //ajax 끝
-
-						}) //on()끝
-	}
- */
-	function fncUpdateMovieComment() {
-
-		var movieComment = $("input:hidden[name='movieComment']").val();
-		var movieCommentNo = $("input:hidden[name='movieCommentNo']").val();
-
-		console.log("fncUpdateMovieComment() movieComment" + movieComment);
-		console.log("fncUpdateMovieComment() movieCommentNo" + movieCommentNo);
-
-		$.ajax({
-			url : "/movie/json/updateMovieComment/",
-			type : 'POST',
-
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			data : JSON.stringify({
-
-				movieComment : movieComment,
-				movieCommentNo : movieCommentNo
-
-			}),
-			dataType : "text",
-
-			success : function(JSONData, status) {
-				
-				var	displayValue = "<div class='row' id='updateMovieComment'>"
-					+ "<div class='col-xs-11'>"
-					+ movieComment
-					+ "</textarea>"
-					+ "</div>"
-					+ " </div>";
-
-					console.log("test"+movieComment+"            " +movieCommentNo)
-				$(	"div[name='movieComment"+ movieCommentNo+ "']").html(displayValue);
-					
-					
-					$("hidden[name='movieComment']").val(movieComment);
-
-				
-				
-			}
-		})
-
-	}
-
-	function fncDeleteMovieComment() {
-
-		var movieCommentNo;
-
-		$(".movieCommentList:nth-child(5)").on("click",function() {
-					movieCommentNo = $("input[name='movieCommentNo']", $(this)).val();
-
-					console.log("fncDeleteMovieComment()의 movieCommentNo ==> "+ movieCommentNo)
-
-					$.ajax({
-						url : "/movie/json/deleteMovieComment/"+ movieCommentNo,
-						type : 'GET',
-
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-
-						dataType : "json",
-
-						success : function(JSONData, status) {
-							console.log("fncAddMovieComment() JSONData "+ JSONData);
-						
-						}
-					}) //ajax 끝
-
-				}) //on()끝
-	}
-	
-	function fncBlindCommentFlag() {
-		var movieCommentNo;
-		var blindCommentFlag;
-		$(".movieCommentList:nth-child(6)").on("click", function () {
-			movieCommentNo = $("input[name='movieCommentNo']", $(this)).val();
-			blindCommentFlag = $("input[name='blindCommentFlag']", $(this)).val();
+     				console.log('dddd');
+     				if(confirm("정말 블라인드 처리를 "+blindComment+"하시겠습니까?") == true){
+     					
+     					$.ajax({
+     						url : "/movie/json/blindMoiveComment",
+     						type : 'POST',
+     	
+     						headers : {
+     							"Accept" : "application/json",
+     							"Content-Type" : "application/json"
+     						},
+     						data : JSON.stringify({
+     	
+     							blindCommentFlag : blindCommentFlag,
+     							movieCommentNo : movieCommentNo
+     	
+     						}),
+     						dataType : "text",
+     	
+     						success : function(JSONData, status) {
+     							console.log("fncAddMovieComment()");
+     							 fncMovieCommentList()
+     						}
+     					})
+     	
+     				}else{
+     					return;
+     				}
+     			
 			
-			console.log("fncBlindCommentFlag()의 movieCommentNo ==> "+ movieCommentNo)
-			console.log("fncBlindCommentFlag()의 blindCommentFlag ==> "+ blindCommentFlag)
-			if(blindCommentFlag == 'N'){
-				console.log('dddd');
-				if(confirm("정말 블라인드 처리를 하시겠습니까?") == true){
-					
-					$.ajax({
-						url : "/movie/json/blindMoiveComment",
-						type : 'POST',
-	
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						data : JSON.stringify({
-	
-							blindCommentFlag : blindCommentFlag,
-							movieCommentNo : movieCommentNo
-	
-						}),
-						dataType : "text",
-	
-						success : function(JSONData, status) {
-							console.log("fncAddMovieComment()");
-						}
-					})
-	
-				}else{
-					return;
-				}
-			}else{
-				console.log('dddd');
-				if(confirm("정말 블라인드 처리를 취소 하시겠습니까?") == true){
-					
-					$.ajax({
-						url : "/movie/json/blindMoiveComment",
-						type : 'POST',
-	
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						data : JSON.stringify({
-	
-							blindCommentFlag : blindCommentFlag,
-							movieCommentNo : movieCommentNo
-	
-						}),
-						dataType : "text",
-	
-						success : function(JSONData, status) {
-							console.log("fncAddMovieComment()");
-						}
-					})
-	
-				}else{
-					return;
-				}
-			}
-			
-		
-			
-		})
+		}
 		
 		
-	}
 
-	$(function() {
-		movieNo = $("input[name='movieNo']").val();
-		userId = $("input[name='userId']").val();
-		screenContentNo = $("input[name='screenContentNo']").val();
-		movieNm = $("input[name='movieNm']").val();
-	
-	
-		console.log(userId);
-		$("button[name='booking']").on("click", function() {
+         $(document).ready(function() {
+         	movieNo = $("input[name='movieNo']").val();
+     		userId = $("input[name='userId']").val();
+     		screenContentNo = $("input[name='screenContentNo']").val();
+     		movieNm = $("input[name='movieNm']").val();
+     		
+     		$(document).on("click", "#addButton", function () {
+     			fncAddMovieComment();
+     			fncMovieCommentList();
+			})
 			
+			$(document).on("click", ".comment__delete", function () {
+				 movieCommentNo=  $("#movieCommentNo",$(this)).val();				 
+				fncDeleteMovieComment();
+     			fncMovieCommentList();
+			})
+			
+			$(document).on("click", ".comment__blind ", function () {
+				movieCommentNo=  $("#movieCommentNo",$(this)).val();
+       		 	blindCommentFlag=  $("#blindCommentFlag",$(this)).val();	 
+				 fncBlindCommentFlag();
+     			fncMovieCommentList();
+			})
+			
+			$(document).on("click", ".comment__update", function () {
+				
+				movieCommentNo=  $("#movieCommentNo",$(this)).val();
+       		 	movieComment=  $("#movieComment",$(this)).val();	 
+       		 	
+       		 	fncGetMovieComment();
+		
+			})
+			$(document).on("click", ".comment-more", function () {
+				currentPage = $("#currentPage").val();
+				
+				
+				//alert(currentPage);
+				
+				fncGetPageList(currentPage);
+			})
+			
+			$(document).on("click", "#updateButton", function () {
+			
+       		 	movieCommentNo = $(this).parent().find("#movieCommentNo").val();
+       		 	movieComment =  $(this).parent().find("#updateMovieCommentText").val();
+       		 	fncUpdateMovieComment();
+		
+			})
+			
+			$("button[name='booking']").on("click", function() {
+				
 				$(self.location).attr("href","/booking/getScreenMovieList");
-			
 		})
 		
 		$("button[name='wish']").on("click", function() {
@@ -453,14 +511,10 @@ window.fbAsyncInit = function() {
 				alert('로그인 후 이용가능합니다')
 			}else{
 				//$(self.location).attr("href","/booking/getScreenMovieList");
-				
-
 
 			}
 		})
 
-		
-		
  		$("button[name='ticketOpen']").on("click", function() {
 			if(userId == ""){
 				alert('로그인 후 이용가능합니다')
@@ -469,65 +523,87 @@ window.fbAsyncInit = function() {
 			}
 		})  
 		
+			
+
+         });
+            
+        </script>
+        
+        
+        <style type="text/css">
+        
+        
+        .your-class img{
+			height : calc(50vh - 100px);
+			width : auto;
+			margin : 0 auto;
+		}
+		.slick-prev:before,
+		.slick-next:before{
+			color : #f06060;
+		}
+
+
+        
+        
+        	.movieComment {
+			  margin-bottom: 40px;
+			}
+			.movieComment .movieComment__text {
+			  width: 100%;
+			  min-height: 78px;
+			  padding: 8px 19px;
+			  -webkit-border-radius: 3px;
+			  -moz-border-radius: 3px;
+			  border-radius: 3px;
+			  background-color: #ffffff;
+			  border: solid 1px #dbdee1;
+			  font-size: 13px;
+			  color: #b4b1b2;
+			}
+			.movieComment .movieComment__info {
+			  margin-top: 19px;
+			  font: 13px 'Roboto', sans-serif;
+			  color: #969b9f;
+			  display: inline-block;
+			}
+			.movieComment .movieComment__btn {
+			  float: right;
+			  margin-top: 9px;
+			}
 		
-		 fncBlindCommentFlag();
-		fncDeleteMovieComment();
-		fncGetMovieComment();
-		$("button[name='addMovieComment']").on("click", function() {
-			fncAddMovieComment();
-		})
-		targetDiv = null;
+      		body {
+				padding-top: 80px;
+			}	
+			 .comment .comment__user {
+				  font-size: 18px;
+				  margin-bottom: 20px;
+				  font-weight: bold;
+				  position: relative;
+		   		overflow: hidden;
+			}
+			
+			.comment .comment__movieComment {
+			  font-size: 14px;  
+			   line-height: 14px;
+			}
+			
+			.comment .comment__regDate {
+			  font-size: 12px;
+			  color: #969b9f;
+			    line-height: 14px;
+			}
 		
-	})
-	
+        </style>
 
-	
-</script>
-
-<style>
-body {
-	padding-top: 70px;
-}
-
-textarea {
-	rows: 3;
-	cols: 140;
-	resize: none;
-}
-div.img{
-	width : 150px; hieght:200px; line-height:200px;
-	text-align : center;
-}
-#realTimeSearch{
-width:500px;
-height: 300px;
-}
-.your-class img{
-	height : calc(50vh - 100px);
-	width : auto;
-	margin : 0 auto;
-}
-.slick-prev:before,
-.slick-next:before{
-	color : #f06060;
-}
-#twitterSearch{
-color:#065a69;
-}
-
-</style>
+</head>
 
 <body>
-
-
-
-
-	<jsp:include page="/layout/topToolbar.jsp" />
-
-
-
-	<div class="container">
-		<div>
+<jsp:include page="/layout/topToolbar.jsp" />
+	
+    <div class="wrapper">
+    	<div class="container">
+    		<div>
 			<div class="page-header">
 				<h2 class=" text-info">${movie.movieNm }</h2>
 			</div>
@@ -593,12 +669,13 @@ color:#065a69;
 		<div class="col-md-12" style="margin-bottom: 50px">
 			<div
 				style="border: 1px solid black; border-radius: 0.5em; padding: 10px;">
-				<h3>줄거리</h3>
+				<h2 class="page-heading">줄거리 </h2>
 				<div>${movie.synopsis }</div>
 			</div>
 			<br>
 			<div		style="border: 1px solid black; border-radius: 0.5em; padding: 10px;">
-				<h3>스틸컷</h3>
+				
+				<h2 class="page-heading">스틸컷 </h2>
 
 				
 					<c:if test="${movie.steelCut1 !=  null}">
@@ -631,118 +708,129 @@ color:#065a69;
 				style="border: 1px solid black; border-radius: 0.5em; padding: 10px;">
 				<h3>트레일러</h3>
 				<div></div>
-			<p align="middle"><iframe  width="960" height="500" src="${movie.trailer }" frameborder="0" allowfullscreen></iframe></p>
+			<p align="middle"><iframe  width="800" height="500" src="${movie.trailer }" frameborder="0" allowfullscreen></iframe></p>
 			</div>
 		</div>
 		<div class='row'>
 			<div class='col-md-3'>			
-				<h3>예매자 성별 차트</h3>
+			<h2 class="page-heading">예매자 성별 차트 </h2>
+				
 				<canvas id="genderChart" width="400" height="400"></canvas>
 			</div>
 			<div class='col-md-3'>
-				<h3>예매자 나이 차트</h3>
+			<h2 class="page-heading">예매자 나이 차트 </h2>
+				
 				<canvas id="ageChart" width="400" height="400"></canvas>
 			</div>
-			<div class='col-md-6'><h3><span class="fa fa-twitter" id='twitterSearch' > </span>  ${movie.movieNm}  실시간 트위터 검색</h3>
-				
+			<div class='col-md-6'>
+				<h2 class="page-heading"><span class="fa fa-twitter" id='twitterSearch' > </span>  ${movie.movieNm}  실시간 트위터 검색</h2>
 			<iframe id="realTimeSearch" src="http://192.168.0.10:1337/${movie.movieNm }" frameborder = 0 >		 
 					  <p>Your browser does not support iframes.</p>
 			</iframe>
 			
 			</div>
 		</div>
+    	</div>
+    
+		
+		
+
+        <!-- Main content -->
+        <section class="container">
+            <div class="col-sm-12">
+              
+
+                <div class="post">
+                    <div class="post__preview">
+                        <div class="swiper-container">
+                        </div>
+                    </div>
+                </div>
 
 
+               
+                 <h2 class="page-heading">감상평 </h2>
 
-	
-			<div class="col-md-12" style="margin-bottom: 50px">
-				<div style="margin-bottom: 30px">
-					<h3>감상평</h3>
-					<table>
-						<tr>
-							<c:if test="${user.userId !=null}">
-								<td><textarea class="form-control" name="movieComment"
-										placeholder="400자이하의 감상평만 입력가능합니다." rows=3 cols=140></textarea></td>
-							</c:if>
-							<c:if test="${user.userId ==null}">
-								<td><textarea class="form-control" name="movieComment"
-										placeholder="로그인 후 이용해주세요" rows=3 cols=140 readonly="readonly"></textarea></td>
-							</c:if>
-							<td><button class="btn btn-primary" name="addMovieComment" <c:if test="${user.userId ==null}">disabled="disabled"</c:if>
-									style="width: 70px; height: 75px"  >등록</button></td>
-						</tr>
-					</table>
-				</div>
+                <div class="comment-wrapper">
+                    <div id="comment-form" class="movieComment">
+                    	<c:if test="${user.userId !=null}">
+                        <textarea class="movieComment__text" id="addMovieCommentText" placeholder='부적절한 글은 블라인드 처리 될 수 있습니다.'></textarea>
+                        </c:if>
+                        
+                        <c:if test="${user.userId ==null}">
+                        <textarea class="movieComment__text" id="addMovieCommentText" placeholder='로그인 후 이용해주세요' readonly="readonly"></textarea>
+                       
+                        </c:if>
+                         <button type='submit' class="btn btn-md btn--danger movieComment__btn" <c:if test="${user.userId ==null}">disabled="disabled"</c:if> id="addButton">등록</button>
+                  
+                    </div>
 
-				<div>
-					<p>전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage }
-						페이지</p>
-				</div>
-				<hr style="border: solid 1px lightgray" />
+                    <div class="comment-sets">	
+                    	
 
+                        <div class="comment">           
+                        	   
+	                        <c:set var="i" value="0" />
+							<c:forEach var="movieComment" items="${list }">
+							<c:set var="i" value="${i+1 }" />
+							
+							<p class="comment__user"> ${movieComment.user.userId }</p>
+							
+                            <p class="comment__movieComment" id="movieComment${movieComment.movieCommentNo }" >
+                            <c:if test="${movieComment.blindCommentFlag.trim() == 'Y'}">
+                            <%-- <input type="hidden" id="movieComment" value="${movieComment.movieComment }"> --%>
+                            <span style="color:gray">블라인드 처리된 게시글입니다.</span>
+	                            <c:if test="${user.role == 'admin'}">
+	                            <br> ${movieComment.movieComment }
+	                            </c:if>
+                            </c:if>
+                            <c:if test="${movieComment.blindCommentFlag.trim() == 'N'}">
+                            <span id='test'>${movieComment.movieComment }</span>
+                            </c:if>
+                            </p>
+                            <span class="comment__regDate">${movieComment.movieCommentRegDate }</span>
+                            <c:if test="${user.userId == movieComment.user.userId || user.role == 'admin'}">
+	                          
+	                            <span class="comment__update" >
+	                            <c:if test="${movieComment.blindCommentFlag.trim() == 'N'}"><i class="fa fa-eraser"></i>  </c:if>
+	                            <input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }">
+	                            <input type="hidden" id="movieComment" value="${movieComment.movieComment }">
+	                            </span>
+	                       
+	                            <span class="comment__delete" ><i class="fa fa-trash-o"></i><input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }"></span>
+		                        <c:if test="${user.role == 'admin'}">
+		                        <span class="comment__blind" >
+		                        <input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }">
+		                        <input type="hidden" id="blindCommentFlag" value="${movieComment.blindCommentFlag }">
+		                            <c:if test="${movieComment.blindCommentFlag.trim() == 'Y'}">             
+		                            	<i class="fa fa-eye"></i>             	
+		                            </c:if>
+		                            <c:if test="${movieComment.blindCommentFlag.trim() == 'N'}">
+		                            	<i class="fa fa-eye-slash"></i>
+		                           	</c:if>
+		                        </span>
+		                        </c:if>
+                           	</c:if>
+                            <hr>
+							</c:forEach>
+							<div id="append"></div>
+                        </div>
 
-				<div>
-					<c:set var="i" value="0" />
-					<c:forEach var="movieComment" items="${list }">
-						<c:set var="i" value="${i+1 }" />
-						<div id="movieCommentList">
-							<div class="movieCommentList" name="userId${movieComment.movieCommentNo }">
-								<h4>${movieComment.user.userId }</h4>
-							</div>
-						<div id="movieComment" class="movieCommentList" 	name="movieComment${movieComment.movieCommentNo }">
-							<c:if test="${movieComment.blindCommentFlag.trim() == 'Y'}">
-									<span style="color:gray">블라인드 처리 된 감상평입니다.</span>
-									<c:if test="${user.role == 'admin'}">
-									<br>
-									<span style="color:gray">${movieComment.movieComment }</span>
-									
-									</c:if>
-							</c:if> 
-							<c:if test="${movieComment.blindCommentFlag.trim() == 'N'}">
-								<span>	
-									${movieComment.movieComment }
-									<input type="hidden" value="${movieComment.movieComment }" name='movieComment2'>
-								</span>
-							</c:if>
-						</div>
-							<span class="movieCommentList">
-								${movieComment.movieCommentRegDate }	
-							</span> 
-							<c:if test="${user.userId == movieComment.user.userId || user.role == 'admin'}">
-							<span class="movieCommentList">							
-								<input type="hidden" name="movieCommentNo" value="${movieComment.movieCommentNo }">
-								<i class="glyphicon glyphicon-pencil"></i> 
-							</span>
-							<span class="movieCommentList">
-								<input type="hidden"name="movieCommentNo" value="${movieComment.movieCommentNo }">
-								<i class="glyphicon glyphicon-trash"></i> 
-							</span>								 
-							<c:if test="${user.role == 'admin'}">
-							<span class="movieCommentList">								 
-								<input type="hidden" name="movieCommentNo" value="${movieComment.movieCommentNo }">
-								<input type="hidden" name="blindCommentFlag" value="${movieComment.blindCommentFlag }">								
-								<c:if test="${movieComment.blindCommentFlag.trim() == 'Y'}">
-									<i class="glyphicon glyphicon-eye-open"></i>
-								</c:if> 
-								<c:if test="${movieComment.blindCommentFlag.trim() == 'N'}">
-									<i class="glyphicon glyphicon-eye-close"></i>
-								</c:if>
-							</span>
-							</c:if>
-							</c:if>
-						</div>
-						<hr style="border: solid 1px lightgray" />
-					</c:forEach>
+                        <div class="comment-more">
+                            <a href="#" class="watchlist">Show more comments</a>
+                        </div>
 
-				</div>
-			</div>
-
-			<div id="hidden">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div id="hidden">
 				<input type="hidden" name='movieNm' value="${movie.movieNm }">
 				<input type="hidden" name='movieNo' value="${movie.movieNo }">
 				<input type="hidden" name='userId' value="${user.userId }">
-				<input type="hidden" name='movieComment' value="${movieComment.movieComment }"> 
-				<input type="hidden" name='movieCommentNo' value="${movieComment.movieCommentNo }">
+				<input type="hidden" name='userRole' value="${user.role }">
+				<input type="hidden" name='movieComment2' value=""> 
+				<input type="hidden" name='movieCommentNo2' >
 				<input type="hidden" name='screenContentNo' value="${screenContent.screenContentNo }">
 			
 				<input type="hidden" name='femaleCnt' value="${movie.femaleCnt}">
@@ -757,126 +845,155 @@ color:#065a69;
 			
 			
 				<form>
-					<input type="hidden" id="currentPage" name="currentPage" value="" />
+					<input type="hidden" id="currentPage" name="currentPage" value="2" />
 				</form>
 			</div>
+        
+        
+    </div>
+
+
+
+    <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Share buttons -->
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-525fd5e9061e7ef0"></script>
+
+
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+        <script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
+        <script type="text/javascript">
+        
+
+        var ctx1 = document.getElementById("genderChart").getContext('2d');
+        var femaleCnt = $("input:hidden[name='femaleCnt']").val();
+        var maleCnt = $("input:hidden[name='maleCnt']").val();
+        console.log(femaleCnt)
+        console.log(maleCnt)
+        var genderData = {
+        	
+        	
+        	    datasets: [{
+        	        data: [
+        	               maleCnt, femaleCnt 
+        	        ],	       
+        	        backgroundColor : [
+        	                           'rgb(54, 162, 235)',
+        	                           'rgb(255, 99, 132)'
+        	             	    ],	             	    
+        	             	    borderColer : [
+        	             			'rgb(255, 99, 132)',
+        	             			'rgb(54, 162, 235)'         
+        	             	    ]
+        	    }],
+
+        	    // These labels appear in the legend and in the tooltips when hovering different arcs
+        	    labels: [
+        	        '남자',
+        	        '여자'
+        	    ]
+        	    
+        	};
+
+        var ageChart = new Chart(ctx1, {
+        	  type: 'pie',
+        	    data: genderData,
+        	    options: {
+                    responsive: true
+                    
+                }
+           
+        });
 
 
 
 
-	</div>
+        var ctx2 = document.getElementById("ageChart").getContext('2d');
 
-<jsp:include page="../common/pageNavigator.jsp" />
 
+        var age10s = $("input:hidden[name='age10s']").val();
+        var age20s = $("input:hidden[name='age20s']").val();
+        var age30s = $("input:hidden[name='age30s']").val();
+        var age40s = $("input:hidden[name='age40s']").val();
+        var age50s = $("input:hidden[name='age50s']").val();
+        var age60s = $("input:hidden[name='age60s']").val();
+        var age60sMore = $("input:hidden[name='age60sMore']").val();
+
+        var ageData ={
+        		 labels: ['10대', '20대', '30대', '40대', '50대', '60대', '60대+' ],
+        	
+        	        
+        	    datasets: [{
+        	    	
+        	    	label : '성별',
+        	        data: [
+        	               age10s, age20s,age30s,age40s,age50s,age60s, age60sMore
+        	        ],	       
+        	        backgroundColor : '#808080',	             	    
+        	             	  
+        	    }]
+        	};
+
+        var barChart = new Chart(ctx2, {
+        	    type: 'bar',
+        	    data: ageData,
+        	    options: {
+        	    	legend:{
+        	    		display : false
+        	    	},
+        	    
+                    responsive: true,
+                    scales :{
+                    	yAxes:[{
+                    		ticks :{
+                    			min : 0,
+                    			stepSize : 1
+                    		}
+                    	}]	
+                }
+               
+                }
+        	});   
+
+
+        $(document).ready(function(){
+            $('.your-class').slick({
+            	centerMode:true,
+            	
+                	edgeFriction : 2,
+                	dots: true,
+              	  infinite: true,
+              	  speed: 500,
+          	  fade: true,
+          	  prevArrow : '<button type="button" class="slick-prev">Previous</button>'
+            });
+          
+            
+          });
+        	
+        </script>
+        
+        
 
 </body>
-<script>
-
-var ctx1 = document.getElementById("genderChart").getContext('2d');
-var femaleCnt = $("input:hidden[name='femaleCnt']").val();
-var maleCnt = $("input:hidden[name='maleCnt']").val();
-console.log(femaleCnt)
-console.log(maleCnt)
-var genderData = {
-	
-	
-	    datasets: [{
-	        data: [
-	               maleCnt, femaleCnt 
-	        ],	       
-	        backgroundColor : [
-	                           'rgb(54, 162, 235)',
-	                           'rgb(255, 99, 132)'
-	             	    ],	             	    
-	             	    borderColer : [
-	             			'rgb(255, 99, 132)',
-	             			'rgb(54, 162, 235)'         
-	             	    ]
-	    }],
-
-	    // These labels appear in the legend and in the tooltips when hovering different arcs
-	    labels: [
-	        '남자',
-	        '여자'
-	    ]
-	    
-	};
-
-var ageChart = new Chart(ctx1, {
-	  type: 'pie',
-	    data: genderData,
-	    options: {
-            responsive: true
-            
-        }
-   
-});
-
-
-
-
-var ctx2 = document.getElementById("ageChart").getContext('2d');
-
-
-var age10s = $("input:hidden[name='age10s']").val();
-var age20s = $("input:hidden[name='age20s']").val();
-var age30s = $("input:hidden[name='age30s']").val();
-var age40s = $("input:hidden[name='age40s']").val();
-var age50s = $("input:hidden[name='age50s']").val();
-var age60s = $("input:hidden[name='age60s']").val();
-var age60sMore = $("input:hidden[name='age60sMore']").val();
-
-var ageData ={
-		 labels: ['10대', '20대', '30대', '40대', '50대', '60대', '60대+' ],
-	
-	        
-	    datasets: [{
-	    	
-	    	label : '성별',
-	        data: [
-	               age10s, age20s,age30s,age40s,age50s,age60s, age60sMore
-	        ],	       
-	        backgroundColor : '#808080',	             	    
-	             	  
-	    }]
-	};
-
-var barChart = new Chart(ctx2, {
-	    type: 'bar',
-	    data: ageData,
-	    options: {
-	    	legend:{
-	    		display : false
-	    	},
-	    
-            responsive: true,
-            scales :{
-            	yAxes:[{
-            		ticks :{
-            			min : 0,
-            			stepSize : 1
-            		}
-            	}]	
-        }
-       
-        }
-	});   
-
-
-$(document).ready(function(){
-    $('.your-class').slick({
-    	centerMode:true,
-    	
-        	edgeFriction : 2,
-        	dots: true,
-      	  infinite: true,
-      	  speed: 500,
-  	  fade: true,
-  	  prevArrow : '<button type="button" class="slick-prev">Previous</button>'
-    });
-  
-    
-  });
-	
-</script>
 </html>

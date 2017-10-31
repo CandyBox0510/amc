@@ -55,6 +55,7 @@ public class ScreenRestController {
 		
 		List<ScreenContent> list = (List<ScreenContent>)map.get("list");
 		
+		
 		System.out.println("List°ªÀÌ ¹»±î" + list);
 		// Page resultPage = new Page(search.getCurrentPage(),
 		// ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);

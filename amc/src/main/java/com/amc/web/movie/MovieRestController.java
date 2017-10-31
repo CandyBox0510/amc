@@ -33,6 +33,7 @@ import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.onetime.MovieJson;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.movie.MovieService;
@@ -508,13 +509,49 @@ public class MovieRestController {
 	};
 	
 	// 해림 추가
-	@RequestMapping(value = "json/getMovieCommentList/{movieNo}")
+@RequestMapping(value = "json/getMovieCommentList/{movieNo}",  method = RequestMethod.GET)
 	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
 		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
 		System.out.println("1. search ==> "+ search);
 		System.out.println("2. movieNo ==> "+ movieNo);
 		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
 		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
+		System.out.println("3. map ==> "+ map); 
+		
+		List<MovieComment> list = (List<MovieComment>)map.get("list");
+
+		
+		
+		System.out.println("4. list ==> ?" + list);
+		return list;
+	}
+	
+	@RequestMapping(value = "json/getMovieCommentList",  method = RequestMethod.POST)
+	public  List<MovieComment> getMovieCommentList( @RequestBody MovieComment movieComment) throws Exception {
+		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		Search search = movieComment.getSearch();
+	
+		System.out.println("1. search ==> "+search);
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		int movieNo = movieComment.getMovie().getMovieNo();
+
+		search.setPageSize(pageSize);
+
+		System.out.println("1-1. search ==> "+ search);
+		//System.out.println("2. movieNo ==> "+ movieNo);
+		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
+		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
+		
 		System.out.println("3. map ==> "+ map); 
 		
 		List<MovieComment> list = (List<MovieComment>)map.get("list");

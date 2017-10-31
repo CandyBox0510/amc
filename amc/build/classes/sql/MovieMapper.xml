@@ -355,10 +355,10 @@
 		<if test="searchCondition !=null">
 		
 				<if test="searchCondition == 1 and searchKeyword !='' ">
-					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+					and movie_title LIKE '%'||#{searchKeyword}||'%'
 				</if>
 				<if test="searchCondition == 2 and searchKeyword !='' ">
-					WHERE director LIKE '%'||#{searchKeyword}||'%'
+					and director LIKE '%'||#{searchKeyword}||'%'
 				</if>
 			
 		</if>) countTable

@@ -3,7 +3,8 @@ package com.amc.service.domain;
 public class FreeBoard {
 	
 	private String freeBoardNo;
-	private String userId;
+	private User user;
+	//private String userId;
 	private String freeBoardTitle;
 	private String freeBoardRegDate;
 	private String freeBoardContent;
@@ -22,12 +23,13 @@ public class FreeBoard {
 		this.freeBoardNo = freeBoardNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getFreeBoardTitle() {
@@ -72,11 +74,12 @@ public class FreeBoard {
 
 	@Override
 	public String toString() {
-		return "FreeBoard [freeBoardNo=" + freeBoardNo + ", userId=" + userId + ", freeBoardTitle=" + freeBoardTitle
+		return "FreeBoard [freeBoardNo=" + freeBoardNo + ", user=" + user + ", freeBoardTitle=" + freeBoardTitle
 				+ ", freeBoardRegDate=" + freeBoardRegDate + ", freeBoardContent=" + freeBoardContent
 				+ ", freeBoardViews=" + freeBoardViews + ", freeBoardImage=" + freeBoardImage + "]";
 	}
-	
+
+
 	
 
 }
