@@ -125,8 +125,8 @@
 					var movieNo = $(this).find('#scMovieNo').val();		
 					var userId = $(this).find('#userId').val();			
 					
-					//alert("movieNo: " + movieNo); 					
-					//alert("userId: " + userId); 
+					alert("movieNo: " + movieNo); 					
+					alert("userId: " + userId); 
 					
 					if (userId != null && userId.length !=0) {
 						alert("userId: " + userId);
@@ -134,23 +134,20 @@
 						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
 						location.href="/user/loginUser.jsp";
 					}
-			
 								
 					$.ajax( 
 							{
-								url : "/movie/json/addWish/"+movieNo,	
-								method : "POST" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData , status) {
-									
-								alert("wishList No:" + JSONData.wishNo);
-							
-								}
-						});
+								url : "/movie/json/switchWishList?screenContent.screenContentNo="+movieNo+"&user.userId="+userId,									
+								type : "GET" ,							
+							}).done(function(data) {
+						//정상 통신인 경우
+						if (data == 'add') {
+							var msg = '찜하기 신청';
+							alert(msg);
+						} else {
+							alert("찜하기 취소");
+						}
+					});
 				});	
 			});
 		

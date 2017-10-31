@@ -87,18 +87,40 @@ public class MovieController {
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
 		
+		System.out.println("menu :" + request.getParameter("menu"));
+		
+		
 		if(request.getParameter("menu").equals("manage")) {
 			
 			search.setSearchKeyword2("manage");
+			search.setSearchKeyword3("manage");
+			
 		
-			System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
+			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
 		} else {
-			if (search.getSearchKeyword() != null) {				
-				search.setSearchCondition("movieTitleSearch");	
-			}
+			// 현재 상영 영화인 경우 로직
+			if((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search")))  {
 				
+				System.out.println("현재 상영 영화 콜 !!!!");
+				
+				search.setSearchKeyword2("4");				
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");					
+				}
+			}
+			
+			// 현재 상영 예정 영화인  경우 로직
+			if(request.getParameter("menu").equals("commingsoon")) {
+				search.setSearchKeyword2("5");
+				
+				System.out.println("상영 예정 영화 콜 !!!!");
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");	
+				}
+			}	
 		}
-	
 		
 		Map<String , Object> map= movieService.getMovieList(search);	
 		
@@ -108,7 +130,7 @@ public class MovieController {
 		
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
-		// "movieTitleSearch"은 일반인 검색에  해당됨 		
+		// "searchCondtion=7" 은 일반인 검색에  해당됨 		
 		
 	
 		System.out.println("search condition :: " + search.getSearchCondition());

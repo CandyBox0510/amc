@@ -71,12 +71,14 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		System.out.println("search.getSearchKeyword2() ::"  + search.getSearchKeyword2());
 		
-		if (search.getSearchKeyword2() != "manage") {
+		if (search.getSearchKeyword2() != "manage" && search.getSearchKeyword3() != "manage") {
 			System.out.println("MovieDAOImpl called check 111111111111...");
 			
 			List<Movie> list = sqlSession.selectList("MovieMapper.getMovieList_MovieTitle",search);
 			return (sqlSession.selectList("MovieMapper.getMovieList_MovieTitle",search));
 		} else {
+			
+			search.setSearchKeyword2(null);  //包府磊侩 SQL Call
 			List<Movie> list = sqlSession.selectList("MovieMapper.getMovieList",search);
 			return (sqlSession.selectList("MovieMapper.getMovieList",search));
 		}
@@ -276,9 +278,19 @@ public class MovieDAOImpl implements MovieDAO {
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		
-		if  (search.getSearchKeyword2() != "manage") {
+		
+		System.out.println("MovieDAOImpl :: search.getSearchKeyword3() " + search.getSearchKeyword3());
+		
+		if  (search.getSearchKeyword2() != "manage" && search.getSearchKeyword3() != "manage") {
+			
+			System.out.println("MovieMapper.getMovieList_MovieTitle_Count called...");
+			
+			System.out.println("searchkeyword2 value" + search.getSearchKeyword2());
+			
 			return (sqlSession.selectOne("MovieMapper.getMovieList_MovieTitle_Count",search));
 		} else {
+			
+			search.setSearchKeyword2(null);  //包府磊侩 SQL Call
 			List<Movie> list = sqlSession.selectList("MovieMapper.getMovieList",search);
 			return (sqlSession.selectOne("MovieMapper.getTotalCount",search));
 		}
