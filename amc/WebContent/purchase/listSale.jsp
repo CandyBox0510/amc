@@ -7,7 +7,7 @@
 
 <html>
 <head>
-	<title>Model2 MVC Shop</title>
+	<title>AMC</title>
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   -->
@@ -40,7 +40,7 @@
 
 			$('td:nth-child(1)')
 				.bind('click',function(){
-					self.location = 'getPurchase?tranNo='+$(this).find('input:hidden').val();
+					self.location = 'getPurchase?impId='+$(this).find('input:hidden').val();
 				});
 			
 			$('td:nth-child(2)')
@@ -55,7 +55,7 @@
 			
 			$('td:nth-child(6):contains("배송하기")')
 				.bind('click',function(){
-					self.location = 'updateTranCode?tranNo='+$(this).find('input:hidden').val()+'&tranCode=2&menu=manage';
+					self.location = 'updateTranCode?impId='+$(this).find('input:hidden').val()+'&tranCode=2&menu=manage';
 				});
 		}
 		
@@ -80,10 +80,10 @@
 						i--;
 						var sale = JSON.list[x];
 						var list = '<tr>';
-						list += '<td><input type="hidden" name="tranNo" value="'+sale.tranNo+'">'+i+'</td>';
-						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.purchaseCount+')</td>';
+						list += '<td><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
+						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.orderStock+')</td>';
 						list += '<td>'+sale.buyer.userId+'</td>';
-						list += '<td>'+sale.dlvyDate+'</td>';
+						list += '<td>'+sale.orderRegDate+'</td>';
 						list += '<td>'
 						if(sale.tranCode == '1'){
 							list += '구매완료';
@@ -95,7 +95,7 @@
 						list += '</td>';
 						list += '<td>';
 						if(sale.tranCode == '1'){
-							list += '<input type="hidden" name="tranNo" value="'+sale.tranNo+'">배송하기';
+							list += '<input type="hidden" name="impId" value="'+sale.impId+'">배송하기';
 						}
 						list += '</td>';
 						list += '</tr>';
@@ -127,7 +127,7 @@
 				success : function(data){
 					var i;
 					for(i=0; i<4 ; i++){
-						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].fileName!=null ? data.HP[i].fileName : 'empty'+Math.floor(3*Math.random())+'.GIF'));
+						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].prodImage!=null ? data.HP[i].prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF'));
 						$($('.popular')[i]).find('span').text(data.HP[i].stock);
 						$($('.popular')[i]).find('h4').append(data.HP[i].prodName);
 					}
@@ -161,19 +161,19 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-3 popular">
 					<h4><span class="badge"></span></h4>
-					<img src="../images/others/ajax_loader4.gif" class="img-responsive img-circle" style="width:200px; height:200px;">
+					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:200px; height:200px;">
 				</div>
 				<div class="col-xs-12 col-sm-3 popular">
 					<h4><span class="badge"></span></h4>
-					<img src="../images/others/ajax_loader4.gif" class="img-responsive img-circle" style="width:150px; height:150px;">
+					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:150px; height:150px;">
 				</div>
 				<div class="col-xs-12 col-sm-3 popular">
 					<h4><span class="badge"></span></h4>
-					<img src="../images/others/ajax_loader4.gif" class="img-responsive img-circle" style="width:100px; height:100px;">
+					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:100px; height:100px;">
 				</div>
 				<div class="col-xs-12 col-sm-3 popular">
 					<h4><span class="badge"></span></h4>
-					<img src="../images/others/ajax_loader4.gif" class="img-responsive img-circle" style="width:80px; height:80px;">
+					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:80px; height:80px;">
 				</div>
 			</div>
 		</div>

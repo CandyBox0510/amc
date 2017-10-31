@@ -60,16 +60,4 @@ public class PurchaseServiceImpl implements PurchaseService{
 		// TODO Auto-generated method stub
 		purchaseDAO.updatePurchase(purchase);
 	}
-	
-	@Override
-	public Purchase getPurchaseByProd(int prodNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateTranCode(Purchase purchase) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 }

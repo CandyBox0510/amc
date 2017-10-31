@@ -11,7 +11,7 @@
   			<result property="prodNo" 			column="prod_no" 		jdbcType="NUMERIC"/>
   			<result property="prodPrice" 		column="prod_price" 	jdbcType="NUMERIC"/>
   			<result property="totalStock" 		column="total_stock" 	jdbcType="NUMERIC"/>
-  			<result property="salesStock" 		column="sales_stock" 	jdbcType="NUMERIC"/>
+  			<!-- <result property="salesStock" 		column="sales_stock" 	jdbcType="NUMERIC"/> -->
   			<result property="stock" 			column="stock" 			jdbcType="NUMERIC"/>
   			<result property="expiryDate" 		column="expiry_date" 	jdbcType="NUMERIC"/>
   			<result property="prodImage" 		column="prod_image" 	jdbcType="VARCHAR"/>
@@ -23,6 +23,118 @@
   			<result property="prodRegDate" 		column="prod_regdate" 	jdbcType="DATE"/>
   			<result property="prodType" 		column="prod_type" 		jdbcType="CHAR"/>
 	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert id="addProduct" parameterType="product">
+		INSERT
+		INTO product 
+		VALUES ( seq_product_prod_no.nextval, 
+					#{prodType}, 
+					#{prodName},
+					#{salesOpenDate}, 
+					#{salesEndDate}, 
+					#{totalStock}, 
+					#{stock}, 
+					#{prodPrice},
+					#{expiryDate}, 
+					SYSDATE,
+					#{prodDetail},
+					#{prodSetInfo}, 
+					#{prodImage} )
+	</insert>
+	
+	<!-- SQL : SELECT ONE -->	
+	<select id="getProduct" parameterType="int" resultMap="productSelectMap">
+		SELECT	
+			p.prod_no, p.prod_name, p.prod_detail, p.prod_regdate, p.prod_price, p.prod_image, p.stock-NVL(COUNT(t.IMP_ID),0) stock, 
+			p.prod_type, p.sales_stock, p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock
+		FROM product p, transaction t
+		<where>
+			p.prod_no=t.prod_no(+)
+			AND p.prod_no=#{prodNo}
+		</where>
+		GROUP BY p.prod_no, p.prod_name, p.prod_detail, p.prod_regdate, p.prod_price, p.prod_image, p.stock, p.prod_type, p.sales_stock, 
+				p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock
+	</select>
+	
+ 	<!-- SQL : UPDATE -->		
+	<update id="updateProduct" parameterType="Product">
+		UPDATE product
+		<set>
+			<if test="prodName!=null">			prod_name=#{prodName},</if>
+			<if test="prodDetail!=null">		prod_detail=#{prodDetail},</if>
+			<if test="prodSetInfo!=null">		prod_set_info=#{prodSetInfo},</if>
+												stock=stock+	<if test="stock==0">0</if>
+																<if test="stock!=0">#{stock}</if>,
+												sales_opendate=#{salesOpenDate},
+												sales_enddate=#{salesEndDate},
+												prod_price =	<if test="prodPrice==0">null</if>
+																<if test="prodPrice!=0">#{prodPrice}</if>,
+			<if test="prodImage!=''">			prod_image=#{prodImage}</if>
+		</set>
+		WHERE prod_no=#{prodNo}
+	</update>
+	
+	<sql id="productList">
+		SELECT
+			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image
+		FROM product p, transaction t
+		<where>
+			p.prod_no=t.prod_no(+)
+			<if test='(searchKeyword == "G")'>
+				AND p.prod_type='G'
+			</if>
+			<if test='(searchKeyword == "S")'>
+				AND p.prod_type='S'
+			</if>
+		</where>		
+		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image
+		<trim prefix="HAVING" prefixOverrides="AND | OR">
+			<if test="!stockView">
+				p.stock-NVL(COUNT(t.IMP_ID),0) > 0
+			</if>
+		</trim>
+		ORDER BY
+		<if test="orderCondition != null and orderCondition != ''">
+			<if test="orderCondition == 1">prod_name</if>
+			<if test="orderCondition == 2">prod_price</if> ${orderOption},
+		</if>
+			p.prod_no DESC
+	</sql>
+	
+	<!-- SQL : SELECT LIST -->
+	<select id="getGoodsList" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM row_seq
+		       FROM ( <include refid="productList"/> ) inner_table
+		       WHERE ROWNUM <![CDATA[<]]>=${currentPage}*${pageSize} )
+		WHERE row_seq BETWEEN ${(currentPage-1)*pageSize+1} AND ${currentPage*pageSize}
+	</select>
+ 	
+	<!-- SQL : SELECT LIST -->
+	<select id="getSnackList" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM row_seq
+		       FROM ( <include refid="productList"/> ) inner_table
+		       WHERE ROWNUM <![CDATA[<]]>=${currentPage}*${pageSize} )
+		WHERE row_seq BETWEEN ${(currentPage-1)*pageSize+1} AND ${currentPage*pageSize}
+ 	</select>
+	
+ 	<!-- SQL : SELECT ROW Count -->	 
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT
+		COUNT(*)
+		FROM ( <include refid="productList"/> )									 
+	</select>  
+	
+	<!-- SQL : UPDATE (DeleteUser)-->
+	<update	id="deleteProduct"	parameterType="int" >
+		UPDATE product
+	   		<set>
+		   		prod_type = 'D'
+	   		</set>
+	   	WHERE prod_no = #{prodNo}
+	</update>
 	
 	<!-- SQL : SELECT LIST -->
   	<select id="uniProductList" parameterType="string" resultMap="productSelectMap">
@@ -56,179 +168,5 @@
 			WHERE outer.rn BETWEEN '1' AND '3'
 		</if>
 	</select>
-  
-  	<!-- SQL : INSERT -->
-	<insert id="addProduct" parameterType="product">
-		INSERT
-		INTO product ( 	prod_no, 
-						prod_type, 
-						prod_name,
-						sales_opendate, 
-						sales_enddate, 
-						total_stock,
-						stock,
-						prod_price, 
-						expiry_date,
-						prod_regdate, 
-						prod_detail, 
-						prod_set_info,
-						prod_image 	 )
-		VALUES ( seq_product_prod_no.nextval, 
-					#{prodType}, 
-					#{prodName},
-					#{salesOpenDate}, 
-					#{salesEndDate}, 
-					#{totalStock}, 
-					#{stock}, 
-					#{prodPrice},
-					#{expiryDate}, 
-					SYSDATE,
-					#{prodDetail},
-					#{prodSetInfo}, 
-					#{prodImage} )
-	</insert>
-
-	 <!-- SQL : UPDATE (DeleteUser)-->
-	 <update	id="deleteProduct"	parameterType="int" >
-	   	UPDATE product
-	   		<set>
-		   		prod_type = 'D',
-	   		</set>
-	   	WHERE prod_no = #{prodNo}
-	 </update>
-	
-	
-	<!-- SQL : SELECT ONE -->	
-	<select id="getProduct" parameterType="string" resultMap="productSelectMap">
-		SELECT	prod_no, prod_name, prod_detail, prod_regdate, prod_price, prod_image,total_stock,prod_type,
-		sales_stock,stock,prod_set_info,sales_opendate,sales_enddate
-		FROM product
-		WHERE prod_no = #{value}
-	</select>
- 	
- 	<!-- SQL : UPDATE -->		
-	<update id="updateProduct" parameterType="Product">
-		UPDATE product
-		<set>
-												prod_type=#{prodType},
-			<if test="prodName!=null">			prod_name=#{prodName},</if>
-			<if test="prodDetail!=null">		prod_detail=#{prodDetail},</if>
-			<if test="prodSetInfo!=null">		prod_set_info=#{prodSetInfo},</if>
-												stock=stock+	<if test="stock==0">0</if>
-																<if test="stock!=0">#{stock}</if>,
-												sales_opendate=#{salesOpenDate},
-												sales_enddate=#{salesEndDate},
-												prod_price =	<if test="prodPrice==0">null</if>
-																<if test="prodPrice!=0">#{prodPrice}</if>,
-			<if test="prodImage!=''">			prod_image=#{prodImage},</if>
-		</set>
-		WHERE prod_no=#{prodNo}
-	</update>
-
-	<!-- SQL : SELECT LIST -->
-	<select id="getGoodsList" parameterType="map" resultMap="productSelectMap">
-		SELECT *
-		FROM	(	SELECT inner_table.* , ROWNUM AS row_seq
-					FROM	(	SELECT p.*, t.tran_code
-								FROM  product p, transaction t				
-									<where>
-										p.prod_no = t.prod_no(+)
-											<if test="searchCondition!=null " >
-												<if test="searchCondition==0  and searchKeyword !=''  and searchKeyword != null">
-													AND p.prod_name	like '%${search.searchKeyword}%'
-												</if> 
-												
-												<if test="searchCondition==1   and searchKeyword !=''  and searchKeyword != null ">
-													AND p.prod_no = #{search.searchKeyword}
-												</if>  					
-												
-												<if test="searchCondition==2  and searchKeyword !=''  and searchKeyword != null">
-													AND p.prod_price = #{search.searchKeyword}
-												</if>
-											</if>
-						  		    </where> 		
-						  		    AND p.prod_type = 'G'	 									 
-									ORDER BY p.prod_no ) inner_table
-					WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
- 	</select>
- 	
- 		<!-- SQL : SELECT LIST -->
-	<select id="getSnackList" parameterType="map" resultMap="productSelectMap">
-		SELECT *
-		FROM	(	SELECT inner_table.* , ROWNUM AS row_seq
-					FROM	(	SELECT p.*, t.tran_code
-								FROM  product p, transaction t				
-									<where>
-										p.prod_no = t.prod_no(+)
-											<if test="searchCondition!=null " >
-												<if test="searchCondition==0  and searchKeyword !=''  and searchKeyword != null">
-													AND p.prod_name	like '%${search.searchKeyword}%'
-												</if> 
-												
-												<if test="searchCondition==1   and searchKeyword !=''  and searchKeyword != null ">
-													AND p.prod_no = #{search.searchKeyword}
-												</if>  					
-												
-												<if test="searchCondition==2  and searchKeyword !=''  and searchKeyword != null">
-													AND p.prod_price = #{search.searchKeyword}
-												</if>
-											</if>
-						  		    </where> 
-						  		    AND p.prod_type = 'S'													 
-									ORDER BY p.prod_no ) inner_table
-					WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
- 	</select>
- 
- 	<!-- SQL : SELECT ROW Count -->	 
-	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
-		SELECT COUNT(*)
-	  	FROM	(	SELECT 
-	  					p.prod_no as prod_no, 
-	  					p.prod_name as prod_name, 
-	  					p.prod_detail as prod_detail, 
-	  					p.expiry_date as expiry_date, 
-	  					p.prod_price as prod_price, 
-	  					p.prod_image as prod_image, 
-	  					p.prod_regdate as prod_regdate, 
-	  					t.tran_code as tran_code 
-					FROM product p, transaction t 
-					<where>
-						p.prod_no = t.prod_no(+)
-							<if test="searchCondition!=null " >
-								<if test="searchCondition==0  and searchKeyword !=''  and searchKeyword != null">
-									AND p.prod_name	=	#{searchKeyword}
-								</if> 
-								
-								<if test="searchCondition==1   and searchKeyword !=''  and searchKeyword != null ">
-									AND p.prod_no like #{searchKeyword}
-								</if>  					
-								
-								<if test="searchCondition==2  and searchKeyword !=''  and searchKeyword != null">
-									AND p.prod_price = #{searchKeyword}
-								</if>
-							</if>
-				  	</where>	)	countTable											 
-					
-	 </select>   
-
-<!-- <sql id="select-product">
-		SELECT
-		prod_no, 
-		prod_name, 
-		prod_detail, 
-		manufacture_day, 
-		price, 
-		image_file, 
-		reg_date
-		FROM product
-	</sql>
-	
-	<sql id="orderby-prodNo-desc">
-		ORDER BY prod_No DESC
-	</sql>
- -->			 
-
   
 </mapper>

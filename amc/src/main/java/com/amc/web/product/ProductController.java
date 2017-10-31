@@ -34,25 +34,22 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productService")
 	private ProductService productService;
-
-	public ProductController() {
-		// TODO Auto-generated constructor stub
-		System.out.println(this.getClass());
-	}
 	
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
-	@Value("#{commonProperties['pageUnit']}")
-	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	@Value("#{commonProperties['pageUnit'] ?: 5}")
 	int pageUnit;
 	
-	@Value("#{commonProperties['pageSize']}")
-	//@Value("#{commonProperties['pageSize'] ?: 2}")
+	@Value("#{commonProperties['pageSize'] ?: 3}")
 	int pageSize;
-	
+
 	@Autowired
 	@Qualifier("uploadFilePath")
 	private FileSystemResource fsr;
+	
+	public ProductController() {
+		System.out.println(this.getClass());
+	}
 	
 	@RequestMapping(value="addProduct", method=RequestMethod.GET)
 	public String addProduct() throws Exception {
@@ -61,14 +58,13 @@ public class ProductController {
 	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public String addProduct( @ModelAttribute("product") Product product,
-									@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
+							@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
 
 		product.setProdImage("");
 		if(file != null && !file.isEmpty()){
 			product.setProdImage(file.getOriginalFilename());
 		}
 		
-		product.setStock(product.getTotalStock());
 		productService.addProduct(product);
 		
 		return "forward:addProductConfirm.jsp";
@@ -79,35 +75,24 @@ public class ProductController {
 									Model model ) throws Exception{
 		System.out.println("/product/deleteProduct : GET");
 		productService.deleteProduct(prodNo);
-		
 		model.addAttribute("menu", "manage");
 		
 		return "forward:/product/getGoodsList";
 	}
 	
-/*	@RequestMapping( value="deleteProduct", method=RequestMethod.POST )
-	public String deleteProduct( @ModelAttribute("product") Product product, Model model , HttpSession session) throws Exception{
-		System.out.println("/product/deleteProduct : POST");
-		productService.deleteProduct(product);
-		return "forward:/product/index.jsp";
-	}
-*/	
 	@RequestMapping( value="getGoodsProduct", method=RequestMethod.GET)
 	public String getGoodsProduct( @RequestParam("prodNo") int prodNo,
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
 		
-		System.out.println("/getProduct");				
-		//Business Logic
 		Product product = productService.getProduct(prodNo);
-		// Model 과 View 연결
 		model.addAttribute("product", product);
-		System.out.println(product);
+		System.out.println("※※※※※※※※※※※※※※※※※※※"+product);
 		System.out.println(menu);
 		
 		if(menu!=""){
 			if(menu.equals("manage")){
-				return "forward:updateProduct";
+				return "forward:updateProduct?prodNo="+prodNo;
 			}
 		}
 		return "forward:getGoodsProduct.jsp";
@@ -118,17 +103,12 @@ public class ProductController {
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
 		
-		System.out.println("/getProduct");				
-		//Business Logic
 		Product product = productService.getProduct(prodNo);
-		// Model 과 View 연결
 		model.addAttribute("product", product);
-		System.out.println(product);
-		System.out.println(menu);
 		
 		if(menu!=""){
 			if(menu.equals("manage")){
-				return "forward:updateProduct";
+				return "forward:updateProduct?prodNo="+prodNo;
 			}
 		}
 		return "forward:getSnackProduct.jsp";
@@ -136,7 +116,7 @@ public class ProductController {
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.GET)
 	public String updateProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception{
-		System.out.println("/updateProduct");
+		
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
 		return "forward:updateProduct.jsp";
@@ -162,11 +142,8 @@ public class ProductController {
 	}
 			
 	@RequestMapping(value="getGoodsList")
-	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 
-								@ModelAttribute("product") Product product ,
-								@RequestParam("menu") String menu) throws Exception{
-		
-		System.out.println("%%%%%%%%%%%%%%%%%ProductController의 /getGoodsList 메소드");
+	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
+								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -178,30 +155,21 @@ public class ProductController {
 			search.setStockView(true);
 		}
 		search.setPageSize(pageSize);
-		search.setPageUnit(pageUnit);
-		product.setProdType("G");
-		
+		search.setPageUnit(pageUnit);		
 		// Business logic 수행
-		Map<String , Object> map=productService.getGoodsList(search, product);
+		Map<String , Object> map=productService.getGoodsList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("$$$$$$$$$$$$$$$$$$$$ result Page : "+resultPage);
-		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("product", product);
-		System.out.println("ProductController의 /getGoodsList 메소드2222222222");
 	
-		return "forward:/product/listGoodsProduct.jsp";
+		return "forward:/product/listGoodsProduct.jsp?menu="+menu;
 	}
 	
 	@RequestMapping(value="getSnackList")
 	public String getSnackList( @ModelAttribute("search") Search search , Model model ,
-								@ModelAttribute("product") Product product ,
-								@RequestParam("menu") String menu) throws Exception{
-		
-		System.out.println("ProductController의 /getSnackList 메소드");
+								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -214,21 +182,15 @@ public class ProductController {
 		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
-		product.setProdType("S");
 		// Business logic 수행
-		Map<String , Object> map=productService.getSnackList(search, product);
+		Map<String , Object> map=productService.getSnackList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		
-		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("product", product);
-	
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"+resultPage+search+product+map.get("list"));
 		
-		return "forward:/product/listSnackProduct.jsp";
+		return "forward:/product/listSnackProduct.jsp?menu="+menu;
 	}
 
 }

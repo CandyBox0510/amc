@@ -36,7 +36,6 @@
 	<script type="text/javascript">
 	//imp초기화는 페이지 첫단에 해주는게 좋음
  	IMP.init('imp41659269');
-	alert("afd");
 	var things = "AMC : ";
 	if( "${booking}"=="" ){
 		things += "물품"
@@ -143,14 +142,13 @@
 	
 		$(function(){
 			
-			$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
-				alert();
+/* 			$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
 				kakaoPay();
-			});
-			
-		/* 	$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
-				$('form').attr('method','post').attr('action','addPurchase').submit();
 			}); */
+			
+		 	$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
+				$('form').attr('method','post').attr('action','addPurchase').submit();
+			}); 
 			
 			$('.add-purchase .btn-info:contains("취소")').bind('click',function(){
 				history.go(-1);
@@ -162,6 +160,17 @@
 
 		});
 		
+		
+		/* count */
+		function calc(item, count, sum){ 
+
+		      if(count.value=="")    var count = 0; 
+		      else                   var count = count.value; 
+
+		      sum.value = eval(item.value) * eval(count) ; 
+		  
+		  } 
+
 	</script>
 </head>
 
@@ -186,7 +195,6 @@
 			<div class="col-md-6">
 				<div class="row">
 					<input type="hidden" name="prodType" value="${product.prodType}"/>
-					<input type="hidden" name="prodNo" value="${product.prodNo}"/>
 					<div class="col-xs-4">
 						<c:if test="${!empty product.prodImage}">
 							<img src="../images/uploadFiles/${product.prodImage}" class="img-responsive"/>
@@ -203,10 +211,6 @@
 						<dl class="dl-horizontal">
 							<dt>총 수량</dt>
 							<dd>${product.totalStock} 개</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>현재 판매량</dt>
-							<dd>${product.salesStock} 개</dd>
 						</dl>
 						<dl class="dl-horizontal">
 							<dt>현재 재고수량</dt>
@@ -242,8 +246,7 @@
 						<label for="inputPaymentOption" class="col-sm-3 control-label">결제방법</label>
 						<div class="col-sm-3">
 							<select class="form-control" id="inputPaymentOption" name="paymentOption">
-								<option value="1">현금결제</option>
-								<option value="2">신용카드</option>
+								<option value="1">카카오페이</option>								
 							</select>
 						</div>
 						<span class="col-sm-6"></span>
@@ -252,12 +255,15 @@
 					<div class="row">
 						<label for="inputPurchaseCount" class="col-sm-3 control-label">구매수량</label>
 						<div class="col-sm-3">
-							<select class="form-control" id="inputPurchaseCount" name="purchaseCount">
+							<select class="form-control" id="inputPurchaseCount" name="orderStock" onchange="calc(this.form.prodPrice, this.form.orderStock, this.form.totalProdPrice)">
 								<c:forEach var="i" begin="1" end="${product.stock>10? 10 : product.stock}">
 									<option value="${i}">${i}</option>
 								</c:forEach>
-							</select>
+							</select>							
 						</div>
+					 
+						
+						
 						<span class="col-sm-6"></span>
 					</div>
 					<br/>
@@ -291,8 +297,6 @@
 				    </div>	
 				    <span class="col-sm-6"></span>			    	
 				 </div>
-							
-					
 					
 					<div class="row">
 						<label for="inputDlvyAddr" class="col-sm-3 control-label">배송지</label>
@@ -312,6 +316,15 @@
 					</div>
 					<br/>
 					
+					<div class="row">
+						<label for="inputDlvyAddr" class="col-sm-3 control-label">총 구매 가격</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
+							<input type=hidden name="prodPrice" value="${product.prodPrice}"> 
+						</div>
+						<span class="col-sm-6"></span>
+					</div>
+					<br/>
 					<div class="row">
 						<div class="add-purchase col-sm-offset-3 col-sm-9">
 							<button type="button" class="btn btn-success">

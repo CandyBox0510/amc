@@ -33,7 +33,7 @@
 	<script type="text/javascript">
 		$(function(){
 			$('a.btn-success:contains("확인")').bind('click',function(){
-				self.location.href='listPurchase?searchKeyword=purchaseList&searchCondition=${sessionScope.user.userId}';
+				self.location.href='getPurchaseList?searchKeyword=purchaseList&searchCondition=${sessionScope.user.userId}';
 			});
 		});
 	</script>
@@ -56,7 +56,7 @@
 	</dl>
 	<dl class="dl-horizontal">
 		<dt>구매 수량</dt>
-		<dd>${purchase.purchaseCount} 개</dd>
+		<dd>${purchase.orderStock} 개</dd>
 	</dl>
 	<dl class="dl-horizontal">
 		<dt>가격</dt>

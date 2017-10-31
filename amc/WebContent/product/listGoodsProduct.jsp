@@ -24,9 +24,9 @@
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
+<!--    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
+ -->    <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
@@ -45,6 +45,7 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		var currentPage = 0;
+		var searchKeyword = 'G';
 		
 		function fncNextList(){
 			currentPage++;
@@ -55,6 +56,7 @@
 				dataType : 'json',
 				data : JSON.stringify({
 						currentPage : currentPage,
+						searchKeyword : searchKeyword, 
 				}),
 				headers : {
 					'Accept' : 'application/json',
@@ -125,12 +127,9 @@
 </head>
 
 <body>
-	
-	<!-- ToolBar Start /////////////////////////////////////-->
+	<%-- <input type="button" value="${list[0].prodNo }"> --%>
 	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		
 		<%-- <form name="detailForm" action="/product/getGoodsList?menu=${param.menu }" method="post"> --%>
