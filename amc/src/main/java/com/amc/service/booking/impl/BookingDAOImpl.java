@@ -1,6 +1,9 @@
 package com.amc.service.booking.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,6 +54,14 @@ public class BookingDAOImpl implements BookingDAO {
 	@Override
 	public List<Booking> getBookingList(Search search) {
 		return sqlSession.selectList("BookingMapper.getBookingList", search);
+	}
+	
+	@Override
+	public Map<String,Object> getUserBookingList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		tempMap.put("totalCount", sqlSession.selectOne("BookingMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("BookingMapper.getUserBookingList",map));
+		return tempMap;
 	}
 
 

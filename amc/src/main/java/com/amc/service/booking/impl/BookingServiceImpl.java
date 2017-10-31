@@ -4,7 +4,7 @@ package com.amc.service.booking.impl;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
+import java.util.Map;
 
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,6 +195,11 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public List<Booking> getBookingList(Search search) {
 		return bookingDAO.getBookingList(search);
+	}
+	
+	@Override
+	public Map<String,Object> getUserBookingList(Map<String, Object> map) {
+		return bookingDAO.getUserBookingList(map);
 	}
 	
 	@Override

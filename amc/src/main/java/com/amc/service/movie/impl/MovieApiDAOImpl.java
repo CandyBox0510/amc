@@ -1,7 +1,9 @@
 package com.amc.service.movie.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -147,12 +149,6 @@ public class MovieApiDAOImpl implements MovieDAO {
 		return null;
 	}
 
-	
-	@Override
-	public int addWish(int movieNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int addMoiveComment(MovieComment movieComment) {
@@ -244,6 +240,29 @@ public class MovieApiDAOImpl implements MovieDAO {
 		return 0;
 	}
 
+	@Override
+	public String checkWishList(WishList wishList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int addWishList(WishList wishList) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteWishList(WishList wishList) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-	
+	@Override
+	public Map<String, Object> getWishList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
+		return tempMap;
+	}
 }

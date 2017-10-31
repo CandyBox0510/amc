@@ -11,9 +11,13 @@ public interface AlarmDAO {
 
 	public int addOpenAlarm(Alarm alarm);
 	
-	public List<Alarm> getCancelAlarmList(Map<String,Object> map);
+	public Map<String,Object> getCancelAlarmList(Map<String,Object> map);
 	
-	public List<Alarm> getOpenAlarmList(Map<String,Object> map);
+	public Map<String,Object> getOpenAlarmList(Map<String,Object> map);
+	
+	public List<Alarm> getPushCancelAlarmList(Map<String,Object> map);
+	
+	public List<Alarm> getPushOpenAlarmList(Map<String,Object> map);
 	
 	public int deleteCancelAlarm(Alarm alarm);
 	

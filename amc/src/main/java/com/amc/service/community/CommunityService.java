@@ -14,7 +14,7 @@ public interface CommunityService {
 	
 	public void deleteFreeBoard(int freeBoardNo);
 	
-	public void addFreeBoard(FreeBoard freeboard);
+	public void addFreeBoard(FreeBoard freeBoard);
 	
 	public void updateFreeBoard(FreeBoard freeBoard);
 	
@@ -28,5 +28,7 @@ public interface CommunityService {
 	public void deleteComment(int commentNo);
 	
 	public void updateComment(Comment comment);
+
+	int getTotalCount(Search search) throws Exception;
 	
 }

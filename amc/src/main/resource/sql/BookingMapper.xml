@@ -94,7 +94,15 @@
 									 FROM booking b,screencontent s 
 									 WHERE b.screencontent_no = s.screencontent_no AND b.user_Id = #{user.userId})inner, movie m
 			   				   WHERE inner.movie_no = m.movie_no)inner_table
-			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') >= TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			   <if test="search.searchCondition != null or search.searchCondition != ''">
+				<if test="search.searchCondition == 'now'">	  
+			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') <![CDATA[>=]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			    </if>
+			    <if test="search.searchCondition == 'past'">
+			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') <![CDATA[<]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			    </if>
+			  </if>	
+			    
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
   	</select>
   	
@@ -103,5 +111,20 @@
   	 	FROM booking
   	 	WHERE booking_no = #{value}
   	</delete>
+  	
+ 	<select id="getTotalCount" parameterType="map" resultType="int">
+ 		SELECT COUNT(*) 
+		FROM booking b, screencontent s 
+		WHERE b.screencontent_no = s.screencontent_no 
+      		  AND user_id = #{user.userId}
+      		  <if test="search.searchCondition != null or search.searchCondition != ''">
+				<if test="search.searchCondition == 'now'">	  
+	      		  	AND TO_DATE(s.screen_opentime,'YYYY/MM/DD HH24:MI') <![CDATA[>=]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI')
+	 			</if>
+				<if test="search.searchCondition == 'past'">
+				  	AND TO_DATE(s.screen_opentime,'YYYY/MM/DD HH24:MI') <![CDATA[<]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI')
+				</if>
+			  </if>	
+	</select>
   	
 </mapper>
