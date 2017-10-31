@@ -1,6 +1,8 @@
 package com.amc.web.booking;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
@@ -213,8 +216,6 @@ public class BookingController {
 		}
 	}
 	
-	//회원용 예매목록
-	
 	//관리자 예매목록조회
 	@RequestMapping( value="getAdminBookingList", method=RequestMethod.GET)
 	public String getAdminBookingList(@ModelAttribute("Search") Search search,
@@ -228,6 +229,36 @@ public class BookingController {
 	
 		return "forward:/booking/listBookingAdmin.jsp";
 	}
+	
+	//회원용 예매목록조회
+	@RequestMapping( value="getBookingList", method=RequestMethod.GET)
+	public String getBookingList(@ModelAttribute("Search")Search search,HttpSession session,Model model) throws Exception {
+		
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		User user = (User)session.getAttribute("user");
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		
+		Map<String, Object> map = bookingService.getUserBookingList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		model.addAttribute("search",search);
+		model.addAttribute("resultPage",resultPage);
+		model.addAttribute("list", map.get("list"));
+		
+	    return "forward:/booking/listBooking.jsp";
+	}
+	
 	
 	@RequestMapping( value="testCode", method=RequestMethod.GET)
 	public String testCode(HttpSession session) throws Exception {

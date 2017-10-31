@@ -304,5 +304,32 @@ public class MovieDAOImpl implements MovieDAO {
 		return sqlSession.selectList("MovieMapper.uniMovieList",search);
 	}
 
+	@Override
+	public String checkWishList(WishList wishList) {
+		return sqlSession.selectOne("WishListMapper.checkWishList",wishList);
+	}
+
+	@Override
+	public int addWishList(WishList wishList) {
+		return sqlSession.insert("WishListMapper.addWishList",wishList);
+	}
+
+	@Override
+	public int deleteWishList(WishList wishList) {
+		return sqlSession.delete("WishListMapper.deleteWishList",wishList);
+	}
 	
+	@Override
+	public Map<String, Object> getWishList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(map.get("search")!=null){
+		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
+		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
+			return tempMap;
+		}else{
+			tempMap.put("list", sqlSession.selectList("WishListMapper.getAllWishList",map));
+			return tempMap;
+		}
+	}
 }

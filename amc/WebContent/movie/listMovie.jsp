@@ -1,10 +1,18 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
+<%@page import="com.amc.service.domain.User"%>
+<%@page import="java.util.Enumeration"%>
+
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
+<%-- <%
+	 User user = new User();	
+	 out.println("userID" + ((User)session.getAttribute("user")).getUserId() + "<br/>");
+	 
+%>   --%>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -104,22 +112,95 @@
 			
 		 });
 		
-		//============= "WishList(찜) Event 처리"  Event  처리 =============	
+		//============= "WishList(찜) Event 처리" AddWish Event  처리 =============	
 			$(function() {
 				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$("span:contains('찜하기')" ).on("click" , function() {
-					 self.location = "/movie/getMovieList?menu=calendar";	
-				});	
-			});
+			 
+				// $("span:contains('찜하기')" ).on("click" , function() {
+				$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
+					
+					 //var movieNo = $(this).next().val();		
+					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+	
+					var movieNo = $(this).find('#scMovieNo').val();		
+					var userId = $(this).find('#userId').val();			
+					
+					//alert("movieNo: " + movieNo); 					
+					//alert("userId: " + userId); 
+					
+					if (userId != null && userId.length !=0) {
+						alert("userId: " + userId);
+					} else {
+						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+						location.href="/user/loginUser.jsp";
+					}
 			
-				
-			//============= "예약  Event 처리"  Event  처리 =============	
-			$(function() {
-				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$("span:contains('예매')" ).on("click" , function() {
-					 self.location = "/booking/getScreenMovieList";	
+								
+					$.ajax( 
+							{
+								url : "/movie/json/addWish/"+movieNo,	
+								method : "POST" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+									
+								alert("wishList No:" + JSONData.wishNo);
+							
+								}
+						});
 				});	
 			});
+		
+		
+		//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
+			$(function() {
+				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 
+				// $("span:contains('찜하기')" ).on("click" , function() {
+				$(".glyphicon.glyphicon-heart").on("click" , function() {	
+									 
+					var movieNo = $(this).find('#scMovieNo').val();		
+					var userId = $(this).find('#userId').val();			
+					
+					/* alert("movieNo: " + movieNo); */
+					
+					
+					if (userId != null && userId.length !=0) {
+						alert("userId: " + userId);
+					} else {
+						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+						location.href="/user/loginUser.jsp";
+					}
+								
+					$.ajax( 
+							{
+								url : "/movie/json/delWish/"+movieNo,	
+								method : "POST" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+									
+									alert("wishList No:" + JSONData.wishNo);
+							
+								}
+						});
+				});	
+			});
+				 
+				 
+		//============= "예약  Event 처리"  Event  처리 =============	
+		$(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("span:contains('예매')" ).on("click" , function() {
+				 self.location = "/booking/getScreenMovieList";	
+			});	
+		});
 			
 		
 		//============= movieNo 에 영화정보보기  Event  처리(Click) =============	
@@ -231,20 +312,36 @@
 						<hr/>
 								
 								<span><strong>${movie.movieNm }</strong></span>
-							    <span><li> 개봉일 : ${movie.openDt }</li></span>	
-							    
+							    <span><li> 개봉일 : ${movie.openDt } </li></span>	
+							        
 							    <div style="text-align: left;">
     						    
     						    </div>								
     							 
 							    <span>
-							     <i class='glyphicon glyphicon-heart-empty' id='emty-hear'>찜하기 </i> 
-							     </span>                                                   
-	                               &nbsp;&nbsp;
-	                             <span>
-	                             <input type='hidden' name='screenMovieNo' value='"+val.movieNo+"'>
-	                             <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket'>예매 </i>   
-	                             </span>
+							    <c:set var="name" value="${wishlist.wishNo}"/>
+	 								<c:if test="${empty name}">
+									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#767676; text-align : center; margin:0 auto;"> 
+									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
+									     </i> 						
+								    </c:if>	
+								    
+								    <c:if test="${not empty name}">
+									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#767676; text-align : center; margin:0 auto;">
+									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
+									    </i> 						
+									</c:if>	
+							   </span>                                                   
+
+	                             &nbsp;&nbsp;
+
+	                            <span>
+	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
+	                            <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            </span>
+	                         
 	                             
                              <hr/>       
       

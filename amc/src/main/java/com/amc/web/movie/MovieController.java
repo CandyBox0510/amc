@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import com.amc.common.Search;
 import com.amc.common.util.CommonUtil;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
+import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 
@@ -430,6 +432,37 @@ public class MovieController {
 		System.out.println("MovieController의 getMovieCommentList메소드 끝");
 
 		return "forward:/movie/getMovie.jsp";
+	}
+	
+	@RequestMapping( value="getWishList", method=RequestMethod.GET)
+	public String getWishList(@ModelAttribute("Search")Search search, 
+										HttpSession session,Model model) throws Exception {
+		
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		User user = (User)session.getAttribute("user");
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		
+		Map<String, Object> map = movieService.getWishList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		System.out.println("■■■위시리스트 확인■■■ : "+map.get("list"));
+		
+		model.addAttribute("search",search);
+		model.addAttribute("resultPage",resultPage);
+		model.addAttribute("list", map.get("list"));
+		
+	    return "forward:/booking/listWishList.jsp";
 	}
 
 }
