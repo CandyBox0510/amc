@@ -4,39 +4,54 @@ public class WishList {
 
 	int wishNo;
 	User user;
-	ScreenContent screenContent;
+	Movie movie;
+	String wishFlag;
 	String wishRegDate;
-	
+
 	public int getWishNo() {
 		return wishNo;
 	}
+
 	public void setWishNo(int wishNo) {
 		this.wishNo = wishNo;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public ScreenContent getScreenContent() {
-		return screenContent;
+
+	public Movie getMovie() {
+		return movie;
 	}
-	public void setScreenContent(ScreenContent screenContent) {
-		this.screenContent = screenContent;
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
+
+	public String getWishFlag() {
+		return wishFlag;
+	}
+
+	public void setWishFlag(String wishFlag) {
+		this.wishFlag = wishFlag;
+	}
+
 	public String getWishRegDate() {
 		return wishRegDate;
 	}
+
 	public void setWishRegDate(String wishRegDate) {
 		this.wishRegDate = wishRegDate;
 	}
+
 	@Override
 	public String toString() {
-		return "WishList [wishNo=" + wishNo + ", user=" + user + ", screenContent=" + screenContent + ", wishRegDate="
-				+ wishRegDate + "]";
+		return "WishList [wishNo=" + wishNo + ", user=" + user + ", movie=" + movie + ", wishFlag=" + wishFlag
+				+ ", wishRegDate=" + wishRegDate + "]";
 	}
-	
-	
-		
+
 }
