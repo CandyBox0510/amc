@@ -27,7 +27,7 @@ public interface BookingService {
 		
 	public void updateStatistic(User user, Booking booking);
 	
-	public void deleteBooking(String bookingNo) throws IOException, JSONException;
+	public int deleteBooking(String bookingNo) throws IOException, JSONException;
 	
 	public Booking getBooking(String bookingNo);
 	

@@ -1,10 +1,7 @@
 package com.amc.service.booking.impl;
 
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -23,6 +20,7 @@ import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.movie.MovieDAO;
 import com.amc.service.screen.ScreenDAO;
+import com.amc.web.cinema.HttpRequestToNode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -101,8 +99,7 @@ public class BookingServiceImpl implements BookingService {
 		searchCondition(영화번호), currentPage(인원수)*/
 		Search search = new Search();
 		
-		//search.setSearchCondition(booking.getMovie().getMovieNo()+"");
-		search.setSearchCondition("10231");
+		search.setSearchCondition(booking.getMovie().getMovieNo()+"");
 		search.setCurrentPage(booking.getHeadCount());
 		if(user.getGender().equals("M")){
 			search.setSearchKeyword("1");
@@ -114,48 +111,39 @@ public class BookingServiceImpl implements BookingService {
 		int birthYear= Integer.parseInt(user.getBirth().substring(0, 4));
 		int ages = (yearToday - birthYear)/10;
 		
-		if(ages>0){
-			search.setSearchKeyword2(ages+"");
-			if(ages>7){
-				search.setSearchKeyword2("7");
-			}
-			bookingDAO.updateStatistic(search);
+		search.setSearchKeyword2(ages+"");
+		if(ages>7){ 
+			search.setSearchKeyword2("7"); 
 		}
+		bookingDAO.updateStatistic(search);
+
 	}
 
 	@Override
-	public void deleteBooking(String bookingNo) throws IOException, JSONException {
-		//1) 예매내역 삭제하기
-		bookingDAO.deleteBooking(bookingNo);
-		//2) 좌석정보 업데이트하기
-	    URL url = new URL("http://localhost:52273/deleteResv");
-	    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+	public int deleteBooking(String bookingNo) throws IOException, JSONException {
+		
+		//1) 좌석정보 업데이트하기
+		Booking booking = bookingDAO.getBooking(bookingNo);
 
-	    if ( conn != null ) {
-    		String screenContentNo = "10000";
-	    	
-    		String strPostData = "screencontent_no="+screenContentNo;
-    		strPostData += "&seat=1,3,2,4";
-    		System.out.println("strPostData : "+strPostData);
+		String urlStr = "http://localhost:52273/deleteResv";
+		String body = "screenNo="+booking.getScreenContentNo()+"&seat="+booking.getBookingNo();
+		try {
+			int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
+			if(responseCode ==200){
+				System.out.println("몽고DB에서 예매 취소를 성공하였습니다.");
+				//2) 예매내역 삭제하기
+				bookingDAO.deleteBooking(bookingNo);
+				System.out.println("오라클 DB에서 예매 취소를 성공하였습니다.");
+				return 1;
+			}else{
+				System.out.println("몽고DB에서 예매 취소를 실패하였습니다.");
+				return -1;
+			}				
+		} catch (Exception e) {
+			System.out.println("몽고DB가 꺼져있나봅니다!");
+			return -1;
+		}
 
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Accept-Language", "en-GB,en;q=0.5");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-length", Integer.toString(strPostData.length()));
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setUseCaches(false);
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            
-            DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-            dos.writeBytes(strPostData);
-            dos.flush();
-            dos.close();
-            System.out.println("DataOutputStream closed");
-            int intResponse = conn.getResponseCode();
-            System.out.println("\nCompleted Sending 'POST' to " + url.toString() + 
-                    ", data: " + strPostData + ", rc: " + intResponse);
-	    }
 	}
 
 	@Override
@@ -166,7 +154,7 @@ public class BookingServiceImpl implements BookingService {
         for(int k = 0; k<screenContentList.size(); k++){
         	
         	String screenDate = screenContentList.get(k).getScreenDate();
-        	String screenDay = screenDate.substring(8,10);
+        	String screenDay = screenDate.substring(5,10);
         	//필요시 substring조정해서 월 일까지 나오도록 할 수 있다.
         	dayList.add(screenDay);
         }
