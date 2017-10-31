@@ -551,18 +551,11 @@ public class MovieRestController {
 		JSONArray jsonArray = new JSONArray();
 
 		for(int i = 0; i<list.size(); i++){
-			jsonObject.put("movie_title", list.get(i).getScreenContent().getMovie().getMovieNm());
-			jsonObject.put("previewTitle", list.get(i).getScreenContent().getPreviewTitle());
-			jsonObject.put("screenOpenTime", list.get(i).getScreenContent().getScreenOpenTime());
-			jsonObject.put("ticketOpenDate", list.get(i).getScreenContent().getTicketOpenDate());
-			jsonObject.put("screenTheater", list.get(i).getScreenContent().getScreenTheater());
-			jsonObject.put("inviteActor", list.get(i).getScreenContent().getInviteActor());
-			jsonObject.put("previewFlag", list.get(i).getScreenContent().getPreviewFlag());
+			jsonObject.put("movie_title", list.get(i).getMovie().getMovieNm());
 			jsonObject.put("wishNo", list.get(i).getWishNo());
 			jsonObject.put("wishRegDate", list.get(i).getWishRegDate());
-			jsonObject.put("poster", list.get(i).getScreenContent().getMovie().getPostUrl());
-			jsonObject.put("movieNo", list.get(i).getScreenContent().getMovie().getMovieNo());
-			jsonObject.put("screencontentNo", list.get(i).getScreenContent().getScreenContentNo());
+			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
+			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
 			
 			jsonArray.add(jsonObject);
 		}

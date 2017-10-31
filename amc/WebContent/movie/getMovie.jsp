@@ -122,7 +122,7 @@ window.fbAsyncInit = function() {
 							/* url : "/movie/json/switchWishList?screenContent.screenContentNo="+screenContentNo+"&user.userId="
 									+ "${sessionScope.user.userId}", //서버로 알림 체크 요청 */
 							
-						url : "/movie/json/switchWishList?screenContent.screenContentNo=10337&user.userId=a@a.a",									
+						url : "/movie/json/switchWishList?movie.movieNo=10232&user.userId=a@a.a&wishFlag=movie",									
 							type : 'GET',
 						}).done(function(data) {
 					//정상 통신인 경우
