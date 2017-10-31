@@ -1,8 +1,7 @@
 package com.amc.service.alarm;
 
-import java.util.List;
+import java.util.Map;
 
-import com.amc.common.Search;
 import com.amc.service.domain.Alarm;
 
 public interface AlarmService {
@@ -11,9 +10,9 @@ public interface AlarmService {
 	
 	public int addOpenAlarm(Alarm alarm);
 	
-	public List<Alarm> getCancelAlarmList(Search search);
+	public Map<String,Object> getCancelAlarmList(Map<String,Object> map);
 	
-	public List<Alarm> getOpenAlarmList(Search search);
+	public Map<String,Object> getOpenAlarmList(Map<String,Object> map);
 	
 	public int deleteCancelAlarm(Alarm alarm);
 	

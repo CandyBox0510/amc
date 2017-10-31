@@ -35,9 +35,6 @@ public interface MovieService {
 	// 영화 삭제
 	public int deleteMovie(int movieNo) throws Exception;
 
-	// 마이페이지에서 위시리스트 불러오기
-	public List<WishList> getWishList(Search search, String userId);
-
 	// RESTCONTROLLER 타는 부분
 
 	// 등록을 누른 후 외부 영화 API 목록 불러오기
@@ -46,9 +43,6 @@ public interface MovieService {
 	// submit을 누른후 외부 영화 API 상세 + 네이버 영화 포스터 API를 가져온 후 DB등록
 	public int addMovie(Movie movie);
 	// 관리목록에서 클릭한경우는 수정화면으로, 영화목록에서 클릭한경우는 상세정보화면으로
-
-	// 회원이 하트를 눌렀을때 위시리스트에 존재 하는지 안하는지 확인(Count로), 존재하면 delete 존재하지않으면 add
-	public int addWish(int movieNo);
 
 	// 영화에 대한 감상평 입력
 	public int addMoiveComment(MovieComment movieComment);
@@ -73,6 +67,10 @@ public interface MovieService {
 	public MovieComment getMovieComment(int movieCommentNo);
 	
 	int dupMovieChk(Search search) throws Exception;
+	
+	// 위시리스트 체크 온오프
+	public String switchWishList(WishList wishList);
 
+	public Map<String,Object> getWishList(Map<String,Object> map);
 
 }

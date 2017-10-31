@@ -244,7 +244,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
-                            <a href="/booking/getBookingList" class="btn btn-lg btn-block btn-primary">이동</a>
+                            <a href="/booking/getBookingList?searchCondition=now" class="btn btn-lg btn-block btn-primary">이동</a>
                         </div>
                      </div>
                 </div>
@@ -298,7 +298,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
-                            <a href="/alarm/getCancelAlarmList" class="btn btn-lg btn-block btn-success">이동</a>
+                            <a href="/alarm/getCancelAlarmList?alarmFlag=C" class="btn btn-lg btn-block btn-success">이동</a>
                         </div>
                      </div>
                 </div>
@@ -325,7 +325,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
-                            <a href="/alarm/getOpenAlamList" class="btn btn-lg btn-block btn-warning">이동</a>
+                            <a href="/alarm/getOpenAlamList?alarmFlag=O" class="btn btn-lg btn-block btn-warning">이동</a>
                         </div>
                      </div>
                 </div>

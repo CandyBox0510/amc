@@ -78,8 +78,8 @@ public class CinemaDAOImpl implements CinemaDAO {
 		//転3
 		List<Product> bestProductList = sqlSession.selectList("ProductMapper.mainProductList",2);
 		
-		for (Product topProduct : bestProductList) {
-			System.out.println("』』topProduct』』"+topProduct.getProdName());
+		for (Product bestProduct : bestProductList) {
+			System.out.println("』』bestProduct』』"+bestProduct.getProdName());
 		}
 		
 		indexList.put("newProductList", newProductList);
@@ -87,5 +87,5 @@ public class CinemaDAOImpl implements CinemaDAO {
 		
 		return indexList;
 	}
-
+	
 }

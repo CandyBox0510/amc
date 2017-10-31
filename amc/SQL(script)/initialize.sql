@@ -21,7 +21,7 @@ DROP SEQUENCE seq_alarm_no;
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_order_no;
 DROP SEQUENCE seq_freeboard_freeboard_no;
-DROP SEQUENCE seq_freeboard_comment_no;
+DROP SEQUENCE seq_freeboard_comment2_no;
 
 
 
@@ -35,6 +35,8 @@ CREATE SEQUENCE seq_product_prod_no			 INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_order_no		 INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_freeboard_freeboard_no 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_freeboard_comment_no 	INCREMENT BY 1 START WITH 10000;
+
+
 
 CREATE SEQUENCE seq_transaction_IMP_ID_no INCREMENT BY 1 START WITH 10000;
 
@@ -91,7 +93,8 @@ CREATE TABLE movie (
 CREATE TABLE wishlist ( 
 	wish_no		NUMBER	NOT NULL,
 	user_id		VARCHAR2(50)	NOT NULL	REFERENCES users(user_id),
-	movie_no	NUMBER	NOT NULL	REFERENCES movie(movie_no),
+	screencontent_no	NUMBER	NOT NULL	REFERENCES screencontent(screencontent_no),
+	wish_regdate DATE,
 	PRIMARY KEY(wish_no)
 );
 

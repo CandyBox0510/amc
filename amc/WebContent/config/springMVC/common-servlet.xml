@@ -58,6 +58,8 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
    	<mvc:resources mapping="/images/**" location="/images/" />
    	<mvc:resources mapping="/javascript/**" location="/javascript/" />
+   	<mvc:resources mapping="/video/**" location="/video/" />
+   	
    	<!-- semantic UI 적용 -->
 	<mvc:resources mapping="/semantic/**" location="/semantic/" />   	
 	   	

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,13 +33,19 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
+import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.ScreenContent;
+import com.amc.service.domain.User;
+import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.movie.MovieService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import net.sf.json.JSONSerializer;
 
 //==> MovieAPI RestController
 @RestController
@@ -508,9 +516,15 @@ public class MovieRestController {
 	};
 	
 	// 해림 추가
-	@RequestMapping(value = "json/getMovieCommentList/{movieNo}")
+@RequestMapping(value = "json/getMovieCommentList/{movieNo}",  method = RequestMethod.GET)
 	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
 		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
 		System.out.println("1. search ==> "+ search);
 		System.out.println("2. movieNo ==> "+ movieNo);
 		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
@@ -518,9 +532,72 @@ public class MovieRestController {
 		System.out.println("3. map ==> "+ map); 
 		
 		List<MovieComment> list = (List<MovieComment>)map.get("list");
+
+		
+		
+		System.out.println("4. list ==> ?" + list);
+		return list;
+	}
+	
+	@RequestMapping(value = "json/getMovieCommentList",  method = RequestMethod.POST)
+	public  List<MovieComment> getMovieCommentList( @RequestBody MovieComment movieComment) throws Exception {
+		System.out.println("movieRestController의 getMovieCommentList시작 ");
+		Search search = movieComment.getSearch();
+	
+		System.out.println("1. search ==> "+search);
+		
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		
+		int movieNo = movieComment.getMovie().getMovieNo();
+
+		search.setPageSize(pageSize);
+
+		System.out.println("1-1. search ==> "+ search);
+		//System.out.println("2. movieNo ==> "+ movieNo);
+		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
+		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
+		
+		System.out.println("3. map ==> "+ map); 
+		
+		List<MovieComment> list = (List<MovieComment>)map.get("list");
 		
 		System.out.println("4. list ==> " + list);
 		return list;
+	}
+	
+	@RequestMapping(value = "/json/switchWishList")
+	public String switchWishList(@ModelAttribute("wishList")WishList wishList){
+		return movieService.switchWishList(wishList);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/wishList/{userId:.+}")
+	public String wishList(@PathVariable String userId){
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		List<WishList> list = new ArrayList<WishList>();
+		User user = new User();
+		user.setUserId(userId);
+		tempMap.put("user", user);
+		
+		list = ((List<WishList>)movieService.getWishList(tempMap).get("list"));
+		
+		JSONObject jsonObject = new JSONObject();
+		JSONObject response = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+
+		for(int i = 0; i<list.size(); i++){
+			jsonObject.put("movie_title", list.get(i).getMovie().getMovieNm());
+			jsonObject.put("wishNo", list.get(i).getWishNo());
+			jsonObject.put("wishRegDate", list.get(i).getWishRegDate());
+			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
+			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
+			
+			jsonArray.add(jsonObject);
+		}
+		response.put("wishList", jsonArray);
+		return response.toString();
 	}
 
 }

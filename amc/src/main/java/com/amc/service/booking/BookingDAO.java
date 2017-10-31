@@ -2,6 +2,7 @@ package com.amc.service.booking;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.amc.common.Search;
 import com.amc.service.domain.Booking;
@@ -18,6 +19,8 @@ public interface BookingDAO {
 	public Booking getBooking(String bookingNo);
 	
 	public List<Booking> getBookingList(Search search);
+	
+	public Map<String,Object> getUserBookingList(Map<String,Object> map);
 
 	public void updateStatistic(Search search);
 }

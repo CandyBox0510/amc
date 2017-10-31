@@ -436,7 +436,7 @@
                         dataType: "text",
 
                         success: function(JSONData, status) {
-
+				
                             $("#previewChecked").prop("checked", false);
                             $("input[type !='hidden']").val(null);
                             $("#screenTheater").val('1');
@@ -444,6 +444,8 @@
                             $("input[name='previewOpenDate' ]").attr("readonly", true);
                             $("input[name='previewOpenTime' ]").attr("readonly", true);
                             $("input[name='inviteActor' ]").attr("readonly", true);
+                            
+                            console.log(JSONData +'sdsdsdsdsdds')
 
                             if (JSONData == -1) {
                                 alert("상영시간이 중복되었습니다. 다시 선택해주세요");

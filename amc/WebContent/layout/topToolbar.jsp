@@ -5,6 +5,14 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- 
+<%
+	User user = new User();
+	user.setUserId("testAdmin");
+	user.setRole("admin");
+	session.setAttribute("user", user);
+%>  --%>
+
 <head>
 <meta charset="EUC-KR">
 	

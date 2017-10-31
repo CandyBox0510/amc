@@ -20,6 +20,7 @@
 		<result property="bookingSeatNo" 	column="bookingseat_no"		jdbcType="VARCHAR"/>		
   		<result property="qrUrl" 			column="qr_url" 			jdbcType="VARCHAR"/>
   		
+  		<result property="movie.movieNo"    			column="movie_no" 	 	 jdbcType="VARCHAR"/>
   		<result property="movie.movieNm"    			column="movie_title" 	 jdbcType="VARCHAR"/>
   		<result property="screenContent.screenDate"  	column="screen_date" 	 jdbcType="VARCHAR"/>
   		<result property="screenContent.screenOpenTime" column="screen_opentime" jdbcType="VARCHAR"/>
@@ -43,9 +44,11 @@
   	</select>
   	
   	 <select id="getBookingByInfo" parameterType="booking" resultMap="bookingSelectMap" >
-  		SELECT * 
-  		FROM booking 
-  		WHERE screencontent_no = #{screenContentNo} AND imp_id = #{impId}							
+  		 SELECT b.*, m.movie_title, m.movie_no, s.screen_date, s.screen_opentime, s.preview_flag, s.preview_title, s.invite_actor  
+		 FROM booking b, screencontent s, movie m 
+  		 WHERE b.screencontent_no = #{screenContentNo} AND b.imp_id = #{impId}
+  		 AND b.screencontent_no = s.screencontent_no 
+		 AND s.movie_no = m.movie_no								
   	</select>
   	
   	<select id="getBookingList" parameterType="search" resultMap="bookingSelectMap">
@@ -91,7 +94,15 @@
 									 FROM booking b,screencontent s 
 									 WHERE b.screencontent_no = s.screencontent_no AND b.user_Id = #{user.userId})inner, movie m
 			   				   WHERE inner.movie_no = m.movie_no)inner_table
-			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') >= TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			   <if test="search.searchCondition != null or search.searchCondition != ''">
+				<if test="search.searchCondition == 'now'">	  
+			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') <![CDATA[>=]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			    </if>
+			    <if test="search.searchCondition == 'past'">
+			   WHERE TO_DATE(inner_table.screen_opentime, 'YYYY/MM/DD HH24:MI') <![CDATA[<]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI') AND ROWNUM &lt;= #{search.endRowNum} )
+			    </if>
+			  </if>	
+			    
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
   	</select>
   	
@@ -100,5 +111,20 @@
   	 	FROM booking
   	 	WHERE booking_no = #{value}
   	</delete>
+  	
+ 	<select id="getTotalCount" parameterType="map" resultType="int">
+ 		SELECT COUNT(*) 
+		FROM booking b, screencontent s 
+		WHERE b.screencontent_no = s.screencontent_no 
+      		  AND user_id = #{user.userId}
+      		  <if test="search.searchCondition != null or search.searchCondition != ''">
+				<if test="search.searchCondition == 'now'">	  
+	      		  	AND TO_DATE(s.screen_opentime,'YYYY/MM/DD HH24:MI') <![CDATA[>=]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI')
+	 			</if>
+				<if test="search.searchCondition == 'past'">
+				  	AND TO_DATE(s.screen_opentime,'YYYY/MM/DD HH24:MI') <![CDATA[<]]> TO_DATE(SYSDATE,'YYYY/MM/DD HH24:MI')
+				</if>
+			  </if>	
+	</select>
   	
 </mapper>

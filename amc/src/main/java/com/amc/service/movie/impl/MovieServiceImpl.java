@@ -116,12 +116,6 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public List<WishList> getWishList(Search search, String userId) {
-		
-		return null;
-	}
-
-	@Override
 	public List<MovieList> getAPIMoiveList() throws Exception {
 		
 		System.out.println("MovieServieImpl getAPIMoiveList()" );
@@ -480,12 +474,6 @@ public class MovieServiceImpl implements MovieService {
 		return -1;	    
 			 
 	}
-	
-	@Override
-	public int addWish(int movieNo) {
-		
-		return 0;
-	}
 
 	@Override
 	public int addMoiveComment(MovieComment movieComment) {
@@ -569,5 +557,32 @@ public class MovieServiceImpl implements MovieService {
 		return 0;
 	}
 
+	@Override
+	public String switchWishList(WishList wishList) {
+		if(this.checkWishList(wishList).equals("0")){
+			this.addWishList(wishList);
+			return "add";
+		}else{
+			this.deleteWishList(wishList);
+			return "delete";
+		}
+
+	}
 	
+	public String checkWishList(WishList wishList){
+		return movieDAO.checkWishList(wishList);
+	}
+	
+	public int addWishList(WishList wishList){
+		return movieDAO.addWishList(wishList);
+	}
+	
+	public int deleteWishList(WishList wishList){
+		return movieDAO.deleteWishList(wishList);
+	}
+
+	@Override
+	public Map<String,Object> getWishList(Map<String,Object> map) {
+		return movieDAO.getWishList(map);
+	}
 }
