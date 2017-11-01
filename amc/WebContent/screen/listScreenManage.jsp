@@ -52,7 +52,7 @@
     <script type="text/javascript">
 			    function fncGetPageList(currentPage) {
 			        $("#currentPage").val(currentPage)
-			        $("form").attr("method", "POST").attr("action", "/screen/getScreenList").submit();
+			        $("form").attr("method", "POST").attr("action", "/community/getFreeBoardList").submit();
 			    }
 			    
 			    $(function() {
@@ -78,7 +78,9 @@
 		   margin-top: 10px;
 		}
 		
-
+		.search{
+			margin-right : 30px;
+		}
 		
 
 		.movieNm {
@@ -89,6 +91,8 @@
 			  margin-top: 5px;
 
 			}
+			
+			
 			
 			#poster{
 				height : calc(50vh - 100px);	
@@ -111,7 +115,7 @@
 
 <body>
 <jsp:include page="/layout/topToolbar.jsp" />
-    <div class="wrapper">
+    <div class="container">
         
 
         
@@ -135,6 +139,7 @@
 				                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독명</option>
 				                    </select>
 				                    <button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
+				                    <input type="hidden" id="currentPage" name="currentPage" value="0" />
 				                </form>
 				             </div>
 			             </div>

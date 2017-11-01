@@ -6109,8 +6109,6 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .cinema .cinema__images img {
   max-width: 100%;
-  margin-left : 20px;
-  
 }
 .cinema .cinema__images:before {
   content: '';

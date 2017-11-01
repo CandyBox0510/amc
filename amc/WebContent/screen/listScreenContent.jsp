@@ -315,6 +315,7 @@
                             displayValue +=
                                 "<tr>" +
                                 "<td></td>" +
+                                
                                 "<td><input type='date' class='form-control input-sm' name='screenDate' id='screenDate'></td>" +
                                 "<td>" +
                                 " <select class='form-control input-sm' name='screenTheater' id='screenTheater'>" +

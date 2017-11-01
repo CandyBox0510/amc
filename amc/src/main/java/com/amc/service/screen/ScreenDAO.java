@@ -50,4 +50,8 @@ public interface ScreenDAO {
 
 	int getScreenNo(ScreenContent screenContent);
 
+	int getTotalPreviewCount(Search search) throws Exception;
+
+	Map<String, Object> getPreviewList(Search search);
+
 }

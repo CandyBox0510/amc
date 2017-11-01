@@ -137,5 +137,13 @@
 		</constructor-arg>
 	</bean>
 	
+	<!-- 커뮤니티 업로드  -->
+	<bean id="communityUploadFile"
+				class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg>
+			<value>C:\Users\장해림\git\amc\amc\WebContent\images\community</value>
+		</constructor-arg>
+	</bean>
+	
     
 </beans>

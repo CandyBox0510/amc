@@ -337,7 +337,8 @@
                     			   displayValue +='<i class="fa fa-eraser">  </i>'
                     		   }
                     		   displayValue +=  '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> '+
-                        	   '<input type="hidden" id="movieComment" value="'+idx+':'+val.movieComment+'"></span>'+
+                        	   '<input type="hidden" id="movieComment" value=
+                        		   "'+val.movieComment+'"></span>'+
                                '<span class="comment__delete" ><i class="fa fa-trash-o">  </i>'+
                                '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
                                if(userRole == 'admin'){
@@ -793,9 +794,9 @@
 
                         <div class="comment">           
                         	   
-	                        <c:set var="i" value="0" />
+	             
 							<c:forEach var="movieComment" items="${list }">
-							<c:set var="i" value="${i+1 }" />
+						
 							
 							<p class="comment__user"> ${movieComment.user.userId }</p>
 							

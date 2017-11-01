@@ -142,8 +142,9 @@ public class MovieController {
 			return "forward:/movie/listCommingSoon.jsp";
 		}
 		else if (request.getParameter("menu").equals("preview")) {
+			System.out.println("????????");
 			//modelAndView.setViewName("/movie/listMoviePreview.jsp");
-			return "forward:/movie/listMoviePreview.jsp";
+			return "forward:/movie/getPreviewList";
 		}
 		else if (request.getParameter("menu").equals("search")) {
 			//modelAndView.setViewName("/movie/listMovie.jsp");
@@ -465,6 +466,65 @@ public class MovieController {
 	    return "forward:/booking/listWishList.jsp";
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	//프리뷰 리스트 10/30 추가
+	
+	@RequestMapping(value = "getPreviewList")
+	public String getPreviewList(@ModelAttribute("search") Search search, Model model) throws Exception {
+		System.out.println("/movie/getPreviewList :: ");
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		System.out.println("search값 확인" + search);
+
+		Map<String, Object> map = screenService.getPreviewList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
+		
+		model.addAttribute("search",map.get("search"));
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+
+		System.out.println("search" + map.get("search"));
+		System.out.println("list" + map.get("list"));
+		System.out.println("totalCount" + map.get("totalCount"));
+		System.out.println("resultPage" + resultPage);
+
+		System.out.println("/movie/getPreviewList ::  끝");
+		
+		
+		return "forward:/movie/listMoviePreview.jsp";
+	};
+	
+	
+	
+	
+	
 }
 
 	
