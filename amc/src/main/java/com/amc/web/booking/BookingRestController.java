@@ -9,6 +9,7 @@ import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import com.amc.common.Search;
 import com.amc.service.booking.BookingService;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.screen.ScreenService;
+import com.amc.web.cinema.HttpRequestToNode;
 
 @RestController
 @RequestMapping("/booking/*")
@@ -51,6 +53,7 @@ public class BookingRestController {
 	        Search search = new Search();
 	        search.setSearchCondition(flag);
 	        search.setSearchKeyword(today);
+	        System.out.println(":::::::movieNo : "+movieNo);
 	        List<ScreenContent> list = screenService.getScreenContentList2(search, movieNo);
 
 			return bookingService.getScreenDateList(list);
@@ -64,14 +67,13 @@ public class BookingRestController {
 			return bookingService.getScreenTimeList(screenDate);
 		}
 		
-		@RequestMapping(value="json/getDisplaySeatNo/{seatNo}", method=RequestMethod.GET)
+		@RequestMapping(value="json/getDisplaySeatNo/{seatNo}/{ticketPrice}", method=RequestMethod.GET)
 		public String getSeatNo(@PathVariable("seatNo") String seatNo, 
-													Model model) throws Exception{		
+								@PathVariable("ticketPrice") int ticketPrice, Model model) throws Exception{		
 			String[] strArray = seatNo.split(",");
 			String displaySeat = "";
 			int k=0;
-	        for(int i=0;i<(strArray.length/2);i++){
-	        	
+	        for(int i=0;i<(strArray.length/2);i++){	        	
 	            // 아스키 코드를 문자형으로 변환
 	        	int no = Integer.parseInt(strArray[k])+65;	        	
 	            String displaySeatNo = Character.toString ((char) no);
@@ -79,8 +81,42 @@ public class BookingRestController {
 	            System.out.println("k : "+k+", displaySeat : "+displaySeat);
 	            k+=2;
 	        }
+	        int headCount = (StringUtils.countOccurrencesOf(seatNo, ",")+1)/2;
 	        
-			return (new JSONObject().put("str", displaySeat).toString());
+	        JSONObject jsonObj = new JSONObject();
+	        jsonObj.put("seatNo", displaySeat);
+	        jsonObj.put("headCount", headCount);
+	        jsonObj.put("totalPrice",ticketPrice*headCount);
+	        
+			return (jsonObj.toString());
 		}
+
+		@RequestMapping(value="/json/confirmSeat/{clientId}", method=RequestMethod.GET)
+		public int rollbackSeat(@PathVariable("clientId") String clientId, Model model) throws Exception{
+			
+	
+			String urlStr = "http://localhost:52273/confirmSeat";
+			String body = "clientId="+clientId;
+			
+			try {
+				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
+				if(responseCode ==200){
+					System.out.println("몽고DB에서 예매확정을 성공하였습니다.");
+					return 1;
+				}else{
+					System.out.println("몽고DB에서 예매확정을 실패하였습니다.");
+					return -1;
+				}				
+			} catch (Exception e) {
+				System.out.println("몽고DB가 꺼져있나봅니다!");
+				return -1;
+			}
+
+		}
+
+
 }
+
+
+
 

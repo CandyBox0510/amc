@@ -10,7 +10,7 @@
 
 <html>
 <head>
-	<title>Model2 MVC Shop</title>
+	<title>AMC</title>
 	<meta charset="EUC-KR">
 
 	<!-- 참조 : http://getbootstrap.com/css/   -->
@@ -18,7 +18,7 @@
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
+<!-- 	<link rel="stylesheet" href="/resources/demos/style.css"> -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -38,7 +38,7 @@
 	<script type="text/javascript">
 		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "listPurchase").submit();
+			$("form").attr("method" , "POST").attr("action" , "getPurchaseList").submit();
 		}
 
 		
@@ -50,7 +50,7 @@
 					keyboard : false
 				}).bind('hide.bs.modal',function(){
 					location.reload();
-				}).load('getPurchase?tranNo='+$(this).attr('name'));
+				}).load('getPurchase?impId='+$(this).attr('name'));
 				
  			});
  			
@@ -121,20 +121,18 @@
 			</thead>
        
 		<tbody>
-		
 			<c:set var="i" value="${resultPage.totalCount- (resultPage.currentPage-1)*resultPage.pageSize + 1}" />
 			<c:forEach var="purchase" items="${list}">
 				<c:set var="i" value="${ i-1 }" />
 				<tr>
 					<td>${ i }</td>
 					<td>
-						<button type="button" class="btn btn-link" name="${purchase.tranNo}" >${purchase.purchaseProd.prodName}&nbsp;&nbsp;(수량 : ${purchase.purchaseCount})</button>
-						<div class="modal fade" id="${purchase.tranNo}" tabindex="-1" role="dialog" aria-labelledby="${purchase.purchaseProd.prodName}" aria-hidden="true">
-
+						<button type="button" class="btn btn-link" name="${purchase.impId}" >${purchase.purchaseProd.prodName}&nbsp;&nbsp;(수량 : ${purchase.orderStock})</button>
+						<div class="modal fade" id="${purchase.impId}" tabindex="-1" role="dialog" aria-labelledby="${purchase.purchaseProd.prodName}" aria-hidden="true">
 						</div>
 					</td>
-					<td>${purchase.dlvyAddr}</td>
-					<td>${purchase.receiverPhone}</td>
+					<td>${purchase.addrDlvy} ${purchase.addrDlvyDetail}</td>
+					<td>${purchase.receiverPhone1} ${purchase.receiverPhone2} ${purchase.receiverPhone3}</td>
 					<td>
 						<c:choose>
 							<c:when test="${purchase.tranCode=='1'}">
@@ -150,7 +148,7 @@
 					</td>
 					<td>
 						<c:if test="${purchase.tranCode=='2'}">
-							<input type="hidden" name="tranNo" value="${purchase.tranNo}"/>
+							<input type="hidden" name="impId" value="${purchase.impId}"/>
 							<a href="#" class="btn btn-link text-success" >물건도착</a>
 						</c:if>
 					</td>

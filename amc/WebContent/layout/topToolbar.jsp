@@ -40,9 +40,9 @@
 	<script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
+<!--    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-  
+ -->  
    	<!-- 카카오 로그인 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
@@ -267,12 +267,12 @@
 	 	
 	 	//=============  굿즈 Event 처리 =============	
 	 	$( "a:contains('굿즈')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getGoodsList?menu=search");
+			$(self.location).attr("href","/product/getGoodsList?menu=search&searchKeyword=G");
 		});
 	 	
 	 	//=============  스낵바 Event 처리 =============	
 	 	$( "a:contains('스낵바')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getSnackList?menu=search");
+			$(self.location).attr("href","/product/getSnackList?menu=search&searchKeyword=S");
 		});
 	 	
 	 	//=============  회원관리 Event  처리 =============	
@@ -287,7 +287,7 @@
 	 	
 	 	//=============  판매관리 Event  처리 =============	
 	 	$( "a:contains('판매관리')" ).on("click" , function() {
-			$(self.location).attr("href","/purchase/getSaleList");
+			$(self.location).attr("href","/purchase/getSaleList?searchKeyword=saleList");
 		});
 	 	
 	 	//=============  영화관리 Event  처리 =============	

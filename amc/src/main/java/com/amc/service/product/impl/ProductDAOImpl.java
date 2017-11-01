@@ -20,43 +20,41 @@ public class ProductDAOImpl implements ProductDAO{
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
+	public ProductDAOImpl() {
+		System.out.println("::"+getClass()+".ProductDaoImpl() 생성자 콜");
+	}
+	
 	public void setSqlSession(SqlSession sqlSession) {
 		System.out.println("::"+getClass()+".sqlSqlSession() 콜");
 		this.sqlSession = sqlSession;
 	}
 
-	public ProductDAOImpl() {
-		System.out.println("::"+getClass()+".ProductDaoImpl() 생성자 콜");
-	}
-
 	@Override
-	public int addProduct(Product product) throws Exception {
-		System.out.println("productdaoimpl");
-		System.out.println("####################"+product.toString());
-		return sqlSession.insert("ProductMapper.addProduct",product);
+	public void addProduct(Product product) throws Exception {
+		sqlSession.insert("ProductMapper.addProduct",product);
 	}
 
 	@Override
 	public Product getProduct(int prodNo) throws Exception {
-		return (Product)sqlSession.selectOne("ProductMapper.getProduct", prodNo);
+		return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 	}
 
 	@Override
-	public List<Product> getGoodsList(Search search, Product product) throws Exception {
+	public Map<String, Object> getGoodsList(Search search) throws Exception {
+		
 		Map<String , Object> map= new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("product", product);
-		System.out.println("############ product dao impl 의 getGoodsList 의 map" + map);
-		return sqlSession.selectList("ProductMapper.getGoodsList", map);
+		map.put("totalCount", sqlSession.selectOne("ProductMapper.getTotalCount",search));
+		map.put("list", sqlSession.selectList("ProductMapper.getGoodsList", search));
+		return map;
 	}
-
+	
 	@Override
-	public List<Product> getSnackList(Search search, Product product) throws Exception {
+	public Map<String, Object> getSnackList(Search search) throws Exception {
+		
 		Map<String , Object> map= new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("product", product);
-		System.out.println("############ product dao impl 의 getSnackList 의 map" + map);
-		return sqlSession.selectList("ProductMapper.getSnackList", map);
+		map.put("totalCount", sqlSession.selectOne("ProductMapper.getTotalCount",search));
+		map.put("list", sqlSession.selectList("ProductMapper.getSnackList", search));
+		return map;
 	}
 
 	@Override
@@ -65,14 +63,8 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 
 	@Override
-	/*public void deleteProduct(Product product) throws Exception {*/
 	public void deleteProduct(int prodNo) throws Exception {
 		sqlSession.update("ProductMapper.deleteProduct", prodNo);
-	}
-
-	@Override
-	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("ProductMapper.getTotalCount" , search);
 	}
 
 }
