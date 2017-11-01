@@ -163,7 +163,9 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-	
+		
+		System.out.println("############################### MAP :"+map);
+		
 		return "forward:/product/listGoodsProduct.jsp?menu="+menu;
 	}
 	
