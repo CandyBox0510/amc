@@ -8,6 +8,8 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private	String searchKeyword2;
+	String orderCondition; // 
+	String orderOption; //
 	private int pageSize;
 	int pageUnit;
 	//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
@@ -82,7 +84,6 @@ public class Search {
 		this.searchKeyword2 = searchKeyword2;
 	}
 
-
 	public boolean isStockView() {
 		return stockView;
 	}
@@ -90,14 +91,29 @@ public class Search {
 		this.stockView = stockView;
 	}
 
+	public String getOrderCondition() {
+		return orderCondition;
+	}
+
+	public void setOrderCondition(String orderCondition) {
+		this.orderCondition = orderCondition;
+	}
+
+	public String getOrderOption() {
+		return orderOption;
+	}
+
+
+	public void setOrderOption(String orderOption) {
+		this.orderOption = orderOption;
+	}
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", pageSize=" + pageSize + ", pageUnit="
-				+ pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView
-				+ "]";
+				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", orderCondition=" + orderCondition
+				+ ", orderOption=" + orderOption + ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum="
+				+ endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView + "]";
 	}
-
 	
 }

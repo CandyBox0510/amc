@@ -4,44 +4,44 @@ import java.sql.Date;
 
 public class Purchase {
 	
-	@Override
-	public String toString() {
-		return "Purchase [orderNo=" + orderNo + ", receiverName=" + receiverName + ", paymentOption=" + paymentOption
-				+ ", addrDlvy=" + addrDlvy + ", addrDlvyDetail=" + addrDlvyDetail + ", orderStock=" + orderStock
-				+ ", receiverPhone1=" + receiverPhone1 + ", receiverPhone2=" + receiverPhone2 + ", receiverPhone3="
-				+ receiverPhone3 + ", totalProdPrice=" + totalProdPrice + ", tranCode=" + tranCode + ", orderRegDate="
-				+ orderRegDate + ", purchaseCount=" + purchaseCount + ", purchaseProd=" + purchaseProd + ", buyer="
-				+ buyer + "]";
-	}
-
-	private String orderNo;
-	private String receiverName;
-	private String paymentOption;
+	
+	private Date orderRegDate;
 	private String addrDlvy;
 	private String addrDlvyDetail;
-	private int orderStock;
+	private String paymentOption;
+	private String receiverName;
 	private String receiverPhone1;
 	private String receiverPhone2;
 	private String receiverPhone3;
+	private String orderNo;
+	private String impId;
 	private int totalProdPrice;
 	private int tranCode;
-	private Date orderRegDate;
-	private int purchaseCount;
+	private int orderStock;
+	/*private int purchaseCount;*/
 	
-	private Product purchaseProd;
 	private User buyer;
+	private Product purchaseProd;
 	
-	public int getPurchaseCount() {
+	public Purchase() {
+	}
+
+/*	public int getPurchaseCount() {
 		return purchaseCount;
 	}
 
 	public void setPurchaseCount(int purchaseCount) {
 		this.purchaseCount = purchaseCount;
 	}
-	
-	public Purchase() {
+*/
+	public String getImpId() {
+		return impId;
 	}
 
+	public void setImpId(String impId) {
+		this.impId = impId;
+	}
+	
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -153,5 +153,15 @@ public class Purchase {
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Purchase [orderRegDate=" + orderRegDate + ", addrDlvy=" + addrDlvy + ", addrDlvyDetail="
+				+ addrDlvyDetail + ", paymentOption=" + paymentOption + ", receiverName=" + receiverName
+				+ ", receiverPhone1=" + receiverPhone1 + ", receiverPhone2=" + receiverPhone2 + ", receiverPhone3="
+				+ receiverPhone3 + ", orderNo=" + orderNo + ", impId=" + impId + ", totalProdPrice=" + totalProdPrice
+				+ ", tranCode=" + tranCode + ", orderStock=" + orderStock + ", buyer=" + buyer + ", purchaseProd="
+				+ purchaseProd + "]";
+	}
+
 }

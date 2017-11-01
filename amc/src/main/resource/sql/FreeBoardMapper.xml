@@ -22,25 +22,40 @@
   	
   	<insert id="addFreeBoard" parameterType="freeBoard">
 	INSERT INTO freeboard(freeboard_no, freeboard_title, user_id, freeboard_regdate, freeboard_content, freeboard_views, freeboard_image)
-	VALUES(seq_freeboard_no.nextval, #{freeBoardTitle}, #{user.userId}, TO_DATE(SYSDATE, 'YYYY/MM/DD HH24:MI:SS'), #{freeBoardContent},0, #{freeBoardImage})
+	VALUES(seq_freeboard_freeboard_no.nextval, #{freeBoardTitle}, #{user.userId}, SYSDATE, 
+	#{freeBoardContent},0, 
+	<if test="freeBoardImage == '' ">null</if>
+	<if test="freeBoardImage != '' ">#{freeBoardImage}</if>)
 	</insert>
 	
 	<select id="getFreeBoard" parameterType="int" resultMap="freeBoardMap"> 
 		SELECT freeboard_no, freeboard_title, user_id, 
-						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
 		FROM freeboard
 		WHERE freeboard_no = #{freeBoardNo} 
 	</select>
+	
+	<update id="updateFreeBoardViews" parameterType="FreeBoard">
+	UPDATE freeboard
+		<set>
+			freeboard_views = #{freeBoardViews}+1
+		</set>
+	WHERE freeboard_no = #{freeBoardNo} 
+	</update>
+	
 	
 	<update id="updateFreeBoard" parameterType="FreeBoard">
 	UPDATE freeboard
 		<set>
 			freeboard_title = #{freeBoardTitle},
-			freeboard_content = #{freeBoardContent},
-			 freeboard_image = #{freeBoardImage}
+			freeboard_content = #{freeBoardContent}
+			<if test="freeBoardImage != null">
+			 , freeboard_image = #{freeBoardImage}
+			 </if>
 		</set>
 		WHERE freeboard_no = #{freeBoardNo}
 	</update>
+	
 	
 	
 	<delete id="deleteFreeBoard" parameterType="int">
@@ -53,7 +68,7 @@
 		SELECT *
 		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
 		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
-						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
 						FROM freeboard	  			    
 		<if test="searchCondition != null">
 				<if test="searchCondition == 1 and searchKeyword != '' ">
@@ -67,7 +82,7 @@
 				</if>
 				
 		</if>
-		ORDER BY freeboard_regdate DESC) inner_table
+		ORDER BY freeboard_no DESC) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum})
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 
@@ -75,9 +90,8 @@
 	
 	<select id="getTotalCount" parameterType="search" resultType="int">
 	SELECT count(*)
-		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
 		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
-						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') moviecomment_regdate,  freeboard_content, freeboard_views, freeboard_image
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
 						FROM freeboard	  			    
 		<if test="searchCondition != null">
 				<if test="searchCondition == 1 and searchKeyword != '' ">
@@ -90,10 +104,7 @@
 					WHERE user_id LIKE '%${searchKeyword}%'
 				</if>
 				
-		</if>
-		ORDER BY freeboard_regdate DESC) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum})
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+		</if>)countTable
 	
 	</select>
 	

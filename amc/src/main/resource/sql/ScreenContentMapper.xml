@@ -10,6 +10,8 @@
       <result property="screenContentNo" column="screencontent_no" jdbcType="NUMERIC"/>
       <result property="movie.movieNo" column="movie_no" jdbcType="NUMERIC"/>
       <result property="movie.postUrl" column="poster" jdbcType="VARCHAR"/>
+      <result property="movie.movieNm" column="movie_title" jdbcType="VARCHAR"/>
+      <result property="movie.directors" column="director" jdbcType="VARCHAR"/>
       <result property="screenDate" column="screen_date" jdbcType="DATE"/>
       <result property="screenOpenTime" column="screen_openTime" jdbcType="DATE" />
       <result property="screenEndTime" column="screen_endTime" jdbcType="DATE" />
@@ -20,6 +22,7 @@
       <result property="ticketOpenDate" column="ticket_opendate" jdbcType="DATE" />
       <result property="inviteActor" column="invite_Actor" jdbcType="VARCHAR" />
       <result property="screenContentRegDate" column="screencontent_regdate" jdbcType="DATE" />
+      
    </resultMap>
    
    
@@ -178,5 +181,55 @@
 		WHERE screen_OpenTime = TO_DATE(#{screenOpenTime}, 'YYYY/MM/DD HH24:MI') 
 				AND  screen_theater = #{screenTheater} 
 	</select>
+	
+	
+		<!-- 프리뷰 목록을 위한 sql 생성  -->
+	<select id="getPreviewList" parameterType="search" resultMap="screenContentSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM (SELECT movie.movie_title, movie.director, movie.poster, movie.movie_no,screencontent.screencontent_no, screencontent.invite_actor, screencontent.preview_title,
+					TO_CHAR(screencontent.screen_opentime,'YYYY/MM/DD HH24:MI') screen_opentime , 
+					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY/MM/DD HH24:MI') ticket_opendate 
+					FROM movie, (SELECT * FROM screencontent WHERE screen_opentime> SYSDATE AND preview_flag = 'Y') screencontent  
+					WHERE movie.movie_no = screencontent.movie_no
+		<if test="searchCondition != null" >
+			    
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE director LIKE '%${searchKeyword}%'
+				</if>
+			</if>
+
+		ORDER BY movie_no ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+
+	</select>
+	
+		<!-- 프리뷰 목록 개수를 위한 sql 생성  -->
+	<select id="getTotalPreviewCount" parameterType="search"  resultType="int">
+		SELECT COUNT(*)
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM (SELECT movie.movie_title, movie.director, movie.poster, movie.movie_no,screencontent.screencontent_no, screencontent.invite_actor, screencontent.preview_title,
+					TO_CHAR(screencontent.screen_opentime,'YYYY/MM/DD HH24:MI') screen_opentime , 
+					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY/MM/DD HH24:MI') ticket_opendate 
+					FROM movie, (SELECT * FROM screencontent WHERE screen_opentime> SYSDATE AND preview_flag = 'Y') screencontent  
+					WHERE movie.movie_no = screencontent.movie_no
+		<if test="searchCondition != null" >
+			    
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE director LIKE '%${searchKeyword}%'
+				</if>
+			</if>
+
+		ORDER BY movie_no ) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>	
 	
 </mapper>

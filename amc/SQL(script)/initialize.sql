@@ -40,6 +40,9 @@ CREATE SEQUENCE seq_freeboard_comment_no 	INCREMENT BY 1 START WITH 10000;
 
 
 
+CREATE SEQUENCE seq_transaction_IMP_ID_no INCREMENT BY 1 START WITH 10000;
+
+
 
 
 CREATE TABLE users ( 

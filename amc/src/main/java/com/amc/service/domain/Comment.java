@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Comment {
 	
-	private String commentNo;
-	private String freeBoardNo;
-	private String userId;
+	private int commentNo;
+	private FreeBoard freeBoard;
+	private User user;
 	private String commentContent;
-	private String parentCommentNo;
+	private int parentCommentNo;
 	private List<Comment> replyList;
 	private String commentRegDate;
 
@@ -25,28 +25,28 @@ public class Comment {
 		this.commentRegDate = commentRegDate;
 	}
 
-	public String getCommentNo() {
+	public int getCommentNo() {
 		return commentNo;
 	}
 
-	public void setCommentNo(String commentNo) {
+	public void setCommentNo(int commentNo) {
 		this.commentNo = commentNo;
 	}
 
-	public String getFreeBoardNo() {
-		return freeBoardNo;
+	public FreeBoard getFreeBoard() {
+		return freeBoard;
 	}
 
-	public void setFreeBoardNo(String freeBoardNo) {
-		this.freeBoardNo = freeBoardNo;
+	public void setFreeBoard(FreeBoard freeBoard) {
+		this.freeBoard = freeBoard;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getCommentContent() {
@@ -57,11 +57,11 @@ public class Comment {
 		this.commentContent = commentContent;
 	}
 
-	public String getParentCommentNo() {
+	public int getParentCommentNo() {
 		return parentCommentNo;
 	}
 
-	public void setParentCommentNo(String parentCommentNo) {
+	public void setParentCommentNo(int parentCommentNo) {
 		this.parentCommentNo = parentCommentNo;
 	}
 
@@ -76,12 +76,12 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [commentNo=" + commentNo + ", freeBoardNo=" + freeBoardNo + ", userId=" + userId
-				+ ", commentContent=" + commentContent + ", parentCommentNo=" + parentCommentNo + ", replyList="
-				+ replyList + "]";
+		return "Comment [commentNo=" + commentNo + ", freeBoard=" + freeBoard + ", user=" + user + ", commentContent="
+				+ commentContent + ", parentCommentNo=" + parentCommentNo + ", replyList=" + replyList
+				+ ", commentRegDate=" + commentRegDate + "]";
 	}
 
-	
+
 	
 	
 }

@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int addProduct(Product product) throws Exception {
-		return productDAO.addProduct(product);
+	public void addProduct(Product product) throws Exception {
+		productDAO.addProduct(product);
 	}
 
 	@Override
@@ -45,27 +45,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Map<String, Object> getGoodsList(Search search, Product product) throws Exception {
-		List<Product> list = productDAO.getGoodsList(search, product);
-		int totalCount = productDAO.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
+	public Map<String, Object> getGoodsList(Search search) throws Exception {
+		return productDAO.getGoodsList(search);
 	}
 
 	@Override
-	public Map<String, Object> getSnackList(Search search, Product product) throws Exception {
-		List<Product> list = productDAO.getSnackList(search, product);
-		int totalCount = productDAO.getTotalCount(search);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
-		
-		return map;
+	public Map<String, Object> getSnackList(Search search) throws Exception {
+		return productDAO.getSnackList(search);
 	}
 
 	@Override
@@ -74,7 +60,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	/*public void deleteProduct(Product product) throws Exception {*/
 	public void deleteProduct(int prodNo) throws Exception {
 		productDAO.deleteProduct(prodNo);
 	}

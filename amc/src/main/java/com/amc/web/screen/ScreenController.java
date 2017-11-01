@@ -106,4 +106,6 @@ public class ScreenController {
 
 		return "forward:/screen/listScreenContent.jsp";
 	}
+	
+	
 }

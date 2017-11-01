@@ -91,7 +91,7 @@ public class ScreenRestController {
 			int screenContentNo = screenService.getScreenNo(screenContent);
 			
 			//mongodb에 좌석현황 추가 부분
-			String urlStr = "http://localhost:52273/addSeats";
+			String urlStr = "http://192.168.0.32:52273/addSeats";
 			String body = "screenNo="+screenContentNo+"&theater="+screenTheater;
 			try {
 				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
