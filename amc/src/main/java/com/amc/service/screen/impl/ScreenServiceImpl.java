@@ -41,6 +41,25 @@ public class ScreenServiceImpl implements ScreenService {
 
 		return map;
 	}
+	
+
+	@Override
+	public Map<String, Object> getPreviewList(Search search) throws Exception {
+
+		System.out.println("ScreenServiceImpl의 getPreviewList 메소드 시작..");
+		int totalCount = screenDAO.getTotalPreviewCount(search);
+		System.out.println("1. totalCount의 값 :::::: " + totalCount);
+		Map<String, Object> map = screenDAO.getPreviewList(search);
+		System.out.println("1. map의 값 :::::: " + map);
+		
+		map.put("totalCount", new Integer(totalCount));
+		// Page resultPage = new Page(search.getCurrentPage(),)
+
+		System.out.println("ScreenServiceImpl의 getPreviewList 메소드 끝..");
+
+		return map;
+	}
+
 
 	@Override
 	public Movie getMovie(int movieNo) {

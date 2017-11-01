@@ -27,6 +27,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.amc.common.Search;
+import com.amc.common.util.RestApiUtil;
 import com.amc.service.domain.User;
 import com.amc.service.user.UserService;
 
@@ -161,5 +162,37 @@ public class UserServiceImpl implements UserService {
 	public String deleteCheck(User user) throws Exception {
 		// TODO Auto-generated method stub
 		return userDAO.deleteCheck(user);
+	}
+
+	@Override
+	public String addUuid(String token, String userId) throws Exception {
+		RestApiUtil restApiUtil = new RestApiUtil("https://kapi.kakao.com/v1/push/register", "POST");
+		Map<String, String> header = new HashMap<String,String>();
+		Map<String, Object> body = new HashMap<String, Object>();
+		
+		header.put("Host", "kapi.kakao.com");
+		header.put("Authorization", "KakaoAK a02318166885b3124da4962257436383");
+		
+		User user = userDAO.getUser(userId);
+		int userNo = user.getUserNo(); 
+		body.put("uuid", userNo);
+		body.put("device_id", userId);
+		body.put("push_type", "gcm");
+		body.put("push_token",token);
+		
+		String result = (restApiUtil.restApiResponse(header, body));
+		
+		if(result.length()<=5){
+			user.setUserNo(userNo);
+			if(userDAO.updateUuid(user) == 1){
+				System.out.println("uuid 업데이트 성공");
+				return "success";
+			}else{
+				System.out.println("uuid 업데이트 실패");
+				return "fail";
+			}
+		}else{
+			return "fail";
+		}
 	}
 }

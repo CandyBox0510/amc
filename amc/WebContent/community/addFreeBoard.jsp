@@ -2,35 +2,198 @@
     pageEncoding="EUC-KR"%>
     <%@ page contentType="text/html; charset=EUC-KR" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR"><!-- Basic Page Needs -->
-        <meta charset="utf-8">
+<meta charset="EUC-KR">
 
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
+</head>
+
+<body>
+   <div class="wrapper">
+    	<c:set var="who" value=""/>
+    	<c:if test="${sessionScope.user.role ne 'admin'}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user eq null || sessionScope.user eq ''}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user.role eq 'admin'}">
+    		<c:set var="who" value="admin"/>	
+    	</c:if>
+        <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar_.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
+
+        
+        <!-- Main content -->
+        <div class="container">
+           
+    	<div class="col-md-12">
+  				<h2 class="page-heading">게시글 작성</h2>
+  					<form id = 'addFreeForm'>
+		  				<div class="addFreeBoard">
+		  					<div class ="field">
+		  					<div class='col-md-1' id="title">제목</div>
+		  					<div class='col-md-11'><input type='text' name='freeBoardTitle' id ="freeBoardTitle" class="add__input"></div>
+		  					<div class='field' >
+		  						<div class='col-md-12' id="context"><textarea id="freeBoardContent" name="freeBoardContent"></textarea></div>
+		  						<div class='col-md-1' id="title">첨부파일</div>
+		  						<div class='col-md-11' >
+		  						<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span>
+		  						<input type="file" id="imageFile" name="imageFile" class="add__input" ></div>
+		  					</div>
+		  					</div>
+		  					<div class="col-md-12" id ="buttonWrap" >
+		                        <button type='button' class="btn btn-md btn--warning btn--wider" id="addButton">등록하기</button>     
+		                        <button type='button' class="btn btn-md btn--warning btn--wider" id="cancleButton">취소하기</button>               
+		                    </div>
+		                    <div>
+		                    	<input type="hidden" name="userId" id="userId" value ="${user.userId }">
+		                    </div>
+		  				</div>
+                     </form>
+        
+   		    <div class="clearfix"></div>
+        </div>
+ 
+                
+        </div>
+        
+        
+
+      
+    </div>
+
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
+            <section class="container">
+
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+
+                        <p class="login__tracker">or</p>
+                        
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+        </div>
+
+         <script src="/js/external/modernizr.custom.js"></script> 
+	
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
         <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script> 
 
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-    <style type="text/css">
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+       
+        
+        <script type="text/javascript">
+        
+        function fncAddFreeBoard() {
+        	freeBoardTitle = $("input[name='freeBoardTitle']").val();
+        	freeBoardContent = $("textarea[name='freeBoardContent']").val();
+        	imageFile = $("input[name='imageFile']").val();
+        	console.log(freeBoardTitle +"   "+freeBoardContent +"   " +imageFile);
+        	
+        	if(freeBoardTitle == null || freeBoardTitle.length <1){
+        		alert("제목을 입력 해 주세요");
+        		return;
+        	}
+        	if(freeBoardContent == null || freeBoardContent.length <1){
+        		alert("내용을 입력 해 주세요");
+        		return;
+        	}
+        	if(imageFile != ""){
+            	extension = imageFile.substring(imageFile.lastIndexOf(".")+1);
+				extension = extension.toLowerCase();
+
+					if(extension =='jpg' || extension=='jpeg' || extension=='png' || extension=='gif'){
+						
+					}else{
+		        		alert("업로드가능한 확장자가 아닙니다. 다시 확인해주세요");
+						return;
+		        	}						
+        	}
+        	
+        	$("form").attr("method", "POST").attr("action", "/community/addFreeBoard").attr('enctype','multipart/form-data').submit();
+		}
+        
+        $(document).ready(function () {
+
+       	 
+
+			$(document).on("click", "#addButton", function () {
+				
+			
+				fncAddFreeBoard();
+		
+			})
+			
+			
+			$(document).on("click", "#cancleButton", function () {
+				
+				if( confirm("정말 등록을 취소하시겠습니까?")==true){
+					history.go(-1);
+				}else{
+					return;
+				}
+		
+			})
+			
+			
+		})
+        </script>
+    
+
+</body>
+<style type="text/css">
+	   .page-heading{
+			margin-top : 100px
+		}
+		.wrapper{
+			margin-bottom : 30px
+		}
+            html{
+            height:auto;
+            }
     
     	.add__input {
 		  font-size: 13px;
@@ -62,9 +225,9 @@
 		 margin : 0 auto; */
 		}
 		
-		#addFreeBoardConetext {
+		#freeBoardContent {
 			  width: 100%;
-			  min-height: 500px;
+			  min-height: 400px;
 			  padding: 8px 19px;
 			  -webkit-border-radius: 3px;
 			  -moz-border-radius: 3px;
@@ -75,61 +238,34 @@
 			  color: #b4b1b2;
 			}
 			
-			#add {
-			  text-align : left;
+			#addButton {
+			font-size: 13px;
+			 text-align : center;
+  			margin-top: 10px;
+  			height : 40px;
+  			margin-right: 5px;
+  			color : #4C4145;
+			}
+			
+			#cancleButton {
+			font-size: 13px;
+			 text-align : center;
+  			margin-top: 10px;
+  			height : 40px;
+  			margin-left: 5px;
+  			color : #4C4145;
+			}
+			
+			#buttonWrap{
+			text-align : center;
+			}
+			.notice{
+				font-size : 12px;
+				color:#969b9f;
 			}
 			
 			
 
     </style>
     
-</head>
-
-<body>
-<div class="container">
-    <div class="wrapper">
-    	<div class="col-md-12">
-  				<h2 class="page-heading"> 게시글 등록</h2>
-  				<form class="addFreeBoard">
-  					<div class ="field">
-  					<div class='col-md-1' id="title">제목</div>
-  					<div class='col-md-11'><input type='text' name='freeBoardTitle' class="add__input"></div>
-  					<div class='field' >
-  						<div class='col-md-12' id="context"><textarea id="addFreeBoardConetext"></textarea></div>
-  					</div>
-  					</div>
-  					<div class="col-md-12l">
-                        <button type='submit' class="btn btn-md btn--warning btn--wider" id="add">등록하기</button>                   
-                    </div>
-  				</form>
-                            
-        
-   		    <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-
-	<!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
-        
-
-</body>
 </html>

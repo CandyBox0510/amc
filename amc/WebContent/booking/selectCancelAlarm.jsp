@@ -1,92 +1,97 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="org.springframework.util.StringUtils" %>
+<!doctype html>
+<html>
+<head>
+   <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="ko">
-<head> 
+    <!-- Mobile Specific Metas-->
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!--   Modal CDN  -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+    
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   	<!--   Sweetalert CDN  -->
-	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+        <!--   Sweetalert2 CDN  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
 	
-	<!--   Sweetalert2 CDN  -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-	
-	<!--   semantic UI  -->
-	<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-	<script
-	  src="https://code.jquery.com/jquery-3.1.1.min.js"
-	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-	  crossorigin="anonymous"></script>
-	<script src="../semantic/semantic.min.js"></script>
-	
-	<style type="text/css">
-	body {
-        padding-top : 70px;
-    }
-	</style>
+		<!--   semantic UI  -->
+		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<script
+		  src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="../semantic/semantic.min.js"></script>
+  
+  <script type="text/javascript">
+  IMP.init('imp41659269');
+   var things = "AMC : ";
+      things += "ì˜ˆë§¤"
 
-<title>selectScreenMovie.jsp</title>
-
-<script>
-	function listener(event){		
-		document.getElementById('cancelAlarm').contentWindow.postMessage(event.data,"*");
-		$("input[name='seats']").val(event.data);
-		
-		  $.ajax({
-					url : "/booking/json/getDisplaySeatNo/"+event.data,						
-					method : "GET" ,
-					dataType : "json" ,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},						
-					success : function(JSONData, status) {
-						console.log('SeatNo ¹Ş¾Æ¿È : '+JSONData.str);								
-	                    if(JSONData != ""){
-	                    	$("#display2").val(JSONData.str);
-	                    }//end of if¹®
-					}
-		});//end of ajax
-			  
-	}
-
-		
-		if (window.addEventListener){
-			  addEventListener("message", listener, false);
-		} else {
-			  attachEvent("onmessage", listener)
-		}
-		
-		function requestPay() {			
-			$("form").attr("method" , "POST").attr("action" , "/booking/requestPay").submit();
-		}
-		
-		function addCancelAlarm(){
+         
+      function confirmSeat(){
+         
+         var clientId = $("input[name='clientId']").val();
+         
+           $.ajax(
+                  {
+                     url : "/booking/json/confirmSeat/"+clientId,            
+                     method : "GET" ,
+                     async : false,
+                     dataType : "json" ,
+                     headers : {
+                        "Accept" : "application/json",
+                        "Content-Type" : "application/json"
+                     },
+                     
+                     success : function(JSONData, status) {
+                        console.log('SeatNo ë°›ì•„ì˜´ : '+JSONData.seatNo);                        
+                            if(JSONData != ""){
+                               console.log('ajaxë¡œ ì¢Œì„ rollback resCode: '+jsonData);
+                            }//end of ifë¬¸
+                     }
+            });//end of ajax
+         
+      }   
+         
+      function addCancelAlarm(){
 			var userId = $("input[name='userId']").val(); 
 			if( userId == null || userId == ''){
 				swal({
-					  title: '½ÅÃ» ½ÇÆĞ',
+					  title: 'ì‹ ì²­ ì‹¤íŒ¨',
 					  html: $('<div>')
 					    .addClass('some-class')
-					    .text('·Î±×ÀÎ »óÅÂ°¡ ¾Æ´Õ´Ï´Ù'),
+					    .text('ë¡œê·¸ì¸ ìƒíƒœê°€ ì•„ë‹™ë‹ˆë‹¤'),
 					  animation: false,
 					  customClass: 'animated swing'
 					})
@@ -98,94 +103,283 @@
 			    	}).done(function(result) {
 			    		console.log("result : " + result);
 			    		if ( result == 'success' ) {
-			    			var msg = 'Ãë¼ÒÇ¥ ¾Ë¸² ½ÅÃ» ¼º°ø';
+			    			var msg = 'ì·¨ì†Œí‘œ ì•Œë¦¼ ì‹ ì²­ ì„±ê³µ';
 			    			swal({
 			    				  //position: 'top-right',
 			    				  type: 'success',
-			    				  title: 'Ãë¼ÒÇ¥ ¾Ë¸² ½ÅÃ» ¼º°ø!',
+			    				  title: 'ì·¨ì†Œí‘œ ì•Œë¦¼ ì‹ ì²­ ì„±ê³µ!',
 			    				  showConfirmButton: true,
 			    				  timer: 2000
 			    				})
 			    		} else if( result == 'exceed'){
 			    			swal(
-			    					  'Ãë¼ÒÇ¥¾Ë¸² ÀÚ¸® ¼ö ÃÊ°ú!',
-			    					  '½ÅÃ» °¡´ÉÇÑ Ãë¼ÒÇ¥¾Ë¸² ¼ö ÃÊ°ú (ÃÖ´ë 4 ÁÂ¼®)',
+			    					  'ì·¨ì†Œí‘œì•Œë¦¼ ìë¦¬ ìˆ˜ ì´ˆê³¼!',
+			    					  'ì‹ ì²­ ê°€ëŠ¥í•œ ì·¨ì†Œí‘œì•Œë¦¼ ìˆ˜ ì´ˆê³¼ (ìµœëŒ€ 4 ì¢Œì„)',
 			    					  'error'
 			    					)
 			    		} else {
 			    			swal(
-			    					  'Áßº¹ ÁÂ¼® ½ÅÃ»!',
-			    					  '½ÅÃ»ÇÑ ÁÂ¼® Áß ±âÁ¸¿¡ Áßº¹µÈ ÁÂ¼®ÀÌ ÀÖ½À´Ï´Ù.'+"\n"+result,
+			    					  'ì¤‘ë³µ ì¢Œì„ ì‹ ì²­!',
+			    					  'ì‹ ì²­í•œ ì¢Œì„ ì¤‘ ê¸°ì¡´ì— ì¤‘ë³µëœ ì¢Œì„ì´ ìˆìŠµë‹ˆë‹¤.'+"\n"+result,
 			    					  'error'
 			    					)
 			    		}
 			    	});
-		}	
-			
-		
-</script>
+		}	 
+        
+     function addBooking(){
+         
+        $("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();   
+        
+     }
+     
+         
+   function listener(event){      
+        document.getElementById('child').contentWindow.postMessage(event.data,"*");
 
+        if(event.data == 'pay'){
+           alert('ì¹´ì¹´ì˜¤í˜ì´ ê²°ì œìš”ì²­ì´ì™”ìŠµë‹ˆë‹¤.');
+           kakaoPay();     
+           //ì§€ê¸ˆì€ ì“°ì§€ì•ŠëŠ”ë‹¤.
+        } else if(event.data.length>100){
+         alert('ì¹´ì¹´ì˜¤í˜ì´ê´€ë ¨ event ë°œìƒì…ë‹ˆë‹¤.');
+           
+        } else if(event.data.indexOf("id")==0){
+           //alert('í´ë¼ì´ì–¸íŠ¸ IDë¥¼ ë°›ìŠµë‹ˆë‹¤. '+event.data.split(",")[1]);
+           $("input[name='clientId']").val(event.data.split(",")[1]); 
+          
+        } else{
+           
+           alert('ì¢Œì„ë²ˆí˜¸ë¥¼ ë°›ìŠµë‹ˆë‹¤.');
+           
+           $("input[name='bookingSeatNo']").val(event.data);
+           var no = ${screenContent.ticketPrice};
+           $.ajax(
+            {
+                url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,                  
+               method : "GET" ,
+               dataType : "json" ,
+               headers : {
+                  "Accept" : "application/json",
+                  "Content-Type" : "application/json"
+               },
+               
+               success : function(JSONData, status) {
+                  console.log('SeatNo ë°›ì•„ì˜´ : '+JSONData.seatNo);                        
+                      if(JSONData != ""){
+                         $("#seatNo").text(JSONData.seatNo);
+                         $("#headCount").text(JSONData.headCount);
+                         $("#totalPrice").text(JSONData.totalPrice);
+                         
+                         $("input[name='displaySeat']").val(JSONData.seatNo);
+                         $("input[name='headCount']").val(JSONData.headCount);
+                       $("input[name='totalTicketPrice']").val(JSONData.totalPrice);
+                      }//end of ifë¬¸
+               }
+         });//end of ajax
+         
+                
+        }
+
+   }
+   
+   
+   if (window.addEventListener){
+        addEventListener("message", listener, false);
+   } else {
+        attachEvent("onmessage", listener)
+   }
+   
+   function selectCancelAlarm(){
+      $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
+   }
+
+
+   </script> 
 </head>
-	<body>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-   	<div class="container"> 
-   		<input type="hidden" name="userId" value="${sessionScope.user.userId}" >
-		<form>
-			<div align="center" class="alert alert-info" role="alert">
-				<h4><strong>Ãë¼ÒÇ¥ ¾Ë¸®¹Ì ½ÅÃ»</strong>&nbsp;&nbsp;[ÃÖ´ë 4ÀÚ¸® ½ÅÃ» °¡´É]</h4>
-	      	</div>
-      	
-			<!-- hiddenÅ¸ÀÔÀ¸·Î ¹Ù²Ù±â -->
-			<input type="hidden" name="screenContentNo" value="${screenContentNo}" disabled>
-		<div class="col-md-12">
-				<div class="col-md-8">
-				<%-- <iframe id="cancelAlarm" src="http://192.168.0.7:52273/cancelAlarm?screenNo=${screenContentNo}" width="600" height="400" > --%>
-				<iframe id="cancelAlarm" 
-						src="http://127.0.0.1:52273/cancelAlarm?screenNo=10000"
-						width="600" height="400" align="left">		 
-						  <p>Your browser does not support iframes.</p>
-				</iframe>
-				</div>
-				<div class="col-md-4">
-				<div class="ui container">
-					<p/>
-					<div class="ui top attached warning icon message">
-					    <i class="attention icon"></i>
-					    <div class="content">
-					      	Ãë¼ÒÇ¥ ¾Ë¸² ½ÅÃ» ÁÂ¼®
-					    </div>
-				 	</div>
-					<table class="ui bottom attached table">
-					    <tbody>
-					      <tr>
-					        <td>seatNo</td>
-					      </tr>
-					      <tr>
-					        <td>seatNo</td>
-					      </tr>
-					      <tr>
-					        <td>seatNo</td>
-					      </tr>
-					      <tr>
-					        <td>seatNo</td>
-					      </tr>
-					    </tbody>
-				  	</table>
-				  	
-				  	<button class="ui blue button" 
-					style="font-size:20px; height:50px;width:300px" 
-					onClick="javascript:addCancelAlarm()">
-					Ãë¼ÒÇ¥ ¾Ë¸² ½ÅÃ»</button>
-					
-				  	</div>
-				</div>
-		</div>
-		<input type="hidden" name="seats" value="" disabled>
-		<!-- <input type="text" id="display2" value=""> -->
-		<input type="hidden" name="seats" value="">
-		</form>
-	</div>
-	</body>
+
+<body>
+    <div class="wrapper place-wrapper">
+        <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="/images/banners/bra.jpg">
+        </div>
+
+        <!-- Header section -->
+        <header class="header-wrapper">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar_.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+        </header>
+        
+        <!-- Main content -->
+        <div class="place-form-area">
+        <section class="container">
+            <div class="order-container">
+                <div class="order">
+                    <img class="order__images" alt='' src="../images/cinema/Cancel.jpg">
+                    <p class="order__title">Cancel Alarm <br><span class="order__descript">request Cancelalarm</span></p>
+                    <div class="order__control">
+                        <a href="#" class="order__control-btn active">Alarm</a>
+                    </div>
+                </div>
+            </div>
+                <div class="order-step-area">
+                    <div class="order-step first--step">Select CancelAlarm Seats</div>
+                </div>
+            
+            <div class="choose-sits">
+                <div class="choose-sits__info choose-sits__info--first">
+                    <ul>
+                       <li class="sits-price marker--none"><strong>ì·¨ì†Œí‘œ ì•Œë¦¼ì€ 1ì¸ ìµœëŒ€ 4ì¢Œì„ ê¹Œì§€ ì‹ ì²­ ê°€ëŠ¥í•©ë‹ˆë‹¤</strong></li>
+                       <li class="sits-price marker--none"><strong></strong></li>
+                    </ul>
+                </div>
+
+                <div class="choose-sits__info">
+                    <ul>
+                        <li class="sits-state sits-state--not">Not available</li>
+                        <li class="sits-state sits-state--your">Yourd choice</li>
+                    </ul>
+                </div>
+          </div>
+          <!--  only UI -->
+   
+         <div class="col-sm-8 com-md-9">   
+            <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
+            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=10358" 
+            style='width:100%; height:550px'  frameborder='0' align='center'>       
+                    <p>Your browser does not support iframes.</p>
+            </iframe>
+            <!-- style='width:100%' -->
+         </div>
+         <div class="col-sm-4 col-md-3">
+         	<div class="row"><p/></div>
+         	<div class="row"><p/></div>
+         	<div class="row"><p/></div>
+            <div class="category category--popular marginb-sm">
+                      <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
+                      <ul>
+                          <li style="font-size:20px; color:black">Seat : </li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li style="font-size:20px; color:black">Seat : </li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li style="font-size:20px; color:black">Seat : </li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                          <li style="font-size:20px; color:black">Seat : </li>
+                          <li>&nbsp;</li>
+                          <li>&nbsp;</li>
+                      </ul>
+            </div>
+            <button class="ui brown button" style="width:100%; height:50%;"><font size="4px">ì·¨ì†Œí‘œ ì•Œë¦¬ë¯¸</font><p/><font size="4px" color="white">ì‹ &nbsp;ì²­</font></button>
+         </div>
+        </section>  
+       
+         <input type="hidden" name="clientId" value=""/>
+         <form id="addBooking">
+         <input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
+         <input type="hidden" name="screenContentNo" value="${screenContent.screenContentNo}"/>
+         <input type="hidden" name="bookingSeatNo" value=""/>         
+         <input type="hidden" name="headCount" value=""/>
+         <input type="hidden" name="totalTicketPrice" value=""/>
+         <!-- <input type="hidden" name="impId" value=""/> -->
+         <!-- <input type="hidden" name="qrUrl" value=""/> -->   
+         <input type="hidden" name="impId" value="temp_imp_uid"/>
+         <input type="hidden" name="qrUrl" value="temp_qrUrl"/>
+         <input type="hidden" name="displaySeat" value="temp_displaySeat"/>
+      </form>
+                
+       </div>
+               <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>           
+     </div>
+  
+
+
+   <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+      
+      <script type="text/javascript">
+            $(document).ready(function() {
+                init_BookingOne();
+            });
+      </script>
+</body>
+ <style>
+      html{
+ 	     height: auto;
+      }
+ </style>
 </html>

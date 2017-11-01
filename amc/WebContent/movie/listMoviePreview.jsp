@@ -176,7 +176,11 @@
 <body>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
+	  <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar_.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -244,19 +248,22 @@
 		<div class="row">
 		
 			<c:set var="i" value="0"/>
-				<c:forEach var="movie" items="${list}">
+				<c:forEach var="preview" items="${list}">
 					<c:set var="i" value="${i+1 }"/>
 						<div class="col-xs-6 col-md-4" >
-						<a class='thumbnail' href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" style="text-decoration:none;">
-						<img src="${movie.postUrl }">
+						<a class='thumbnail' href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=search" style="text-decoration:none;">
+						<img src="${preview.movie.postUrl }">
 						</a>
 							
 							<hr/>
+								<span><li> 제목 : ${preview.movie.movieNm}</li> </span>			
+								<span><li> 감독 : ${preview.movie.directors}</li> </span>			
+								<span><li> 포스터 : ${preview.movie.postUrl}</li> </span>			
 								
-								<span><strong>${movie.movieNm }</strong></span>
-							    <span><li> 티켓오픈날짜 : ${movie.openDt }</li></span>	
-							       
-					
+								<span><strong>${preview.movie.movieNm }</strong></span>
+							    <span><li> 티켓오픈날짜 : ${preview. ticketOpenDate}</li></span>	
+							    <span><li> 상영날짜 : ${preview. screenOpenTime}</li> </span>
+						    <span><li> 가격 : ${preview. ticketPrice}</li> </span>					
 							    
 							     <div style="text-align: left;" >  					    							
    								 <!-- glyphicon glyphicon-heart -->   							 
@@ -279,6 +286,7 @@
 						
 						</div>				
 				</c:forEach>
+				</div>
 		
 	</div>
 

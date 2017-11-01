@@ -75,6 +75,30 @@ public class ScreenDAOImpl implements ScreenDAO {
 		return map;
 	}
 	
+	// 10/31 추가
+	@Override
+	public Map<String, Object> getPreviewList(Search search) {
+		System.out.println("ScreenDAOImpl의 getPreviewList 메소드 시작...");
+		
+		System.out.println("SEARCH :::: " + search);
+		
+		List<ScreenContent> list = sqlSession.selectList("ScreenContentMapper.getPreviewList", search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		
+		map.put("list", list);
+
+		System.out.println("List 값이 뭐게 " + list);
+		System.out.println("map 값이 뭐게 " + map);
+		System.out.println("ScreenDAOImpl의 getPreviewList 메소드 끝...");
+		
+		
+		
+		return map;
+	}
+
+	
 	
 	//[예매1단계용]
 	@Override
@@ -176,6 +200,19 @@ public class ScreenDAOImpl implements ScreenDAO {
 	public int getTotalCount(Search search) throws Exception {		
 		return sqlSession.selectOne("MovieMapper.getTotalCount2",search);
 	}
+	
+	//10/31 추가
+	@Override
+	public int getTotalPreviewCount(Search search) throws Exception {		
+		System.out.println("ScreenDAOImpl getTotalPreviewCount 시작");
+		System.out.println("searc값 ::::: " +search);
+		int getTotalPreviewCount = sqlSession.selectOne("ScreenContentMapper.getTotalPreviewCount",search);
+		System.out.println("getTotalPreviewCount :::::: " + getTotalPreviewCount);
+		System.out.println("ScreenDAOImpl getTotalPreviewCount 끝끝");
+		return getTotalPreviewCount;
+	}
+	
+	
 	@Override
 	public int getTotalCount(int movieNo) throws Exception {		
 		return sqlSession.selectOne("ScreenContentMapper.getTotalCount",movieNo);
