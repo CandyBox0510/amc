@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html;"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
 <%-- <c:if test="${ indexList eq null }">
  	<jsp:forward page="/cinema/index"/>
@@ -9,7 +9,6 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="EUC-KR">
 <!-- df
 	Basic Page Needs
         <meta charset="utf-8">
@@ -467,10 +466,11 @@
                  <c:if test="${count <=2 }">
                      <div class="movie-beta__item ">
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
-                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
-                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        <%-- <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;"> --%>
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
@@ -489,10 +489,10 @@
                  <c:if test="${count == 3 }">
                      <div class="movie-beta__item third--item">
                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
-                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
-                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
@@ -511,10 +511,10 @@
 				 <c:if test="${count == 4}">
                      <div class="movie-beta__item hidden-xs">
                          <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
-                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
-                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
@@ -533,10 +533,10 @@
                 <c:if test="${count > 4 }">
                      <div class="movie-beta__item hidden-xs hidden-sm">
                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
-                     	<img alt='' src="../images/comming_soon.jpg" style="width:185px; height:264px;">
+                     	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
-                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;">
+                        <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
                              <li><span class="best-voted">71 people voted today</span></li>
@@ -568,19 +568,17 @@
                       <div class="mega-select pull-right">
                           <span class="mega-select__point">Search by</span>
                           <ul class="mega-select__sort">
-                              <li class="filter-wrap"><a href="#" class="mega-select__filter filter--active" data-filter='location'>���հ˻�</a></li>
+                              <li class="filter-wrap"><a href="#" class="mega-select__filter filter--active" data-filter='location'>통합검색</a></li>
                           </ul>
 
-                          <input name="search-input" type='text' class="select__field">
+						  <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search" accept-charset="EUC-KR">
+	                          <input name="searchKeyword" type="text" class="select__field">
+	                          <div class="select__btn" onClick="javascript:unifiedSearch()">
+	                          <div class="btn btn-md btn--danger location">find <span class="hidden-exrtasm">unified</span></div>
+	                          </div>
+                          </form>
                           
-                          <div class="select__btn">
-                            <a href="#" class="btn btn-md btn--danger location">find <span class="hidden-exrtasm">your city</span></a>
-                            <a href="#" class="btn btn-md btn--danger cinema">find <span class="hidden-exrtasm">suitable cimema</span></a>
-                            <a href="#" class="btn btn-md btn--danger film-category">find <span class="hidden-exrtasm">best category</span></a>
-                            <a href="#" class="btn btn-md btn--danger actors">find <span class="hidden-exrtasm">talented actors</span></a>
-                            <a href="#" class="btn btn-md btn--danger director">find <span class="hidden-exrtasm">favorite director</span></a>
-                            <a href="#" class="btn btn-md btn--danger country">find <span class="hidden-exrtasm">produced country</span></a>
-                          </div>
+                          
 
                           <div class="select__dropdowns">
                               <ul class="select__group location">
@@ -619,7 +617,7 @@
                             <div class="movie movie--test movie--test--dark movie--test--left">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                        <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
                                         <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -643,7 +641,7 @@
                             <div class="movie movie--test movie--test--light movie--test--left">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                        <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
                                         <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -667,7 +665,7 @@
                             <div class="movie movie--test movie--test--light movie--test--right">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                    <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
                                     <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -691,7 +689,7 @@
                             <div class="movie movie--test movie--test--dark movie--test--right">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                    <img alt='' src="${movie.postUrl}" style="width:220px; height:220px;">
+                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
                                     <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -749,59 +747,6 @@
                     </aside>
                 </div>
             </div>
-
-            <div class="col-sm-12">
-                <h2 class="page-heading">Latest news</h2>
-
-                <div class="col-sm-4 similar-wrap col--remove">
-                    <div class="post post--preview post--preview--wide">
-                        <div class="post__image">
-                            <img alt='' src="../images/client-photo/post-thor.jpg">
-                            <div class="social social--position social--hide">
-                                <span class="social__name">Share:</span>
-                                <a href='#' class="social__variant social--first fa fa-facebook"></a>
-                                <a href='#' class="social__variant social--second fa fa-twitter"></a>
-                                <a href='#' class="social__variant social--third fa fa-vk"></a>
-                            </div>
-                        </div>
-                        <p class="post__date">22 October 2013 </p>
-                        <a href="single-page-left.html" class="post__title">"Thor: The Dark World" - World Premiere</a>
-                        <a href="single-page-left.html" class="btn read-more post--btn">read more</a>
-                    </div>
-                </div>
-                <div class="col-sm-4 similar-wrap col--remove">
-                    <div class="post post--preview post--preview--wide">
-                        <div class="post__image">
-                            <img alt='' src="../images/client-photo/post-annual.jpg">
-                            <div class="social social--position social--hide">
-                                <span class="social__name">Share:</span>
-                                <a href='#' class="social__variant social--first fa fa-facebook"></a>
-                                <a href='#' class="social__variant social--second fa fa-twitter"></a>
-                                <a href='#' class="social__variant social--third fa fa-vk"></a>
-                            </div>
-                        </div>
-                        <p class="post__date">22 October 2013 </p>
-                        <a href="single-page-left.html" class="post__title">30th Annual Night Of Stars Presented By The Fashion Group International</a>
-                        <a href="single-page-left.html" class="btn read-more post--btn">read more</a>
-                    </div>
-                </div>
-                <div class="col-sm-4 similar-wrap col--remove">
-                    <div class="post post--preview post--preview--wide">
-                        <div class="post__image">
-                            <img alt='' src="../images/client-photo/post-awards.jpg">
-                            <div class="social social--position social--hide">
-                                <span class="social__name">Share:</span>
-                                <a href='#' class="social__variant social--first fa fa-facebook"></a>
-                                <a href='#' class="social__variant social--second fa fa-twitter"></a>
-                                <a href='#' class="social__variant social--third fa fa-vk"></a>
-                            </div>
-                        </div>
-                        <p class="post__date">22 October 2013 </p>
-                        <a href="single-page-left.html" class="post__title">Hollywood Film Awards 2013</a>
-                        <a href="single-page-left.html" class="btn read-more post--btn">read more</a>
-                    </div>
-                </div>
-            </div>
                 
         </div>
         
@@ -811,26 +756,23 @@
             <section class="container">
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Cities</a></li>
-                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
-                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
-                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                        <li><a href="#" class="nav-link__item">현재 상영 영화</a></li>
+                        <li><a href="#" class="nav-link__item">상영 예정 영화</a></li>
+                        <li><a href="#" class="nav-link__item">시사회</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
-                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
-                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
-                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                        <li><a href="#" class="nav-link__item">영화 예매</a></li>
+                        <li><a href="#" class="nav-link__item">시사회 예매</a></li>
+                        <li><a href="#" class="nav-link__item">영화관 정보</a></li>
+                        <li><a href="#" class="nav-link__item">커뮤니티</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
-                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
-                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
-                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                        <li><a href="#" class="nav-link__item">굿즈</a></li>
+                        <li><a href="#" class="nav-link__item">스낵바</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-6">
@@ -839,15 +781,10 @@
 
                         <div class="social">
                             <a href='#' class="social__variant fa fa-facebook"></a>
-                            <a href='#' class="social__variant fa fa-twitter"></a>
-                            <a href='#' class="social__variant fa fa-vk"></a>
-                            <a href='#' class="social__variant fa fa-instagram"></a>
-                            <a href='#' class="social__variant fa fa-tumblr"></a>
-                            <a href='#' class="social__variant fa fa-pinterest"></a>
                         </div>
                         
                         <div class="clearfix"></div>
-                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
                     </div>
                 </div>
             </section>
@@ -889,6 +826,7 @@
 
             </section>
         </div>
+     </div>
 <!-- df
 	JavaScript
         jQuery 3.1.1 
@@ -938,7 +876,15 @@
               });
 		    </script> -->
 		    <script src="/js/custom.js"></script>
-		    
-
+		<script>
+		function unifiedSearch(){
+	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").attr("accept-charset","EUC-KR").submit();
+	   	}
+		</script>
 </body>
+ <style>
+      html{
+ 	     height: auto;
+      }
+ </style>
 </html>

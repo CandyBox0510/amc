@@ -45,7 +45,7 @@ public class CinemaController {
 		
 		String searchKeyword = search.getSearchKeyword();
 		
-		System.out.println("통합검색 서치키워드 : " + search.getSearchKeyword());
+		System.out.println("통합검색 서치키워드 : " + searchKeyword);
 		
 		model.addAttribute("unifiedSearch",cinemaService.unifiedSearch(searchKeyword));
 		

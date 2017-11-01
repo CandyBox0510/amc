@@ -95,8 +95,9 @@
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
-             <a href='/index.jsp' class="logo">
-                 <img alt='logo' src="/images/logo.png">
+             <a href='/cinema/index2' class="logo">
+                 <!-- <img alt='logo' src="/images/logo.png"> -->
+                 <img src="/images/amc.png">
              </a>
              
              <!-- Main website navigation-->
@@ -172,10 +173,10 @@
                    </a>
                      <ul class="auth__function">
                          <li><a href="#" class="auth__function-item">내 정보 보기</a></li>
-                         <li><a href="#" class="auth__function-item">예매 목록</a></li>
-                         <li><a href="#" class="auth__function-item">위시리스트</a></li>
-                         <li><a href="#" class="auth__function-item">취소표 알리미</a></li>
-                         <li><a href="#" class="auth__function-item">티켓오픈시간 알리미</a></li>
+                         <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">예매 목록</a></li>
+                         <li><a href="/movie/getWishList" class="auth__function-item">위시리스트</a></li>
+                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">취소표 알리미</a></li>
+                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=O" class="auth__function-item">티켓오픈시간 알리미</a></li>
                          <li><a href="#" class="auth__function-item">스토어 구매 목록</a></li>
                      </ul>
                  </div>

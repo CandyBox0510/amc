@@ -9273,6 +9273,9 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   background-repeat: no-repeat;
   background-position: 50% 7px;
 }
+.offer--alarm {
+  background-image: url(../images/icons/alarm-dark.svg);
+}
 .offer--winter {
   background-image: url(../images/icons/snow-dark.svg);
 }
@@ -9287,6 +9290,9 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .offer--gift {
   background-image: url(../images/icons/gift-dark.svg);
+}
+.offer--alarm:hover {
+  background-image: url(../images/icons/alarm-light.svg);
 }
 .offer--winter:hover {
   background-image: url(../images/icons/snow-light.svg);
@@ -9306,6 +9312,18 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .gallery-item .gallery-item--video:before,
 .gallery-item .gallery-item--video-link:before {
   background-color: #fe505a;
+}
+.gallery-item .gallery-item--blue-link:before {
+  background-color: #0080FF;
+}
+.gallery-item .gallery-item--success-link:before {
+  background-color: #5cb85c;
+}
+.gallery-item .gallery-item--goods-link:before {
+  background-color: #4c4145;
+}
+.gallery-item .gallery-item--info-link:before {
+  background-color: #5bc0de;
 }
 .choose-sits__info--first {
   border-right: 1px solid #4c4145;

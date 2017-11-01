@@ -1,133 +1,309 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    <!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="org.springframework.util.StringUtils" %>
+<!doctype html>
 <html>
 <head>
-<meta charset="EUC-KR">
+   <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!--   Modal CDN  -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+    
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
-	<!--  CSS √ﬂ∞° : ≈¯πŸø° »≠∏È ∞°∏Æ¥¬ «ˆªÛ «ÿ∞· :  ¡÷ºÆ√≥∏Æ ¿¸, »ƒ »Æ¿Œ-->
-	<style type="text/css">
-	}
-    body {
-        padding-top : 100px;
-    }
-    </style>
-
-
-
+    
+  
+  <script type="text/javascript">
+   </script> 
 </head>
+
+
 <body>
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-<br></br>
-	<div class="container">
-	<br/><br/><br/>
-			<div class="panel panel-success"> <!-- ∏µÁøµ»≠ ∞Àªˆ -->
-	            <div class="panel-heading">
-	              <div class="panel-title"><h2>øµ»≠ ∞Àªˆ ∞·∞˙</h2></div>
-	            </div>
-	            <div class="panel-body">
-	               <c:set var="i" value="0" />
+    <div class="wrapper place-wrapper">
+        <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="/images/banners/bra.jpg">
+        </div>
+
+        <!-- Header section -->
+        <header class="header-wrapper">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar_.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+        </header>
+        
+         <!-- Search bar -->
+        <div class="search-wrapper">
+            <div class="container container--add">
+                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
+                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
+                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
+                </form>
+            </div>
+        </div>
+        
+        
+        <!-- Main content -->
+        <div class="place-form-area">
+        <section class="container">
+            <div class="order-container">
+                <div class="order">
+                    <img class="order__images" alt='' src="/images/unifiedSearch.png">
+                    <p class="order__title">ÌÜµÌï©Í≤ÄÏÉâ <br><span class="order__descript">in amc homepage</span></p>
+                </div>
+            </div>
+            
+            <!-- ÏòÅÌôî ÌÜµÌï©Í≤ÄÏÉâ  ÏãúÏûë-->
+            <div class="order-step-area">
+                <div class="order-step second--step">ÏòÅÌôî</div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+	                <div class="gallery-wrapper">
+	                <c:set var="i" value="0" />
 					  <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-xs-6 col-md-4" >
-						<a class='thumbnail' href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" style="text-decoration:none;">
-							<img src="${movie.postUrl }">
-						</a>
-								<span><strong>øµ»≠∏Ì : ${movie.movieNm }</strong></span>
-							    <span><li> ∞≥∫¿¿œ : ${movie.openDt }</li></span>	   
-							    <div style="text-align: left;">
-    						    </div>								
-						<hr/>       
-						</div>	
+						<div class="col-sm-4 col-md-3">
+	                        <div class="gallery-item">
+	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search">
+	                                <img alt='' src="${movie.postUrl}" align="middle" width="230px" height="230px">
+	                            </a>
+	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
+	                                <p class="gallery-item__name">${movie.movieNm }</p>
+	                            </a>
+	                        </div>
+	                    </div>	
 			        </c:forEach>
-	            </div>
-	          </div><!-- øµ»≠ ∆«≥⁄ ≥° -->
-	          <div class="panel panel-info"> <!-- Ω√ªÁ»∏ ∞Àªˆ -->
-	            <div class="panel-heading">
-	              <div class="panel-title"><h2>Ω√ªÁ»∏ ∞Àªˆ ∞·∞˙</h2></div>
-	            </div>
-	            <div class="panel-body">
-		            <c:set var="i" value="0" />
-						  <c:forEach var="screenContent" items="${unifiedSearch.uniPreviewList}">
-							<c:set var="i" value="${ i+1 }" />
-							<div class="col-xs-6 col-md-4" >
-							<a class='thumbnail' href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" style="text-decoration:none;">
-								<img src="${screenContent.movie.postUrl }">
-							</a>
-									<span><strong>Ω√ªÁ»∏∏Ì : ${screenContent.previewTitle }</strong></span>
-								    <span><li> ∆ºƒœ ø¿«¬ ≥Ø¬• : ${screenContent.ticketOpenDate }</li></span>	   
-								    <div style="text-align: left;">
-	    						    </div>								
-							<hr/>       
-							</div>	
-				        </c:forEach>
-	            </div>
-	          </div><!-- Ω√ªÁ»∏ ∆«≥⁄ ≥° -->
-	        <div class="panel panel-warning"> <!-- ±¬¡Ó ∞Àªˆ -->
-	            <div class="panel-heading">
-	              <div class="panel-title"><h2>±¬¡Ó ∞Àªˆ ∞·∞˙</h2></div>
-	            </div>
-	            <div class="panel-body">
-	            		<c:set var="i" value="0" />
-						  <c:forEach var="goods" items="${unifiedSearch.uniGoodsList}">
-							<c:set var="i" value="${ i+1 }" />
-							<div class="col-xs-6 col-md-4" >
-							<a class='thumbnail' href="/product/getGoodsProduct?prodNo=${goods.prodNo}" style="text-decoration:none;">
-								<img src="/images/uploadFiles/${goods.prodImage}">
-							</a>
-									<span><strong>π∞«∞∏Ì : ${goods.prodName }</strong></span>
-								    <span><li> ∞°∞› : ${goods.prodPrice }</li></span>	   
-								    <div style="text-align: left;">
-	    						    </div>								
-							<hr/>       
-							</div>	
-				          </c:forEach>
-	            </div>
-	          </div><!-- ±¬¡Ó ∆«≥⁄ ≥° -->
-	        <div class="panel panel-danger"> <!-- Ω∫≥º ∞Àªˆ -->
-	            <div class="panel-heading">
-	              <div class="panel-title"><h2>Ω∫≥º ∞Àªˆ ∞·∞˙</h2></div>
-	            </div>
-	            <div class="panel-body">
-	            		<c:set var="i" value="0" />
-						  <c:forEach var="snack" items="${unifiedSearch.uniSnackList}">
-							<c:set var="i" value="${ i+1 }" />
-							<div class="col-xs-6 col-md-4" >
-							<a class='thumbnail' href="/product/getSnackProduct?prodNo=${snack.prodNo}" style="text-decoration:none;">
-								<img src="/images/uploadFiles/${snack.prodImage}">
-							</a>
-									<span><strong>π∞«∞∏Ì : ${snack.prodName }</strong></span>
-								    <span><li> ∞°∞› : ${snack.prodPrice }</li></span>	   
-								    <div style="text-align: left;">
-	    						    </div>								
-							<hr/>       
-							</div>	
-				          </c:forEach>
-	            </div>
-	          </div><!-- Ω∫≥º ∆«≥⁄ ≥° -->
-	</div>
+	                </div>
+                </div>
+            </div>
+          	<hr/>
+          	<!-- ÏòÅÌôî ÌÜµÌï©Í≤ÄÏÉâ ÎÅù -->
+          	
+          	<!-- ÏãúÏÇ¨Ìöå ÌÜµÌï©Í≤ÄÏÉâ  ÏãúÏûë-->
+            <div class="order-step-area">
+                <div class="order-step second--step">ÏãúÏÇ¨Ìöå</div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+	                <div class="gallery-wrapper">
+	                <c:set var="i" value="0" />
+					  <c:forEach var="screenContent" items="${unifiedSearch.uniPreviewList}">
+						<c:set var="i" value="${ i+1 }" />
+						<div class="col-sm-4 col-md-3">
+	                        <div class="gallery-item">
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
+	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="230px" height="230px">
+	                            </a>
+	                            <div class="alert alert-danger"><strong>Ìã∞Ïºì Ïò§Ìîà ÏùºÏûê</strong><br/> ${screenContent.ticketOpenDate }</div>
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
+	                                <p class="gallery-item__name">${screenContent.previewTitle }</p>
+	                            </a>
+	                        </div>
+	                    </div>	
+			        </c:forEach>
+	                </div>
+                </div>
+            </div>
+          	<hr/>
+          	<!-- ÏãúÏÇ¨Ìöå ÌÜµÌï©Í≤ÄÏÉâ ÎÅù -->
+          	
+          	<!-- ÍµøÏ¶à ÌÜµÌï©Í≤ÄÏÉâ  ÏãúÏûë-->
+            <div class="order-step-area">
+                <div class="order-step third--step">ÍµøÏ¶à</div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+	                <div class="gallery-wrapper">
+	                <c:set var="i" value="0" />
+					  <c:forEach var="goods" items="${unifiedSearch.uniGoodsList}">
+						<c:set var="i" value="${ i+1 }" />
+						<div class="col-sm-4 col-md-3">
+	                        <div class="gallery-item">
+	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}">
+	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="230px" height="230px">
+	                            </a>
+	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}" class="gallery-item__descript gallery-item--goods-link">
+	                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
+	                                <p class="gallery-item__name">${goods.prodName}</p>
+	                            </a>
+	                        </div>
+	                    </div>	
+			        </c:forEach>
+	                </div>
+                </div>
+            </div>
+          	<hr/>
+          	<!-- ÍµøÏ¶à ÌÜµÌï©Í≤ÄÏÉâ ÎÅù -->
+          	
+        	<!-- Ïä§ÎÇµÎ∞î ÌÜµÌï©Í≤ÄÏÉâ  ÏãúÏûë-->
+            <div class="order-step-area">
+                <div class="order-step first--step">Ïä§ÎÇµÎ∞î</div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row">
+	                <div class="gallery-wrapper">
+	                <c:set var="i" value="0" />
+					  <c:forEach var="snack" items="${unifiedSearch.uniSnackList}">
+						<c:set var="i" value="${ i+1 }" />
+						<div class="col-sm-4 col-md-3">
+	                        <div class="gallery-item">
+	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}">
+	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="230px" height="230px">
+	                            </a>
+	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}" class="gallery-item__descript gallery-item--photo-link">
+	                                <span class="gallery-item__icon"><i class="fa fa-glass"></i></span>
+	                                <p class="gallery-item__name">${snack.prodName }</p>
+	                            </a>
+	                        </div>
+	                    </div>	
+			        </c:forEach>
+	                </div>
+                </div>
+            </div>
+          	<hr/>
+          	<!-- Ïä§ÎÇµÎ∞î ÌÜµÌï©Í≤ÄÏÉâ ÎÅù -->
+   
+        </section>  
+       
+         <input type="hidden" name="clientId" value=""/>
+         <form id="addBooking">
+         <input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
+         <input type="hidden" name="screenContentNo" value="${screenContent.screenContentNo}"/>
+         <input type="hidden" name="bookingSeatNo" value=""/>         
+         <input type="hidden" name="headCount" value=""/>
+         <input type="hidden" name="totalTicketPrice" value=""/>
+         <!-- <input type="hidden" name="impId" value=""/> -->
+         <!-- <input type="hidden" name="qrUrl" value=""/> -->   
+         <input type="hidden" name="impId" value="temp_imp_uid"/>
+         <input type="hidden" name="qrUrl" value="temp_qrUrl"/>
+         <input type="hidden" name="displaySeat" value="temp_displaySeat"/>
+      </form>
+                
+       </div>
+               <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>           
+     </div>
+  
+
+
+   <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+      
+      <script type="text/javascript">
+            $(document).ready(function() {
+                init_BookingOne();
+            });
+            
+            function unifiedSearch(){
+    	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").attr("accept-charset","EUC-KR").submit();
+    	   	}
+      </script>
+     
 </body>
+ <style>
+      html{
+ 	     height: auto;
+      }
+ </style>
 </html>

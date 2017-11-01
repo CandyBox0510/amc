@@ -77,7 +77,7 @@
         <!-- Main content -->
         <section class="container">
             <div class="col-sm-12">
-                <h2 class="page-heading">취소표 알림 리스트</h2>
+                <h2 class="page-heading">나의 위시 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <%-- <c:set var="i" value="0" />
@@ -89,12 +89,12 @@
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg">
 	                                <img alt='' src="https://pbs.twimg.com/media/DMjnIyvUQAAYKLy.jpg" style="widht:524px; height:365px">
 	                            </a>
-	                            <div class="alert alert-success" role="alert">
-  									<strong>취소표 신청 좌석</strong><br/>A30<a href="http://naver.com"><span class="label label-success">취소</span></a>
+	                            <div class="alert alert-info" role="alert">
+  									<strong>시사회 여부</strong><br/>영화 or 시사회<a href="http://naver.com"><span class="label label-info">취소</span></a>
 								</div>
-	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
+	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--info-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
-	                                <p class="gallery-item__name">영화이름</p>
+	                                <p class="gallery-item__name">영화 or 시사회 이름</p>
 	                            </a>
  	                         </div>       
 	                    </div>

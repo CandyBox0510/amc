@@ -144,7 +144,7 @@
 	
 	<select id="uniPreviewList" parameterType="string" resultMap="screenContentSelectMap">
 	SELECT * FROM 
-				(SELECT sc.preview_flag, sc.preview_title, mv.movie_no, mv.poster 
+				(SELECT sc.preview_flag, sc.preview_title, mv.movie_no, mv.poster, TO_CHAR(sc.ticket_opendate,'yyyy-mm-dd hh:mi') ticket_opendate
 				FROM screencontent sc, movie mv 
 				WHERE sc.movie_no = mv.movie_no AND sc.preview_title LIKE '%${value}%') 
 			 WHERE preview_flag = 'Y'
