@@ -109,12 +109,12 @@ public class Search {
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
 				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", searchKeyword3=" + searchKeyword3
-				+ ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum="
-				+ startRowNum + ", stockView=" + stockView + "]";
-				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", orderCondition=" + orderCondition
-				+ ", orderOption=" + orderOption + ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum="
-				+ endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView + "]";
+				+ ", orderCondition=" + orderCondition + ", orderOption=" + orderOption + ", pageSize=" + pageSize
+				+ ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", stockView=" + stockView + "]";
 	}
 
+
+	
 	
 }
