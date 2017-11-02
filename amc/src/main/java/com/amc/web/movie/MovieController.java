@@ -34,6 +34,7 @@ import com.amc.common.util.CommonUtil;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
+import com.amc.service.domain.WishList;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 
@@ -71,8 +72,9 @@ public class MovieController {
 	
 
 	@RequestMapping( value="getMovieList")
-	public String getMovieList( @ModelAttribute("search") Search search, 
-								  Model model , HttpServletRequest request) 
+	public String getMovieList( @ModelAttribute("search") Search search,								
+								  Model model , HttpSession session,
+								  HttpServletRequest request) 
 								  throws Exception{
 		
 		System.out.println("/getMovieList  GET ");
@@ -84,42 +86,108 @@ public class MovieController {
 		}
 		search.setPageSize(pageSize);
 		
+		
+		User user = (User)session.getAttribute("user");		
+		
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
+		
+		System.out.println("menu :" + request.getParameter("menu"));
+		
 		
 		if(request.getParameter("menu").equals("manage")) {
 			
 			search.setSearchKeyword2("manage");
+			search.setSearchKeyword3("manage");
+			
 		
-			System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
+			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
 		} else {
-			if (search.getSearchKeyword() != null) {				
-				search.setSearchCondition("movieTitleSearch");	
-			}
+			// 현재 상영 영화인 경우 로직
+			if((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search")))  {
 				
+				System.out.println("현재 상영 영화 콜 !!!!");
+				
+				search.setSearchKeyword2("4");				
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");					
+				}
+			}
+			
+			// 현재 상영 예정 영화인  경우 로직
+			if(request.getParameter("menu").equals("commingsoon")) {
+				search.setSearchKeyword2("5");
+				
+				System.out.println("상영 예정 영화 콜 !!!!");
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");	
+				}
+			}	
 		}
-	
 		
-		Map<String , Object> map= movieService.getMovieList(search);	
+			
+		if (user != null) {
+			System.out.println("User not null ....");
+			
+			Map<String,Object> tempMap = new HashMap<String,Object>();		
+			
+			tempMap.put("search", search);
+			tempMap.put("user", user);
+			
+			Map<String, Object> map2 = movieService.getWishList(tempMap);	
+			List<WishList> listWish = ((List<WishList>)movieService.getWishList(tempMap).get("listWish"));
+			
+			System.out.println("listWish  length::" + listWish.size()  + "listWish  :: " + listWish);
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);		
+			Map<String , Object> map= movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");	
+			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
+			
+			for (int i = 0 ; i < movieList.size(); i++) {			
+				for (int j = 0; j < listWish.size() ; j++) {				
+						if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
+							movieList.get(i).setWishList(listWish.get(j));
+							System.out.println("movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
+						}
+				  }
+			}
+		
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);		
+			
+			System.out.println("search condition :: " + search.getSearchCondition());
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			System.out.println("list show ::"  + map.get("list"));
+			
+		} else {
+			Map<String , Object> map= movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");	
+			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
+			
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);	
+			
+			System.out.println("search condition :: " + search.getSearchCondition());
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			System.out.println("list show ::"  + map.get("list"));
+		}
 		
 		
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
-		// "movieTitleSearch"은 일반인 검색에  해당됨 		
-		
-	
-		System.out.println("search condition :: " + search.getSearchCondition());
-		
-		// Model 과 View 연결
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		
-		System.out.println("list show ::"  + map.get("list"));
-	
+		// "searchCondtion=7" 은 일반인 검색에  해당됨 		
 		
 		if(request.getParameter("menu").equals("movie")) {
 			System.out.println("listMovie.jsp called");
@@ -239,11 +307,9 @@ public class MovieController {
 		}
 	}
 	
-	/*private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";*/
-	private final String PATH = "http://127.0.0.1:8080/images/movie/";
+	//private final String PATH = "C:/Users/jeung/git/amc/amc/WebContent/images/movie/";
+	//private final String PATH = "http://127.0.0.1:8080/images/movie/";
 	//private final String PATH = "C:/amcPoster/";
-		
-	
 	
 	@RequestMapping (value ="updateMovie", method=RequestMethod.POST)
 	public String updateMovie( 						
@@ -251,10 +317,15 @@ public class MovieController {
 									 MultipartHttpServletRequest multiPartRequest,
 									 HttpServletRequest httpReq,												
 									 Model model,
-									 HttpSession session
+									 HttpSession session									
 								   ) throws Exception {
 		
-				
+		
+		// Tomcat 서버가 실제 구동되는 위치 파일 
+		// D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\amc\images\movie
+		
+		String PATH = session.getServletContext().getRealPath("/")+"\\images\\movie\\";
+		
 		/**
 		 * Upload Multi-files using Spring Controller
 		 * 
@@ -284,7 +355,6 @@ public class MovieController {
 		
         if(itr.hasNext()) {
         	List<MultipartFile> mpf = multiPartRequest.getFiles(itr.next());
-        	
                        
             for(int i = 0; i < mpf.size(); i++) {
             	
@@ -357,12 +427,11 @@ public class MovieController {
 		//modelAndView.setViewName("/movie/updateMovie.jsp");
 		//return modelAndView;
 		
-		return "forward:/movie/updateMovie.jsp";
+		return "forward:/movie/getMovieList?menu=manage";
 		
 	}
-        return "forward:/movie/updateMovie.jsp";
+        return "forward:/movie/getMovieList?menu=manage";
   }
-
 
 	@RequestMapping( value="deleteMovie", method=RequestMethod.POST)
 	public String deleteMovie(@RequestParam(value="movieNo", required=true) Integer movieNo , 

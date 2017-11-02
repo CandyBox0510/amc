@@ -60,7 +60,7 @@
         <!-- Header section -->
         <header class="header-wrapper">
 			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar_.jsp" />
+			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
@@ -49,6 +50,9 @@ public interface MovieDAO {
 
 	// 마이페이지에서 위시리스트 불러오기
 	public List<WishList> getWishList(Search search, String userId);
+	
+	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
+	// public List<WishList> getWishListMovie(Search search, User user);
 
 	// RESTCONTROLLER 타는 부분
 

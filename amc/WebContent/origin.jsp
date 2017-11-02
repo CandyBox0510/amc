@@ -1177,9 +1177,9 @@
                         <p class="login__tracker">or</p>
                         
                         <div class="field-wrap">
-                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+<!--                         <input type='email' placeholder='Email' name='user-email' class="login__input">
                         <input type='password' placeholder='Password' name='user-password' class="login__input">
-
+ -->
                         <input type='checkbox' id='#informed' class='login__check styled'>
                         <label for='#informed' class='login__check-info'>remember me</label>
                          </div>

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -116,50 +115,36 @@ public class BookingController {
 		return "forward:/booking/selectSeat.jsp";
 	}
 
-	//예매3단계
-	@RequestMapping( value="requestPay", method=RequestMethod.POST)
-	public String requestPay(@RequestParam("screenContentNo") int screenContentNo,
-			@RequestParam("seats") String seats, Model model) throws Exception{	
-		System.out.println("/booking/requestPay : POST");
-		
-		ScreenContent screenContent = screenService.getScreenContent(screenContentNo);		
-		Movie movie = movieService.getMovie(screenContent.getMovie().getMovieNo());
-		
-		Booking booking = new Booking();
-		booking.setMovie(movie);
-		booking.setScreenContent(screenContent);
-		booking.setBookingSeatNo(seats);	
-		int headCount = (StringUtils.countOccurrencesOf(seats, ",")+1)/2;
-		System.out.println("headCount : "+headCount+", 티켓가격 : "+screenContent.getTicketPrice());
-		booking.setHeadCount(headCount);
-		booking.setTotalTicketPrice(screenContent.getTicketPrice()*headCount);
-		
-		model.addAttribute(booking);
-		
-		return "forward:/booking/addBooking.jsp";
-	}
-	
-	//결제완료시 예매확인
+	//예매3단계 (결제완료) QR보내기
 	@RequestMapping( value="addBooking", method=RequestMethod.POST)
 	public String addBooking(@ModelAttribute("booking") Booking booking,
-						Model model, HttpSession session) throws Exception{	
-		System.out.println("/booking/addBooking : POST");
+							 @RequestParam("displaySeat") String displaySeat,
+							 HttpSession session, Model model) throws Exception{	
+		System.out.println("/booking/requestPay : POST");
+		
+		ScreenContent screenContent = screenService.getScreenContent(booking.getScreenContentNo());		
+		Movie movie = movieService.getMovie(screenContent.getMovie().getMovieNo());
+		
+		booking.setMovie(movie);
+		booking.setScreenContent(screenContent);
 		
 		//1. ADD booking
 		System.out.println("insert하려는 booking : "+booking);
 		bookingService.addBooking(booking);
 		
-		//3. GET booking
+		//2. GET booking
 		booking = bookingService.getBookingByInfo(booking);
 		System.out.println("add 후 no까지 포함된 booking : " + booking);
 		
-		//2. ADD statistic
+		//3. ADD statistic
 		User user = (User) session.getAttribute("user");
 		bookingService.updateStatistic(user, booking);
 		
-		model.addAttribute("booking",booking);
-		return "forward:/booking/addBookingConfirm.jsp";
+		model.addAttribute("booking",booking);		
+		model.addAttribute("displaySeat", displaySeat);
+		return "forward:/booking/addBooking.jsp";
 	}
+	
 	
 	//예매상세조회
 	@RequestMapping( value="getBooking", method=RequestMethod.GET)
@@ -266,5 +251,22 @@ public class BookingController {
 	    return "redirect:/booking/getPreviewList";
 	}
 	
+	@RequestMapping(value="sendEmailQR", method=RequestMethod.GET)
+	public String sendEmailQR(@RequestParam("bookingNo") String bookingNo, 
+						@RequestParam("userEmailAddr") String userEmailAddr, Model model) throws Exception{			
+
+		
+		Booking booking = bookingService.getBooking(bookingNo);
+
+    	String subject = "AMC에서 예매하신 내역입니다.";	
+    	StringBuilder sb = new StringBuilder();        
+        sb.append("회원님의 예매정보가 있는 QR코드입니다. 이미지를 클릭 하시면 회원가입 화면으로 이동합니다. <br/>" );
+        sb.append("<a href=http://127.0.0.1:8080/user/addUser?email="+userEmailAddr+">");
+        sb.append("<img src='"+booking.getQrUrl()+"'/></a>");        
+        
+        userService.send(subject, sb.toString(), "bitcampamc@gmail.com", userEmailAddr, null);
+		
+		return  "forward:/booking/addBooking.jsp";
+	}
 	
 }

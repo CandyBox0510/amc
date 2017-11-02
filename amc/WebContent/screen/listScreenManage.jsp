@@ -148,7 +148,6 @@
         
         
         
-        
            
 
                 <div class="tags-area tags-area--thin" style="height : 50px">
@@ -173,7 +172,8 @@
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
 	                                    <a href='/screen/getScreenContentList/${screen.movieNo}' class="cinema__images">
-	                                        <img id="poster"alt='' src="${screen.postUrl }" >                                        
+	                                        <img id="poster"alt='' src="${screen.postUrl }" >
+	                                                           <input type="text" value="${screen.postUrl }">                     
 	                                    </a>
 	                                    <a href="/screen/getScreenContentList/${screen.movieNo}" class="movieNm">${screen.movieNm }</a>
 	                                    <p><strong>개봉일</strong>  ${screen.openDt }<br><strong>상영마감일</strong>${screen.endDt }<br><strong>감독</strong>  ${screen.director }</p>	     

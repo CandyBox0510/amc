@@ -1,74 +1,319 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html>
+<head>
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="ko">
-<head> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+    
+    <!--  Í∏∞Ï°¥ src -->
+    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
-	<!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
+		<!--  font from googleApi -->
+		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
+		
+  <script type="text/javascript">
+	$( function() {
+		
+		$("#deleteBooking").on("click" , function() {
+			if(confirm("ÏòàÎß§Î•º Ï∑®ÏÜåÌïòÏãúÍ≤†ÏäµÎãàÍπå?")){
+				var bookingNo = $("input[name='bookingNo']").val();
+				self.location = "/booking/deleteBooking?bookingNo="+bookingNo;
+			}		
+		});
+		
+		$("#sendQR").on("click", function(){
+			alert("clicked!");
+			fncSendMail();
+		})
 	
-	<!--   Modal CDN  -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<title>øπ∏≈ªÛºº∫∏±‚</title>
-<script>
-$( function() {
-	
-	$("#deleteBooking").on("click" , function() {
-		if(confirm("øπ∏≈∏¶ √Îº“«œΩ√∞⁄Ω¿¥œ±Ó?")){
-			var bookingNo = $("input[name='bookingNo']").val();
-			self.location = "/booking/deleteBooking?bookingNo="+bookingNo;
-		}		
 	});
 
-});
+	function fncSendMail() {
+			
+		 var email = $("#email").val();	
+		 var bookingNo = "${booking.bookingNo}";
+		 //var bookingNo = "b10100";
+		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) 
+			 || email == ""){
+	   	alert("Ïù¥Î©îÏùº ÌòïÏãùÏù¥ ÏïÑÎãôÎãàÎã§.");
+	   	return;
+	    }
+		alert("Î©îÏùºÏùÑ Î≥¥ÎÉÖÎãàÎã§. \nÏù¥Î©îÏùºÏ£ºÏÜå : "+email+"\nÏòàÎß§Î≤àÌò∏ : "+bookingNo);
+		self.location="/booking/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email;
+	
+	}
 
 </script>
+<style>
+	.promo--short .promo__head {
+	  color: #4c4145;
+	  position: relative;
+	  display: inline-block;
+	  margin-bottom: 6px;
+	  margin-top: 8px;
+	}
+	.promo--short .promo__head:before {
+	  content: '';
+	  background-image: url(../images/components/wave-dark.svg);
+	  background-repeat: no-repeat;
+	  background-size: 84px 8px;
+	  width: 84px;
+	  height: 8px;
+	  position: absolute;
+	  top: 8px;
+	  left: -116px;
+	}
+	.promo--short .promo__head:after {
+	  content: '';
+	  background-image: url(../images/components/wave-dark.svg);
+	  background-repeat: no-repeat;
+	  background-size: 84px 8px;
+	  width: 84px;
+	  height: 8px;
+	  position: absolute;
+	  top: 8px;
+	  right: -116px;
+	}
+	.content__text{
+	 /*font-family: 'Jeju Gothic', sans-serif;*/
+	  font-family: 'Hanna', sans-serif; 
+	 
+	}
+	.abc{
+	  font-family: 'Hanna', sans-serif; 
+	 }
+	 
+	 .contact-info {
+	  text-align: left;
+	}
+	.contact-info .contact-info__field {
+	  position: relative;
+	  width: 100%;
+	  display: inline-block;
+	  margin-right: 28px;
+	}
+	.contact-info .contact-info__field .form__mail {
+	  padding-left: 60px;
+	}
+	.contact-info .contact-info__field:before {
+	  content: '';
+	  width: 39px;
+	  height: 39px;
+	  -webkit-border-radius: 3px 0 0 3px;
+	  -moz-border-radius: 3px 0 0 3px;
+	  border-radius: 3px 0 0 3px;
+	  background-color: #4c4145;
+	  position: absolute;
+	  top: 0px;
+	  left: 0;
+	}
+	.contact-info .contact-info__field:after {
+	  content: '';
+	  color: #b4b1b2;
+	  font: 13px "FontAwesome";
+	  position: absolute;
+	  top: 10px;
+	  left: 15px;
+	}
+	.contact-info .contact-info__field-mail:after {
+	  content: "\f0e0";
+	  left: 13px;
+	}
+	.contact-info .contact-info__field-tel:after {
+	  content: "\f095";
+	}
+	.ticket-control .list--download {
+	  border-radius: 3px 0 0 3px;
+	  margin-right: -5px;
+	}
+	.watchlist list--download {
+		color:white;
+	}
+	
+</style>
 </head>
 		
 <body>
-		<jsp:include page="/layout/topToolbar.jsp" /><br><br><br>
 
 	<div class="container">
-	<h2>øπ∏≈ªÛºº∫∏±‚ ∆‰¿Ã¡ˆ¿‘¥œ¥Ÿ.</h2>
+	            <!-- Promo boxes -->
+            <div class="content-wrapper">
+                <h2 class="heading heading--outcontainer">Promo boxes</h2>
+                
+                <div class="col-sm-3">
+                  <div class="promo promo-field">
+                      <div class="promo__head">A.Movie app</div>
+                      <div class="promo__describe">for all smartphones<br> and tablets</div>
+                      <div class="promo__content">
+                          <ul>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/apple-store.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/google-play.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/windows-store.svg"></a></li>
+                          </ul>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="promo promo--short">
+                      <img class="promo__images" alt='' src="/images/tickets.png">
+                      <div class="promo__head">My Ticket</div>
+                      <div class="promo__describe"><span class="abc">ÏòàÎß§ Ï°∞Ìöå /Ï∑®ÏÜåÌïòÍ∏∞</span></div>
+                      <div class="promo__content"></div>
+                  </div>
+                  <div class="promo promo--info">
+                      <div class="promo__head"><!-- Join <br> --><span class="abc">${booking.movie.movieNm}</span></div>
+                      <div class="promo__content">
+                          <p class="content__text">ÏòàÎß§Î≤àÌò∏ : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	ÏòàÎß§ Í∞ÄÍ≤© : ${booking.totalTicketPrice}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	Ï¢åÏÑù Î≤àÌò∏ : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
+                          	<br>
+                          	Ï¢åÏÑù Î≤àÌò∏ : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
+                          </p>
+                          <a href="#" id="deleteBooking" class="btn btn-md btn--warning btn-wider btn--follow"><span class="abc">ÏòàÎß§ Ï∑®ÏÜåÌïòÍ∏∞</span></a>                  
+                      </div>
+                      
+                      
+						<form id='contact-info' method='post' novalidate="" class="form contact-info">
+			                   <div class="contact-info__field contact-info__field-mail"  >
+			                        <input type='email' id="email" name='user-mail' value="" placeholder='QRÏΩîÎìúÎ•º Î∞õÏùÑ Ïù¥Î©îÏùºÏ£ºÏÜå' 
+			                        class="form__mail" style="width:50%" autofocus autocomplete="off" required >		                     
+			                         <div class="watchlist list--download abc" id="sendQR">QR CODE Ï†ÑÏÜ°</div>                   
+			                    </div> 			                                                              
+		                </form>
+                	
+                	
+                  </div>
+                </div>
+            </div>
+		<!--  end of promo box -->
+	
+	<!--  yena made -->
 	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
-			
-	<table class="table table-hover table-striped" >
-		<tbody>
-			<tr align="center">
-			  	<td>øπ∏≈π¯»£</td>
-			  	<td>${booking.bookingNo}</td> 
-			</tr>
-			<tr align="center">
-			  	<td>øπ∏≈ ∞°∞›</td>
-			  	<td>${booking.totalTicketPrice}</td> 
-			</tr>
-			<tr align="center">
-			  	<td>øπ∏≈ ¡¬ºÆ</td>
-			  	<td>${booking.bookingSeatNo}</td> 
-			</tr>
-			<tr align="center">
-			  	<td>øµ»≠¡¶∏Ò</td>
-			  	<td>${booking.movie.movieNm}</td> 
-			</tr>				  
- 
-        </tbody>
-      </table>
+	<!--  yena made -->
 
-	</div>	
-		 <div id="deleteBooking"><h3>¢∫øπæ‡√Îº“«œ±‚</h3></div>
-	</body>
+	<div>
+        <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-	</body>
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </div>
+
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
+            <section class="container">
+
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+
+                        <p class="login__tracker">or</p>
+                        
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+        </div>
+
+
+</body>
 </html>
+

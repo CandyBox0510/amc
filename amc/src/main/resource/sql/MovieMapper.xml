@@ -29,25 +29,22 @@
   		<result property="showTm" 			column="runningtime"		jdbcType="VARCHAR"/>  		
   		<result property="synopsis" 		column="synopsis" 			jdbcType="VARCHAR"/>  	
   		<result property="trailer" 			column="trailer" 			jdbcType="VARCHAR"/>  	
-  		<result property="maleCnt" 			column="male_count" 			jdbcType="NUMERIC"/>
-  		<result property="femaleCnt" 		column="female_count" 			jdbcType="NUMERIC"/>
-  		<result property="age10s"	 		column="age10s" 				jdbcType="NUMERIC"/>  
-  		<result property="age20s" 			column="age20s" 				jdbcType="NUMERIC"/>
-  		<result property="age30s" 	column="age30s" 			jdbcType="NUMERIC"/>
-  		<result property="age40s" 		column="age40s" 			jdbcType="NUMERIC"/>  		
-  		<result property="age50s" 			column="age50s"		jdbcType="NUMERIC"/>  		
-  		<result property="age60s" 		column="age60s" 			jdbcType="NUMERIC"/>  	
-  		<result property="age60sMore" 			column="age60more" 			jdbcType="NUMERIC"/>  
-  		
+  		<result property="maleCnt" 			column="male_count" 		jdbcType="NUMERIC"/>
+  		<result property="femaleCnt" 		column="female_count" 		jdbcType="NUMERIC"/>
+  		<result property="age10s"	 		column="age10s" 			jdbcType="NUMERIC"/>  
+  		<result property="age20s" 			column="age20s" 			jdbcType="NUMERIC"/>
+  		<result property="age30s" 			column="age30s" 			jdbcType="NUMERIC"/>
+  		<result property="age40s" 			column="age40s" 			jdbcType="NUMERIC"/>  		
+  		<result property="age50s" 			column="age50s"				jdbcType="NUMERIC"/>  		
+  		<result property="age60s" 			column="age60s" 			jdbcType="NUMERIC"/>  	
+  		<result property="age60sMore" 		column="age60more" 			jdbcType="NUMERIC"/>  
+
+		<association property="wishList"	resultMap="WishListMapper.wishListSelectMap"/>
   	
   		
   	</resultMap>
   	
 
-
-  	
-  	
-  	
  
    	<insert 	id="addMovie" 	 parameterType="movie">
   		INSERT
@@ -180,25 +177,29 @@
 		             steelcut,
 	  			     trailer FROM   movie 
 		
-		<if test="searchCondition != null" >
-		
-			    
-				<if test="searchCondition == 1 and searchKeyword != '' ">
-					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+		<if test="searchCondition != null or searchKeyword2 !=null" >
+
+<!-- "searchKeyword2 = 4"번은 현재 상영 영화, "searchKeyword = 5" 상영 예정 영화  -->		
+
+				<if test="searchCondition == 1  and searchKeyword != '' ">
+					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'					
 				</if>
+				
+			
 				<if test="searchCondition == 2 and searchKeyword != '' ">
 					WHERE director LIKE '%${searchKeyword}%'
 				</if>
+				
 				<if test="searchCondition == 3 and searchKeyword !='' ">
-				movie_opendate <![CDATA[<=]]> (to_date(#{searchKeyword}, 'yy/mm/dd')+6) 
+					movie_opendate <![CDATA[<=]]> (to_date(#{searchKeyword}, 'yy/mm/dd')+6) 
 					AND movie_enddate <![CDATA[>=]]> to_date(#{searchKeyword}, 'yy/mm/dd')
 				</if>	
-			
 		</if>
 
 		ORDER BY movie_no ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum})
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+
 
 	</select>
 	
@@ -219,9 +220,32 @@
 		             steelcut,
 	  			     trailer FROM   movie 
 		
-	 		<if test="searchKeyword != null" >
-				WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
-			</if> 
+	 		<if test="searchCondition != null or searchKeyword2 !=null" >
+
+			<!-- "searchKeyword2 = 4"번은 현재 상영 영화, "searchKeyword = 5" 상영 예정 영화  -->		
+
+				<if test="searchCondition == 1"> 
+					 	<if test="searchKeyword != '' and searchKeyword2 == 4">
+							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+						</if>	
+					 	<if test="searchKeyword != '' and searchKeyword2 == 5">
+							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate		
+						</if>	
+				</if>
+				
+				<if test="searchCondition != 1">
+						<if test="searchKeyword2 == 4">
+							WHERE movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate
+						</if>
+						<if test="searchKeyword2 == 5">
+							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate	
+						</if>
+				</if>	
+			</if>
 
 		ORDER BY movie_no ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum})
@@ -236,8 +260,32 @@
 	  					poster,director,actor,genre,rating,runningtime,synopsis,steelcut,trailer
 	  					FROM movie
 		
-			<if test="searchKeyword != null" >
-				WHERE movie_title LIKE '%'||#{searchKeyword}||'%'			
+		<if test="searchCondition != null or searchKeyword2 !=null" >	
+		
+				<if test="searchCondition == 1"> 
+					 	<if test="searchKeyword != '' and searchKeyword2 == 4">
+							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+						</if>	
+					 	<if test="searchKeyword != '' and searchKeyword2 == 5">
+							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate		
+						</if>	
+				</if>
+				
+		
+				<if test="searchCondition != 1">
+						<if test="searchKeyword2 == 4">
+							WHERE movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+						</if>
+						<if test="searchKeyword2 == 5">
+							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate	
+						</if>
+				</if>	
+		
 			
 		</if>) countTable
 	</select>
@@ -258,8 +306,6 @@
 		</if>) countTable
 	</select>
 	 
-	 
-	 
 
 	<select id="getTotalCount" parameterType="search" resultType="int">
 		SELECT COUNT(*)
@@ -278,6 +324,7 @@
 			
 		</if>) countTable
 	</select>
+	
 	
 	
 	<select id="uniMovieList" parameterType="search" resultMap="movieSelectMap">

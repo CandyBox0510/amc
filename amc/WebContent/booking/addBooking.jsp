@@ -169,7 +169,133 @@
   					}
   			});//end of ajax
   	})
-   </script> 
+  	
+	function fncSendMail() {
+  		
+		 var email = $("#email").val();	
+		 var bookingNo = ${booking.bookingNo}+"";
+		 //var bookingNo = "b10100";
+		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) 
+			 || email == ""){
+	    	alert("이메일 형식이 아닙니다.");
+	    	return;
+	     }
+		alert("메일을 보냅니다. \n이메일주소 : "+email+"\n예매번호 : "+bookingNo);
+		self.location="/booking/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email;
+		
+			/* 	  //왜 restController로는 안될까..?	  
+ 			$.ajax(
+	  				{
+	  					url : "/booking/json/sendEmailQR/"+bookingNo+"/"+email,						
+	  					method : "GET" ,
+	  					dataType : "json" ,
+	  					headers : {
+	  						"Accept" : "application/json",
+	  						"Content-Type" : "application/json"
+	  					},
+	  					
+	  					success : function(JSONData, status) {
+	  						console.log('JSONData 받아옴 : '+JSONData.str);								
+	                        if(JSONData == 1){
+	                        	alert("이메일로 QR코드를 전송했습니다.");
+	                        }//end of if문
+
+	  					}
+	  			});//end of ajax 
+	  			*/
+	}
+  	
+  	
+  	
+   </script>
+  <style>
+	   .contact-info {
+		  text-align: center;
+		}
+		.reservation-message {
+		  position: relative;
+		  font-size: 13px;
+		  /* padding-left: 45px; */
+		  margin-top: 10px;
+		  margin-bottom: 8px;
+		  
+		}
+		
+		.reservation-message:before {
+		  content: '';
+		  background-image: url(../images/icons/speech.svg);
+		  background-repeat: no-repeat;
+		  background-position: right center;
+		  -webkit-background-size: 42px 36px;
+		  background-size: 42px 36px;
+		  width: 45px;
+		  height: 40px;
+		  position: absolute;
+		  top: -4px;
+		  left: -1px;
+		}
+		.form .form__mail,
+		.form .form__message {
+		  margin-bottom: 10px;
+		  width: 100%;
+		  border: none;
+		  box-shadow: none;
+		  border: 1px solid #dbdee1;
+		  -webkit-border-radius: 3px;
+		  -moz-border-radius: 3px;
+		  border-radius: 3px;
+		  font-size: 13px;
+		  color: #b4b1b2;
+		  padding: 9px 18px 10px;
+		}
+		
+		.contact-info {
+		  text-align: center;
+		}
+		.contact-info .contact-info__field {
+		  position: relative;
+		  width: 460px;
+		  display: inline-block;
+		  margin-right: 20px;
+		}
+		.contact-info .contact-info__field .form__mail {
+		  padding-left: 35px;
+		}
+		.contact-info .contact-info__field:before {
+		  content: '';
+		  width: 39px;
+		  height: 39px;
+		  -webkit-border-radius: 3px 0 0 3px;
+		  -moz-border-radius: 3px 0 0 3px;
+		  border-radius: 3px 0 0 3px;
+		  background-color: #4c4145;
+		  position: absolute;
+		  top: 0px;
+		  left: 0;
+		}
+		.contact-info .contact-info__field:after {
+		  content: '';
+		  color: #b4b1b2;
+		  font: 13px "FontAwesome";
+		  position: absolute;
+		  top: 10px;
+		  left: 15px;
+		}
+		.contact-info .contact-info__field-mail:after {
+		  content: "\f0e0";
+		  left: 13px;
+		}
+		
+		.ticket .ticket__item {
+		  display: block;
+		  margin-bottom: 2.5px;
+		  font-family: 'PT Mono';
+		  font-size: 14px;
+		  text-transform: uppercase;
+		  text-align: left;
+		}
+		
+   </style> 
 </head>
 
 <body>
@@ -304,7 +430,7 @@
             <div class="order-container">
                 <div class="order">
                     <img class="order__images" alt='' src="/images/tickets.png">
-                    <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
+                    <p class="order__title">Thank you<br><span class="order__descript">you have successfully purchase tickets</span></p>
                     <div class="order__control">
                         <a href="#" class="order__control-btn active">Purchase</a>
                         <a href="#" class="order__control-btn">Reserve</a>
@@ -316,46 +442,62 @@
                     <div class="order-step second--step order-step--disable">2. Choose a sit</div>
                     <div class="order-step third--step">3. Check out</div>
                 </div>
-            
-            <div class="col-sm-12">
-                <div class="checkout-wrapper">
-                    <h2 class="page-heading">Ticket</h2>
-                    <ul class="book-result">
-                    	<li class="book-result__item">Title: <span class="book-result__count">영화명 : ${booking.movie.movieNm} 시사회명 :${booking.screenContent.previewTitle}</span></li>
-                        <li class="book-result__item">Tickets: <span class="book-result__count">${booking.headCount} </span></li>
-                        <li class="book-result__item">Theater: <span class="book-result__count">${booking.screenContent.screenTheater}상영관</span></li>
-                        <li class="book-result__item">Date & Time: <span class="book-result__count">${booking.screenContent.screenDate}&nbsp; ${booking.screenContent.screenOpenTime}</span></li>
-                        <li class="book-result__item">Seats: <span class="book-result__count" id="displaySeat">좌석번호</span></li>
-                   </ul>
-                    
-					<h2 class="page-heading">price</h2>
-                    <ul class="book-result">
-                    	<li class="book-result__item">Total: <span class="book-result__count booking-cost">${booking.totalTicketPrice}원</span></li>
-                    </ul>
-                    
-                    <h2 class="page-heading">Choose a payment mehtod</h2>
-            
-                    <form id='contact-info' method='post' novalidate="" class="form contact-info">
-                        <div class="contact-info__field contact-info__field-mail">
-                            <input type='email' name='user-mail' placeholder='카카오페이' class="form__mail">
+            <!--  test  -->
+            <section class="container">
+            <div class="order-container">
+
+                <div class="ticket">
+                    <div class="ticket-position">
+                        <div class="ticket__indecator indecator--pre"><div class="indecator-text pre--text">online ticket</div> </div>
+                        <div class="ticket__inner">
+
+                            <div class="ticket-secondary">
+                                <span class="ticket__item">Ticket number <strong class="ticket__number">${booking.bookingNo}</strong></span>
+								<%-- <span class="ticket__item ticket__date">${booking.screenContent.screenDate}</span> --%>
+                                <span class="ticket__item ticket__time">${booking.screenContent.screenOpenTime}</span>
+                                <span class="ticket__item">Cinema: <span class="ticket__cinema">Americode Cinema</span></span>
+                                <span class="ticket__item">Hall: <span class="ticket__hall">${booking.screenContent.screenTheater}관</span></span>
+                                <span class="ticket__item ticket__price">price: <strong class="ticket__cost">${booking.totalTicketPrice}원</strong></span>
+                            </div>
+
+                            <div class="ticket-primery">
+                                <span class="ticket__item ticket__item--primery ticket__film">Film<br><strong class="ticket__movie">${booking.movie.movieNm} ${booking.screenContent.previewTitle}</strong></span>
+                                <span class="ticket__item ticket__item--primery" style="vertical-align:middle">
+                                	Sits: <span  align='center left'  class="ticket__place">${displaySeat} AA</span>
+                                	<iframe style='width:50%; height:100%'  frameborder='0' align='right' 
+                                	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=abc"></iframe>
+								</span>
+                            </div>
+
+
                         </div>
-                    </form>
-                    
-                    <p class="reservation-message">Fill your contact information to recieve your reservation code. Reserved tickets are removed 20 minutes befor the session is due to start</p>
-                
+                        <div class="ticket__indecator indecator--post"><div class="indecator-text post--text">online ticket</div></div>
+                    </div>
                 </div>
                 
-                <div class="order">
-                    <a href="javascript:kakaoPay()" class="btn btn-md btn--warning btn--wide" >reserve</a>
-                    <a href="javascript:kakaoPayCancel()" class="btn btn-md btn--warning btn--wide" >cancel reservation</a>
+                 <p>
+                
+
+
+               <div id="row1" style="float:center;" >
+					<form id='contact-info' method='post' novalidate="" class="form contact-info">
+		                   <div class="contact-info__field contact-info__field-mail"  >
+		                        <input type='email' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
+		                        class="form__mail" style="width:50%" autofocus autocomplete="off" required >		                     
+		                        <a href = "javascript:fncSendMail()" class="watchlist list--download">QR코드 전송하기</a>                      
+		                    </div>                                         
+	                 </form>
                 </div>
 
+
+               </div> 
+   
             </div>
-          
-        </section>  
-                   
             </div>
-            </div>
+            
+         <!-- emaill -->   
+
+
 
 	<form id="addBooking">
 	<!--  !!!!!!!!!!!!!!!!!!!!!!!!!input type hidden으로 나중에 바꾸기 -->
@@ -374,17 +516,7 @@
         
 
         <div class="clearfix"></div>
-        
-        <div class="booking-pagination">
-                <a href="book2.html" class="booking-pagination__prev">
-                    <p class="arrow__text arrow--prev">prev step</p>
-                    <span class="arrow__info">choose a sit</span>
-                </a>
-                <a href="#" class="booking-pagination__next hide--arrow">
-                    <p class="arrow__text arrow--next">next step</p>
-                    <span class="arrow__info"></span>
-                </a>
-        </div>
+
 
         
         <div class="clearfix"></div>
