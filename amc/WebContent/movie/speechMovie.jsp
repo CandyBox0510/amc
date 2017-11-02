@@ -112,8 +112,9 @@
 	<br/> <br/> <br/> <br/> <br/> <br/>
 	
 	
-	<div class="center">
-	
+	<!-- <div class="center"> -->
+	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 100px; margin-left: auto;
+ 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
   	
     <noscript>Please <a href="http://www.enable-javascript.com/" target="_blank">enable JavaScript</a>. Thank You! :D</noscript>
     <div class="content" >
@@ -135,12 +136,17 @@
              <!--   영화 검색 : -->
             <input type="search" name="abc" id="speech-transcript">          
                      
-            <input type="button" value="클릭후 말해주세요 " id="speech-btn">            
+            <input type="button" value="클릭후 말해주세요 " id="speech-btn">   
+            
+            <hr/>          
                
         </div>
         
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <i class='glyphicon glyphicon-ok' id="voidSearchOk" style="color:green"></i>  &nbsp;&nbsp;&nbsp;&nbsp;	
+    
+  
+    
    <!--  <i class='glyphicon glyphicon-remove' id="voidSearchNo" style="color:red"></i>	 -->
     
 	

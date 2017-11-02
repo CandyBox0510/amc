@@ -116,13 +116,51 @@
 				        
 				        /**************************************/
 				        //node서버에 롤백 요청하기
-				        //rollbackSeat();
-				        self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
+				        
+				        //self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
+				        alert('결제를 중단하셨습니다.');
+				        rollbackSeat();
 				        
 				        
 				    }//end of rsp.success else 
 				}); //end of Imp.request_pay
 			}//end of kakaoPay function
+		
+			function rollbackSeat(){
+				
+				var seatNos = $("input[name='bookingSeatNo']").val();
+				var screenNo = ${screenContent.screenContentNo};
+				
+				alert('seatNos : '+seatNos);
+				  $.ajax(
+							{
+								url : "/booking/json/rollbackSeat/"+screenNo+"/"+seatNos,				
+								method : "GET" ,
+								async : false,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								
+								success : function(JSONData, status) {
+									console.log('SeatNo 받아옴 : '+JSONData.seatNo);								
+			                      if(JSONData != ""){
+			                    	  console.log('ajax로 좌석 rollback resCode: '+jsonData);
+			                      }//end of if문
+								}
+					});//end of ajax
+					
+				var seatNos = $("input[name='bookingSeatNo']").val("");
+				$("#seatNo").remove();
+	            $("#headCount").remove();
+	            $("#totalPrice").remove();
+	             	
+	            $("input[name='displaySeat']").val("");
+	            $("input[name='headCount']").val("");
+	            $("input[name='totalTicketPrice']").val("");
+			}	
+			
 			
 		function confirmSeat(){
 			
@@ -198,9 +236,7 @@
 			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
 		  } else{
-			  
-			  alert('좌석번호를 받습니다.');
-		  	
+			  		  	
 			  $("input[name='bookingSeatNo']").val(event.data);
 			  var no = ${screenContent.ticketPrice};
 			  $.ajax(
@@ -436,7 +472,7 @@
                 <div class="choose-sits__info choose-sits__info--first">
                     <ul>
                         <li class="sits-price marker--none"><strong>인원수를 먼저 선택한 후 좌석을 지정해주세요</strong></li>
-                    	<li class="sits-price marker--none"><strong>결제하기 버튼을 누르면 좌석이 홀딩됩니다.</strong></li>
+                    	<li class="sits-price marker--none"><strong><button onclick="selectCancelAlarm()" class="ui purple button">취소표 알리미 신청하기</button></strong></li>
                     </ul>
                 </div>
 
@@ -450,14 +486,12 @@
           <!--  only UI -->
 	
 			<div class="col-sm-8 com-md-9">	
-				<iframe id="child" src="http://127.0.0.1:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" 
-				style='width:100%; height:450px'  frameborder='0' align='center'>		 
+				<iframe id="child" src= "http://127.0.0.1:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}"
+				style='width:100%; height:400px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 				<!-- style='width:100%' -->
-				<span>
-				<button onclick="selectCancelAlarm()" class="ui purple button">취소표 알리미 신청하기</button>				
-				</span>				
+			
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="category category--popular marginb-sm">
@@ -470,18 +504,9 @@
                           <li><a href="#" class="category__item">Date & Time: ${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
                           <li><a href="#" class="category__item">Total Price:<span id="totalPrice">0</span>원</a></li>
                       </ul>
+                      
                   </div> 
-                  <!-- <div class="promo promo-field">
-                      <div class="promo__head">A.Movie app</div>
-                      <div class="promo__describe">for all smartphones<br> and tablets</div>
-                      <div class="promo__content">
-                          <ul>
-                              <li class="store-variant"><a href="#"><img alt='' src="/images/apple-store.svg"></a></li>
-                              <li class="store-variant"><a href="#"><img alt='' src="/images/google-play.svg"></a></li>
-                              <li class="store-variant"><a href="#"><img alt='' src="/images/windows-store.svg"></a></li>
-                          </ul>
-                      </div>
-                  </div> -->
+
 			</div>
         </section>  
        

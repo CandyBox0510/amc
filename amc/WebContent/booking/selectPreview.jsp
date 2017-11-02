@@ -248,112 +248,40 @@
 	    }); */
 		$("#randomSeat").on("click", function(){
     		var screeContentNo = $(".item").eq(3).text();
-			var headCount = 2;
-
+			var headCount = $("select[name=randomCount]").val();
+			
+			if( headCount==0){
+    			alert("인원수를 먼저 선택해주세요.");
+    		}else{
     			alert("랜덤좌석을 "+headCount+"석 신청합니다.");
     			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
-
+			}
 	    });
 		
     });
 	
 	
    </script> 
-<style>
-.time-select .time-select__item {
-  position: relative;
-  z-index: 10;
-  display: inline-block;
-  font-size: 12px;
-  background-color: #ffd564;
-  padding: 9px 15px 8px 14px;
-  margin: 5px 16px 5px 0;
-  cursor: pointer;
-}
-.time-select .time-select__item:hover {
-  background-color: #fe505a;
-}
-.time-select .time-select__item:before {
-  content: '';
-  width: 95%;
-  height: 28px;
-  border: 1px solid #ffffff;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-}
-.time-select .time-select__item:after {
-  content: '';
-  width: 64px;
-  height: 34px;
-  background-image: url(../images/components/bg-time.png);
-  background-repeat: no-repeat;
-  -webkit-background-size: 64px 34px;
-  background-size: 64px 34px;
-  position: absolute;
-  top: 0px;
-  left: -2px;
-  z-index: -1;
-}
-.time-select .time-select__item:hover:after {
-  background-image: url(../images/components/bg-time-hover.png);
-}
-.time-select .time-select__item.active {
-  background-color: #fe505a;
-}
-.time-select .time-select__item.active:after {
-  background-image: url(../images/components/bg-time-hover.png);
-}
-a.disabled {
-   pointer-events: none;
-   cursor: default;
-}
-.choose-indector {
-  position: relative;
-  z-index: 13;
-  width: 100%;
-  background-color: #4c4145;
-  color: #ffffff;
-  font-size: 18px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 12px 21px 12px;
-  cursor: pointer;
-  }
-.choose-indector:before {
-  content: "\f077";
-  font: 18px "FontAwesome";
-  color: #ffffff;
-  position: absolute;
-  top: 8px;
-  right: 21px;
 
-}
-.abc{
-	  font-family: 'Hanna', sans-serif; 
-}
-</style>
 </head>
 
 <body>
-  <%--  <div class="banner-top">
-      <img alt='top banner' src="../images/banners/space.jpg">
-  </div>
-  <header class="header-wrapper header-wrapper--home">
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar_.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
-   </header> --%>
+
+<div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
    <!--  <div class="wrapper"> -->
 	
     <input type="hidden" name="flag" value="2"> 
     <input type="hidden" name="openTime" value="2017-10-27 12:00:00">
 
 
-<!--     
-	<button class="ui inverted green button" name="selectSeat" disabled="disabled">(시간되면 활성화) 좌석선택</button>
-	<button class="ui inverted green button" name="tempSelectSeat">[테스트용] 좌석선택 </button>	 -->
+
 	<p>
         
         <!-- Main content -->
@@ -423,19 +351,18 @@ a.disabled {
               <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place abc">랜덤좌석수(선택)</p>
+                                <p class="time-select__place abc">랜덤좌석수(선택) &nbsp;&nbsp;
+                                
+                                </p>
                             </div>
                             
-                            <ul class="col-sm-6 items-wrap">				                            		  
-							  <li class="time-select__item abc" name="headCount">1석						  	
-							  	<input type="hidden" name="headCount" value="1">
-							  	<input type="radio" name="headCount" value="1">
-							  </li>
-							  <li class="time-select__item abc" name="headCount">2석						  	
-							  	<input type="hidden" name="headCount" value="2">
-							  	<input type="radio" name="headCount" value="2">
-							  </li>
-                            </ul>                        
+                            <div class="col-sm-6 items-wrap">				                            		  							  
+							  <select name="randomCount" id="randomCount" class="select__sort" tabindex="0">
+					              <option value="0">선택</option>
+					              <option value="1">1석</option>
+					              <option value="2">2석</option>	                     
+					          </select>
+                            </div>                    
                         </div>
                    </div>
           
@@ -598,4 +525,79 @@ a.disabled {
 		</script>
 
 </body>
+<style>
+.time-select .time-select__item {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #ffd564;
+  padding: 9px 15px 8px 14px;
+  margin: 5px 16px 5px 0;
+  cursor: pointer;
+}
+.time-select .time-select__item:hover {
+  background-color: #fe505a;
+}
+.time-select .time-select__item:before {
+  content: '';
+  width: 95%;
+  height: 28px;
+  border: 1px solid #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.time-select .time-select__item:after {
+  content: '';
+  width: 64px;
+  height: 34px;
+  background-image: url(../images/components/bg-time.png);
+  background-repeat: no-repeat;
+  -webkit-background-size: 64px 34px;
+  background-size: 64px 34px;
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  z-index: -1;
+}
+.time-select .time-select__item:hover:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.time-select .time-select__item.active {
+  background-color: #fe505a;
+}
+.time-select .time-select__item.active:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+}
+.choose-indector {
+  position: relative;
+  z-index: 13;
+  width: 100%;
+  background-color: #4c4145;
+  color: #ffffff;
+  font-size: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 12px 21px 12px;
+  cursor: pointer;
+  }
+.choose-indector:before {
+  content: "\f077";
+  font: 18px "FontAwesome";
+  color: #ffffff;
+  position: absolute;
+  top: 8px;
+  right: 21px;
+
+}
+.abc{
+	  font-family: 'Hanna', sans-serif; 
+}
+</style>
 </html>

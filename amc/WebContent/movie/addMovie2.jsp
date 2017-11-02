@@ -27,50 +27,6 @@
 <head>
    <meta charset="UTF-8">
    
-    <!-- Fonts -->
-    <!-- Font awesome - icon font -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
-   
-    <!-- Roboto -->
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
- 
-    <!-- Stylesheets -->
-
-    <!-- Mobile menu -->
-    <link href="/css/gozha-nav.css" rel="stylesheet" />
-    <!-- Select -->
-   <!--  <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-    --> 
-    <!-- Custom -->
-    <link href="/css/style.css?v=1" rel="stylesheet" />
-    
-    <!-- Modernizr --> 
-    <script src="/js/external/modernizr.custom.js"></script>
-    <!-- Migrate --> 
-    <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-    <!-- Form element -->
-    <script src="/js/external/form-element.js"></script>
-    <!-- Form validation -->
-    <script src="/js/form.js"></script>
-   
-   
-    <!-- Slider Revolution core JavaScript files -->
-    <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
-
-    <!-- Slider Revolution extension scripts. --> 
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
-
-   
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -90,8 +46,278 @@
  
  
 <!-- ToolBar Start /////////////////////////////////////-->
-  <script type="text/javascript">
-  
+<div class="navbar  navbar-inverse navbar-fixed-top">
+	
+	<div class="container">
+	       <!-- 절대경로로 변경  -->
+		<a class="navbar-brand" href="/index.jsp">
+			<img src="/images/common/AMC_Logo.png" width="80px" height="30px"/>
+		</a>
+		
+		<!-- toolBar Button Start //////////////////////// -->
+		<div class="navbar-header">
+		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		    </button>
+		</div>
+		<!-- toolBar Button End //////////////////////// -->
+		
+	    <!--  dropdown hover Start -->
+		<div 	class="collapse navbar-collapse" id="target" 
+	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
+	         
+	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
+	             <ul class="nav navbar-nav">
+	             
+	              <!-- 영화 DrowDown -->
+	              <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span>영화</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">현재 상영영화</a></li>
+	                         <li><a href="#">상영 예정영화</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">시사회</a></li>
+	                     </ul>
+	                 </li>
+	                 
+	              <!-- 예매 DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>예매</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">영화 예매</a></li>
+		                         <li><a href="#">시사회 예매</a></li>
+		                     </ul>
+		                </li>
+		                
+	              <!-- 영화관  -->
+					  <li><a href="#">영화관</a></li>
+				
+				  <!-- 커뮤니티  -->  
+					  <li><a href="#">커뮤니티</a></li>
+		                
+	              <!-- 스토어 DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>스토어</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">굿즈</a></li>
+		                         <li><a href="#">스낵바</a></li>
+		                     </ul>
+		                </li>
+	                 
+	             <!-- 관리자메뉴 DrowDown  -->
+	             
+	               <c:if test="${sessionScope.user.role == 'admin'}">
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span >[관리자 메뉴]</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">회원관리</a></li>
+		                         <li><a href="#">상품관리</a></li>
+		                         <li><a href="#">판매관리</a></li>
+		                         <li><a href="#">영화관리</a></li>
+		                         <li><a href="#">상영관리</a></li>
+		                         <li><a href="#">예매관리</a></li>
+		                     </ul>
+		                </li>
+	                 </c:if>
+	                 
+	             </ul>
+	             
+	             
+	             
+	             <ul class="nav navbar-nav navbar-right">
+	             <!-- 유저가 로그인 상태일 시 -->
+	             	<c:if test="${sessionScope.user ne null }">
+		             	<li title="Click : 개인정보 수정"><a href="#">ID : [${sessionScope.user.userId }]</a></li>
+		             	<li><a href="#">로그아웃</a></li>
+		             	<li><a href="#">마이페이지</a></li>
+	             	</c:if>
+	             	
+	             <!-- 유저가 비로그인 상태일 시 -->	
+	             	<c:if test="${sessionScope.user eq null }">
+		             	<li>
+		             		<input type="text" name="userId" placeholder="아이디" width="300px">
+		             		<input type="text" name="password" placeholder="비밀번호" width="300px">
+		             	</li>
+		             	<input type="button" value="로그인">
+	             	</c:if>
+	            </ul>
+	           	 <!-- 유저가 비로그인 상태일 시 -->	
+             	<c:if test="${sessionScope.user eq null }">
+	             	<li>
+	             		<input type="text" name="userId" placeholder="아이디" width="300px">
+	             		<input type="text" name="password" placeholder="비밀번호" width="300px">
+	             	</li>
+	             	<input type="button" value="로그인">
+             	</c:if>
+ --%>	             	
+	 			<c:if test="${empty user}">					
+						<form class="navbar-form navbar-right">
+						<!-- <a data-toggle="modal" href="../user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static"> -->
+						<a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
+							<button type="button" class="btn btn-primary">Log in</button>
+						</a>
+							<button type="button" class="btn btn-primary">Sign in</button>
+						</form>
+					</li>	
+				</c:if>	
+				
+				<c:if test="${!empty user}">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" class="user-info">${sessionScope.user.userName}</a>
+						<li><a href="#">로그아웃</a></li>
+					</ul>
+				</c:if>     
+		
+		</div>
+		<!-- dropdown hover END -->	       
+	</div>
+</div>
+ 
+ </head>
+ 
+   
+ 
+ 
+
+   
+ <script type="text/javascript">
+ 
+	//============= START TOPTOOL BAR ==========================
+
+	function openHistory(){
+		popWin = window.open("../openHistory.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+	}
+
+		
+	//=============  현재 상영영화 Event  처리 =============	
+	$( "a:contains('현재 상영영화'),a:contains('ID')" ).on("click" , function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$(self.location).attr("href","/movie/getMovieList?menu=movie");
+	});
+	
+	
+	//=============  상영 예정영화 Event  처리 =============	
+	$( "a:contains('상영 예정영화')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=commingsoon");
+	});
+	
+	//=============  시사회 Event  처리 =============	
+	$( "a:contains('시사회')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=preview");
+	});
+	
+	//=============  예매 Event  처리 =============	
+	$( "a:contains('예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenMovieList");
+	});
+	
+	//=============  영화 예매 Event  처리 =============	
+	$( "a:contains('영화 예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenMovieList");
+	});
+	
+	//=============  시사회 예매 Event  처리 =============	
+	$( "a:contains('시사회 예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenPreviewList");
+	});
+	
+	//=============  영화관 Event  처리 =============	
+	$( "a:contains('영화관')" ).on("click" , function() {
+		$(self.location).attr("href","/cinema/theaterInfo");
+	});
+	
+	//=============  커뮤니티 Event 처리 =============	
+	$( "a:contains('커뮤니티')" ).on("click" , function() {
+		$(self.location).attr("href","/community/getFreeBoardList");
+	});
+	
+	//============= 스토어 Event 처리 =============	
+	$( "a:contains('스토어')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  굿즈 Event 처리 =============	
+	$( "a:contains('굿즈')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  스낵바 Event 처리 =============	
+	$( "a:contains('스낵바')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getSnackList");
+	});
+	
+	//=============  회원관리 Event  처리 =============	
+	$( "a:contains('회원관리')" ).on("click" , function() {
+		$(self.location).attr("href","/user/getUserList");
+	});
+	
+	//=============  상품관리 Event  처리 =============	
+	$( "a:contains('상품관리')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  판매관리 Event  처리 =============	
+	$( "a:contains('판매관리')" ).on("click" , function() {
+		$(self.location).attr("href","/purchase/getSaleList");
+	});
+	
+	//=============  영화관리 Event  처리 =============	
+	$( "a:contains('영화관리')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=manage");
+	});
+	
+	//=============  상영관리 Event  처리 =============	
+	$( "a:contains('상영관리')" ).on("click" , function() {
+		$(self.location).attr("href","/screen/getScreenList");
+	});
+	
+	//=============  예매관리 Event  처리 =============	
+	$( "a:contains('예매관리')" ).on("click" , function() {ss
+		$(self.location).attr("href","/booking/getAdminBookingList");
+	});
+	
+	
+	//============= login Event  처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("input:contains('로그인')").on("click" , function() {
+			$(self.location).attr("href","/user/loginUser");
+		}); 
+	 });
+	
+	//============= logout Event  처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("a:contains('로그아웃')").on("click" , function() {
+			$(self.location).attr("href","/user/logoutUser");
+		}); 
+	 });
+	
+	//=============  최근 본 상품  처리 =============	
+	 	$( "a:contains('최근 본 상품')" ).on("click" , function() {
+	 		openHistory();
+		});
+	
+ 
+    //============= END OF TOPTOOL BAR ==========================
+ 
+ 
+ 
         $(document).ready(function(){
          	
         	
@@ -401,102 +627,8 @@
 		  
 		  
     </script>
-</head>
+
 <body>
-<div class="navbar  navbar-inverse navbar-fixed-top">
-<!-- Header section -->
-         <div class="container">
-             <!-- Logo link-->
-             <a href='/cinema/index2' class="logo">
-                 <!-- <img alt='logo' src="/images/logo.png"> -->
-                 <img src="/images/amc.png">
-             </a>
-             
-             <!-- Main website navigation-->
-             <nav id="navigation-box">
-                 <!-- Toggle for mobile menu mode -->
-                 <a href="#" id="navigation-toggle">
-                     <span class="menu-icon">
-                         <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
-                           <span class="lines"></span>
-                         </span>
-                     </span>
-                 </a>
-                 
-                 <!-- Link navigation -->
-                 <ul id="navigation">
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="#">영화</a>
-                         <ul>
-                             <li class="menu__nav-item"><a href="#">현재 상영 영화</a></li>
-                             <li class="menu__nav-item"><a href="#">상영 예정 영화</a></li>
-                             <li class="divider"></li>
-                             <li class="menu__nav-item"><a href="#">시사회</a></li>
-
-                         </ul>
-                     </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="#">예매</a>
-                         <ul>
-                             <li class="menu__nav-item"><a href="typography.html">영화 예매</a></li>
-                             <li class="menu__nav-item"><a href="page-elements.html">시사회 예매</a></li>
-                         </ul>
-                     </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="page-elements.html">영화관</a>
-                     </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="gallery-four.html">커뮤니티</a>
-                     </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="news-left.html">스토어</a>
-                         <ul>
-                             <li class="menu__nav-item"><a href="news-left.html">굿즈</a></li>
-                             <li class="menu__nav-item"><a href="news-right.html">스낵바</a></li>
-                         </ul>
-                     </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="#">[관리자 메뉴]</a>
-						<ul class="mega-menu__list">
-                                 <li class="mega-menu__nav-item"><a href="#">회원 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">상품 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">판매 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">영화 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">상영 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">예매 관리</a></li>
-                             </ul>
-                     </li>
-                 </ul>
-             </nav>
-             
-             <!-- Additional header buttons / Auth and direct link to booking-->
-             <div class="control-panel">
-                 <div class="auth auth--home">
-                   <div class="auth__show">
-                   </div>
-                   <a href="#" class="btn btn--sign btn--singin">
-                       	MyPage
-                   </a>
-                     <ul class="auth__function">
-                         <li><a href="#" class="auth__function-item">내 정보 보기</a></li>
-                         <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">예매 목록</a></li>
-                         <li><a href="/movie/getWishList" class="auth__function-item">위시리스트</a></li>
-                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">취소표 알리미</a></li>
-                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=O" class="auth__function-item">티켓오픈시간 알리미</a></li>
-                         <li><a href="#" class="auth__function-item">스토어 구매 목록</a></li>
-                     </ul>
-                 </div>
-                 <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a>
-        	</div>
-	 </div>
-</div>
-
 
 
 <form id="uploadForm" method="POST">  

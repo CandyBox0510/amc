@@ -141,93 +141,37 @@
 		
 	$(document).on("click", "#gotoSeat",  function(){
 		
-		var screenContentNo = $(".item").eq(3).text();	
-		self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
-
+		//로그인 여부 체크
+		if( ${sessionScope.user==(null)} ){
+			
+			alert('로그인 후 이용해 주세요');
+			//로그인 창 모달로 띄우기
+			self.location= "/";
+			
+		}else{
+			
+			var screenContentNo = $(".item").eq(3).text();	
+			self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+		}
+	
 	});
    </script> 
-<style>
-.time-select .time-select__item {
-  position: relative;
-  z-index: 10;
-  display: inline-block;
-  font-size: 12px;
-  background-color: #ffd564;
-  padding: 9px 15px 8px 14px;
-  margin: 5px 16px 5px 0;
-  cursor: pointer;
-}
-.time-select .time-select__item:hover {
-  background-color: #fe505a;
-}
-.time-select .time-select__item:before {
-  content: '';
-  width: 95%;
-  height: 28px;
-  border: 1px solid #ffffff;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-}
-.time-select .time-select__item:after {
-  content: '';
-  width: 64px;
-  height: 34px;
-  background-image: url(../images/components/bg-time.png);
-  background-repeat: no-repeat;
-  -webkit-background-size: 64px 34px;
-  background-size: 64px 34px;
-  position: absolute;
-  top: 0px;
-  left: -2px;
-  z-index: -1;
-}
-.time-select .time-select__item:hover:after {
-  background-image: url(../images/components/bg-time-hover.png);
-}
-.time-select .time-select__item.active {
-  background-color: #fe505a;
-}
-.time-select .time-select__item.active:after {
-  background-image: url(../images/components/bg-time-hover.png);
-}
-.choose-indector {
-  position: relative;
-  z-index: 13;
-  width: 100%;
-  background-color: #4c4145;
-  color: #ffffff;
-  font-size: 18px;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  padding: 12px 21px 12px;
-  cursor: pointer;
-  }
-.choose-indector:before {
-  content: "\f077";
-  font: 18px "FontAwesome";
-  color: #ffffff;
-  position: absolute;
-  top: 8px;
-  right: 21px;
 
-}
-
-</style>
 </head>
 
 <body>
-  <%--  <div class="banner-top">
-      <img alt='top banner' src="../images/banners/space.jpg">
-  </div>
-  <header class="header-wrapper header-wrapper--home">
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar_.jsp" />
-	<!-- ToolBar End /////////////////////////////////////-->
-   </header> --%>
+
    <!--  <div class="wrapper"> -->
- 	
+ 	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
+   		
     <input type="hidden" name="flag" value="1"> 
         <!-- Main content -->
 
@@ -455,4 +399,74 @@
 		</script>
 
 </body>
+
+<style>
+.time-select .time-select__item {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #ffd564;
+  padding: 9px 15px 8px 14px;
+  margin: 5px 16px 5px 0;
+  cursor: pointer;
+}
+.time-select .time-select__item:hover {
+  background-color: #fe505a;
+}
+.time-select .time-select__item:before {
+  content: '';
+  width: 95%;
+  height: 28px;
+  border: 1px solid #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.time-select .time-select__item:after {
+  content: '';
+  width: 64px;
+  height: 34px;
+  background-image: url(../images/components/bg-time.png);
+  background-repeat: no-repeat;
+  -webkit-background-size: 64px 34px;
+  background-size: 64px 34px;
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  z-index: -1;
+}
+.time-select .time-select__item:hover:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.time-select .time-select__item.active {
+  background-color: #fe505a;
+}
+.time-select .time-select__item.active:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.choose-indector {
+  position: relative;
+  z-index: 13;
+  width: 100%;
+  background-color: #4c4145;
+  color: #ffffff;
+  font-size: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 12px 21px 12px;
+  cursor: pointer;
+  }
+.choose-indector:before {
+  content: "\f077";
+  font: 18px "FontAwesome";
+  color: #ffffff;
+  position: absolute;
+  top: 8px;
+  right: 21px;
+
+}
+
+</style>
 </html>
