@@ -143,7 +143,8 @@ public class ProductController {
 			
 	@RequestMapping(value="getGoodsList")
 	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
+								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								HttpSession session) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -165,6 +166,7 @@ public class ProductController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
+		System.out.println("session ¿Ã∞≈ππæﬂ :"+session.getAttribute("user"));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@LIST :"+map.get("list"));
 		System.out.println("############################### MAP :"+map);
 		

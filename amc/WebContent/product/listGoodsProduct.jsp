@@ -78,6 +78,7 @@
 		<input type="hidden" name="menu" value="${param.menu}"/>
 		<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
+		<input type="text" name="userId" value="${sessionScope.user.role}"/>
 		
 		
 	   	<!-- Main content -->
@@ -101,11 +102,11 @@
 				                <form id='search-form' method='get' class="search">
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword">
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
-					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
-					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독명</option>
+					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
+					                        <%-- <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option> --%>
 					                    </select>
-				                    <button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
-				                    <input type="hidden" id="currentPage" name="currentPage" value="0" />
+				                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
+				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				                </form>
 				             </div>
 			             </div>
@@ -144,35 +145,20 @@
                 		 </c:forEach>
 					</div>
 	            </div>     
-		
-		
-		
-		
-		
-									
-										<div class="col-md-9" role="main">
-											<div class="page-header col-sm-offset-4 col-sm-10">
-												<c:if test="${param.menu=='manage'}">
-													<h1>상품 관리</h1>
-												</c:if>
-												<c:if test="${param.menu=='search'}">
-													<h1>상품 구매</h1>
-												</c:if>
-											</div>
-											<div class="row">
-											
-											</div>
-										</div>
-									
- 					
  				</div>
  			
  			
- 			
- 				<div class="pagination paginatioon--full">
-	                <a href='#' class="pagination__prev">prev</a>
-	                <a href='#' class="pagination__next">next</a>
-                </div>
+ 						<div class="clearfix"></div>
+ 					<div class="coloum-wrapper">
+	                    <div class="pagination paginatioon--full">
+	                    	<c:if test="${resultPage.currentPage != 1 }">
+	                            <a href='#' class="pagination__prev">prev</a>
+	                    	</c:if>
+	                     	<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">	            
+	                            <a href='#' class="pagination__next">next</a>
+	                      	</c:if>
+	                    </div>
+	                </div>
  			
  			
  			
@@ -254,11 +240,7 @@
         <!-- Custom -->
         <script src="/js/custom.js"></script>
       
-      <script type="text/javascript">
-            $(document).ready(function() {
-                init_BookingOne();
-            });
-      </script>
+
       
 <!-- 	    <script type="text/javascript">
 		var currentPage = 0;
@@ -439,35 +421,44 @@
 
 <script type="text/javascript">
 			   
-				function fncGetPageList(currentPage) {
-			        $("#currentPage").val(currentPage)
-			        
-			        if(sessionScope.user != empty){
-			        	$("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=manage").submit();	
-			        }else{
-			        	$("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search").submit();
-			        }
-			        
-			    }
-			    
-			    $(function() {
-			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			        $("button[name='search']").on("click", function() {
-			            fncGetPageList(1);
-			        });
-	      
-			    });
+function fncGetPageList(currentPage) {
+    $("#currentPage").val(currentPage)		  
+  
+    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
+    $("input[name='searchKeyword']").val(searchKeyword);
+}
 
-	            $(document).ready(function() {
-	                init_CinemaList();
-	                $("#movie-search-sort").css("width","200px");
-	            });
-		</script>
+
+
+$(document).ready(function() {
+   
+    $("button[name='search']").on("click", function() {
+    	
+    	fncGetPageList(1);
+    });
+    
+    $(".pagination__next").on("click", function() {		
+    	searchKeyword = $("input[name='searchKeyword']").val();
+   
+        var currentPage = $("#currentPage").val()
+        currentPage = parseInt(currentPage)+1
+	   	 	 
+        fncGetPageList(currentPage);
+    });
+    
+    $(".pagination__prev").on("click", function() {
+    	 var currentPage = $("#currentPage").val()
+         currentPage = parseInt(currentPage)-1
+	   	 
+        fncGetPageList(currentPage);
+    });
+});
+
+</script>
+
+
 
 <style type="text/css">
-
-		
-	
 	.countPage {
 	  	font-size: 13px;
 	   	margin-top: 10px;

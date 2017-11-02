@@ -77,34 +77,11 @@
         <!-- Form element -->
         <script src="/js/external/form-element.js"></script>
         <!-- Form validation -->
-        <script src="/js/form.js"></script>
-        //ÀÌ°ÅÁÖ¼®Ã³¸®¾ÈÇÏ¸é ·Î±×ÀÎ ¾ÈµÊ
+        <!-- <script src="/js/form.js"></script> -->
+   		<!--ÀÌ°ÅÁÖ¼®Ã³¸®¾ÈÇÏ¸é ·Î±×ÀÎ ¾ÈµÊ -->
 
         <!-- Twitter feed -->
         <!-- <script src="/js/external/twitterfeed.js"></script> -->
-
-        <!-- Custom -->
- 		<script src="/js/custom.js"></script>
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-		<!-- ï¿½ï¿½ï¿½â°¡ ï¿½Ù¸ï¿½ jsp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ cdn ï¿½ï¿½/////////////////////////////////////////////////////////////////////////////////////////////// -->
-		
-		<!--  ï¿½Ø¸ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿? js-->
-		<script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
-		
-		<!-- Bootstrap Dropdown Hover CSS -->
-	<!--    <link href="/css/animate.min.css" rel="stylesheet">
-	   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-	 -->  
-	   	<!-- Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-		<!-- Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ -->
 	   
    
     <!-- Bootstrap Dropdown Hover JS -->
@@ -114,11 +91,11 @@
   <!--       <script type="text/javascript">
         <!-- <script src="/js/custom.js"></script> -->
 		
-        <script type="text/javascript">
+         <script type="text/javascript">
              $(document).ready(function() {
                init_Home();
              });
-	    </script> 
+	    </script>  
 
 		<script type="text/javascript">
     	//============= "·Î±×ÀÎ"  Event ¿¬°á =============
