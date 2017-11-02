@@ -248,11 +248,14 @@
 	    }); */
 		$("#randomSeat").on("click", function(){
     		var screeContentNo = $(".item").eq(3).text();
-			var headCount = 2;
-
+			var headCount = $("select[name=randomCount]").val();
+			
+			if( headCount==0){
+    			alert("인원수를 먼저 선택해주세요.");
+    		}else{
     			alert("랜덤좌석을 "+headCount+"석 신청합니다.");
     			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
-
+			}
 	    });
 		
     });
@@ -423,19 +426,18 @@ a.disabled {
               <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place abc">랜덤좌석수(선택)</p>
+                                <p class="time-select__place abc">랜덤좌석수(선택) &nbsp;&nbsp;
+                                
+                                </p>
                             </div>
                             
-                            <ul class="col-sm-6 items-wrap">				                            		  
-							  <li class="time-select__item abc" name="headCount">1석						  	
-							  	<input type="hidden" name="headCount" value="1">
-							  	<input type="radio" name="headCount" value="1">
-							  </li>
-							  <li class="time-select__item abc" name="headCount">2석						  	
-							  	<input type="hidden" name="headCount" value="2">
-							  	<input type="radio" name="headCount" value="2">
-							  </li>
-                            </ul>                        
+                            <div class="col-sm-6 items-wrap">				                            		  							  
+							  <select name="randomCount" id="randomCount" class="select__sort" tabindex="0">
+					              <option value="0">선택</option>
+					              <option value="1">1석</option>
+					              <option value="2">2석</option>	                     
+					          </select>
+                            </div>                    
                         </div>
                    </div>
           

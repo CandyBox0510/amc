@@ -60,7 +60,7 @@
 	  font-family: 'Hanna', sans-serif; 
 	  font-size: 120%;
 }	
-    #child {
+    /* #child {
 -ms-zoom: 0.75;
 -moz-transform: scale(0.75);
 -moz-transform-origin: 0 0;
@@ -68,7 +68,7 @@
 -o-transform-origin: 0 0;
 -webkit-transform: scale(0.75);
 -webkit-transform-origin: 0 0;
-}
+} */
 </style>
 
 <script type="text/javascript">
@@ -129,7 +129,7 @@ function kakaoPay(){
 			    			/**************************************/
 			    			//node서버에 롤백 요청하기
 			    			//rollbackSeat();
-			    			self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
+			    			//self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
 			    			
 			    		}
 			    	});
@@ -142,7 +142,8 @@ function kakaoPay(){
 			        /**************************************/
 			        //node서버에 롤백 요청하기
 			        //rollbackSeat();
-			        self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
+			        
+			        //self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
 			        
 			        
 			    }//end of rsp.success else 
@@ -450,10 +451,10 @@ function kakaoPay(){
           </div>
           <!--  only UI -->
 	
-			<div class="col-sm-8 com-md-9" align='center'>
+			<div  class="col-sm-8 com-md-9">
 
-				<iframe id="child" src="http://127.0.0.1:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
-				style='width:100%; height:500px; '  frameborder='0' align='center'>		 
+				<iframe id="child" src="http://192.168.0.20:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 
@@ -476,6 +477,7 @@ function kakaoPay(){
                       </ul>
                   </div>
 			</div>
+
         </section>  
        
          <input type="hidden" name="clientId" value=""/>

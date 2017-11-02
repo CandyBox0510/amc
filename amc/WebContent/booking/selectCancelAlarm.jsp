@@ -247,8 +247,8 @@
    
          <div class="col-sm-8 com-md-9">   
             <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=10358" 
-            style='width:100%; height:550px'  frameborder='0' align='center'>       
+            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
             </iframe>
             <!-- style='width:100%' -->

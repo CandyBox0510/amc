@@ -141,9 +141,19 @@
 		
 	$(document).on("click", "#gotoSeat",  function(){
 		
-		var screenContentNo = $(".item").eq(3).text();	
-		self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
-
+		//로그인 여부 체크
+		if(${sessionScope.user==null}){
+			
+			alert('로그인 후 이용해 주세요');
+			//로그인 창 모달로 띄우기
+			self.location= "/";
+			
+		}else{
+			
+			var screenContentNo = $(".item").eq(3).text();	
+			self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+		}
+	
 	});
    </script> 
 <style>
