@@ -206,11 +206,7 @@ public class BookingServiceImpl implements BookingService {
 	public void selectCancelAlarm(int screenContentNo) {
 	}
 	
-	@Override
-	public void sendEmailQR(String bookinNo, String email) {
-
-	}
-
+	
 	@Override
 	public void sendPhoneQR(String bookingNo, String phone) {
 	}

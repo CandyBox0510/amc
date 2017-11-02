@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="ko">
-<head> 
+<!doctype html>
+<html>
+<head>
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMovie - Booking step 1</title>
+        <title>AMovie - (Preview)Booking step 1</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -34,383 +33,539 @@
         <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
     
         <!-- Custom -->
-        <link href="/css/style.css?v=4" rel="stylesheet" />
+        <link href="/css/style.css?v=1" rel="stylesheet" />
 
         <!-- Modernizr --> 
         <script src="/js/external/modernizr.custom.js"></script>
     
     	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
   
-  <script type="text/javascript">
-var ticketOpenDate="";
-
-    function dpTime(){
-    	
-    	
-    	console.log("open : "+ticketOpenDate);
-    	var templist = ticketOpenDate.split('.');
-    	console.log("ø¿«¬Ω√∞£ : "+templist[0]);
-    	
-    	var now = new Date();
-    	var screenTime = new Date(templist[0]);
- 	   //var screenTime = new Date('17/10/22 12:00:00');
- 	  	console.log("now : "+now);  //mon oct 16 2017 10:51:31 GMT+0900
- 	  	console.log("now.getTime() : "+now.getTime()); //1508118721142
- 	 
- 	  	var _second = 1000;
- 	  	var _minute = _second * 60;
- 	  	var _hour = _minute * 60;
- 	  	var _day = _hour * 24;
- 	  	var timer;
-
- 	   var diff = (screenTime.getTime() - now.getTime());
- 	  	
- 	  	var days = Math.floor(diff / _day);
- 	  	var hours = Math.floor((diff % _day) / _hour);
- 	  	var minutes = Math.floor((diff % _hour) / _minute);
- 	  	var seconds = Math.floor((diff % _minute) / _second);
- 	  	
- 	  	
-        if(diff<1){
-        	$("button[name='selectSeat']").removeAttr("disabled");
-        	$("button[name='selectRandomSeat']").removeAttr("disabled");
-        	$("#dpTime").html("«„«„");
-        } 
+  		<link rel="stylesheet" type="text/css" href="/semantic/semantic.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
 		
- 	 	 if (days < 1){
+		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		
+  <script type="text/javascript">
+//ÌÉÄÏù¥Î®∏ÏÖãÌåÖ
+	var ticketOpenDate="";
+  function dpTime(){
+  	
+  	
+  	console.log("open : "+ticketOpenDate);
+  	var templist = ticketOpenDate.split('.');
+  	console.log("Ïò§ÌîàÏãúÍ∞Ñ : "+templist[0]);
+  	
+  	var now = new Date();
+  	var screenTime = new Date(templist[0]);
+	   //var screenTime = new Date('17/10/22 12:00:00');
+	  	console.log("now : "+now);  //mon oct 16 2017 10:51:31 GMT+0900
+	  	console.log("now.getTime() : "+now.getTime()); //1508118721142
+	 
+	  	var _second = 1000;
+	  	var _minute = _second * 60;
+	  	var _hour = _minute * 60;
+	  	var _day = _hour * 24;
+	  	var timer;
+
+	   var diff = (screenTime.getTime() - now.getTime());
+	  	
+	  	var days = Math.floor(diff / _day);
+	  	var hours = Math.floor((diff % _day) / _hour);
+	  	var minutes = Math.floor((diff % _hour) / _minute);
+	  	var seconds = Math.floor((diff % _minute) / _second);
+	  	
+	  	
+      if(diff<1){
+      	$("#gotoSeat").removeClass("disabled");
+      	$("#randomSeat").removeClass("disabled");
+      	$("#dpTime").html("ÌòÑÏû¨ Ìã∞Ïºì Íµ¨Îß§ Í∞ÄÎä•Ìï©ÎãàÎã§.");
+      } 
+		
+	 	 if (days < 1){
 	         days = "";
 	     }
-        
-        if (hours < 10){
-            hours = "0" + hours;
-        }
-        
-        if (minutes < 10){
-            minutes = "0" + minutes;
-        }
-        
-        if (seconds < 10){
-            seconds = "0" + seconds;
-        }
-       
-        if(diff<1){
-        	
-        }else{
-			document.getElementById("dpTime").innerHTML =days+ "¿œ " + hours + ":" + minutes + ":" + seconds;
-        }
-    }
-
-    //////////////////////////////////////////////////
-    //1. øµ»≠¡¶∏Ò ≈¨∏ØΩ√
-		$( function() {
+      
+      if (hours < 10){
+          hours = "0" + hours;
+      }
+      
+      if (minutes < 10){
+          minutes = "0" + minutes;
+      }
+      
+      if (seconds < 10){
+          seconds = "0" + seconds;
+      }
+     
+      if(diff<1){
+      	
+      }else{
+			document.getElementById("dpTime").innerHTML =days+ "Ïùº " + hours + ":" + minutes + ":" + seconds;
+      }
+  }
+  
+  
+   $( function() {
+		
+		$("li[name='movieName']").on("click" , function() {
 			
-			$(".movieName").on("click" , function() {
-				
-				var movieNo =  $($(this).find("input[name='movieNo']")).val();
-				var flag = $("input:hidden[name='flag']").val();
-				var movieName =  $($(this).find("input[name='movieName']")).val();
-				$(".item").eq(0).text(movieName);
-				
-				$.ajax(
-						{
-							url : "/booking/json/getScreenDate/"+movieNo+"/"+flag,						
-							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function(JSONData, status) {
-								console.log('»˜»˜ : '+JSONData);								
-		                        var str = "";
-		                        if(JSONData != ""){
-		                        	
-		                           $(JSONData).each(
-		                               function(){
-		                            	  str+= 	'<div class="screenDay">'+this+'¿œ'
-		                            	  str+=     '<input type="hidden" name="day" value='+this+'>'
-		                            	  str+=	'</div>';
-				                      });//end of each fnc                            
-			                        }//end of ifπÆ
-			                        $(".col-md-4").eq(1).find(".screenDay").remove();
-			                        $(".col-md-4").eq(2).find(".screenTime").remove();
-			                        $(".col-md-4").eq(1).find(".head").after(str);
-
-							}
-					});//end of ajax
-			});
-
-		});
-		
-		
-		//2. ≥Ø¬• ≈¨∏ØΩ√
-		$(document).on("click", ".screenDay",  function(){
-			alert("≥Ø¬•∏¶ º±≈√«œºÃΩ¿¥œ¥Ÿ.");
-
-			var date =  $($(this).find("input[name='day']")).val();
-			$(".item").eq(1).text(date);
+			var movieNo =  $($(this).find("input[name='movieNo']")).val();
+			var movieName =  $($(this).find("input[name='movieName']")).val();
+			$(".item").eq(1).html("");
+			$(".item").eq(2).html("");
+			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
+			alert('movie title clicked! : '+movieNo);
+			var flag = $("input:hidden[name='flag']").val();
+			
 			$.ajax(
 					{
-						url : "/booking/json/getScreenTime/"+date,						
+						url : "/booking/json/getScreenDate/"+movieNo+"/"+flag,						
 						method : "GET" ,
 						dataType : "json" ,
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
 						},
-						async : false,
 						success : function(JSONData, status) {
-							console.log('screenTime πﬁæ∆ø» : '+JSONData);								
+							console.log('ÌûàÌûà : '+JSONData);								
 	                        var str = "";
 	                        if(JSONData != ""){
-	                        	
 	                            $(JSONData).each(
-	                               function(){
-	                            	   str+= '<div class="screenTime">Ω√∞£ : '+this.screenOpenTime
-	                            	   +     ', ªÛøµπ¯»£ : '+this.screenContentNo+'  ∆ºƒœø¿«¬Ω√∞£¿∫ : '+this.ticketOpenDate
-	                            	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
-	                            	   +'<input type="hidden" name="ticketOpenDate" value="'+this.ticketOpenDate+'">'
-	                            	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
-	                            	   +'</div>' ;				
+	                               function(){	
 	                            	   
-	                               }//end of function
-	                             );
-	                        }//end of ifπÆ
+	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this.substring(3,5)+'Ïùº'
+	                            	   str+=    '<input type="hidden" name="day" value='+this.substring(3,5)+'>'	
+									   str+=  '</li>';
+	                               });//end of each fnc                            
+	                        }//end of ifÎ¨∏
+	                       
+	                        $(".col-sm-6.items-wrap").eq(1).find(".time-select__item").remove();
+	                        $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
+	                        $(".col-sm-6.items-wrap").eq(1).html(str);
 	                        
-	                        $(".col-md-4").eq(2).find(".screenTime").remove();
-	                        $(".col-md-4").eq(2).find(".head").after(str);
+	                        
+	                        
 						}
 				});//end of ajax
 		});
+
+	});
+   
+	//2. ÎÇ†Ïßú ÌÅ¥Î¶≠Ïãú
+	$(document).on("click", "li[name='screenDay']",  function(){
+		alert("ÎÇ†ÏßúÎ•º ÏÑ†ÌÉùÌïòÏÖ®ÏäµÎãàÎã§.");
 		
-		//3. Ω√∞£≈¨∏ØΩ√
-		$(document).on("click", ".screenTime",  function(){
-			
-			var contNo = $($(this).find("input[name='contNo']")).val();
-			ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
-			var screenTime = $($(this).find("input[name='screenTime']")).val();
-			$(".item").eq(2).text(screenTime);
-			
-			alert("∆ºƒœø¿«¬Ω√∞£ :"+ticketOpenDate);
-			
-			$("#display").text(contNo);	
-			
-			setInterval("dpTime();",1000);
-			
-		});
-			
+		var date =  $($(this).find("input[name='day']")).val();
+		$(".item").eq(2).html("");
+		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"Ïùº");
+		$.ajax(
+				{
+					url : "/booking/json/getScreenTime/"+date,						
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, 
+					async : false,
+					success : function(JSONData, status) {
+						console.log('screenTime Î∞õÏïÑÏò¥ : '+JSONData);								
+                       var str = "";
+                       if(JSONData != ""){
+                           $(JSONData).each(
+                              function(){
+                            	  
+                           	   str+= '<li class="time-select__item abc" name="screenTime">ÏãúÍ∞Ñ : '+this.screenOpenTime
+                           	   +     ' '+'&nbsp;'+' Ìã∞ÏºìÏò§ÌîàÏãúÍ∞Ñ : '+this.ticketOpenDate
+                           	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
+                           	   +'<input type="hidden" name="ticketOpenDate" value="'+this.ticketOpenDate+'">'
+                           	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
+                           	   +'</li>' ;				
 
-	$( function(){	
+                              }//end of function
+                            );
+                       }//end of ifÎ¨∏
+                       
+                      
+                       $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
+                       $(".col-sm-6.items-wrap").eq(2).html(str);
 
-    	$("button[name='selectSeat']").on("click", function(){
-    		var screeContentNo = $("#display").text();
-	    	self.location="/booking/selectSeat?screenContentNo="+"10000";
-	    });
-    	$("button[name='tempSelectSeat']").on("click", function(){
-    		var screeContentNo = $("#display").text();
-    		self.location="/booking/selectSeat?screenContentNo="+"10000";
-	    });
-    	$("button[name='selectRandomSeat']").on("click", function(){
-    		var screeContentNo = $("#display").text();
+					}
+			});//end of ajax
+	});
+	
+	//3. ÏãúÍ∞ÑÌÅ¥Î¶≠Ïãú
+	$(document).on("click", "li[name='screenTime']",  function(){
+		
+		var screenTime = $($(this).find("input[name='screenTime']")).val();
+		var contNo = $($(this).find("input[name='contNo']")).val();
+		
+		ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
+		alert("ÏÑ†ÌÉùÌïú ÏÉÅÏòÅÎ≤àÌò∏Îäî : "+contNo+", Ìã∞ÏºìÏò§ÌîàÌÉÄÏûÑÏùÄ :"+ticketOpenDate);
+		
+		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
+		$(".item").eq(3).text(contNo);
+		
+		setInterval("dpTime();",1000);
+	});
+		
+	
+/* 	//3. ÏãúÍ∞ÑÌÅ¥Î¶≠Ïãú
+	$(document).on("click", ".screenTime",  function(){
+		
+		var contNo = $($(this).find("input[name='contNo']")).val();
+		ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
+		alert("ÏÑ†ÌÉùÌïú ÏÉÅÏòÅÎ≤àÌò∏Îäî : "+contNo+", Ìã∞ÏºìÏò§ÌîàÌÉÄÏûÑÏùÄ :"+ticketOpenDate);
+		
+		$("#display").text(contNo);	
+		
+		setInterval("dpTime();",1000);
+		
+	}); */
+	
+	
+	$(document).on("click", "#gotoSeat",  function(){
+		
+		var screenContentNo = $(".item").eq(3).text();	
+		self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+
+	});
+	
+	$( function(){
+ 		
+    	/* $("#randomSeat").on("click", function(){
+    		var screeContentNo = $(".item").eq(3).text();
     		var headCount = $("input:radio[name=headCount]:checked").val();
     		if( $("input:radio[name=headCount]:checked").length<1){
-    			alert("¿Œø¯ºˆ∏¶ ∏’¿˙ º±≈√«ÿ¡÷ººø‰.");
+    			alert("Ïù∏ÏõêÏàòÎ•º Î®ºÏ†Ä ÏÑ†ÌÉùÌï¥Ï£ºÏÑ∏Ïöî.");
     		}else{
-    			alert("∑£¥˝¡¬ºÆ¿ª "+headCount+"ºÆ Ω≈√ª«’¥œ¥Ÿ.");
-    			//self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;	
-        		self.location="/booking/selectRandomSeat?screenContentNo=10172&headCount="+headCount+"";
+    			alert("ÎûúÎç§Ï¢åÏÑùÏùÑ "+headCount+"ÏÑù Ïã†Ï≤≠Ìï©ÎãàÎã§.");
+    			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
+    			
     		}
     		
+	    }); */
+		$("#randomSeat").on("click", function(){
+    		var screeContentNo = $(".item").eq(3).text();
+			var headCount = 2;
+
+    			alert("ÎûúÎç§Ï¢åÏÑùÏùÑ "+headCount+"ÏÑù Ïã†Ï≤≠Ìï©ÎãàÎã§.");
+    			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
+
 	    });
-    
-    })
-</script>
+		
+    });
+	
+	
+   </script> 
+<style>
+.time-select .time-select__item {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #ffd564;
+  padding: 9px 15px 8px 14px;
+  margin: 5px 16px 5px 0;
+  cursor: pointer;
+}
+.time-select .time-select__item:hover {
+  background-color: #fe505a;
+}
+.time-select .time-select__item:before {
+  content: '';
+  width: 95%;
+  height: 28px;
+  border: 1px solid #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.time-select .time-select__item:after {
+  content: '';
+  width: 64px;
+  height: 34px;
+  background-image: url(../images/components/bg-time.png);
+  background-repeat: no-repeat;
+  -webkit-background-size: 64px 34px;
+  background-size: 64px 34px;
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  z-index: -1;
+}
+.time-select .time-select__item:hover:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.time-select .time-select__item.active {
+  background-color: #fe505a;
+}
+.time-select .time-select__item.active:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+}
+.choose-indector {
+  position: relative;
+  z-index: 13;
+  width: 100%;
+  background-color: #4c4145;
+  color: #ffffff;
+  font-size: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 12px 21px 12px;
+  cursor: pointer;
+  }
+.choose-indector:before {
+  content: "\f077";
+  font: 18px "FontAwesome";
+  color: #ffffff;
+  position: absolute;
+  top: 8px;
+  right: 21px;
+
+}
+.abc{
+	  font-family: 'Hanna', sans-serif; 
+}
+</style>
 </head>
-	<body>
-	    <div class="wrapper wrapper-images">
-        <div class="comming-wrapper">
-        <div class="order-container">
-               
-        <section class="container">
-         
-         	<div class="order">
-              <img class="order__images" alt='' src="/images/tickets.png">
-              <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
-              <div class="order__control">
-                  <a href="#" class="order__control-btn active">Purchase</a>
-                  <a href="#" class="order__control-btn">Reserve</a>
-              </div>
-            </div>
-            
-           
-        
-            <div class="couter">
-                <div class="timer-wrap">
-                    <div class="timer-bg"></div>
-                    <span class="digits"></span>
-                    <input class="knob day" data-min="0" data-max="100" data-bgColor="rgba(255,255,255,0.2)" data-fgColor="#ffd564" data-displayInput=false data-width="200" data-height="200" data-thickness=".11">
-                    <div class="digits-label">days</div>
-                </div>
-                <div class="timer-wrap">
-                    <div class="timer-bg"></div>
-                    <span class="digits"></span>
-                    <input class="knob hour" data-min="0" data-max="24" data-bgColor="rgba(255,255,255,0.2)" data-fgColor="#ffd564" data-displayInput=false data-width="200" data-height="200" data-thickness=".11">
-                    <div class="digits-label">hours</div>
-                </div>
-                <div class="timer-wrap">
-                    <div class="timer-bg"></div>
-                    <span class="digits"></span>
-                    <input class="knob minute" data-min="0" data-max="60" data-bgColor="rgba(255,255,255,0.2)" data-fgColor="#ffd564" data-displayInput=false data-width="200" data-height="200" data-thickness=".11">
-                    <div class="digits-label">minutes</div>
-                </div>
-                <div class="timer-wrap">
-                    <div class="timer-bg"></div>
-                    <span class="digits"></span>
-                    <input class="knob second" data-min="0" data-max="60" data-bgColor="rgba(255,255,255,0.2)" data-fgColor="#ffd564" data-displayInput=false data-width="200" data-height="200" data-thickness=".11">
-                    <div class="digits-label">seconds</div>
-                </div>
-            </div>
-          </section>
-          </div> 
-        </div>
-    
-    </div>
-	
-	
+
+<body>
+  <%--  <div class="banner-top">
+      <img alt='top banner' src="../images/banners/space.jpg">
+  </div>
+  <header class="header-wrapper header-wrapper--home">
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/topToolbar_.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
+   </header> --%>
    <!--  <div class="wrapper"> -->
- 	<div class="item">selected movie</div>
-	<div class="item"></div>
-	<div class="item"></div>
-	<div class="item"></div>
-    <input type="hidden" name="flag" value="1"> 
-       <!-- Main content -->
+	
+    <input type="hidden" name="flag" value="2"> 
+    <input type="hidden" name="openTime" value="2017-10-27 12:00:00">
+
+
+<!--     
+	<button class="ui inverted green button" name="selectSeat" disabled="disabled">(ÏãúÍ∞ÑÎêòÎ©¥ ÌôúÏÑ±Ìôî) Ï¢åÏÑùÏÑ†ÌÉù</button>
+	<button class="ui inverted green button" name="tempSelectSeat">[ÌÖåÏä§Ìä∏Ïö©] Ï¢åÏÑùÏÑ†ÌÉù </button>	 -->
+	<p>
+        
+        <!-- Main content -->
 
         <section class="container">
-        
-         <div class="order-step-area">
-                <div class="order-step first--step">1. What &amp; Where &amp; When</div>
-         </div>
+            <div class="order-container">
+                <div class="order">
+                    <img class="order__images" alt='' src="/images/tickets.png">
+                    <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
+                    <div class="order__control">
+                        <a href="#" class="order__control-btn active">Purchase</a>
+                        <a href="#" class="order__control-btn">Reserve</a>
+                    </div>
+                </div>
+            </div>
+               <div class="order-step-area">
+                   <div class="order-step first--step">1. What &amp; Where &amp; When</div>
+               </div>
+        </section>
+        <br>
+
+
+        <section class="container">
             <div class="col-sm-12">
                 
-                <h2 class="page-heading">Preview</h2>
+                <h2 class="page-heading abc">ÏãúÏÇ¨Ìöå</h2>
 
                 <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">ÏãúÏÇ¨ÌöåÏ†úÎ™©</p>
                             </div>
                             
                             <ul class="col-sm-6 items-wrap">
                             <c:set var="i" value="0" />
-							  <c:forEach var="movie" items="${movieList}">
+							  <c:forEach var="screenContent" items="${screenContentList}">
 								<c:set var="i" value="${ i+1 }" />										  
-								  <li class="time-select__item" name="movieName">${movie.movieNm}
-								  	<input type="hidden" name="movieNo" value="${movie.movieNo}">
-								  	<input type="hidden" name="movieName" value="${movie.movieNm}">
+								  <li class="time-select__item abc" name="movieName">${screenContent.previewTitle} 
+								  	<input type="hidden" name="movieNo" value="${screenContent.screenContentNo}">
+								  	<input type="hidden" name="movieName" value="${screenContent.previewTitle}">
 								  </li>
 					          </c:forEach> 
                             </ul>                        
                         </div>
                    </div>
-               	
-                <h2 class="page-heading">Date</h2>
 
                 <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">ÎÇ†Ïßú</p>
                             </div>
                             <ul class="col-sm-6 items-wrap">
                             </ul>
                         </div>
                    </div>
 
-                <h2 class="page-heading">Pick time</h2>
-
                 <div class="time-select time-select--wide">
+                   <div class="time-select__group group--first">
+                       <div class="col-sm-3">
+                           <p class="time-select__place abc">ÏãúÍ∞Ñ</p>
+                       </div>
+                       <ul class="col-sm-6 items-wrap">
+                      </ul>
+                   </div>
+               </div>
+               
+              <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">ÎûúÎç§Ï¢åÏÑùÏàò(ÏÑ†ÌÉù)</p>
                             </div>
-                            <ul class="col-sm-6 items-wrap">
-
-                            </ul>
+                            
+                            <ul class="col-sm-6 items-wrap">				                            		  
+							  <li class="time-select__item abc" name="headCount">1ÏÑù						  	
+							  	<input type="hidden" name="headCount" value="1">
+							  	<input type="radio" name="headCount" value="1">
+							  </li>
+							  <li class="time-select__item abc" name="headCount">2ÏÑù						  	
+							  	<input type="hidden" name="headCount" value="2">
+							  	<input type="radio" name="headCount" value="2">
+							  </li>
+                            </ul>                        
                         </div>
-                    </div>
+                   </div>
+          
+               
 
 				<br><br>
-                <div class="choose-indector choose-indector--time">
-                    <strong>Choosen: </strong><span class="choosen-area"></span>
+                <div class="choose-indector choose-indector--time abc">
+                <div class="row" style="padding:10px;">
+                    <strong>Choosen &nbsp; </strong>
+                    <span class="choosen-area">
+                    	<span class="item"></span>
+						<span class="item"></span>
+						<span class="item"></span>
+						<input type="hidden" class="item"></input>
+					</span>
+				</div >
+				<div class="row abc" style="padding:10px;">
+					<strong>Ìã∞Ïºì Ïò§ÌîàÍπåÏßÄ ÎÇ®ÏùÄÏãúÍ∞Ñ &nbsp; </strong>
+                    <span class="choosen-area">
+                    	<span id="dpTime"></span>
+					</span>
+				</div >
                 </div>
+                
+            
+       
+           </div>
+        </section>
+
+        <div class="clearfix"></div>
+
+            <div class="booking-pagination">
+                    <a class="booking-pagination__next disabled" id="randomSeat">
+                        <span class="arrow__text ">random seat</span>
+                        <span class="arrow__info">get random sit</span>
+                    </a>
+                    <a class="booking-pagination__next disabled" id="gotoSeat">
+                        <span class="arrow__text arrow--next" >next step</span>
+                        <span class="arrow__info">choose a sit</span>
+                    </a>
             </div>
 
-        </section>
+
         
-        
+        <div class="clearfix"></div>
 
-	<input type="hidden" name="flag" value="2">
-	<input type="hidden" name="openTime" value="2017-10-27 12:00:00">
+        <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-	<h3><span id ="timer">∆ºƒœ ø¿«¬±Ó¡ˆ ≥≤¿∫Ω√∞£ : <span id="dpTime">«ˆ¿ÁΩ√∞£ «•Ω√</span></span></h3>
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    <!-- </div> -->
 
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
+            <section class="container">
 
-	<button class="ui inverted green button" name="selectSeat" disabled="disabled">(Ω√∞£µ«∏È »∞º∫»≠) ¡¬ºÆº±≈√</button>
-	<button class="ui inverted green button" name="tempSelectSeat">[≈◊Ω∫∆ÆøÎ] ¡¬ºÆº±≈√ </button>
-	
-	<p>
-	
-	<div class="ui form">
-		<button class="ui inverted purple button" name="selectRandomSeat" disabled="disabled"> ∑£¥˝¡¬ºÆ º±≈√«œ±‚ </button>
-	
-	  <div class="inline fields">
-	    <label>&nbsp;∑£¥˝¡¬ºÆ »¶µ˘¿ª ¿ß«— ¿Œø¯ºˆ∏¶ º±≈√«ÿ¡÷ººø‰</label>
-	    <div class="field">
-	      <div class="ui radio checkbox">
-	        <input type="radio" name="headCount" value="1">
-	        <label class="lb">1∏Ì</label>
-	      </div>
-	    </div>
-	    <div class="field">
-	      <div class="ui radio checkbox">
-	        <input type="radio" name="headCount" value="2">
-	        <label class="lb">2∏Ì</label>
-	      </div>
-	    </div>	        
-	 </div>
-	</div>
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
 
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
 
+                        <p class="login__tracker">or</p>
+                        
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
 
-	 <input type="hidden" name="flag" value="1">
-      <div class="row">
-        <div class="col-md-4">
-         <div class="head"><h3>Ω√ªÁ»∏ ¡¶∏Ò</h3></div>
-          <table>
-	          <c:set var="i" value="0" />
-			  <c:forEach var="screenContent" items="${screenContentList}">
-				<c:set var="i" value="${ i+1 }" />
-						  
-				  <div align="left" class="movieName"><h5>${screenContent.previewTitle} </h5>
-				  	<input type="hidden" name="movieNo" value="${screenContent.screenContentNo}">
-				  	<input type="hidden" name="movieName" value="${screenContent.previewTitle}">
-				  </div>
-				
-	          </c:forEach>        
-          </table>
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
         </div>
-		<div class="col-md-4" id="dayList">
-			<div class="head"><h3>ªÛøµ ≥Ø¬•</h3></div>
-	   	</div>
-	   	<div class="col-md-4" id="dayList">
-			<div class="head"><h3>ªÛøµ ≥Ø¬•</h3></div>
-	   	</div>
-      </div>
-      
- 
 
-      <div id="display" ></div>
-     
-     	<!-- JavaScript-->
+		<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
@@ -441,24 +596,6 @@ var ticketOpenDate="";
                 init_BookingOne();
             });
 		</script>
-		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Knob js -->
-        <script src="/js/external/jquery.knob.js"></script>
-        <!-- Count comimg soon -->
-        <script src="/js/external/count.down.js"></script>
 
-        <script>
-            $(document).ready(function() {
-                //CountDown
-                var dateOfBeginning = "Jan 16, 2017", //type your date of the Beginnig
-                    dateOfEnd = "Dec 25, 2017"; //type your date of the end
-
-                countDown(dateOfBeginning, dateOfEnd);            
-            });
-        </script>
-     
-     
-	</body>
+</body>
 </html>

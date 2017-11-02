@@ -7262,7 +7262,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   content: '';
   background-image: url(../images/icons/speech.svg);
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center center;
   -webkit-background-size: 42px 36px;
   background-size: 42px 36px;
   width: 45px;
@@ -7358,7 +7358,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .ticket .ticket__item {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-family: 'PT Mono';
   font-size: 14px;
   text-transform: uppercase;
