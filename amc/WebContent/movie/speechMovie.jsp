@@ -113,7 +113,7 @@
 	
 	
 	<!-- <div class="center"> -->
-	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 70px; margin-left: auto;
+	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 100px; margin-left: auto;
  	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
   	
     <noscript>Please <a href="http://www.enable-javascript.com/" target="_blank">enable JavaScript</a>. Thank You! :D</noscript>

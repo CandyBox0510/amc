@@ -175,7 +175,7 @@
 					$(function() {
 						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 						 
-						  $(document).on("click", ".glyphicon.glyphicon-heart-empty", function () {
+						  $(document).on("click", ".fa-heart-o", function () {
 
 								
 								 //var movieNo = $(this).next().val();		
@@ -191,7 +191,7 @@
 							
 								
 								//$(this).switchClass('glyphicon glyphicon-heart-empty','glyphicon glyphicon-heart');
-							    $(this).removeClass('glyphicon glyphicon-heart-empty').addClass('glyphicon glyphicon-heart');
+							    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
 							    
 							    //$(this).replaceClass('.glyphicon glyphicon-heart-empty','.glyphicon glyphicon-heart');
 								
@@ -228,7 +228,7 @@
 							
 						})
 						 
-						 $(document).on("click", ".glyphicon.glyphicon-heart", function () {
+						 $(document).on("click", ".fa-heart", function () {
 								
 								
 							 //var movieNo = $(this).next().val();		
@@ -241,7 +241,7 @@
 							alert("userId: " + userId); 
 							
 							
-							$(this).removeClass('glyphicon glyphicon-heart').addClass('glyphicon glyphicon-heart-empty');
+							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
 						
 							if(userId == null || userId == ''){
 								alert("로그인 후 이용 가능합니다.");
@@ -349,7 +349,7 @@
                 <!-- Search bar -->
  			<div class="col-sm-12">
  			
-                <h2 class="page-heading"> 현재 상영 영화<</h2>                
+                <h1 class="page-heading"> 현재 상영 영화 </h1>                
 				
 			       <div class="col-md-2 text-right">          
                     <form class="form-inline" name="detailForm">
@@ -360,8 +360,8 @@
 				  	 </form>
 				   </div>
 				   		
-				  <i class='glyphicon glyphicon-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
-				  <i class='glyphicon glyphicon-volume-up' id="voidSearchIcon" style="color:grey"></i>	  
+				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
+				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	  
 			        
              		  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -393,14 +393,17 @@
 							    <span style="line-height:0%">
 							    <c:set var="name" value="${movie.wishList.wishNo}"/>
 	 								<c:if test="${name eq '0'}">
-									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
-									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+								<%-- bootstrap icon이 작동이 되질 않음      --%>
+								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
+										text-align : center; margin:0 auto;">   --%>	
+								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -412,7 +415,7 @@
 	                            <span style="line-height:0%">
 	                             
 	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
-	                            <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            <i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
 	                            </span>
 	                         
 	                                    
@@ -424,12 +427,10 @@
 					</div>
 	           </div>     
                               
-
-                  <!--  화면구성 div End /////////////////////////////////////-->
- 	
-				 	<!-- PageNavigation Start... -->
-					<jsp:include page="../common/pageNavigator.jsp"/>
-					<!-- PageNavigation End... -->
+ 					<div class="pagination paginatioon--full">
+                            <a href='#' class="pagination__prev">prev</a>
+                            <a href='#' class="pagination__next">next</a>
+                    </div>
               </div>
           
             
