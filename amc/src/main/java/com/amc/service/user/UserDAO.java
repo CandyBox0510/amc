@@ -30,5 +30,7 @@ public interface UserDAO {
 	
 	// È¸¿øÅ»Åğ À¯Àú È®ÀÎ
 	public String deleteCheck(User user) throws Exception;
+	
+	public int updateUuid(User user);
 		
 }

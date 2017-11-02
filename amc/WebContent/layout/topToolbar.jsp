@@ -1,349 +1,349 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-<%@page import="com.amc.service.domain.User"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%-- 
-<%
-	User user = new User();
-	user.setUserId("testAdmin");
-	user.setRole("admin");
-	session.setAttribute("user", user);
-%>  --%>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
+<!doctype html>
+<html lang="ko">
 <head>
-<meta charset="EUC-KR">
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!-- ¿©±â°¡ ´Ù¸¥ jsp ÆäÀÌÁö¿¡ ÀÖ´Â cdn ½ÃÀÛ///////////////////////////////////////////////////////////////////////////////////////////// -->
-	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-	
-	<!--  ÇØ¸² CDN ¼ø¼­º¯°æ-->
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->	
-	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMovie</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
+        <!-- Open Sans -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+
+        <!-- Slider Revolution CSS Files -->
+        <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+        <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
+        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
 
 
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+        
+        <!-- JavaScript-->
+		<!-- jQuery 3.1.1 --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate  -->
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- Bootstrap 3 --> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Slider Revolution core JavaScript files -->
+        <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+        <!-- Slider Revolution extension scripts. --> 
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+        <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Stars rate -->
+        <script src="/js/external/jquery.raty.js"></script>
+        
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+ <!--        <script src="/js/form.js"></script> -->
+
+        <!-- Twitter feed -->
+        <!-- <script src="/js/external/twitterfeed.js"></script> -->
+
+        <!-- Custom -->
+ 		<script src="/js/custom.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<!-- ¿©±â°¡ ´Ù¸¥ jsp ÆäÀÌÁö¿¡ ÀÖ´Â cdn ³¡/////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- ï¿½ï¿½ï¿½â°¡ ï¿½Ù¸ï¿½ jsp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ cdn ï¿½ï¿½/////////////////////////////////////////////////////////////////////////////////////////////// -->
 	
-	<!--  ÇØ¸² Ä³·¯¼¿ »ç¿ë js-->
+	<!--  ï¿½Ø¸ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ js-->
 	<script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
+<!--    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-  
-   	<!-- Ä«Ä«¿À ·Î±×ÀÎ -->
+ -->  
+   	<!-- Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<!-- Ä«Ä«¿À ·Î±×ÀÎ -->
+	<!-- Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ -->
    
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 </head>
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<div class="navbar  navbar-inverse navbar-fixed-top">
-	 
-	<div class="container">
-	       <!-- Àı´ë°æ·Î·Î º¯°æ  -->
-		<a class="navbar-brand" href="/index.jsp">
-			<img src="/images/common/AMC_Logo.png" width="80px" height="30px"/>
-		</a>
-		
-		<!-- toolBar Button Start //////////////////////// -->
-		<div class="navbar-header">
-		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		    </button>
-		</div>
-		<!-- toolBar Button End //////////////////////// -->
-		
-	    <!--  dropdown hover Start -->
-		<div 	class="collapse navbar-collapse" id="target" 
-	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
-	         
-	         	<!-- Tool Bar ¸¦ ´Ù¾çÇÏ°Ô »ç¿ëÇÏ¸é.... -->
-	             <ul class="nav navbar-nav">
-	             
-	              <!-- ¿µÈ­ DrowDown -->
-	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span>¿µÈ­</span>
-	                         <span class="caret"></span>
-	                     </a>
-	                     <ul class="dropdown-menu">
-	                         <li><a href="#">ÇöÀç »ó¿µ¿µÈ­</a></li>
-	                         <li><a href="#">»ó¿µ ¿¹Á¤¿µÈ­</a></li>
-	                         <li class="divider"></li>
-	                         <li><a href="#">½Ã»çÈ¸</a></li>
-	                     </ul>
-	                 </li>
-	                 
-	              <!-- ¿¹¸Å DrowDown  -->
-		              <li class="dropdown">
-		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span>¿¹¸Å</span>
-		                         <span class="caret"></span>
-		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">¿µÈ­ ¿¹¸Å</a></li>
-		                         <li><a href="#">½Ã»çÈ¸ ¿¹¸Å</a></li>
-		                     </ul>
-		                </li>
-		                
-	              <!-- ¿µÈ­°ü  -->
-					  <li><a href="#">¿µÈ­°ü</a></li>
-				
-				  <!-- Ä¿¹Â´ÏÆ¼  -->  
-					  <li><a href="#">Ä¿¹Â´ÏÆ¼</a></li>
-		                
-	              <!-- ½ºÅä¾î DrowDown  -->
-		              <li class="dropdown">
-		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span>½ºÅä¾î</span>
-		                         <span class="caret"></span>
-		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">±ÂÁî</a></li>
-		                         <li><a href="#">½º³¼¹Ù</a></li>
-		                     </ul>
-		                </li>
-	                 
-	             <!-- °ü¸®ÀÚ¸Ş´º DrowDown  -->
-	             
-	               <c:if test="${sessionScope.user.role == 'admin'}">
-		              <li class="dropdown">
-		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >[°ü¸®ÀÚ ¸Ş´º]</span>
-		                         <span class="caret"></span>
-		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">È¸¿ø°ü¸®</a></li>
-		                         <li><a href="#">»óÇ°°ü¸®</a></li>
-		                         <li><a href="#">ÆÇ¸Å°ü¸®</a></li>
-		                         <li><a href="#">¿µÈ­°ü¸®</a></li>
-		                         <li><a href="#">»ó¿µ°ü¸®</a></li>
-		                         <li><a href="#">¿¹¸Å°ü¸®</a></li>
-		                     </ul>
-		                </li>
-	                 </c:if>
-	                 
-	             </ul>
-	             
-	             
-	             
-	             <ul class="nav navbar-nav navbar-right">
-	             <li>
-	             	<div></div>
-	             </li>
-	             <li>
-	             	<div></div>
-	             </li>
-	             <li>
-	             	<div></div>
-	             </li>
-	             <li>
-	           		<div style = margin:10px>
-						<form class="form-inline" action="/cinema/unifiedSearch" method="post" role="form">
-							<input type="text" class="form-control" name="searchKeyword" placeholder="ÅëÇÕ°Ë»ö">
-							<input type="button" class="form-control" value="°Ë»ö" onClick="javascript:unifiedSearch()">
-						</form>
-					</div>  
-	          	 </li>
-	             </ul>
-	             
-	           	 <!-- À¯Àú°¡ ºñ·Î±×ÀÎ »óÅÂÀÏ ½Ã -->	
-	 			<c:if test="${empty user}">		
-	 				<li>			
-						<form class="navbar-form navbar-right">
-						<!-- <a data-toggle="modal" href="../user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static"> -->
-						<a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
-							<button type="button" class="btn btn-primary">Log in</button>
-						</a >
-							<a href="/user/authForm.jsp"><button type="button" class="btn btn-primary">Sign in</button></a>
-						</form>
-					</li>	
-				</c:if>	
-				
-				<c:if test="${!empty user}">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#" class="user-info">[${sessionScope.user.userName}]</a>
-						<li><a href="/cinema/myPage.jsp">¸¶ÀÌÆäÀÌÁö</a></li>
-						<li><a href="#">·Î±×¾Æ¿ô</a></li>
-					</ul>
-				</c:if> 
-   
-		</div>
-		<!-- dropdown hover END -->	       
-	</div>
-</div>
-		<!-- ToolBar End /////////////////////////////////////-->
- 	
-   	
-   	
-   	<script type="text/javascript">
-	
-   	
-	   	function openHistory(){
-	   		popWin = window.open("../openHistory.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-	   	}
-	   	
-	   	function unifiedSearch(){
-	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").submit();
-	   	}
-   	
-		
-		//============= ¿µÈ­ Event  Ã³¸® =============	
-		/*  $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('¿µÈ­')").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/movie/getMovieList"
-			}); 
-		 }); */
-		
-		//=============  ÇöÀç »ó¿µ¿µÈ­ Event  Ã³¸® =============	
-	 	$( "a:contains('ÇöÀç »ó¿µ¿µÈ­'),a:contains('ID')" ).on("click" , function() {
-	 		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$(self.location).attr("href","/movie/getMovieList?menu=movie");
-		});
-		
-		
-	 	//=============  »ó¿µ ¿¹Á¤¿µÈ­ Event  Ã³¸® =============	
-	 	$( "a:contains('»ó¿µ ¿¹Á¤¿µÈ­')" ).on("click" , function() {
-			$(self.location).attr("href","/movie/getMovieList?menu=commingsoon");
-		});
-	 	
-	 	//=============  ½Ã»çÈ¸ Event  Ã³¸® =============	
-	 	$( "a:contains('½Ã»çÈ¸')" ).on("click" , function() {
-			$(self.location).attr("href","/movie/getMovieList?menu=preview");
-		});
-	 	
-	 	//=============  ¿¹¸Å Event  Ã³¸® =============	
-	 	$( "a:contains('¿¹¸Å')" ).on("click" , function() {
-			$(self.location).attr("href","/booking/getScreenMovieList");
-		});
-	 	
-	 	//=============  ¿µÈ­ ¿¹¸Å Event  Ã³¸® =============	
-	 	$( "a:contains('¿µÈ­ ¿¹¸Å')" ).on("click" , function() {
-			$(self.location).attr("href","/booking/getScreenMovieList");
-		});
-	 	
-	 	//=============  ½Ã»çÈ¸ ¿¹¸Å Event  Ã³¸® =============	
-	 	$( "a:contains('½Ã»çÈ¸ ¿¹¸Å')" ).on("click" , function() {
-			$(self.location).attr("href","/booking/getPreviewList");
-		});
-		
-	 	//=============  ¿µÈ­°ü Event  Ã³¸® =============	
-	 	$( "a:contains('¿µÈ­°ü')" ).on("click" , function() {
-			$(self.location).attr("href","/cinema/theaterInfo.jsp");
-		});
-	 	
-	 	//=============  Ä¿¹Â´ÏÆ¼ Event Ã³¸® =============	
-	 	$( "a:contains('Ä¿¹Â´ÏÆ¼')" ).on("click" , function() {
-			$(self.location).attr("href","/community/getFreeBoardList");
-		});
-	 	
-	 	//============= ½ºÅä¾î Event Ã³¸® =============	
-	 	$( "a:contains('½ºÅä¾î')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getGoodsList?menu=search");
-		});
-	 	
-	 	//=============  ±ÂÁî Event Ã³¸® =============	
-	 	$( "a:contains('±ÂÁî')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getGoodsList?menu=search");
-		});
-	 	
-	 	//=============  ½º³¼¹Ù Event Ã³¸® =============	
-	 	$( "a:contains('½º³¼¹Ù')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getSnackList?menu=search");
-		});
-	 	
-	 	//=============  È¸¿ø°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('È¸¿ø°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/user/getUserList");
-		});
-	 	
-	 	//=============  »óÇ°°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('»óÇ°°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/product/getGoodsList?menu=manage");
-		});
-	 	
-	 	//=============  ÆÇ¸Å°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('ÆÇ¸Å°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/purchase/getSaleList");
-		});
-	 	
-	 	//=============  ¿µÈ­°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('¿µÈ­°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/movie/getMovieList?menu=manage");
-		});
-	 	
-	 	//=============  »ó¿µ°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('»ó¿µ°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/screen/getScreenList");
-		});
-	 	
-	 	//=============  ¿¹¸Å°ü¸® Event  Ã³¸® =============	
-	 	$( "a:contains('¿¹¸Å°ü¸®')" ).on("click" , function() {
-			$(self.location).attr("href","/booking/getAdminBookingList");
-		});
-	 	
-	 	
-/* 	 	//============= login Event  Ã³¸® =============	
-		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("input:contains('·Î±×ÀÎ')").on("click" , function() {
-				$(self.location).attr("href","/user/loginUser");
-			}); 
-		 });
- */	 	
-	 	//============= logout Event  Ã³¸® =============	
-/*		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 		 	$("a:contains('·Î±×¾Æ¿ô')").on("click" , function() {
-				$(self.location).attr("href","/user/logoutUser");
-			}); 
-		 });
- */	 	
- 
-	 $(function() {
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a:contains('·Î±×¾Æ¿ô')").on("click" , function() {
-			//alert("Ä«Ä«¿À·Î±×¾Æ¿ô");
-			logoutWithKakao();
+  <!--       <script type="text/javascript">
+             $(document).ready(function() {
+               init_Home();
+             });
+	    </script>  -->
+	    
+	    <script type="text/javascript">
+    	//============= "ë¡œê·¸ì¸"  Event ì—°ê²° =============
+		$( function() {
+		/* 	alert("ì œë°œ ì¼ë¡œì¢€ ë“¤ì–´ì™€ë¼"); */
+			$("#userId").focus();
 			
-		}); 
-	});
- 
-		function logoutWithKakao() {
-			Kakao.init('fc5658887af25f840e94144f6722b228');
-			Kakao.Auth.logout(function(){
-				setTimeout(function(){
-					location.href="/user/logoutUser/"
-				},300);
-				});
-		}
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("#login").on("click" , function() {
+				var id=$("#userId").val();
+				var pw=$("input:password").val();
+				
+				if(id == null || id.length <1) {
+					alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+					$("#userId").focus();
+					return;
+				}
+				
+				if(pw == null || pw.length <1) {
+					alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+					$("#password").focus();
+					return;
+				}
+				
+				$.ajax( 
+						{	
+							url : "/user/json/loginUser",
+							method : "POST" ,
+							async : false,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							data : JSON.stringify({
+								userId : id,
+								password : pw
+							}),
+							success : function(JSONData , status) {
 
-		//=============  ÃÖ±Ù º» »óÇ°  Ã³¸® =============	
-		 	$( "a:contains('ÃÖ±Ù º» »óÇ°')" ).on("click" , function() {
-		 		openHistory();
+								//Debug...
+								//alert(status);
+								//alert("JSONData : \n"+JSONData);
+								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+								//alert("JSONData : "+ JSONData );
+								//alert("status : "+ status );
+									//alert(JSONData.role);
+									console.log(JSONData.userId);
+									
+									//alert("ë¡œê·¸ì¸ìœ ì €");
+									
+									if( JSONData.role == 'not' ){
+										alert("íƒˆí‡´í•œíšŒì›...");
+									}else if( JSONData !='' ){
+									//$(window.parent.document.location).attr("href","/index.jsp");
+									$(self.location).attr("href","/index.jsp");
+									
+									}else{
+										alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸1...");
+									}
+								},
+							error:function(request,status,error){
+								//alert(error);
+								//alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸2...");
+						    }
+					}); 
+				
 			});
-	 	
-	</script>  
+		});	
+    	
+    	
+		 $(function() {
+				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)				
+				$("a:contains('ë¡œê·¸ì•„ì›ƒ')").on("click" , function() {
+					$(self.location).attr("href","/user/logoutUser");
+				}); 
+			});
+		 
+		 	//============= ìŠ¤í† ì–´ Event ì²˜ë¦¬ =============	
+		 	$( "a:contains('ìŠ¤í† ì–´')" ).on("click" , function() {
+				$(self.location).attr("href","/product/getGoodsList?menu=search");
+			});
+		 	
+		 	//=============  êµ¿ì¦ˆ Event ì²˜ë¦¬ =============	
+		 	$( "a:contains('êµ¿ì¦ˆ')" ).on("click" , function() {
+				$(self.location).attr("href","/product/getGoodsList?menu=search&searchKeyword=G");
+			});
+		 	
+		 	//=============  ìŠ¤ë‚µë°” Event ì²˜ë¦¬ =============	
+		 	$( "a:contains('ìŠ¤ë‚µë°”')" ).on("click" , function() {
+				$(self.location).attr("href","/product/getSnackList?menu=search&searchKeyword=S");
+			});
+		 	
+		 	//=============  íšŒì›ê´€ë¦¬ Event  ì²˜ë¦¬ =============	
+		 	$( "a:contains('íšŒì›ê´€ë¦¬')" ).on("click" , function() {
+				$(self.location).attr("href","/user/getUserList");
+			});
+		 	
+		 	//=============  ìƒí’ˆê´€ë¦¬ Event  ì²˜ë¦¬ =============	
+		 	$( "a:contains('ìƒí’ˆê´€ë¦¬')" ).on("click" , function() {
+				$(self.location).attr("href","/product/getGoodsList?menu=manage");
+			});
+		 	
+		 	//=============  íŒë§¤ê´€ë¦¬ Event  ì²˜ë¦¬ =============	
+		 	$( "a:contains('íŒë§¤ê´€ë¦¬')" ).on("click" , function() {
+				$(self.location).attr("href","/purchase/getSaleList?searchKeyword=saleList");
+			});
+
+		</script>
+
+</head>
+<div class="navbar  navbar-inverse navbar-fixed-top">
+<!-- Header section -->
+         <div class="container">
+        
+             <!-- Logo link-->
+             <a href='/index.jsp' class="logo">
+                 <img alt='logo' src="/images/logo.png">
+             </a>
+             
+             <!-- Main website navigation-->
+             <nav id="navigation-box">
+                 <!-- Toggle for mobile menu mode -->
+                 <a href="#" id="navigation-toggle">
+                     <span class="menu-icon">
+                         <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                           <span class="lines"></span>
+                         </span>
+                     </span>
+                 </a>
+                 
+                 <!-- Link navigation -->
+                 <ul id="navigation">
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">ì˜í™”</a>
+                         <ul>
+                             <li class="menu__nav-item"><a href="#">í˜„ì¬ ìƒì˜ ì˜í™”</a></li>
+                             <li class="menu__nav-item"><a href="#">ìƒì˜ ì˜ˆì • ì˜í™”</a></li>
+                             <li class="divider"></li>
+                             <li class="menu__nav-item"><a href="#">ì‹œì‚¬íšŒ</a></li>
+
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">ì˜ˆë§¤</a>
+                         <ul>
+                             <li class="menu__nav-item"><a href="typography.html">ì˜í™” ì˜ˆë§¤</a></li>
+                             <li class="menu__nav-item"><a href="page-elements.html">ì‹œì‚¬íšŒ ì˜ˆë§¤</a></li>
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="page-elements.html">ì˜í™”ê´€</a>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="gallery-four.html">ì»¤ë®¤ë‹ˆí‹°</a>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="news-left.html">ìŠ¤í† ì–´</a>
+                         <ul>
+                             <!-- <li class="menu__nav-item"><a href="news-left.html">êµ¿ì¦ˆ</a></li>
+                             <li class="menu__nav-item"><a href="news-right.html">ìŠ¤ë‚µë°”</a></li> -->
+                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=G">êµ¿ì¦ˆ</a></li>
+                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=S">ìŠ¤ë‚µë°”</a></li>
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">[ê´€ë¦¬ì ë©”ë‰´]</a>
+						<ul class="mega-menu__list">
+                                 <li class="mega-menu__nav-item"><a href="#">íšŒì› ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="#">ìƒí’ˆ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="#">íŒë§¤ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="#">ì˜í™” ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="#">ìƒì˜ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="#">ì˜ˆë§¤ ê´€ë¦¬</a></li>
+                             </ul>
+                     </li>
+                 </ul>
+             </nav>
+             
+             <!-- Additional header buttons / Auth and direct link to booking-->
+             <div class="control-panel">
+                 <div class="auth auth--home">
+                   <div class="auth__show">
+                   </div>
+                   <a href="#" class="btn btn--sign btn--singin">
+                       	MyPage
+                   </a>
+                     <ul class="auth__function">
+                         <li><a href="#" class="auth__function-item">ë‚´ ì •ë³´ ë³´ê¸°</a></li>
+                         <li><a href="#" class="auth__function-item">ì˜ˆë§¤ ëª©ë¡</a></li>
+                         <li><a href="#" class="auth__function-item">ìœ„ì‹œë¦¬ìŠ¤íŠ¸</a></li>
+                         <li><a href="#" class="auth__function-item">ì·¨ì†Œí‘œ ì•Œë¦¬ë¯¸</a></li>
+                         <li><a href="#" class="auth__function-item">í‹°ì¼“ì˜¤í”ˆì‹œê°„ ì•Œë¦¬ë¯¸</a></li>
+                         <li><a href="#" class="auth__function-item">ìŠ¤í† ì–´ êµ¬ë§¤ ëª©ë¡</a></li>
+                     </ul>
+                 </div>
+                 
+           	<!-- ìœ ì €ê°€ ë¹„ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->	
+ 			<c:if test="${empty sessionScope.user}">		
+ 				<li>			
+					<form class="navbar-form navbar-right">						
+					<!-- <a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
+						<button type="button" class="btn btn-primary">Log in</button>
+					</a > -->
+<!-- 						<a href="/user/loginUser.jsp"><button type="button" class="btn btn-primary">Log in</button></a>
+						<a href="/user/authForm.jsp"><button type="button" class="btn btn-primary">Sign in</button></a>
+ -->						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
+					</form>
+				</li>	
+			</c:if>	
+			
+			<c:if test="${!empty sessionScope.user}">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#" class="user-info">[${sessionScope.user.userName}]</a>
+					<!-- <li><a href="/cinema/myPage.jsp">ë§ˆì´í˜ì´ì§€</a></li> -->
+					<li><a href="#">ë¡œê·¸ì•„ì›ƒ</a></li>
+				</ul>
+			</c:if> 
+ 
+                 
+        	</div>
+          	
+      	
+        	
+	 </div>
+</div>
+</html>

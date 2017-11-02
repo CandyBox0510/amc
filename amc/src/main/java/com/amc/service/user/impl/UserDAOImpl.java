@@ -83,4 +83,9 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne("UserMapper.deleteCheck", user);
 	}
 
+	@Override
+	public int updateUuid(User user) {
+		return sqlSession.update("UserMapper.updateUuid",user);
+	}
+
 }

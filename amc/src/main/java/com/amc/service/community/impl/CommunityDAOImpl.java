@@ -1,6 +1,8 @@
 package com.amc.service.community.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +40,12 @@ public class CommunityDAOImpl implements CommunityDAO {
 		System.out.println("communityDAOImpl의 getFreeBoard 시작...");
 		System.out.println("1. freeBoardNo값 ==> " + freeBoardNo);
 		FreeBoard freeBoard = sqlSession.selectOne("FreeBoardMapper.getFreeBoard", freeBoardNo);
+		sqlSession.update("FreeBoardMapper.updateFreeBoardViews", freeBoard);
+		freeBoard = sqlSession.selectOne("FreeBoardMapper.getFreeBoard", freeBoardNo);
 		System.out.println("2. freeBoard의 값 ==> " + freeBoard);
 		System.out.println("communityDAOImpl의 getFreeBoard 끝...");
 		return freeBoard;
 	}
-
 	@Override
 	public void deleteFreeBoard(int freeBoardNo) {
 		System.out.println("communityDAOImpl의 deleteFreeBoard 시작...");
@@ -66,7 +69,7 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void updateFreeBoard(FreeBoard freeBoard) {
 		System.out.println("communityDAOImpl의 addFreeBoard 시작...");
 		System.out.println("1. freeboard값 ==> " + freeBoard);
-		int addFreeBoard = sqlSession.update("FreeBoardMapper.addFreeBoard", freeBoard);
+		int addFreeBoard = sqlSession.update("FreeBoardMapper.updateFreeBoard", freeBoard);
 		System.out.println("2. addFreeBoard의 값 ==> " + addFreeBoard);
 		System.out.println("communityDAOImpl의 addFreeBoard 끝...");
 	}
@@ -88,31 +91,66 @@ public class CommunityDAOImpl implements CommunityDAO {
 	@Override
 	public void addComment(Comment comment) {
 		// TODO Auto-generated method stub
+		System.out.println("communityDAOImpl의 addComment 시작...");
+		System.out.println("1. comment값 ==> " + comment);
+		int addComment = sqlSession.insert("CommentMapper.addFreeBoardComment", comment);
+		System.out.println("2. addComment의 값 ==> " + addComment);
+		System.out.println("communityDAOImpl의 addComment 끝...");
 
 	}
 
 	@Override
-	public List<Comment> getCommentList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Comment> getCommentList(Search search, int freeBoardNo) {
+		System.out.println("communityDAOImpl의 getCommentList 시작...");
+		System.out.println("1. search값 ==> " + search);
+		System.out.println("2. freeBoardNo값 ==> " + freeBoardNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("freeBoardNo", freeBoardNo);
+		System.out.println("3. map값 ==> " + map);
+		List<Comment> list = sqlSession.selectList("CommentMapper.getFreeBoardCommentList", map);
+		System.out.println("4. list의 값 ==> " + list);
+		System.out.println("communityDAOImpl의 getCommentList 끝...");
+		return list;
 	}
 
 	@Override
-	public List<Comment> getReplyList() {
+	public List<Comment> getReplyList(Search search, int parentCommentNo) {
 		// TODO Auto-generated method stub
-		return null;
+		System.out.println("communityDAOImpl의 getReplyList 시작...");
+		System.out.println("1. search값 ==> " + search);
+	
+		System.out.println("3. parentCommentNo값 ==> " +parentCommentNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		
+		map.put("parentCommentNo", parentCommentNo);
+		System.out.println("3. map값 ==> " + map);
+		List<Comment> list = sqlSession.selectList("CommentMapper.getFreeBoardReplyCommentList", map);
+		System.out.println("4. list의 값 ==> " + list);
+		System.out.println("communityDAOImpl의 getReplyList 끝...");
+		
+		return list;
+		
 	}
 
 	@Override
 	public void deleteComment(int commentNo) {
-		// TODO Auto-generated method stub
+		System.out.println("communityDAOImpl의 deleteComment 시작...");
+		System.out.println("1. commentNo값 ==> " + commentNo);
+		int deleteComment = sqlSession.delete("CommentMapper.deleteFreeBoardComment", commentNo);
+		System.out.println("2. deleteFreeBoard의 값 ==> " + deleteComment);
+		System.out.println("communityDAOImpl의 deleteComment 끝...");
 
 	}
 
 	@Override
 	public void updateComment(Comment comment) {
-		// TODO Auto-generated method stub
-
+		System.out.println("communityDAOImpl의 updateComment 시작...");
+		System.out.println("1. comment값 ==> " + comment);
+		int updateComment = sqlSession.update("CommentMapper.updateFreeBoardComment", comment);
+		System.out.println("2. addFreeBoard의 값 ==> " + updateComment);
+		System.out.println("communityDAOImpl의 updateComment 끝...");
 	}
 
 }

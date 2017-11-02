@@ -168,6 +168,18 @@
     border-color:#fff;
 }
 	</style>
+	
+	<script type="text/javascript">
+	$(function(){
+		$("a:contains('구매상세조회이동')").bind("click", function(){
+			self.location.href="/purchase/getPurchaseList?searchKeyword=purchaseList&searchCondition=${user.userId}";
+		});
+	});
+		
+	</script>	
+		
+	
+	
 </head>
 <body>
 	<!-- ToolBar Start /////////////////////////////////////-->	
@@ -340,7 +352,10 @@
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
-                            <a href="/purchase/listPurchase" class="btn btn-lg btn-block btn-danger">이동</a>
+	                        <form>
+					    		 <a class="btn btn-lg btn-block btn-danger">구매상세조회이동</a>
+					    	</form>
+                           
                         </div>
                      </div>
                 </div>

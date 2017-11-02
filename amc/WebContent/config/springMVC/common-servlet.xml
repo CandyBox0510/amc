@@ -45,14 +45,14 @@
 	 
 	 <mvc:annotation-driven />
 	 
-	<mvc:interceptors>
+<!-- 	<mvc:interceptors>
 		
    		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>
 			<bean class="com.amc.common.web.LogonCheckInterceptor" />
    		</mvc:interceptor>
 
-   	</mvc:interceptors>
+   	</mvc:interceptors> -->
 
 	<!-- 홈페이지 메인 인덱스가 / 이기때문에 각 폴더가 URL로 주소가 아닌 폴더로 인식해서 들어가기 위해서 설정 -->
 	<mvc:resources mapping="/css/**" location="/css/" />
@@ -134,6 +134,14 @@
 				class="org.springframework.core.io.FileSystemResource">
 		<constructor-arg>
 			<value>C:\Users\bang\git\amc\amc\WebContent\images\uploadFiles\</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 커뮤니티 업로드  -->
+	<bean id="communityUploadFile"
+				class="org.springframework.core.io.FileSystemResource">
+		<constructor-arg>
+			<value>C:\Users\장해림\git\amc\amc\WebContent\images\community</value>
 		</constructor-arg>
 	</bean>
 	

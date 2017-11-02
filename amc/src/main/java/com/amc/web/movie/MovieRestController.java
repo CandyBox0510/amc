@@ -596,15 +596,20 @@ public class MovieRestController {
 			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
 			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
 			
+
 			
 			jsonArray.add(jsonObject);
 			
 			jsonObject = new JSONObject();
+
+			jsonArray.add(i,jsonObject);
+
 		}
 		response.put("wishList", jsonArray);
 		
+
 		System.out.println("response content" + response);
-		
+
 		return response.toString();
 	}
 

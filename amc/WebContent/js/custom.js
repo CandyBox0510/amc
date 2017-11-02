@@ -314,9 +314,9 @@ function init_Home() {
                         $(this).parent().find('.active-dropdown').css("z-index", '-1');
                     });
 
-                    $('body').click( function (e){
-                      console.log(e.target);
-                    })
+                    $('body').click( function (e){                    
+                    	console.log(e.target);
+                    });
 
     //4. Rating scrore init
     //Rating star

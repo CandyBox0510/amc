@@ -20,13 +20,16 @@ public interface CommunityDAO {
 	// restController에서 사용
 	public void addComment(Comment comment);
 
-	public List<Comment> getCommentList();
 
-	public List<Comment> getReplyList();
 
 	public void deleteComment(int commentNo);
 
 	public void updateComment(Comment comment);
 
 	int getTotalCount(Search search) throws Exception;
+
+	List<Comment> getCommentList(Search search, int freeBoardNo);
+
+	List<Comment> getReplyList(Search search, int parentCommentNo);
+
 }

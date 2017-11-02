@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -249,5 +251,40 @@ public class UserRestController {
 		*/
 	}	
 
+	@RequestMapping(value="/androidGetUser")
+	public String androidGetUser(@RequestParam("email")String userId, 
+									@RequestParam("password")String password) throws Exception{
+		
+		String jsonString = "";
+		
+		System.out.println("안드로이드 : userId : "+userId+" password :"+password);
+		
+		User dbUser=userService.getUser(userId);
+		
+		if(dbUser==null){
+			return jsonString;
+		}else{
+			if(dbUser.getPassword().equals(password)){
+				System.out.println("안드로이드 유저 id,pw 맞음");
+			}else{
+				return jsonString;
+			}
+		}
+		System.out.println("dbUser : " + dbUser);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		return objectMapper.writeValueAsString(dbUser);
 
+	}
+	
+	@RequestMapping(value="/addUuid")
+	public String addUuid(@RequestParam("token")String token, 
+									@RequestParam("userId")String userId) throws Exception{
+				
+		System.out.println("안드로이드에서 온 토큰 token : "+token+" userId :"+userId);
+		
+		return userService.addUuid(token, userId);
+	}
+	
 }

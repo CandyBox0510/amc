@@ -4,30 +4,31 @@ import java.sql.Date;
 
 public class Product {
 	
-	@Override
-	public String toString() {
-		return "Product [prodNo=" + prodNo + ", prodPrice=" + prodPrice + ", totalStock=" + totalStock + ", salesStock="
-				+ salesStock + ", stock=" + stock + ", expiryDate=" + expiryDate + ", prodImage=" + prodImage
-				+ ", prodName=" + prodName + ", prodDetail=" + prodDetail + ", prodSetInfo=" + prodSetInfo
-				+ ", salesOpenDate=" + salesOpenDate + ", salesEndDate=" + salesEndDate + ", prodRegDate=" + prodRegDate
-				+ ", prodType=" + prodType + "]";
-	}
 	private int prodNo;
 	private int prodPrice;
 	private int totalStock;
-	private int salesStock;
+/*	private int salesStock;*/
 	private int stock;
 	private int expiryDate;
 	private String prodImage;
 	private String prodName;
 	private String prodDetail;
 	private String prodSetInfo;
+	private String proTranCode;
+	private String prodType;
 	private Date salesOpenDate;
 	private Date salesEndDate;
 	private Date prodRegDate;
-	private String prodType;
-	
+
 	public Product() {		
+	}
+	
+	public String getProTranCode() {
+		return proTranCode;
+	}
+
+	public void setProTranCode(String proTranCode) {
+		this.proTranCode = proTranCode;
 	}
 	
 	public int getProdNo() {
@@ -48,13 +49,13 @@ public class Product {
 	public void setTotalStock(int totalStock) {
 		this.totalStock = totalStock;
 	}
-	public int getSalesStock() {
+/*	public int getSalesStock() {
 		return salesStock;
 	}
 	public void setSalesStock(int salesStock) {
 		this.salesStock = salesStock;
 	}
-	public int getStock() {
+*/	public int getStock() {
 		return stock;
 	}
 	public void setStock(int stock) {
@@ -114,5 +115,14 @@ public class Product {
 	public void setProdType(String prodType) {
 		this.prodType = prodType;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Product [prodNo=" + prodNo + ", prodPrice=" + prodPrice + ", totalStock=" + totalStock + ", stock="
+				+ stock + ", expiryDate=" + expiryDate + ", prodImage=" + prodImage + ", prodName=" + prodName
+				+ ", prodDetail=" + prodDetail + ", prodSetInfo=" + prodSetInfo + ", proTranCode=" + proTranCode
+				+ ", prodType=" + prodType + ", salesOpenDate=" + salesOpenDate + ", salesEndDate=" + salesEndDate
+				+ ", prodRegDate=" + prodRegDate + "]";
+	}
+
 }

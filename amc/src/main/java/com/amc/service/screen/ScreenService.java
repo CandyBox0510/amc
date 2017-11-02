@@ -46,4 +46,6 @@ public interface ScreenService {
 
 	int getScreenNo(ScreenContent screenContent);
 
+	Map<String, Object> getPreviewList(Search search) throws Exception;
+
 }

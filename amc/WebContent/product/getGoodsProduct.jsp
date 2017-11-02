@@ -45,7 +45,7 @@
 			}); */
 			
 			$('a.btn-default:contains("목록으로")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=${param.menu}';
+				self.location.href = 'getGoodsList?menu=${param.menu}'+'&searchKeyword=G';
 			});
 
 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
@@ -98,11 +98,7 @@
 					</dl>
 					<dl class="dl-horizontal">
 						<dt>총 수량</dt>
-						<dd>${product.totalStock} 개</dd>
-					</dl>
-					<dl class="dl-horizontal">
-						<dt>현재 판매량</dt>
-						<dd>${product.salesStock} 개</dd>
+						<dd>${product.totalStock} 개</dd>						
 					</dl>
 					<dl class="dl-horizontal">
 						<dt>현재 재고수량</dt>

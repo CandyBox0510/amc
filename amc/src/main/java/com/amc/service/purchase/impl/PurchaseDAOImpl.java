@@ -29,6 +29,15 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	}
 
 	@Override
+	public void addPurchase(Purchase purchase) throws Exception {
+		sqlSession.insert("PurchaseMapper.addPurchase", purchase);
+		for(int i=1;i<purchase.getOrderStock();i++){
+			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+purchase);
+			sqlSession.insert("PurchaseMapper.addPurchaseCount", purchase);
+		}
+	}
+	
+	@Override
 	public Purchase getPurchase(Purchase purchase) throws Exception {
 		return sqlSession.selectOne("PurchaseMapper.getPurchase",purchase);
 	}
@@ -44,44 +53,14 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 		return map;
 	}
 
-	@Override
-	public void addPurchase(Purchase purchase) throws Exception {
-		System.out.println("11111111111111**************purchase : " + purchase);
-		sqlSession.insert("PurchaseMapper.addPurchase", purchase);
-		System.out.println("2222222222222222**************purchase : " + purchase);
-		for(int i=1;i<purchase.getPurchaseCount();i++){
-			sqlSession.insert("PurchaseMapper.addPurchaseCount", purchase);
-		}
-
-	}
 	
 	@Override
 	public void updatePurchase(Purchase purchase) throws Exception {
-		sqlSession.delete("PurchaseMapper.deletePurchaseForUpdate", purchase.getOrderNo());
-		
+		sqlSession.delete("PurchaseMapper.deletePurchaseForUpdate", purchase.getImpId());
 		sqlSession.update("PurchaseMapper.updatePurchase", purchase);
 		
-		for(int i=1;i<purchase.getPurchaseCount();i++){
+		for(int i=1;i<purchase.getOrderStock();i++){
 			sqlSession.insert("PurchaseMapper.insertPurchaseForUpdate", purchase);
 		}
 	}
-
-	@Override
-	public Purchase getPurchaseByProd(int prodNo) throws Exception {
-	
-		return null;
-	}
-
-	@Override
-	public void updateTranCode(Purchase purchase) throws Exception {
-	
-		
-	}
-
-	@Override
-	public int getTotalCount(Search search) throws Exception {
-	
-		return 0;
-	}
-
 }

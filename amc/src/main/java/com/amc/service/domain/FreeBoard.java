@@ -2,7 +2,7 @@ package com.amc.service.domain;
 
 public class FreeBoard {
 	
-	private String freeBoardNo;
+	private int freeBoardNo;
 	private User user;
 	//private String userId;
 	private String freeBoardTitle;
@@ -15,11 +15,11 @@ public class FreeBoard {
 		super();
 	}
 
-	public String getFreeBoardNo() {
+	public int getFreeBoardNo() {
 		return freeBoardNo;
 	}
 
-	public void setFreeBoardNo(String freeBoardNo) {
+	public void setFreeBoardNo(int freeBoardNo) {
 		this.freeBoardNo = freeBoardNo;
 	}
 

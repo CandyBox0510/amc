@@ -20,6 +20,8 @@ public class Search {
 	}
 
 
+	String orderCondition; // 
+	String orderOption; //
 	private int pageSize;
 	int pageUnit;
 	//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
@@ -109,6 +111,9 @@ public class Search {
 				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", searchKeyword3=" + searchKeyword3
 				+ ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum="
 				+ startRowNum + ", stockView=" + stockView + "]";
+				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", orderCondition=" + orderCondition
+				+ ", orderOption=" + orderOption + ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum="
+				+ endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView + "]";
 	}
 
 	
