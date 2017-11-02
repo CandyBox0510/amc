@@ -27,7 +27,7 @@ import com.amc.service.product.ProductService;
 
 //==> 회원관리 RestController
 @RestController
-@RequestMapping("product/*")
+@RequestMapping("product/json/*")
 public class ProductRestController {
 	
 	///Field
@@ -53,7 +53,7 @@ public class ProductRestController {
 
 	
 
-	@RequestMapping( value="json/addProduct", method=RequestMethod.POST )
+	@RequestMapping( value="addProduct", method=RequestMethod.POST )
 	public Product addProduct( @RequestParam("product") String json,
 									@RequestParam("file") MultipartFile file ) throws Exception{
 				
@@ -73,7 +73,7 @@ public class ProductRestController {
 		return product;
 	}
 	
-	@RequestMapping( value="json/getGoodsProduct/{prodNo}", method=RequestMethod.GET )
+	@RequestMapping( value="getGoodsProduct/{prodNo}", method=RequestMethod.GET )
 	public Product getProduct( @PathVariable int prodNo ) throws Exception{
 		System.out.println("여기는 product rest controller :"+prodNo);
 		System.out.println("이건 productService.getProduct(prodNo)");
@@ -85,7 +85,7 @@ public class ProductRestController {
 	}
 
 	
-	@RequestMapping( value="json/updateProduct", method=RequestMethod.POST )
+	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
 	public Product updateProduct(	@RequestBody Product product ) throws Exception{
 	
 		System.out.println("/product/json/updateProduct : POST");
@@ -97,7 +97,7 @@ public class ProductRestController {
 		return product;
 	}
 	
-	@RequestMapping( value="json/uploadFile", method=RequestMethod.POST )
+	@RequestMapping( value="uploadFile", method=RequestMethod.POST )
 	public boolean uploadFile( @RequestParam("file") MultipartFile file ) throws Exception{
 		System.out.println("productRestController의 uploadfile");
 		boolean result = false;
@@ -114,33 +114,9 @@ public class ProductRestController {
 		return result;
 	}
 
-	
-	@RequestMapping( value="json/getProductList", method=RequestMethod.GET )
-	public Map getProductList(	@RequestBody Search search ) throws Exception{
-	
-		System.out.println("/product/json/getProductList : POST");
-		//Business Logic
-		
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		Map<String , Object> map=productService.getGoodsList(search, null);
-		System.out.println("map ::"+map);
-		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println("resultPage ::" + resultPage);
-		System.out.println("map tostring ::" + map.toString());
-		
-		return map;
-	}
-	
-	@RequestMapping( value="json/getGoodsList/{menu}")
-	public Map<String, Object> getGoodsList(@RequestBody Search search, 											
-											@PathVariable String menu) throws Exception{
-		Product product = new Product();
-		System.out.println("######################################### json/getGoodsList 여기 오냐?");
+	@RequestMapping( value="getGoodsList/{menu}")
+	public Map<String, Object> getGoodsList(@RequestBody Search search,	@PathVariable String menu) throws Exception{
+		System.out.println("★★★★★★★★★★★★★★★★★★★열로들어와서 그런지?GGGGGGGGGGGGGGGGGGGGGGGGGGG");
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
 		}
@@ -149,7 +125,6 @@ public class ProductRestController {
 		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
-		product.setProdType("G");
 		
 		if(search.getSearchCondition() != null && search.getSearchCondition().equals("2")){
 			try{
@@ -157,15 +132,10 @@ public class ProductRestController {
 			}catch(NumberFormatException e){
 				search.setSearchKeyword("");
 			}
-			try{
-				Integer.parseInt(search.getSearchKeyword2());
-			}catch(NumberFormatException e){
-				search.setSearchKeyword2("");
-			}
 		}
 		
-		Map<String, Object> map = productService.getGoodsList(search, product);
-		System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP:"+map);
+		Map<String, Object> map = productService.getGoodsList(search);
+		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		map.put("resultPage", resultPage);
@@ -173,11 +143,9 @@ public class ProductRestController {
 		return map;
 	}
 	
-	@RequestMapping( value="json/getSnackList/{menu}")
-	public Map<String, Object> getSnackList(@RequestBody Search search, 										
-											@PathVariable String menu) throws Exception{
-		System.out.println("######################################### json/getSnackList 여기 오냐?");
-		Product product = new Product();
+	@RequestMapping( value="getSnackList/{menu}")
+	public Map<String, Object> getSnackList(@RequestBody Search search,	@PathVariable String menu) throws Exception{
+		System.out.println("★★★★★★★★★★★★★★★★★★★열로들어와서 그런지?ssssssssssssssssssssssssssss");
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
 		}
@@ -186,7 +154,6 @@ public class ProductRestController {
 		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
-		product.setProdType("S");
 		
 		if(search.getSearchCondition() != null && search.getSearchCondition().equals("2")){
 			try{
@@ -194,14 +161,9 @@ public class ProductRestController {
 			}catch(NumberFormatException e){
 				search.setSearchKeyword("");
 			}
-			try{
-				Integer.parseInt(search.getSearchKeyword2());
-			}catch(NumberFormatException e){
-				search.setSearchKeyword2("");
-			}
 		}
 		
-		Map<String, Object> map = productService.getSnackList(search, product);
+		Map<String, Object> map = productService.getSnackList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
@@ -209,7 +171,5 @@ public class ProductRestController {
 		
 		return map;
 	}
-
-
 	
 }

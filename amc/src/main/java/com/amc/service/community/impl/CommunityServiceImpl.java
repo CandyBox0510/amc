@@ -93,27 +93,43 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public List<Comment> getCommentList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Comment> getCommentList(Search search, int freeBoardNo) {
+		System.out.println("getCommentList의 getFreeBoardList 시작...");
+		System.out.println("1. search값 ==> " + search);
+		System.out.println("2. freeBoardNo값 ==> " + freeBoardNo);
+		List<Comment> list = communityDAO.getCommentList(search, freeBoardNo);
+		System.out.println("3. list의 값 ==> " + list);
+		System.out.println("communityDAOImpl의 getCommentList 끝...");
+		return list;
 	}
 
 	@Override
-	public List<Comment> getReplyList() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Comment> getReplyList(Search search, int parentCommentNo) {
+		System.out.println("communityServiceImpl의 getReplyList 시작...");
+		System.out.println("1. search값 ==> " + search);;
+		System.out.println("3. parentCommentNo값 ==> " + parentCommentNo);
+		List<Comment> list = communityDAO.getReplyList(search, parentCommentNo);
+		System.out.println("4. list의 값 ==> " + list);
+		System.out.println("communityDAOImpl의 getReplyList 끝...");
+		return list;
 	}
 
 	@Override
 	public void deleteComment(int commentNo) {
-		// TODO Auto-generated method stub
+		System.out.println("communityServiceImpl의 deleteComment 시작...");
+		System.out.println("1. commentNo값 ==> " + commentNo);
+		communityDAO.deleteComment(commentNo);
+		
+		System.out.println("communityServiceImpl의 deleteComment 끝...");
 
 	}
 
 	@Override
 	public void updateComment(Comment comment) {
-		// TODO Auto-generated method stub
-
+		System.out.println("communityServiceImpl의 updateComment 시작...");
+		System.out.println("1. comment값 ==> " + comment);
+		communityDAO.updateComment(comment);
+		System.out.println("communityServiceImpl의 updateComment 끝...");
 	}
 
 }

@@ -8,6 +8,20 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private	String searchKeyword2;
+	private String searchKeyword3;
+	
+	public String getSearchKeyword3() {
+		return searchKeyword3;
+	}
+
+
+	public void setSearchKeyword3(String searchKeyword3) {
+		this.searchKeyword3 = searchKeyword3;
+	}
+
+
+	String orderCondition; // 
+	String orderOption; //
 	private int pageSize;
 	int pageUnit;
 	//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
@@ -94,10 +108,13 @@ public class Search {
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", pageSize=" + pageSize + ", pageUnit="
-				+ pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView
-				+ "]";
+				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", searchKeyword3=" + searchKeyword3
+				+ ", orderCondition=" + orderCondition + ", orderOption=" + orderOption + ", pageSize=" + pageSize
+				+ ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", stockView=" + stockView + "]";
 	}
 
+
+	
 	
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
@@ -72,5 +73,8 @@ public interface MovieService {
 	public String switchWishList(WishList wishList);
 
 	public Map<String,Object> getWishList(Map<String,Object> map);
+	
+	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
+	// public List<WishList> getWishListMovie(Search search, User user);
 
 }

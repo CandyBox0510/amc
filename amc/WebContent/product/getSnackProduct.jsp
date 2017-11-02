@@ -100,10 +100,6 @@
 						<dd>${product.totalStock} 개</dd>
 					</dl>
 					<dl class="dl-horizontal">
-						<dt>현재 판매량</dt>
-						<dd>${product.salesStock} 개</dd>
-					</dl>
-					<dl class="dl-horizontal">
 						<dt>현재 재고수량</dt>
 						<dd>${product.stock} 개</dd>
 					</dl>

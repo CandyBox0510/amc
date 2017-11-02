@@ -102,8 +102,7 @@ public class RestApiUtil {
 			
 			//헤더세팅
 			for (String mapKey : header.keySet()){
-				 con.setRequestProperty(mapKey, header.get(mapKey));
-		    }
+				 con.setRequestProperty(mapKey, header.get(mapKey));		    }
 			
 			//바디세팅
 			if (body != null) {
@@ -124,9 +123,9 @@ public class RestApiUtil {
 			}
 			
 			
-			System.out.println("con : " + this.con.toString());
+			System.out.println("con : " + con.toString());
 			for (String mapKey : header.keySet()){
-				System.out.println("header : ["+mapKey+":" + this.con.getRequestProperty(mapKey)+"]");
+				System.out.println("header : ["+mapKey+":" + con.getRequestProperty(mapKey)+"]");
 		    }
 		    System.out.println("body : "+ bufferBody.toString());
 		    

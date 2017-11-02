@@ -70,7 +70,7 @@ public class AlarmServiceImpl implements AlarmService {
 		///////test User¿Í screenContentNo//////
 		User user = new User();
 		ScreenContent sc = new ScreenContent();
-		user.setUserId("¸®½Å");
+		user.setUserId("b@b.b");
 		sc.setScreenContentNo(10260);
 		alarm.setUser(user);
 		alarm.setScreenContent(sc);

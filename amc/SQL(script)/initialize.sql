@@ -12,6 +12,7 @@ DROP TABLE freeboardcomment;
 
 
 
+DROP SEQUENCE seq_user_no;
 DROP SEQUENCE seq_movie_no;
 DROP SEQUENCE seq_wish_no;
 DROP SEQUENCE seq_movie_comment_no;
@@ -25,7 +26,7 @@ DROP SEQUENCE seq_freeboard_comment2_no;
 
 
 
-
+CREATE SEQUENCE seq_user_no INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_movie_no 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_wish_no	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_movie_comment_no INCREMENT BY 1 START WITH 10000;
@@ -37,6 +38,9 @@ CREATE SEQUENCE seq_transaction_order_no		 INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_freeboard_freeboard_no 	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_freeboard_comment_no 	INCREMENT BY 1 START WITH 10000;
 
+
+
+CREATE SEQUENCE seq_transaction_IMP_ID_no INCREMENT BY 1 START WITH 10000;
 
 
 
