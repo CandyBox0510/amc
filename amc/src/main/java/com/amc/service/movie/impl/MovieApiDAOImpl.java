@@ -18,6 +18,7 @@ import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieAPI;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
@@ -265,4 +266,10 @@ public class MovieApiDAOImpl implements MovieDAO {
 		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
 		return tempMap;
 	}
+
+	
+	/*public List<WishList> getWishListMovie(Search search, User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
 }

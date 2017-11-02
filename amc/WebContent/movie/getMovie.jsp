@@ -127,7 +127,7 @@
         		
         	  
          function fncGetPageList(currentPage) {
-        	 
+       	 
 
 		        var movieNo = $("input[name='movieNo']").val();
 		        

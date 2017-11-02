@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <!doctype html>
-<html lang="ko">
+<html>
 <head>
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
@@ -41,7 +41,7 @@
 
 
         <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
+         <script src="/js/external/modernizr.custom.js"></script> 
         
         <!-- JavaScript-->
 		<!-- jQuery 3.1.1 --> 
@@ -77,7 +77,8 @@
         <!-- Form element -->
         <script src="/js/external/form-element.js"></script>
         <!-- Form validation -->
- <!--        <script src="/js/form.js"></script> -->
+        <script src="/js/form.js"></script>
+        //ÀÌ°ÅÁÖ¼®Ã³¸®¾ÈÇÏ¸é ·Î±×ÀÎ ¾ÈµÊ
 
         <!-- Twitter feed -->
         <!-- <script src="/js/external/twitterfeed.js"></script> -->
@@ -92,7 +93,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 		<!-- ï¿½ï¿½ï¿½â°¡ ï¿½Ù¸ï¿½ jsp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ cdn ï¿½ï¿½/////////////////////////////////////////////////////////////////////////////////////////////// -->
 		
-		<!--  ï¿½Ø¸ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ js-->
+		<!--  ï¿½Ø¸ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿? js-->
 		<script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
 		
 		<!-- Bootstrap Dropdown Hover CSS -->
@@ -111,30 +112,32 @@
 </head>
 
   <!--       <script type="text/javascript">
+        <!-- <script src="/js/custom.js"></script> -->
+		
+        <script type="text/javascript">
              $(document).ready(function() {
                init_Home();
              });
-	    </script>  -->
-	    
-	    <script type="text/javascript">
-    	//============= "ë¡œê·¸ì¸"  Event ì—°ê²° =============
+	    </script> 
+
+		<script type="text/javascript">
+    	//============= "·Î±×ÀÎ"  Event ¿¬°á =============
 		$( function() {
-		/* 	alert("ì œë°œ ì¼ë¡œì¢€ ë“¤ì–´ì™€ë¼"); */
 			$("#userId").focus();
 			
-			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#login").on("click" , function() {
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
 				
 				if(id == null || id.length <1) {
-					alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+					alert('ID ¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
 					$("#userId").focus();
 					return;
 				}
 				
 				if(pw == null || pw.length <1) {
-					alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+					alert('ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
 					$("#password").focus();
 					return;
 				}
@@ -163,75 +166,36 @@
 									//alert(JSONData.role);
 									console.log(JSONData.userId);
 									
-									//alert("ë¡œê·¸ì¸ìœ ì €");
-									
 									if( JSONData.role == 'not' ){
-										alert("íƒˆí‡´í•œíšŒì›...");
+										alert("Å»ÅğÇÑÈ¸¿ø...");
 									}else if( JSONData !='' ){
 									//$(window.parent.document.location).attr("href","/index.jsp");
 									$(self.location).attr("href","/index.jsp");
 									
 									}else{
-										alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸1...");
+										alert("¾ÆÀÌµğ , ÆĞ½º¿öµå¸¦ È®ÀÎÇÏ½Ã°í ´Ù½Ã ·Î±×ÀÎ1...");
 									}
 								},
 							error:function(request,status,error){
 								//alert(error);
-								//alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸2...");
+								//alert("¾ÆÀÌµğ , ÆĞ½º¿öµå¸¦ È®ÀÎÇÏ½Ã°í ´Ù½Ã ·Î±×ÀÎ2...");
 						    }
 					}); 
 				
 			});
 		});	
-    	
-    	
-		 $(function() {
-				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)				
-				$("a:contains('ë¡œê·¸ì•„ì›ƒ')").on("click" , function() {
-					$(self.location).attr("href","/user/logoutUser");
-				}); 
-			});
-		 
-		 	//============= ìŠ¤í† ì–´ Event ì²˜ë¦¬ =============	
-		 	$( "a:contains('ìŠ¤í† ì–´')" ).on("click" , function() {
-				$(self.location).attr("href","/product/getGoodsList?menu=search");
-			});
-		 	
-		 	//=============  êµ¿ì¦ˆ Event ì²˜ë¦¬ =============	
-		 	$( "a:contains('êµ¿ì¦ˆ')" ).on("click" , function() {
-				$(self.location).attr("href","/product/getGoodsList?menu=search&searchKeyword=G");
-			});
-		 	
-		 	//=============  ìŠ¤ë‚µë°” Event ì²˜ë¦¬ =============	
-		 	$( "a:contains('ìŠ¤ë‚µë°”')" ).on("click" , function() {
-				$(self.location).attr("href","/product/getSnackList?menu=search&searchKeyword=S");
-			});
-		 	
-		 	//=============  íšŒì›ê´€ë¦¬ Event  ì²˜ë¦¬ =============	
-		 	$( "a:contains('íšŒì›ê´€ë¦¬')" ).on("click" , function() {
-				$(self.location).attr("href","/user/getUserList");
-			});
-		 	
-		 	//=============  ìƒí’ˆê´€ë¦¬ Event  ì²˜ë¦¬ =============	
-		 	$( "a:contains('ìƒí’ˆê´€ë¦¬')" ).on("click" , function() {
-				$(self.location).attr("href","/product/getGoodsList?menu=manage");
-			});
-		 	
-		 	//=============  íŒë§¤ê´€ë¦¬ Event  ì²˜ë¦¬ =============	
-		 	$( "a:contains('íŒë§¤ê´€ë¦¬')" ).on("click" , function() {
-				$(self.location).attr("href","/purchase/getSaleList?searchKeyword=saleList");
-			});
+    	</script>
 
-		</script>
+
 
 </head>
 <div class="navbar  navbar-inverse navbar-fixed-top">
 <!-- Header section -->
          <div class="container">
-        
              <!-- Logo link-->
-             <a href='/index.jsp' class="logo">
-                 <img alt='logo' src="/images/amc.png">
+             <a href='/cinema/index2' class="logo">
+                 <!-- <img alt='logo' src="/images/logo.png"> -->
+                 <img src="/images/amc.png">
              </a>
              
              <!-- Main website navigation-->
@@ -249,51 +213,49 @@
                  <ul id="navigation">
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="#">ì˜í™”</a>
+                         <a href="#">¿µÈ­</a>
                          <ul>
-                             <li class="menu__nav-item"><a href="#">í˜„ì¬ ìƒì˜ ì˜í™”</a></li>
-                             <li class="menu__nav-item"><a href="#">ìƒì˜ ì˜ˆì • ì˜í™”</a></li>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=movie">ÇöÀç »ó¿µ ¿µÈ­</a></li>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=commingsoon">»ó¿µ ¿¹Á¤ ¿µÈ­</a></li>
                              <li class="divider"></li>
-                             <li class="menu__nav-item"><a href="#">ì‹œì‚¬íšŒ</a></li>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=preview">½Ã»çÈ¸</a></li>
 
                          </ul>
                      </li>
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="#">ì˜ˆë§¤</a>
+                         <a href="#">¿¹¸Å</a>
                          <ul>
-                             <li class="menu__nav-item"><a href="typography.html">ì˜í™” ì˜ˆë§¤</a></li>
-                             <li class="menu__nav-item"><a href="page-elements.html">ì‹œì‚¬íšŒ ì˜ˆë§¤</a></li>
+                             <li class="menu__nav-item"><a href="/booking/getScreenMovieList">¿µÈ­ ¿¹¸Å</a></li>
+                             <li class="menu__nav-item"><a href="/booking/getPreviewList">½Ã»çÈ¸ ¿¹¸Å</a></li>
                          </ul>
                      </li>
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="page-elements.html">ì˜í™”ê´€</a>
+                         <a href="/cinema/theaterInfo.jsp">¿µÈ­°ü</a>
                      </li>
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="gallery-four.html">ì»¤ë®¤ë‹ˆí‹°</a>
+                         <a href="/community/getFreeBoardList">Ä¿¹Â´ÏÆ¼</a>
                      </li>
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="news-left.html">ìŠ¤í† ì–´</a>
+                         <a href="#">½ºÅä¾î</a>
                          <ul>
-                             <!-- <li class="menu__nav-item"><a href="news-left.html">êµ¿ì¦ˆ</a></li>
-                             <li class="menu__nav-item"><a href="news-right.html">ìŠ¤ë‚µë°”</a></li> -->
-                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=G">êµ¿ì¦ˆ</a></li>
-                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=S">ìŠ¤ë‚µë°”</a></li>
+                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=G">±ÂÁî</a></li>
+                             <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">½º³¼¹Ù</a></li>
                          </ul>
                      </li>
                      <li>
                          <span class="sub-nav-toggle plus"></span>
-                         <a href="#">[ê´€ë¦¬ì ë©”ë‰´]</a>
+                         <a href="#">[°ü¸®ÀÚ ¸Ş´º]</a>
 						<ul class="mega-menu__list">
-                                 <li class="mega-menu__nav-item"><a href="#">íšŒì› ê´€ë¦¬</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">ìƒí’ˆ ê´€ë¦¬</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">íŒë§¤ ê´€ë¦¬</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">ì˜í™” ê´€ë¦¬</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">ìƒì˜ ê´€ë¦¬</a></li>
-                                 <li class="mega-menu__nav-item"><a href="#">ì˜ˆë§¤ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">È¸¿ø °ü¸®</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage">»óÇ° °ü¸®</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">ÆÇ¸Å °ü¸®</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">¿µÈ­ °ü¸®</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">»ó¿µ °ü¸®</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">¿¹¸Å °ü¸®</a></li>
                              </ul>
                      </li>
                  </ul>
@@ -308,25 +270,20 @@
                        	MyPage
                    </a>
                      <ul class="auth__function">
-                         <li><a href="#" class="auth__function-item">ë‚´ ì •ë³´ ë³´ê¸°</a></li>
-                         <li><a href="#" class="auth__function-item">ì˜ˆë§¤ ëª©ë¡</a></li>
-                         <li><a href="#" class="auth__function-item">ìœ„ì‹œë¦¬ìŠ¤íŠ¸</a></li>
-                         <li><a href="#" class="auth__function-item">ì·¨ì†Œí‘œ ì•Œë¦¬ë¯¸</a></li>
-                         <li><a href="#" class="auth__function-item">í‹°ì¼“ì˜¤í”ˆì‹œê°„ ì•Œë¦¬ë¯¸</a></li>
-                         <li><a href="#" class="auth__function-item">ìŠ¤í† ì–´ êµ¬ë§¤ ëª©ë¡</a></li>
+                         <li><a href="/user/getUser" class="auth__function-item">³» Á¤º¸ º¸±â</a></li>
+                         <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">¿¹¸Å ¸ñ·Ï</a></li>
+                         <li><a href="/movie/getWishList" class="auth__function-item">À§½Ã¸®½ºÆ®</a></li>
+                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">Ãë¼ÒÇ¥ ¾Ë¸®¹Ì</a></li>
+                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=O" class="auth__function-item">Æ¼ÄÏ¿ÀÇÂ½Ã°£ ¾Ë¸®¹Ì</a></li>
+                         <li><a href="/purchase/getPurchaseList" class="auth__function-item">½ºÅä¾î ±¸¸Å ¸ñ·Ï</a></li>
                      </ul>
                  </div>
-                 
-           	<!-- ìœ ì €ê°€ ë¹„ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->	
+                 <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
+        	<!-- À¯Àú°¡ ºñ·Î±×ÀÎ »óÅÂÀÏ ½Ã -->	
  			<c:if test="${empty sessionScope.user}">		
  				<li>			
 					<form class="navbar-form navbar-right">						
-					<!-- <a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
-						<button type="button" class="btn btn-primary">Log in</button>
-					</a > -->
-<!-- 						<a href="/user/loginUser.jsp"><button type="button" class="btn btn-primary">Log in</button></a>
-						<a href="/user/authForm.jsp"><button type="button" class="btn btn-primary">Sign in</button></a>
- -->						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
+						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
 					</form>
 				</li>	
 			</c:if>	
@@ -334,16 +291,14 @@
 			<c:if test="${!empty sessionScope.user}">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#" class="user-info">[${sessionScope.user.userName}]</a>
-					<!-- <li><a href="/cinema/myPage.jsp">ë§ˆì´í˜ì´ì§€</a></li> -->
-					<li><a href="#">ë¡œê·¸ì•„ì›ƒ</a></li>
+					<li><a href="/user/logoutUser">·Î±×¾Æ¿ô</a></li>
 				</ul>
 			</c:if> 
- 
-                 
-        	</div>
-          	
-      	
         	
+        	
+        	</div>
+        	
+         	
 	 </div>
 </div>
 </html>

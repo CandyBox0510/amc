@@ -47,7 +47,9 @@
 			
 			var movieNo =  $($(this).find("input[name='movieNo']")).val();
 			var movieName =  $($(this).find("input[name='movieName']")).val();
-			$(".item").eq(0).text(movieName);
+			$(".item").eq(2).html("");
+			$(".item").eq(1).html("");
+			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
 			alert('movie title clicked! : '+movieNo);
 			var flag = $("input:hidden[name='flag']").val();
 			
@@ -88,7 +90,8 @@
 		alert("날짜를 선택하셨습니다.");
 		
 		var date =  $($(this).find("input[name='day']")).val();
-		$(".item").eq(1).text(date);
+		$(".item").eq(2).html("");
+		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"일");
 		$.ajax(
 				{
 					url : "/booking/json/getScreenTime/"+date,						
@@ -117,6 +120,7 @@
                        }//end of if문
                        
                       
+                       
                        $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
                        $(".col-sm-6.items-wrap").eq(2).html(str);
 
@@ -130,7 +134,7 @@
 		var screenTime = $($(this).find("input[name='screenTime']")).val();
 		var contNo = $($(this).find("input[name='contNo']")).val();
 		alert("시간을 선택하셨습니다  상영번호는 : "+contNo);
-		$(".item").eq(2).text(screenTime);
+		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
 
 	});
@@ -142,14 +146,88 @@
 
 	});
    </script> 
+<style>
+.time-select .time-select__item {
+  position: relative;
+  z-index: 10;
+  display: inline-block;
+  font-size: 12px;
+  background-color: #ffd564;
+  padding: 9px 15px 8px 14px;
+  margin: 5px 16px 5px 0;
+  cursor: pointer;
+}
+.time-select .time-select__item:hover {
+  background-color: #fe505a;
+}
+.time-select .time-select__item:before {
+  content: '';
+  width: 95%;
+  height: 28px;
+  border: 1px solid #ffffff;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+.time-select .time-select__item:after {
+  content: '';
+  width: 64px;
+  height: 34px;
+  background-image: url(../images/components/bg-time.png);
+  background-repeat: no-repeat;
+  -webkit-background-size: 64px 34px;
+  background-size: 64px 34px;
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  z-index: -1;
+}
+.time-select .time-select__item:hover:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.time-select .time-select__item.active {
+  background-color: #fe505a;
+}
+.time-select .time-select__item.active:after {
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.choose-indector {
+  position: relative;
+  z-index: 13;
+  width: 100%;
+  background-color: #4c4145;
+  color: #ffffff;
+  font-size: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 12px 21px 12px;
+  cursor: pointer;
+  }
+.choose-indector:before {
+  content: "\f077";
+  font: 18px "FontAwesome";
+  color: #ffffff;
+  position: absolute;
+  top: 8px;
+  right: 21px;
+
+}
+
+</style>
 </head>
 
 <body>
+  <%--  <div class="banner-top">
+      <img alt='top banner' src="../images/banners/space.jpg">
+  </div>
+  <header class="header-wrapper header-wrapper--home">
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/topToolbar_.jsp" />
+	<!-- ToolBar End /////////////////////////////////////-->
+   </header> --%>
    <!--  <div class="wrapper"> -->
- 	<div class="item">selected movie</div>
-	<div class="item"></div>
-	<div class="item"></div>
-	<div class="item"></div>
+ 	
     <input type="hidden" name="flag" value="1"> 
         <!-- Main content -->
 
@@ -222,7 +300,13 @@
 
 				<br><br>
                 <div class="choose-indector choose-indector--time">
-                    <strong>Choosen: </strong><span class="choosen-area"></span>
+                    <strong>Choosen: </strong>
+                    <span class="choosen-area">
+                    	<span class="item"></span>
+						<span class="item"></span>
+						<span class="item"></span>
+						<input type="hidden" class="item"></input>
+					</span>
                 </div>
             </div>
 

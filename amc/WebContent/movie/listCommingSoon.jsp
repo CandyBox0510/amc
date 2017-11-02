@@ -124,14 +124,107 @@
 			});	
 		});
 		
-		//============= "WishList(찜) Event 처리"  Event  처리 =============	
+		//============= "WishList(찜) Event 처리" AddWish Event  처리 =============	
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("span:contains('찜하기')" ).on("click" , function() {
-				 self.location = "/movie/getMovieList?menu=calendar";	
+		 
+			// $("span:contains('찜하기')" ).on("click" , function() {
+			$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
+				
+				 //var movieNo = $(this).next().val();		
+				 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+
+				var movieNo = $(this).find('#scMovieNo').val();		
+				var userId = $(this).find('#userId').val();			
+				
+				alert("movieNo: " + movieNo); 					
+				alert("userId: " + userId); 
+				
+				$(this).removeClass('glyphicon glyphicon-heart-empty');
+				$(this).addClass('glyphicon glyphicon-heart');
+				
+				
+				/* if (userId != null && userId.length !=0) {
+					alert("userId: " + userId);
+				} else {
+					alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+					location.href="/user/loginUser.jsp";
+				} */
+				
+				
+				if(userId == null || userId == ''){
+					alert("로그인 후 이용 가능합니다.");
+					return;
+				}
+				
+							
+				$.ajax( 
+						{
+							url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+							type : "GET" ,							
+						}).done(function(data) {
+					//정상 통신인 경우
+					if (data == 'add') {
+						var msg = '찜하기 신청';
+						alert(msg);
+					} else {
+						alert("찜하기 취소");
+					}
+				});
 			});	
 		});
-		
+	
+	
+		//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
+		$(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 
+			// $("span:contains('찜하기')" ).on("click" , function() {
+			$(".glyphicon.glyphicon-heart").on("click" , function() {	
+				
+				 //var movieNo = $(this).next().val();		
+				 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+
+				var movieNo = $(this).find('#scMovieNo').val();		
+				var userId = $(this).find('#userId').val();			
+				
+				alert("movieNo: " + movieNo); 					
+				alert("userId: " + userId); 
+				
+				$(this).removeClass('glyphicon glyphicon-heart');
+				$(this).addClass('glyphicon glyphicon-heart-empty');
+				
+				/* if (userId != null && userId.length !=0) {
+					alert("userId: " + userId);
+				} else {
+					alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+					location.href="/user/loginUser.jsp";
+				} */
+				
+				
+				if(userId == null || userId == ''){
+					alert("로그인 후 이용 가능합니다.");
+					return;
+				}
+				
+							
+				$.ajax( 
+						{
+							url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+							type : "GET" ,							
+						}).done(function(data) {
+					//정상 통신인 경우
+					if (data == 'add') {
+						var msg = '찜하기 신청';
+						alert(msg);
+					} else {
+						alert("찜하기 취소");
+					}
+				});
+			});	
+		});
+			 
+
 			
 		//============= "예약  Event 처리"  Event  처리 =============	
 		$(function() {
@@ -262,34 +355,44 @@
 				
 						
 						    <div style="text-align: left;" >  
-					
-    						    							
-   							 <!-- glyphicon glyphicon-heart -->
-   							 
+							 
    							</div>	
  						
 							
-					<!-- 		</a>			 -->			    
-							
-						     <!-- <input type='hidden' name='screenMovieNo' value='"+val.movieNo+"'> -->
-						     <span>
-						     <i class='glyphicon glyphicon-heart-empty' id='emty-hear'>찜하기 </i> 
-						     </span>                                                   
-                               &nbsp;&nbsp;
-                             <span>
-                             <input type='hidden' name='screenMovieNo' value='"+val.movieNo+"'>
-                             <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket'>예매 </i>   
-                             </span>
-                             
-                             <hr/>                           
-	  		    
-						
-						</div>	
-										
+							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
+    							
+							    <span>
+							    <c:set var="name" value="${movie.wishList.wishNo}"/>
+	 								<c:if test="${name eq '0'}">
+									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
+									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
+									     </i> 						
+								    </c:if>	
+								    
+								    <c:if test="${name ne '0'}">
+									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
+									    </i> 						
+									</c:if>	
+							   </span>                                                   
+
+	                             &nbsp;&nbsp;
+
+	                            <span>
+	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
+	                            <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            </span>
+	                         
+	                             
+                             <hr/>       
+      
+    						
+					
+						</div>					
+				
 				</c:forEach>
-		
-           
-							
 		
 	</div>
 

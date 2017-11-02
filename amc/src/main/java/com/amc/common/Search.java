@@ -8,6 +8,18 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private	String searchKeyword2;
+	private String searchKeyword3;
+	
+	public String getSearchKeyword3() {
+		return searchKeyword3;
+	}
+
+
+	public void setSearchKeyword3(String searchKeyword3) {
+		this.searchKeyword3 = searchKeyword3;
+	}
+
+
 	String orderCondition; // 
 	String orderOption; //
 	private int pageSize;
@@ -84,6 +96,7 @@ public class Search {
 		this.searchKeyword2 = searchKeyword2;
 	}
 
+
 	public boolean isStockView() {
 		return stockView;
 	}
@@ -91,29 +104,17 @@ public class Search {
 		this.stockView = stockView;
 	}
 
-	public String getOrderCondition() {
-		return orderCondition;
-	}
-
-	public void setOrderCondition(String orderCondition) {
-		this.orderCondition = orderCondition;
-	}
-
-	public String getOrderOption() {
-		return orderOption;
-	}
-
-
-	public void setOrderOption(String orderOption) {
-		this.orderOption = orderOption;
-	}
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", orderCondition=" + orderCondition
-				+ ", orderOption=" + orderOption + ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum="
-				+ endRowNum + ", startRowNum=" + startRowNum + ", stockView=" + stockView + "]";
+				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", searchKeyword3=" + searchKeyword3
+				+ ", orderCondition=" + orderCondition + ", orderOption=" + orderOption + ", pageSize=" + pageSize
+				+ ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", stockView=" + stockView + "]";
 	}
+
+
+	
 	
 }
