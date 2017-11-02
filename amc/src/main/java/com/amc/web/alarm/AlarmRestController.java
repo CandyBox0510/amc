@@ -62,7 +62,11 @@ public class AlarmRestController {
 		
 		System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId );
 		
-		return alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+		String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+		
+		String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+		
+		return null;
 	}
 	
 	@RequestMapping("/json/test")

@@ -1,213 +1,335 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="EUC-KR">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--   jQuery , Bootstrap CDN  -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- d
+	  jQuery , Bootstrap CDN 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   <!-- Bootstrap Paver -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
-	<script type="text/javascript" src="../dist/js/jquery.paver.min.js"></script>
-	<script type="text/javascript" src="../demo/dist/js/functions.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
 
-	
+	<!-- íŒŒë…¸ë¼ë§ˆ -->
 	<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.0/normalize.min.css" media="all" rel="stylesheet" />
 	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400italic" rel="stylesheet" type="text/css">
 	<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" media="all" rel="stylesheet" />
+	<!-- <link rel="stylesheet" href="../demo/dist/css/style.min.css" /> -->
+	<link rel="stylesheet" href="../dist/css/paver.min.css" />
+	<!-- íŒŒë…¸ë¼ë§ˆ end -->
 	
-	<script type="text/javascript">
-		$(function () {
-    		$('div[data-paver]').paver();
-		});
-	</script>
+	<!-- ê¸€ì”¨ì²´ -->
+	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 	
-	<script>
-		(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,"script","https://www.google-analytics.com/analytics.js","ga");
-		ga("create", "UA-46830269-1", "terrymun.github.io");
-		ga("send", "pageview");
-	</script>
+	 <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- slick -->
+    <link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
+	<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css" />
+    
+    <!-- Stylesheets -->
 
-	
-	<!--  CSS Ãß°¡ : Åø¹Ù¿¡ È­¸é °¡¸®´Â Çö»ó ÇØ°á :  ÁÖ¼®Ã³¸® Àü, ÈÄ È®ÀÎ-->
-	<style>
-        body {
-            padding-top : 70px;
-        }
-   	</style>
-   	
-    <title>ÀÌ¹ÌÁö ¸¶Ä¿¿Í Ä¿½ºÅÒ ¿À¹ö·¹ÀÌ</title>
+        <!-- Mobile menu -->
+        <link href="../css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="../css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr -->
+        <script src="../js/external/modernizr.custom.js"></script>
+    
+    	<!--   semantic UI  -->
+		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<script
+		  src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="../semantic/semantic.min.js"></script>
+
     <style>
 .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
 .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
 .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.hn{font-family: 'Hanna', sans-serif;}
+
+/* Panorama container */
+*[data-paver] {
+  margin-bottom: 1.5rem;
+  
+  height: 80vh;
+  left: -25%;
+  width: 150%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+*[data-paver] img {
+  height: 100%;
+}
+
+.panorama {
+  height: 400px;
+  margin-bottom: 1.5rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  left: 0;
+  width: 100%;
+}
+
+.panorama img {
+  height: 100%;
+}
+
+/* Fallback message */
+.paver--fallback {
+  margin-bottom: 0;
+}
+
+.paver--fallback + .paver__fallbackMessage {
+  font-size: .8rem;
+  margin-bottom: 1.5rem;
+  padding: .25rem 1rem;
+  text-align: center;
+}
+
+.theaterphoto img{
+/* 			height : calc(50vh - 100px);
+			width : auto;
+			margin : 0 auto; */
+		}
+		.slick-prev:before,
+		.slick-next:before{
+			color : #f06060;
+		}
+
 </style>
 </head>
 <body>
 
-	<div class="container">
-	<!-- Carousel
-    ================================================== -->
-	    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-	      <!-- Indicators -->
-	      <ol class="carousel-indicators">
-	        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-	        <li data-target="#myCarousel" data-slide-to="1"></li>
-	        <li data-target="#myCarousel" data-slide-to="2"></li>
-	        <li data-target="#myCarousel" data-slide-to="3"></li>
-	        <li data-target="#myCarousel" data-slide-to="4"></li>
-	      </ol>
-	      <div class="carousel-inner" role="listbox">
-	        <div class="item active">
-	          <img class="img-responsive center-block" src="../image/theater/theaterEnter1.jpg" alt="First slide"
-	          		style="width:1000px; height:400px;">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <h1></h1>
-	              <p><code></code></p>
+	
+<div class="wrapper">
+		<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="/images/banners/bra.jpg">
+        </div>
+
+        <!-- Header section -->
+        <header class="header-wrapper">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar_.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+        </header>
+		
+					
+        <section class="container">
+            <h1 class="page-heading heading--outcontainer">ì˜í™”ê´€ ì‚¬ì§„</h1>
+            <div class="contact">
+                <!-- <div class="center-block theaterphoto" style="width:800px; height:300px" align="center" style="margin-left:auto; margin-right:auto;"> -->
+                <div class="theaterphoto" style="width:800px; height:300px; display:block; margin: 0 auto;" align="center" style="margin-left:auto; margin-right:auto;">
+	   					<div>
+	 					 	<div class="image center-block"><img  src="../images/theater/theaterEnter1.jpg" width="1000px" height="400px"/></div>
+	 					</div>			 				
+	 				
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/theaterEnter2.jpg" width="1000px" height="400px"/></div>
+						</div>
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/theaterElevator.jpg" width="1000px" height="400px"/></div>
+						</div>
+						
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterEnter.jpg" width="1000px" height="400px"/></div>
+						</div>
+						
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterLobby.jpg" width="1000px" height="400px"/></div>
+						</div>
+				</div>
+            </div>
+        </section>
+         <div class="contact-form-wrapper">
+            <div class="container" style="margin:auto;">
+	            <h1 class="page-heading heading2--outcontainer">Panorama</h1>
+	            <div class="col-md-12" style="margin-bottom:10px">
+	            	<div class="massive ui red tag label">1 ìƒì˜ê´€</div>
 	            </div>
-	          </div>
-	        </div>
-	        <div class="item">
-	          <img class="img-responsive center-block" src="../image/theater/theaterEnter2.jpg" alt="Second slide"
-	          		style="width:1000px; height:400px;">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <h1></h1>
-	              <br/>
-	              <br/>
-	              <p></p>
+	            <div class="col-sm-11 col-md-11" id="change">
+	                 <figure>
+						<div class="panorama" data-paver data-start-position="0" style="width:100%;">
+							<img src="../images/theater/theater1.jpg"/>
+						</div>
+					 </figure>
 	            </div>
-	          </div>
-	        </div>
-	        <div class="item">
-	          <img class="img-responsive center-block" src="../image/theater/theaterElevator.jpg" alt="third slide"
-	          		style="width:1000px; height:400px;">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <p></p>
-	              <p></p>
+	            <div class="col-md-12" style="margin-bottom:10px">
+	            	<div class="massive ui red tag label">2 ìƒì˜ê´€</div>
 	            </div>
-	          </div>
-	        </div>
-	         <div class="item">
-	          <img class="img-responsive center-block" src="../image/theater/screenTheaterEnter.jpg" alt="four slide"
-	          		style="width:1000px; height:400px;">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <p></p>
-	              <p></p>
+	            <div class="col-sm-11 col-md-11" id="change">
+	                 <figure>
+						<div class="panorama" data-paver data-start-position="0" style="width:100%;">
+							<img src="../images/theater/theater2.jpg"/>
+						</div>
+					</figure>
 	            </div>
-	          </div>
-	        </div>
-	         <div class="item">
-	          <img class="img-responsive center-block" src="../image/theater/screenTheaterLobby.jpg" alt="five slide"
-	          		style="width:1000px; height:400px;">
-	          <div class="container">
-	            <div class="carousel-caption">
-	              <p></p>
-	              <p></p>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-	        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-	        <span class="sr-only">Previous</span>
-	      </a>
-	      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-	        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-	        <span class="sr-only">Next</span>
-	      </a>
-	    </div><!-- /.carousel -->
-    </div>
-    
-   <figure>
-    <div data-paver>
-        <img src="../image/theater/1.jpg" title="Sunset in the heart of Aarhus" alt="A panorama taken from the roof of my penthouse unit in the center of Aarhus." />
-    </div>
-    <figcaption>Sunset in the heart of Aarhus&mdash;A panorama taken from the roof of my penthouse unit in the center of Aarhus.</figcaption>
-	</figure>
-    
-    
-    
-<div id="map" style="width:100%;height:350px;"></div>
-
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=602c37cc6b68ef5c22dd85c18e6663a5"></script>
-<script>
-
-var mapContainer = document.getElementById('map'), // Áöµµ¸¦ Ç¥½ÃÇÒ div 
-  mapOption = { 
-        center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // ÁöµµÀÇ Áß½ÉÁÂÇ¥
-        level: 3 // ÁöµµÀÇ È®´ë ·¹º§
-    };
-
-var map = new daum.maps.Map(mapContainer, mapOption);
-
-var markerPosition = new daum.maps.LatLng(37.4946444, 127.02759279999998); // ¸¶Ä¿°¡ Ç¥½ÃµÉ À§Ä¡ÀÔ´Ï´Ù
+            </div>
+        </div>
+        
+        <section class="container">
+        <h1 class="page-heading heading--outcontainer">AMC ìœ„ì¹˜</h1>
+            <div class="contact">
+                <div id="map" style="width:100%;height:350px;"></div>
+            </div>
+        </section>
 
 
-// ¸¶Ä¿¸¦ »ı¼ºÇÕ´Ï´Ù
-var marker = new daum.maps.Marker({
-  position: markerPosition,
-});
+			<!---------------------------------- ìŠ¤í¬ë¦½íŠ¸ -------------------------------->
+			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=602c37cc6b68ef5c22dd85c18e6663a5"></script>
+			<script>
+			
+			var mapContainer = document.getElementById('map'), // ì§€ë„ë¥¼ í‘œì‹œí•  div 
+			  mapOption = { 
+			        center: new daum.maps.LatLng(37.4946444, 127.02759279999998), // ì§€ë„ì˜ ì¤‘ì‹¬ì¢Œí‘œ
+			        level: 3 // ì§€ë„ì˜ í™•ëŒ€ ë ˆë²¨
+			    };
+			
+			var map = new daum.maps.Map(mapContainer, mapOption);
+			
+			var markerPosition = new daum.maps.LatLng(37.4946444, 127.02759279999998); // ë§ˆì»¤ê°€ í‘œì‹œë  ìœ„ì¹˜ì…ë‹ˆë‹¤
+			
+			
+			// ë§ˆì»¤ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
+			var marker = new daum.maps.Marker({
+			  position: markerPosition,
+			});
+			
+			// ë§ˆì»¤ê°€ ì§€ë„ ìœ„ì— í‘œì‹œë˜ë„ë¡ ì„¤ì •í•©ë‹ˆë‹¤
+			marker.setMap(map);  
+			
+			// ì»¤ìŠ¤í…€ ì˜¤ë²„ë ˆì´ì— í‘œì¶œë  ë‚´ìš©ìœ¼ë¡œ HTML ë¬¸ìì—´ì´ë‚˜ document elementê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤
+			var content = '<div class="customoverlay">' +
+			    '  <a href="http://map.daum.net/link/map/24048361" target="_blank">' +
+			    '    <span class="title">AmericodeCinema</span>' +
+			    '  </a>' +
+			    '</div>';
+			
+			// ì»¤ìŠ¤í…€ ì˜¤ë²„ë ˆì´ê°€ í‘œì‹œë  ìœ„ì¹˜ì…ë‹ˆë‹¤ 
+			var position = new daum.maps.LatLng(37.4946444, 127.02759279999998);  
+			
+			// ì»¤ìŠ¤í…€ ì˜¤ë²„ë ˆì´ë¥¼ ìƒì„±í•©ë‹ˆë‹¤
+			var customOverlay = new daum.maps.CustomOverlay({
+			    map: map,
+			    position: position,
+			    content: content 
+			});
+			
+			//ì¼ë°˜ ì§€ë„ì™€ ìŠ¤ì¹´ì´ë·°ë¡œ ì§€ë„ íƒ€ì…ì„ ì „í™˜í•  ìˆ˜ ìˆëŠ” ì§€ë„íƒ€ì… ì»¨íŠ¸ë¡¤ì„ ìƒì„±í•©ë‹ˆë‹¤
+			var mapTypeControl = new daum.maps.MapTypeControl();
+			
+			// ì§€ë„ì— ì»¨íŠ¸ë¡¤ì„ ì¶”ê°€í•´ì•¼ ì§€ë„ìœ„ì— í‘œì‹œë©ë‹ˆë‹¤
+			// daum.maps.ControlPositionì€ ì»¨íŠ¸ë¡¤ì´ í‘œì‹œë  ìœ„ì¹˜ë¥¼ ì •ì˜í•˜ëŠ”ë° TOPRIGHTëŠ” ì˜¤ë¥¸ìª½ ìœ„ë¥¼ ì˜ë¯¸í•©ë‹ˆë‹¤
+			map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+			
+			// ì§€ë„ í™•ëŒ€ ì¶•ì†Œë¥¼ ì œì–´í•  ìˆ˜ ìˆëŠ”  ì¤Œ ì»¨íŠ¸ë¡¤ì„ ìƒì„±í•©ë‹ˆë‹¤
+			var zoomControl = new daum.maps.ZoomControl();
+			map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+			
+			//ì§€ë„ì— êµí†µì •ë³´ë¥¼ í‘œì‹œí•˜ë„ë¡ ì§€ë„íƒ€ì…ì„ ì¶”ê°€í•©ë‹ˆë‹¤
+			//map.addOverlayMapTypeId(daum.maps.MapTypeId.TRAFFIC);    
+		
+		</script>
+		
+		
+			
+			<!-- íŒŒë…¸ë¼ë§ˆìš© ìŠ¤í¬ë¦½íŠ¸ -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+			<script type="text/javascript" src="../dist/js/jquery.paver.min.js"></script>
+			<script type="text/javascript" src="../demo/dist/js/functions.min.js"></script>
+			<script type="text/javascript">
+				$(function () {
+					// Paver
+					$('div[data-paver]').paver();
+				});
+			</script>
+			<!-- íŒŒë…¸ë¼ë§ˆìš© ìŠ¤í¬ë¦½íŠ¸ end-->
+			
+			        <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">í˜„ì¬ ìƒì˜ ì˜í™”</a></li>
+                        <li><a href="#" class="nav-link__item">ìƒì˜ ì˜ˆì • ì˜í™”</a></li>
+                        <li><a href="#" class="nav-link__item">ì‹œì‚¬íšŒ</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">ì˜í™” ì˜ˆë§¤</a></li>
+                        <li><a href="#" class="nav-link__item">ì‹œì‚¬íšŒ ì˜ˆë§¤</a></li>
+                        <li><a href="#" class="nav-link__item">ì˜í™”ê´€ ì •ë³´</a></li>
+                        <li><a href="#" class="nav-link__item">ì»¤ë®¤ë‹ˆí‹°</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">êµ¿ì¦ˆ</a></li>
+                        <li><a href="#" class="nav-link__item">ìŠ¤ë‚µë°”</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-// ¸¶Ä¿°¡ Áöµµ À§¿¡ Ç¥½ÃµÇµµ·Ï ¼³Á¤ÇÕ´Ï´Ù
-marker.setMap(map);  
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+</div>
 
-// Ä¿½ºÅÒ ¿À¹ö·¹ÀÌ¿¡ Ç¥ÃâµÉ ³»¿ëÀ¸·Î HTML ¹®ÀÚ¿­ÀÌ³ª document element°¡ °¡´ÉÇÕ´Ï´Ù
-var content = '<div class="customoverlay">' +
-    '  <a href="http://map.daum.net/link/map/24048361" target="_blank">' +
-    '    <span class="title">AmericodeCinema</span>' +
-    '  </a>' +
-    '</div>';
-
-// Ä¿½ºÅÒ ¿À¹ö·¹ÀÌ°¡ Ç¥½ÃµÉ À§Ä¡ÀÔ´Ï´Ù 
-var position = new daum.maps.LatLng(37.4946444, 127.02759279999998);  
-
-// Ä¿½ºÅÒ ¿À¹ö·¹ÀÌ¸¦ »ı¼ºÇÕ´Ï´Ù
-var customOverlay = new daum.maps.CustomOverlay({
-    map: map,
-    position: position,
-    content: content 
-});
-
-//ÀÏ¹İ Áöµµ¿Í ½ºÄ«ÀÌºä·Î Áöµµ Å¸ÀÔÀ» ÀüÈ¯ÇÒ ¼ö ÀÖ´Â ÁöµµÅ¸ÀÔ ÄÁÆ®·ÑÀ» »ı¼ºÇÕ´Ï´Ù
-var mapTypeControl = new daum.maps.MapTypeControl();
-
-// Áöµµ¿¡ ÄÁÆ®·ÑÀ» Ãß°¡ÇØ¾ß ÁöµµÀ§¿¡ Ç¥½ÃµË´Ï´Ù
-// daum.maps.ControlPositionÀº ÄÁÆ®·ÑÀÌ Ç¥½ÃµÉ À§Ä¡¸¦ Á¤ÀÇÇÏ´Âµ¥ TOPRIGHT´Â ¿À¸¥ÂÊ À§¸¦ ÀÇ¹ÌÇÕ´Ï´Ù
-map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
-
-// Áöµµ È®´ë Ãà¼Ò¸¦ Á¦¾îÇÒ ¼ö ÀÖ´Â  ÁÜ ÄÁÆ®·ÑÀ» »ı¼ºÇÕ´Ï´Ù
-var zoomControl = new daum.maps.ZoomControl();
-map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-
-//Áöµµ¿¡ ±³ÅëÁ¤º¸¸¦ Ç¥½ÃÇÏµµ·Ï ÁöµµÅ¸ÀÔÀ» Ãß°¡ÇÕ´Ï´Ù
-//map.addOverlayMapTypeId(daum.maps.MapTypeId.TRAFFIC);    
-
-</script>
+		<!-- ìŠ¬ë¦­ ìºëŸ¬ì…€ -->
+        <script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
+         <script>
+         $(document).ready(function(){
+            $('.theaterphoto').slick({
+            	centerMode:true,
+                	edgeFriction : 2,
+                	dots: true,
+              	  infinite: true,
+              	  speed: 500,
+          	  fade: true,
+          	  prevArrow : '<button type="button" class="slick-prev">Previous</button>'
+            });
+          });
+         </script>
 </body>
+ <style>http://127.0.0.1:8080/images/theater/theater2.JPG
+      html{
+ 	     height: auto;
+      }
+      .contact-form-wrapper {
+	  background-color: #ffd564;
+	  overflow: hidden;
+	  margin: 150px 0;
+	  padding: 56px 0 60px;
+	}
+ </style>
 </html>
