@@ -158,12 +158,14 @@ public class ProductController {
 		search.setPageUnit(pageUnit);		
 		// Business logic ผ๖วเ
 		Map<String , Object> map=productService.getGoodsList(search);
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$############# MAP :"+map);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@LIST :"+map.get("list"));
 		System.out.println("############################### MAP :"+map);
 		
 		return "forward:/product/listGoodsProduct.jsp?menu="+menu;

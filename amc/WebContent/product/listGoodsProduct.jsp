@@ -34,243 +34,198 @@
         <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
     
         <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
+        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
 
         <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
+        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
     
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
         <!--   Sweetalert2 CDN  -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
    
-      <!--   semantic UI  -->
-      <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-      <script
+        <!--   semantic UI  -->
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+        <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-      <script src="../semantic/semantic.min.js"></script>
+        <script src="../semantic/semantic.min.js"></script>
   
-  <script type="text/javascript">
-	var currentPage = 0;
-	var searchKeyword = 'G';
-	
-	function fncNextList(){
-		alert("########!!!!!!!!!!!!!########%%%%%%%#######");
-		currentPage++;
-		$.ajax({
-			url : 'json/getGoodsList/'+$('input:hidden[name="menu"]').val(),
-			method : 'post',
-			async : false,
-			dataType : 'json',
-			data : JSON.stringify({
-					currentPage : currentPage,
-					searchKeyword : searchKeyword, 
-			}),
-			headers : {
-				'Accept' : 'application/json',
-				'Content-Type' : 'application/json'
-			},
-			success : function(JSON){
-				var list = '';
-				for( x in JSON.list){
-					var product = JSON.list[x];
-					list += '<div class="col-sm-4 col-md-3"><div class="thumbnail alert alert-'+(product.stock==0? 'danger':'warning')+'">';
-					/* list += '<img src="../images/uploadFiles/'+(product.prodImage!=null ? product.prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF')+'" class="img-responsive" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">'; */
-					list += '<img src="../images/uploadFiles/'+(product.prodImage!=null ? product.prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF')+'" class="img-responsive" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">';
-					list += '<div class="caption">';
-					list += '<input type="hidden" name="prodNo" value="'+product.prodNo+'">';
-					list += '<h3>'+product.prodName+'</h3>';
-					list += '<p>';
-					list += '<div class="btn-group" role="group">';
-					list += '<a href="#" class="btn btn-primary" role="button">';
-					if($('input:hidden[name="menu"]').val()=='manage'){
-						list += '정보수정';
-					}else{
-						list += '상세보기';
-					}
-					list += '</a>';
-					if($('input:hidden[name="userId"]').val() != '' && $('input:hidden[name="menu"]').val()=='search'){
-						list += '<a href="#" class="btn btn-default" role="button">구매</a>';
-					}
-					list += '</div>';
-					list += '</p></div></div></div>';
-				}
-				$('.col-md-9 > .row').html($('.col-md-9 > .row').html() + list);
-				
-				init();
-			}
-		});
-	}
-	
-	function init(){
-		$('a.btn-primary:contains("상세보기"), a.btn-primary:contains("정보수정")').unbind('click').bind('click',function(){
-			self.location.href='getGoodsProduct?menu=${param.menu}&prodNo='+$(this).parent().parent().find('input:hidden').val();
-		});
 		
-		$('a.btn-default:contains("구매")').unbind('click').bind('click',function(){
-			self.location.href='../purchase/addPurchase?prodNo='+$(this).parent().parent().find('input:hidden[name="prodNo"]').val();
-		});
-	};
+		<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	   
+	    <!-- jQuery UI toolTip 사용 CSS-->
+	    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	    <!-- jQuery UI toolTip 사용 JS-->
+	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	$( function() {
-		alert("#########111111111111#######################");
-		while($(document).height() == $(window).height() && currentPage < $('input:hidden[name="maxPage"]').val()){
-			alert("############555555555555555555####################");
-			fncNextList();
-		}
-		
-	} );
-	
-	$(window).scroll(function(){
-		alert("#########222222222222222222222222#######################");
-		if(currentPage < $('input:hidden[name="maxPage"]').val()){
-			alert("##########333333333333333######################");
-			/* console.log($(window).scrollTop()+ "    :::    "+($(document).height()-$(window).height())); */
-			if($(window).scrollTop() >= $(document).height()-$(window).height()){	 	
-				alert("#############4444444444444444###################");
-	//$(window).scrollTop()이 옆항인  $(document).height()-$(window).height()이것과 같으면 fncNextList가 실행되는게 보통인데 경덕컴은 정수가 딱 안떨어져서 크기비교를해야됨
-				fncNextList();
-			}
-		}
-	}); 
+  
   
 
-   </script> 
 </head>
 
 <body>
-    <div class="wrapper">
-        <!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
-        </div>
-
-        <!-- Header section -->
-        <header class="header-wrapper">
-         <!-- ToolBar Start /////////////////////////////////////-->
-         <jsp:include page="/layout/topToolbar.jsp" />
-         <!-- ToolBar End /////////////////////////////////////-->
-        </header>
-        
-        <!-- Main content -->
-        <section class="container">
-            <div class="col-sm-12">
-                <h2 class="page-heading">티켓 오픈 알림 리스트</h2>
-                <div class="row">
-                   <div class="gallery-wrapper">
-                    <%-- <c:set var="i" value="0" />
-                 <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
-                  <c:set var="i" value="${ i+1 }" /> --%>
-                  <c:forEach var="count" begin="1" end="9" step="1">
-                    <div class="col-sm-4 col-md-3">
-                       <div class="gallery-item">
-                               <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg">
-                                   <img alt='' src="https://pbs.twimg.com/media/DMjnIyvUQAAYKLy.jpg" style="width: 100%; height: auto;">
-                               </a>
-                               <div class="alert alert-danger" role="alert">
-                             <strong>티켓 오픈 일자</strong><br/>2017-01-01 15:00<a href="http://naver.com"><span class="label label-danger">취소</span></a>
-                        </div>
-                               <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--video-link">
-                                   <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
-                                   <p class="gallery-item__name">영화이름</p>
-                               </a>
-                             </div>       
-                       </div>
-                    </c:forEach>
-                      <%-- </c:forEach> --%>   
-                   </div>
-                </div>
-            </div>
-        </section>
-       
-       
-       
-       <div class="container">
-		
-		<%-- <form name="detailForm" action="/product/getGoodsList?menu=${param.menu }" method="post"> --%>
+  <jsp:include page="/layout/topToolbar.jsp" />
+    <div class="container">
+         
 	
 		<input type="hidden" name="menu" value="${param.menu}"/>
 		<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
 		
 		
-		<div class="page-header text-info">
-	       <span><h3>${param.menu eq 'search'? "상품 목록조회" : "상품관리" }&ensp;&ensp;
-	      
-	      <c:if test="${param.menu=='manage'}">
-	       <button type="button" class="btn btn-primary pull-right"  float = "right"
-	       			 onclick="location.href='/product/addProduct'">상 품 등 록</button></h3></span>	
-	      </c:if> 		
-	    </div>
+	   	<!-- Main content -->
+        <section class="container">
+        	
+        	<!-- Search bar -->
+        	<div class="col-sm-12">
+        	
+                <h2 class="page-heading">${param.menu eq 'search'? "상품 목록조회" : "상품관리" }</h2>
+                    <div class="tags-area tags-area--thin">
+                    	<div class="container container--add">
+                   			<div class="col-sm-6 text-left">
+                   				<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
+                   			</div>
+		                   		<c:if test="${param.menu=='manage'}">
+			       					<button type="button" class="btn btn-primary pull-right"  float = "right"
+			       						 onclick="location.href='/product/addProduct'">상 품 등 록
+			       					</button>	
+			      				</c:if> 
+			            	<div class="col-sm-6 text-right">
+				                <form id='search-form' method='get' class="search">
+				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword">
+					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
+					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
+					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독명</option>
+					                    </select>
+				                    <button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
+				                    <input type="hidden" id="currentPage" name="currentPage" value="0" />
+				                </form>
+				             </div>
+			             </div>
+			        </div>
 		
-	  	<div class="container">
-		<div class="row">
-			<div class="col-md-9" role="main">
-				<div class="page-header col-sm-offset-2 col-sm-10">
-					<c:if test="${param.menu=='manage'}">
-						<h1>상품 관리</h1>
-					</c:if>
-					<c:if test="${param.menu=='search'}">
-						<h1>상품 구매</h1>
-					</c:if>
-				</div>
-				<div class="row">
-				
-				</div>
-			</div>
-<%--  			<jsp:include page="../history.jsp">
-				<jsp:param name="uri" value="../"/>
-			</jsp:include>
- --%> 		</div>
-	</div>
-	  
- 	</div>
-       
-       
-       
-       
-       <footer class="footer-wrapper">
+		              <div class="tags-area tags-area--thin" style="height : 50px">
+		                 <p>안녕하세영</p>
+		
+		                    <div class="tags tags--unmarked tags--aside">
+		                        <span class="tags__label">Sorted by:</span>
+		                            <ul>
+		                                <li class="item-wrap"><a href="#" class="tags__item item-active" data-filter='all'>all</a></li>
+		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='name'>name</a></li>
+		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='popularity'>popularity</a></li>
+		                            </ul>
+		                    </div>
+		              </div>
+		
+			<input type = "text" value="${list }">
+		 <div class="cinema-wrap">
+	            	<div class="row">
+				 		<c:set var="i" value="0" />
+                		 <c:forEach var="product" items="${list }">
+                		 <c:set var="i" value="${i+1 }" />
+	                 
+	                            <div class="col-xs-6 col-sm-3 cinema-item">
+	                                <div class="cinema">
+	                                    <a href='/product/getGoodsList/${product.prodNo}' class="cinema__images">
+	                                        <img id="poster"alt='' src="../images/uploadFiles/${product.prodImage }" > 
+	                                    </a>
+	                                    <a href="/product/getGoodsList" class="movieNm">${product.prodName }</a>
+	                                    <p><strong>가격</strong>  ${product.prodPrice }<br><strong>판매시작일</strong>${product.salesOpenDate}<br><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
+	                                </div>
+	                            </div>
+	                   		        
+                		 </c:forEach>
+					</div>
+	            </div>     
+		
+		
+		
+		
+		
+									
+										<div class="col-md-9" role="main">
+											<div class="page-header col-sm-offset-4 col-sm-10">
+												<c:if test="${param.menu=='manage'}">
+													<h1>상품 관리</h1>
+												</c:if>
+												<c:if test="${param.menu=='search'}">
+													<h1>상품 구매</h1>
+												</c:if>
+											</div>
+											<div class="row">
+											
+											</div>
+										</div>
+									
+ 					
+ 				</div>
+ 			
+ 			
+ 			
+ 				<div class="pagination paginatioon--full">
+	                <a href='#' class="pagination__prev">prev</a>
+	                <a href='#' class="pagination__next">next</a>
+                </div>
+ 			
+ 			
+ 			
+ 			</div>
+		
+		
+		
+		</section>
+		<div class="clearfix"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+		<!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
             <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">현재 상영 영화</a></li>
-                        <li><a href="#" class="nav-link__item">상영 예정 영화</a></li>
-                        <li><a href="#" class="nav-link__item">시사회</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">영화 예매</a></li>
-                        <li><a href="#" class="nav-link__item">시사회 예매</a></li>
-                        <li><a href="#" class="nav-link__item">영화관 정보</a></li>
-                        <li><a href="#" class="nav-link__item">커뮤니티</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">굿즈</a></li>
-                        <li><a href="#" class="nav-link__item">스낵바</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
                         </div>
+
+                        <p class="login__tracker">or</p>
                         
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
-                    </div>
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
                 </div>
+
             </section>
-        </footer>
-     </div>
-  
+        </div>
+		 
 
 
    <!-- JavaScript-->
@@ -304,10 +259,252 @@
                 init_BookingOne();
             });
       </script>
+      
+<!-- 	    <script type="text/javascript">
+		var currentPage = 0;
+		var searchKeyword = 'G';
+		
+		function fncNextList(){
+			currentPage++;
+			$.ajax({
+				url : 'json/getGoodsList/'+$('input:hidden[name="menu"]').val(),
+				method : 'post',
+				async : false,
+				dataType : 'json',
+				data : JSON.stringify({
+						currentPage : currentPage,
+						searchKeyword : searchKeyword, 
+				}),
+				headers : {
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				},
+				success : function(JSON){
+					var list = '';
+					for( x in JSON.list){
+						var product = JSON.list[x];
+ 						list += '<div class="col-sm-4 col-md-4">';
+						list += '<div class="gallery-item">';
+						list += '<a href="/product/getGoodsProduct">';
+						list += '<img src="../images/uploadFiles/'+(product.prodImage!=null ? product.prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF')+'" style="width: 200%; height: auto;"></a>';
+						list += '<div class="alert alert-'+(product.stock==0? 'danger':'warning')+'" role="alert">';
+						list += '<strong>'+product.prodName+'</strong><br/>'+product.prodPrice+'';
+						list += '<a href="/product/getGoodsProduct"><span class="label label-'+(product.stock==0? 'danger':'warning')+'"></span></a></div>';
+						list += ' <input type="hidden" name="prodNo" value="'+product.prodNo+'">';
+						list += '<a href="/product/getGoodsProduct" class="gallery-item__descript gallery-item--video-link">';
+						list += '<span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>';
+						list += '<p class="gallery-item__name">';
+						if($('input:hidden[name="menu"]').val()=='manage'){
+							list += '정보수정';
+						}else{
+							list += '상세보기';
+						}
+						list += '</p>';
+						if($('input:hidden[name="userId"]').val() != '' && $('input:hidden[name="menu"]').val()=='search'){
+							list += '<a href="#" class="btn btn-default" role="button">구매</a>';
+						}
+						list += '</a>';
+						list += '</div></div>';
+					}
+					$('.col-md-9 > .row').html($('.col-md-9 > .row').html() + list);
+					
+					init();
+				}
+			});
+		}
+		
+		function init(){
+			$('a.btn-primary:contains("상세보기"), a.btn-primary:contains("정보수정")').unbind('click').bind('click',function(){
+				self.location.href='getGoodsProduct?menu=${param.menu}&prodNo='+$(this).parent().parent().find('input:hidden').val();
+			});
+			
+			$('a.btn-default:contains("구매")').unbind('click').bind('click',function(){
+				self.location.href='../purchase/addPurchase?prodNo='+$(this).parent().parent().find('input:hidden[name="prodNo"]').val();
+			});
+		};
+		
+		$( function() {
+			while($(document).height() == $(window).height() && currentPage < $('input:hidden[name="maxPage"]').val()){
+				fncNextList();
+			}
+			
+		} );
+		
+		$(window).scroll(function(){
+			if(currentPage < $('input:hidden[name="maxPage"]').val()){
+				console.log($(window).scrollTop()+ "    :::    "+($(document).height()-$(window).height()));
+				if($(window).scrollTop() >= $(document).height()-$(window).height()){	 	
+				//$(window).scrollTop()이 옆항인  $(document).height()-$(window).height()이것과 같으면 fncNextList가 실행되는게 보통인데 경덕컴은 정수가 딱 안떨어져서 크기비교를해야됨
+					fncNextList();
+				}
+			}
+		}); 
+	  
+	
+	   </script>  -->
+	   
+	   
+	   
+	   
+<!-- 	   	    <script type="text/javascript">
+		var currentPage = 0;
+		var searchKeyword = 'G';
+		
+		function fncNextList(){
+			currentPage++;
+			$.ajax({
+				url : 'json/getGoodsList/'+$('input:hidden[name="menu"]').val(),
+				method : 'post',
+				async : false,
+				dataType : 'json',
+				data : JSON.stringify({
+						currentPage : currentPage,
+						searchKeyword : searchKeyword, 
+				}),
+				headers : {
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				},
+				success : function(JSON){
+					var list = '';
+					for( x in JSON.list){
+						var product = JSON.list[x];
+						list += '<section class="container">';
+						list += '<div class="col-sm-12">';
+						list += '<h2 class="page-heading">티켓 오픈 알림 리스트</h2>';
+						list += '<div class="row">';
+						list += '<div class="gallery-wrapper">';
+						list += '<div class="col-sm-4 col-md-3">';
+						list += '<div class="gallery-item">';
+						list += '<a href="/product/getGoodsProduct">';
+						list += '<img src="../images/uploadFiles/'+(product.prodImage!=null ? product.prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF')+'" style="width: 100%; height: auto;"></a>';
+						list += '<div class="alert alert-'+(product.stock==0? 'danger':'warning')+'" role="alert">';
+						list += '<strong>'+product.prodName+'</strong><br/>'+product.prodPrice+'';
+						list += '<a href="/product/getGoodsProduct"><span class="label label-'+(product.stock==0? 'danger':'warning')+'"></span></a></div>';
+						list += ' <input type="hidden" name="prodNo" value="'+product.prodNo+'">';
+						list += '<a href="/product/getGoodsProduct" class="gallery-item__descript gallery-item--video-link">';
+						list += '<span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>';
+						list += '<p class="gallery-item__name">';
+						if($('input:hidden[name="menu"]').val()=='manage'){
+							list += '정보수정';
+						}else{
+							list += '상세보기';
+						}
+						list += '</p>';
+						if($('input:hidden[name="userId"]').val() != '' && $('input:hidden[name="menu"]').val()=='search'){
+							list += '<a href="#" class="btn btn-default" role="button">구매</a>';
+						}
+						list += '</a>';
+						list += '</div></div></div></div></div></section>';
+					}
+					$('.col-md-9 > .row').html($('.col-md-9 > .row').html() + list);
+					
+					init();
+				}
+			});
+		}
+		
+		function init(){
+			$('a.btn-primary:contains("상세보기"), a.btn-primary:contains("정보수정")').unbind('click').bind('click',function(){
+				self.location.href='getGoodsProduct?menu=${param.menu}&prodNo='+$(this).parent().parent().find('input:hidden').val();
+			});
+			
+			$('a.btn-default:contains("구매")').unbind('click').bind('click',function(){
+				self.location.href='../purchase/addPurchase?prodNo='+$(this).parent().parent().find('input:hidden[name="prodNo"]').val();
+			});
+		};
+		
+		$( function() {
+			while($(document).height() == $(window).height() && currentPage < $('input:hidden[name="maxPage"]').val()){
+				fncNextList();
+			}
+			
+		} );
+		
+		$(window).scroll(function(){
+			if(currentPage < $('input:hidden[name="maxPage"]').val()){
+				console.log($(window).scrollTop()+ "    :::    "+($(document).height()-$(window).height()));
+				if($(window).scrollTop() >= $(document).height()-$(window).height()){	 	
+				//$(window).scrollTop()이 옆항인  $(document).height()-$(window).height()이것과 같으면 fncNextList가 실행되는게 보통인데 경덕컴은 정수가 딱 안떨어져서 크기비교를해야됨
+					fncNextList();
+				}
+			}
+		}); 
+	  
+	
+	   </script>  -->
+	   <jsp:include page="../common/pageNavigator.jsp"/>
+	   
 </body>
- <style>
-      html{
-         height: auto;
-      }
- </style>
+
+<script type="text/javascript">
+			   
+				function fncGetPageList(currentPage) {
+			        $("#currentPage").val(currentPage)
+			        
+			        if(sessionScope.user != empty){
+			        	$("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=manage").submit();	
+			        }else{
+			        	$("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search").submit();
+			        }
+			        
+			    }
+			    
+			    $(function() {
+			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			        $("button[name='search']").on("click", function() {
+			            fncGetPageList(1);
+			        });
+	      
+			    });
+
+	            $(document).ready(function() {
+	                init_CinemaList();
+	                $("#movie-search-sort").css("width","200px");
+	            });
+		</script>
+
+<style type="text/css">
+
+		
+	
+	.countPage {
+	  	font-size: 13px;
+	   	margin-top: 10px;
+	}
+	
+	.search{
+		margin-right : 30px;
+	}
+	
+	
+	.movieNm {
+		  font-size: 16px;
+		  font-weight: bold;
+		  display: block;
+		  margin-bottom: 5px;
+		  margin-top: 5px;
+	
+	}
+	
+	#poster{
+		height : calc(50vh - 100px);	
+		width : auto;	
+		height:260px; 
+		margin-left: auto;
+		margin-right: auto; 
+		display: table;
+	
+	}
+	
+ 	body {
+		padding-top: 80px;
+	} 
+	
+	html{
+       		height: auto;
+  		}
+	
+</style>
+
 </html>
