@@ -453,7 +453,7 @@ function kakaoPay(){
 	
 			<div  class="col-sm-8 com-md-9">
 
-				<iframe id="child" src="http://192.168.0.20:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+				<iframe id="child" src="http://192.168.0.32:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
