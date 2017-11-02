@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amc.common.Search;
 import com.amc.service.booking.BookingService;
+import com.amc.service.domain.Booking;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.screen.ScreenService;
+import com.amc.service.user.UserService;
 import com.amc.web.cinema.HttpRequestToNode;
 
 @RestController
@@ -35,6 +37,11 @@ public class BookingRestController {
 		@Autowired
 		@Qualifier("screenServiceImpl")
 		private ScreenService screenService;
+		
+		///Field
+		@Autowired
+		@Qualifier("userServiceImpl")
+		private UserService userService;
 		//setter Method ±¸Çö ¾ÊÀ½
 		
 		public BookingRestController() {
@@ -111,8 +118,9 @@ public class BookingRestController {
 				System.out.println("¸ù°íDB°¡ ²¨Á®ÀÖ³ªº¾´Ï´Ù!");
 				return -1;
 			}
-
 		}
+		
+		
 
 
 }

@@ -77,10 +77,11 @@
 				    		alert("data : " + data);
 				    		var payStatusCheck = (data.split(','))[0];
 				    		var amountCheck = (data.split(','))[1];
-				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
+				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck+"\n 실제결제해야할 금액 : "+$("input[name='totalTicketPrice']").val());
+				    	
 				    		
 				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-				    		if (  payStatusCheck == 'paid' && amountCheck == '${booking.totalTicketPrice}') {
+				    		if (  payStatusCheck == 'paid' && amountCheck == $("input[name='totalTicketPrice']").val()) {
 				    			var msg = '결제가 완료되었습니다.';
 				    			msg += '\n고유ID : ' + rsp.imp_uid;
 				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
@@ -91,9 +92,8 @@
 				    			$("input[name='impId']").val(impUid);
 				    			
 				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
-				    			
-				    			
-				    			
+				    					    			
+				    			confirmSeat();
 				    			addBooking();
 				    			
 				    		} else {
@@ -127,7 +127,7 @@
 		function confirmSeat(){
 			
 			var clientId = $("input[name='clientId']").val();
-			
+			alert('좌석을 확정합니다.');
 			  $.ajax(
 						{
 							url : "/booking/json/confirmSeat/"+clientId,				
@@ -185,27 +185,27 @@
 			
 	function listener(event){		
 		  document.getElementById('child').contentWindow.postMessage(event.data,"*");
-		  alert("event.data : "+event.data);
-		  alert("length of event.data: "+event.data.length);
+
 		  if(event.data == 'pay'){
-			  alert('결제요청옴!');
+			  alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
 			  //지금은 쓰지않는다.
-		  }else if(event.data.length>100){
-			alert('event.data.length>100입니다.');
+		  } else if(event.data.length>100){
+			alert('카카오페이관련 event 발생입니다.');
 			  
-		  }else if(event.data.split(",")[0]=="id"){
-			  alert('id를 보내왔네요.'+event.data.split(",")[1]);
-			  $("input[name='clientId']").val(event.data.split(",")[1]);
+		  } else if(event.data.indexOf("id")==0){
+			  //alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
+			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
-		  }else{
-			 
+		  } else{
+			  
+			  alert('좌석번호를 받습니다.');
 		  	
 			  $("input[name='bookingSeatNo']").val(event.data);
-
+			  var no = ${screenContent.ticketPrice};
 			  $.ajax(
 				{
-				    url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+${screenContent.ticketPrice}+"",						
+				    url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,						
 					method : "GET" ,
 					dataType : "json" ,
 					headers : {
@@ -220,7 +220,7 @@
                       	$("#headCount").text(JSONData.headCount);
                       	$("#totalPrice").text(JSONData.totalPrice);
                       	
-                      	//$("input[name='bookingSeatNo']").val(JSONData.seatNo);
+                      	$("input[name='displaySeat']").val(JSONData.seatNo);
                       	$("input[name='headCount']").val(JSONData.headCount);
                     	$("input[name='totalTicketPrice']").val(JSONData.totalPrice);
                       }//end of if문
@@ -245,6 +245,24 @@
 
 
    </script> 
+   <style>
+   .abc{
+	  font-family: 'Hanna', sans-serif; 
+	 }
+	 .sits .sits__row .sits-state--your {
+	  text-indent: -9999px;
+	}
+	.sits .sits__row .sits-state--your:after {
+	  content: "\f00c";
+	  font: 13px "FontAwesome";
+	  color: #ffffff;
+	  position: absolute;
+	  top: 7px;
+	  left: 9px;
+	  z-index: 15;
+	  text-indent: 0px;
+	}
+   </style>
 </head>
 
 <body>
@@ -418,6 +436,7 @@
                 <div class="choose-sits__info choose-sits__info--first">
                     <ul>
                         <li class="sits-price marker--none"><strong>인원수를 먼저 선택한 후 좌석을 지정해주세요</strong></li>
+                    	<li class="sits-price marker--none"><strong>결제하기 버튼을 누르면 좌석이 홀딩됩니다.</strong></li>
                     </ul>
                 </div>
 
@@ -432,10 +451,10 @@
 	
 			<div class="col-sm-8 com-md-9">	
 				<iframe id="child" src="http://127.0.0.1:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" 
-				style='width:100%' scrolling='no' frameborder='0' height='300' onLoad='setIFrameHeight(this)'>		 
+				style='width:100%; height:450px'  frameborder='0' align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
-				
+				<!-- style='width:100%' -->
 				<span>
 				<button onclick="selectCancelAlarm()" class="ui purple button">취소표 알리미 신청하기</button>				
 				</span>				
@@ -451,44 +470,38 @@
                           <li><a href="#" class="category__item">Date & Time: ${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
                           <li><a href="#" class="category__item">Total Price:<span id="totalPrice">0</span>원</a></li>
                       </ul>
-                  </div>
+                  </div> 
+                  <!-- <div class="promo promo-field">
+                      <div class="promo__head">A.Movie app</div>
+                      <div class="promo__describe">for all smartphones<br> and tablets</div>
+                      <div class="promo__content">
+                          <ul>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/apple-store.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/google-play.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/windows-store.svg"></a></li>
+                          </ul>
+                      </div>
+                  </div> -->
 			</div>
         </section>  
        
-         <input type="text" name="clientId" value=""/>
+         <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">
-			<input type="text" name="userId" value="${sessionScope.user.userId}"/>
-			<input type="text" name="screenContentNo" value="${screenContent.screenContentNo}"/>
-			<input type="text" name="bookingSeatNo" value=""/>			
-			<input type="text" name="headCount" value=""/>
-			<input type="text" name="totalTicketPrice" value=""/>
-			<!-- <input type="text" name="impId" value=""/> -->
-			<!-- <input type="text" name="qrUrl" value=""/> -->	
-			<input type="text" name="impId" value="acc"/>
-			<input type="text" name="qrUrl" value="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=acc"/>
+			<input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
+			<input type="hidden" name="screenContentNo" value="${screenContent.screenContentNo}"/>
+			<input type="hidden" name="bookingSeatNo" value=""/>			
+			<input type="hidden" name="headCount" value=""/>
+			<input type="hidden" name="totalTicketPrice" value=""/>
+			<!-- <input type="hidden" name="impId" value=""/> -->
+			<!-- <input type="hidden" name="qrUrl" value=""/> -->	
+			<input type="hidden" name="impId" value="temp_imp_uid"/>
+			<input type="hidden" name="qrUrl" value="temp_qrUrl"/>
+			<input type="hidden" name="displaySeat" value="temp_displaySeat"/>
 		</form>
                 
        </div>        	
      </div>
-   
-
-        <div class="clearfix"></div>
-
-          <div class="booking-pagination booking-pagination--margin">
-             <a href="/booking/getScreenMovieList" class="booking-pagination__prev">                     
-             <!--  flag로 판단해서 영화나 시사회로 보내기 -->
-                 <span class="arrow__text arrow--prev">prev step</span>                
-                 <span class="arrow__info">what&amp;where&amp;when</span>
-             </a>
-             <a href="javascript:addBooking()" class="booking-pagination__next">
-             <!-- <a href="javascript:kakaoPay()" class="booking-pagination__prev"> -->   
-                 <span class="arrow__text arrow--next">next step</span>
-                 <span class="arrow__info">checkout</span>
-             </a>
-          </div>
-
-        
-        
+  
 
 
 	<!-- JavaScript-->
