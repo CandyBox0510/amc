@@ -42,10 +42,11 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	   body {
+	  body {
             padding-top: 70px;
             }
             .thumbnail {
+         
             width: 300px;
             height: 250px;
             overflow: auto;
@@ -62,8 +63,10 @@
     		text-shadow: 1px 1px 1px #ccc;
     		font-size: 1.5em;
        }
-      
-    </style>
+       
+       
+    </style>   
+    
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -71,16 +74,26 @@
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		function fncGetPageList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=search").submit();
+			$("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=commingsoon").submit();			
 			//$("form").attr("method","POST").attr("action", "/movie/getMovieList").submit();
 			
 		}
-			
+		
+	
 		
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetPageList(1);
+			});
+			
+		 });
+		
+		//============= "검색 Icon"  Event  처리 =============	
+		 $(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "#searchIcon").on("click" , function() {
 				fncGetPageList(1);
 			});
 			
@@ -94,8 +107,7 @@
 			});
 			
 		 });
-		
-				
+			
 		//============= "캘린더로 보기"  Event  처리 =============	
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -112,14 +124,107 @@
 			});	
 		});
 		
-		//============= "WishList(찜) Event 처리"  Event  처리 =============	
+		//============= "WishList(찜) Event 처리" AddWish Event  처리 =============	
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("span:contains('찜하기')" ).on("click" , function() {
-				 self.location = "/movie/getMovieList?menu=calendar";	
+		 
+			// $("span:contains('찜하기')" ).on("click" , function() {
+			$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
+				
+				 //var movieNo = $(this).next().val();		
+				 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+
+				var movieNo = $(this).find('#scMovieNo').val();		
+				var userId = $(this).find('#userId').val();			
+				
+				alert("movieNo: " + movieNo); 					
+				alert("userId: " + userId); 
+				
+				$(this).removeClass('glyphicon glyphicon-heart-empty');
+				$(this).addClass('glyphicon glyphicon-heart');
+				
+				
+				/* if (userId != null && userId.length !=0) {
+					alert("userId: " + userId);
+				} else {
+					alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+					location.href="/user/loginUser.jsp";
+				} */
+				
+				
+				if(userId == null || userId == ''){
+					alert("로그인 후 이용 가능합니다.");
+					return;
+				}
+				
+							
+				$.ajax( 
+						{
+							url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+							type : "GET" ,							
+						}).done(function(data) {
+					//정상 통신인 경우
+					if (data == 'add') {
+						var msg = '찜하기 신청';
+						alert(msg);
+					} else {
+						alert("찜하기 취소");
+					}
+				});
 			});	
 		});
-		
+	
+	
+		//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
+		$(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 
+			// $("span:contains('찜하기')" ).on("click" , function() {
+			$(".glyphicon.glyphicon-heart").on("click" , function() {	
+				
+				 //var movieNo = $(this).next().val();		
+				 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+
+				var movieNo = $(this).find('#scMovieNo').val();		
+				var userId = $(this).find('#userId').val();			
+				
+				alert("movieNo: " + movieNo); 					
+				alert("userId: " + userId); 
+				
+				$(this).removeClass('glyphicon glyphicon-heart');
+				$(this).addClass('glyphicon glyphicon-heart-empty');
+				
+				/* if (userId != null && userId.length !=0) {
+					alert("userId: " + userId);
+				} else {
+					alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+					location.href="/user/loginUser.jsp";
+				} */
+				
+				
+				if(userId == null || userId == ''){
+					alert("로그인 후 이용 가능합니다.");
+					return;
+				}
+				
+							
+				$.ajax( 
+						{
+							url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+							type : "GET" ,							
+						}).done(function(data) {
+					//정상 통신인 경우
+					if (data == 'add') {
+						var msg = '찜하기 신청';
+						alert(msg);
+					} else {
+						alert("찜하기 취소");
+					}
+				});
+			});	
+		});
+			 
+
 			
 		//============= "예약  Event 처리"  Event  처리 =============	
 		$(function() {
@@ -129,8 +234,7 @@
 			});	
 		});
 		
-		
-		
+	
 		
 		//============= movieNo 에 영화정보보기  Event  처리(Click) =============	
 		 $(function() {
@@ -144,31 +248,9 @@
 				 //alert(movieNo);
 				 self.location = "/movie/getMovie?movieNo="+$($(this).find('input')).val()+"&menu=managed";
 
-			});
-						
-			//==> prodNo LINK Event End User 에게 보일수 있도록 
-			$( "td:nth-child(2)" ).css("color" , "red");
-			
-			//==> prodNo LINK Event End User 에게 보일수 있도록 
-			$( "td:nth-child(6)" ).css("color" , "green");
-			
-			});	
+			});				
 
-		
-			//==> prodNo LINK Event End User 에게 보일수 있도록 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-			$("h7").css("color" , "red");
-			
-			//==> 아래와 같이 정의한 이유는 ??
-			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-	
-			
-			$('a[data-toggle="tooltip"]').tooltip({
-				    animated: 'fade',
-				    placement: 'bottom',
-				    html: true
-			}); 
-
+		 });
 	</script>
 	
 </head>
@@ -176,31 +258,38 @@
 <body>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
-	  <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+	<jsp:include page="/layout/topToolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>시사회 목록</h3>
+	       <h3>상영 예정 영화</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start //////F///////////////////////////////-->
 	    <div class="row">
 	    
-		    <div class="col-md-6 text-left">
+	       <!-- table 위쪽 검색 Start //////F///////////////////////////////-->
+	    <div class="row">
+	    
+		    <%-- <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		<%-- 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지 --%>
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지 
 		    	</p>
-		    </div>
+		    </div> --%>
+		    
+		    <div class="col-md-6 text-left">
+		    	<p class="text-primary">		    		
+		    	</p>
+		    </div> 
+		    
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
+			     
+			     <!--  <button type="button" class="btn btn-default">검색</button> -->
 			    
 				<%--   <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
@@ -208,22 +297,22 @@
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
 						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독</option>
 					</select>
-				  </div>
-				   --%>
-				   
+				  </div> --%>
+				  
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				   		
+				 		
 				  <i class='glyphicon glyphicon-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
 				  <i class='glyphicon glyphicon-volume-up' id="voidSearchIcon" style="color:grey"></i>	  
 				
-				  <!-- 
-				  <button type="button" class="btn btn-default">검색</button>
-				   -->
+		
+				  
+				  <!-- <img src="../images/movie/speechListening2.gif">  -->
+				
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  
@@ -231,8 +320,9 @@
 	    	</div>
 	    	
 		</div>
-		
-		<br/>   
+	    
+	 
+	  <br/>   
 	  
 	  <div class="widget" align="center">	
 		  <button type="button" class="btn btn-thumnail">썸네일로 보기</button>
@@ -240,65 +330,80 @@
 		 
 		  <!-- <input type="submit" value="캘린더로">   -->
 		
-	  </div>    
+	  </div>
 	  
-    <br/>   <br/>   <br/>
+	  <br/>   <br/>   <br/>
+  
+     
 	
 	 <div>
 		<div class="row">
+	      
 		
 			<c:set var="i" value="0"/>
-				<c:forEach var="preview" items="${list}">
+				<c:forEach var="movie" items="${list}">
 					<c:set var="i" value="${i+1 }"/>
-						<div class="col-xs-6 col-md-4" >
-						<a class='thumbnail' href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=search" style="text-decoration:none;">
-						<img src="${preview.movie.postUrl }">
-						</a>
+						<div class="col-xs-6 col-md-4" > 	
+							<a class='thumbnail' href="/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon" style="text-decoration:none;">
+							<img src="${movie.postUrl}" height="50" width="150">
+							</a>
 							
 							<hr/>
-								<span><li> 제목 : ${preview.movie.movieNm}</li> </span>			
-								<span><li> 감독 : ${preview.movie.directors}</li> </span>			
-								<span><li> 포스터 : ${preview.movie.postUrl}</li> </span>			
-								
-								<span><strong>${preview.movie.movieNm }</strong></span>
-							    <span><li> 티켓오픈날짜 : ${preview. ticketOpenDate}</li></span>	
-							    <span><li> 상영날짜 : ${preview. screenOpenTime}</li> </span>
-						    <span><li> 가격 : ${preview. ticketPrice}</li> </span>					
-							    
-							     <div style="text-align: left;" >  					    							
-   								 <!-- glyphicon glyphicon-heart -->   							 
-   								</div>	
-							    
-  							    <!--  <input type='hidden' name='screenMovieNo' value='"+val.movieNo+"'> -->
-  							     <span>
-						   		 <i class='glyphicon glyphicon-heart-empty' id='emty-hear'>찜하기 </i> 
-							     </span>                                                   
-	                               &nbsp;&nbsp;
-	                             	                           
-  							   
-  								<span>	   
-  							    &nbsp;<input type='hidden' name='screenMovieNo' value='"+val.movieNo+"'>
-                                <i class='glyphicon glyphicon-bell' id='reserve-ticket'></i> 예매      
-	                     		</span>
 							
-					   		<hr/>                           
-	  		    
+							<span><strong>${movie.movieNm }</strong></span>							
+							<span><li> 개봉일 : ${movie.openDt }</li></span>						
+				
 						
-						</div>				
+						    <div style="text-align: left;" >  
+							 
+   							</div>	
+ 						
+							
+							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
+    							
+							    <span>
+							    <c:set var="name" value="${movie.wishList.wishNo}"/>
+	 								<c:if test="${name eq '0'}">
+									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
+									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
+									     </i> 						
+								    </c:if>	
+								    
+								    <c:if test="${name ne '0'}">
+									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
+									    </i> 						
+									</c:if>	
+							   </span>                                                   
+
+	                             &nbsp;&nbsp;
+
+	                            <span>
+	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
+	                            <i class='glyphicon glyphicon-phone-alt' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            </span>
+	                         
+	                             
+                             <hr/>       
+      
+    						
+					
+						</div>					
+				
 				</c:forEach>
-				</div>
 		
 	</div>
 
+
+			<!--  화면구성 div End /////////////////////////////////////-->
+			 	<!-- PageNavigation Start... -->
+			<jsp:include page="../common/pageNavigator.jsp"/>
+			<!-- PageNavigation End... -->
 	  
  	</div>
- 	<!--  화면구성 div End /////////////////////////////////////-->
- 	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator.jsp"/>
-	<!-- PageNavigation End... -->
- 	
+ 
  	
  	
 </body>

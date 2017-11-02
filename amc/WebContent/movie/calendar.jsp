@@ -73,10 +73,17 @@
 
 <div class="page">	
 	 
-		<br/><br/>
-		<div style="width:100%; max-width:1200px; display:inline-block;">
+		<br/><br/><br/><br/>
+		
+		
+<div style="border: 1px dashed #BDBDBD; background-color: #819E9C;  width: 1000px; height: 50px; margin-left: auto;
+ 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+		<!-- <div style="width:100%; max-width:1000px; display:inline-block; margin:auto"> -->
 		    <button type="button" class="btn btn-thumnail">썸네일로 보기</button>
-			<button type="button" class="btn btn-calendar">캘린더로 보기</button>		
+			<button type="button" class="btn btn-calendar">캘린더로 보기</button>	
+			
+			<hr/>
+				
 			<div class="monthly" id="mycalendar"></div>
 		</div>
 		
