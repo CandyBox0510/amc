@@ -76,6 +76,87 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
+	 /* jsp 화면 로딩을 처음할 때 WishList 내용을 가져온다. */	 
+	
+		/* $(document).ready(function() {
+			
+			
+			//alert("111");
+			$.ajax( 
+					{
+						url : "/movie/json/wishList/s@s.s",	
+						method : "post" ,
+						dataType : "json" ,					
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+					
+						
+						success : function(response) {
+							
+							var wishListLength =  response.wishList.length;
+							var wishNo = response.wishList[0].wishNo;
+							var movieNo = response.wishList[0].movieNo; 
+							
+							var wishListLength = response.wishList.length;
+							var wishNo = '';
+							var movieNo = '';
+							var test2 = '';
+							
+							displayValue =''
+							display =''
+							
+							for(var idx=0; idx < response.wishList.length; idx++) {
+								 wishNo += response.wishList[idx].wishNo + ",";
+								 movieNo += response.wishList[idx].movieNo + ",";
+								 
+								 movieNo = response.wishList[idx].movieNo ;
+								 var len = response.wishList.length;
+								 alert(movieNo)
+								 
+								 alert("length :" + len);
+								 
+								 test = $("input[name='test"+movieNo+"']").val();
+								 
+								 alert("test movieNo ::" + test )
+
+								if(movieNo == test){
+									
+								    alert("test movieNo ::" + test )
+								
+									display += "<p>ddddddddd</p>"
+									
+									 $("input[name='test"+movieNo+"']").after(display); 
+								}
+								
+								alert("length : " + wishListLength + "wishNo " + response.wishList[idx].wishNo + " movieNo" + response.wishList[idx].movieNo); 
+							
+							}
+							
+							alert("test MovieNo" + test2);
+							displayValue += wishNo + movieNo;
+							
+							
+							
+							alert("displayValue" + displayValue);						
+							
+							
+							movieNo2 =  $("#scMovieNo",$(this)).val();
+							
+							alert(movieNo2);
+							
+							
+							alert("length : " + wishListLength + " wishNo =" + wishNo + " movieNo =" + movieNo); 
+
+							
+						}
+				});	
+		});	
+		 */
+
+
+		
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		function fncGetPageList(currentPage) {
 			$("#currentPage").val(currentPage)
@@ -117,7 +198,7 @@
 				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 
 				// $("span:contains('찜하기')" ).on("click" , function() {
-				$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
+			/* 	$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
 					
 					 //var movieNo = $(this).next().val();		
 					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
@@ -128,16 +209,34 @@
 					alert("movieNo: " + movieNo); 					
 					alert("userId: " + userId); 
 					
-					if (userId != null && userId.length !=0) {
+					//$(this).toggleClass('glyphicon glyphicon-heart-empty').toggleClass(".glyphicon glyphicon-heart");
+				
+					
+					//$(this).switchClass('glyphicon glyphicon-heart-empty','glyphicon glyphicon-heart');
+				    $(this).removeClass('glyphicon glyphicon-heart-empty').addClass('glyphicon glyphicon-heart');
+				    
+				    //$(this).replaceClass('.glyphicon glyphicon-heart-empty','.glyphicon glyphicon-heart');
+					
+				    //$(this).addClass('glyphicon glyphicon-heart');
+					
+					
+					 if (userId != null && userId.length !=0) {
 						alert("userId: " + userId);
 					} else {
 						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
 						location.href="/user/loginUser.jsp";
+					} 
+					
+					
+					if(userId == null || userId == ''){
+						alert("로그인 후 이용 가능합니다.");
+						return;
 					}
+					
 								
 					$.ajax( 
 							{
-								url : "/movie/json/switchWishList?screenContent.screenContentNo="+movieNo+"&user.userId="+userId,									
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
 								type : "GET" ,							
 							}).done(function(data) {
 						//정상 통신인 경우
@@ -148,48 +247,176 @@
 							alert("찜하기 취소");
 						}
 					});
-				});	
+				});	 */
 			});
 		
 		
-		//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
+			//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
 			$(function() {
 				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 
-				// $("span:contains('찜하기')" ).on("click" , function() {
-				$(".glyphicon.glyphicon-heart").on("click" , function() {	
-									 
+				 
+				  $(document).on("click", ".glyphicon.glyphicon-heart-empty", function () {
+
+						
+						 //var movieNo = $(this).next().val();		
+						 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+		
+						var movieNo = $(this).find('#scMovieNo').val();		
+						var userId = $(this).find('#userId').val();			
+						
+						alert("movieNo: " + movieNo); 					
+						alert("userId: " + userId); 
+						
+						//$(this).toggleClass('glyphicon glyphicon-heart-empty').toggleClass(".glyphicon glyphicon-heart");
+					
+						
+						//$(this).switchClass('glyphicon glyphicon-heart-empty','glyphicon glyphicon-heart');
+					    $(this).removeClass('glyphicon glyphicon-heart-empty').addClass('glyphicon glyphicon-heart');
+					    
+					    //$(this).replaceClass('.glyphicon glyphicon-heart-empty','.glyphicon glyphicon-heart');
+						
+					    //$(this).addClass('glyphicon glyphicon-heart');
+						
+						
+						/* if (userId != null && userId.length !=0) {
+							alert("userId: " + userId);
+						} else {
+							alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+							location.href="/user/loginUser.jsp";
+						} */
+						
+						
+						if(userId == null || userId == ''){
+							alert("로그인 후 이용 가능합니다.");
+							return;
+						}
+						
+									
+						$.ajax( 
+								{
+									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+									type : "GET" ,							
+								}).done(function(data) {
+							//정상 통신인 경우
+							if (data == 'add') {
+								var msg = '찜하기 신청';
+								alert(msg);
+							} else {
+								alert("찜하기 취소");
+							}
+						});
+					
+				})
+				 
+				 $(document).on("click", ".glyphicon.glyphicon-heart", function () {
+						
+						
+					 //var movieNo = $(this).next().val();		
+					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+	
 					var movieNo = $(this).find('#scMovieNo').val();		
 					var userId = $(this).find('#userId').val();			
 					
-					/* alert("movieNo: " + movieNo); */
+					alert("movieNo: " + movieNo); 					
+					alert("userId: " + userId); 
+					
+				
+					//$(this).toggleClass($(this).find(".glyphicon glyphicon-heart-empty"));						
+					//$(this).replaceClass('.glyphicon glyphicon-heart','.glyphicon glyphicon-heart-empty');
+					//$(this).toggleClass('glyphicon glyphicon-heart').toggleClass(".glyphicon glyphicon-heart-empty");
 					
 					
-					if (userId != null && userId.length !=0) {
+					$(this).removeClass('glyphicon glyphicon-heart').addClass('glyphicon glyphicon-heart-empty');
+					//$(this).addClass('glyphicon glyphicon-heart-empty');
+					
+				
+					/* if (userId != null && userId.length !=0) {
 						alert("userId: " + userId);
 					} else {
 						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
 						location.href="/user/loginUser.jsp";
+					} */
+					
+					
+					if(userId == null || userId == ''){
+						alert("로그인 후 이용 가능합니다.");
+						return;
 					}
+					
 								
 					$.ajax( 
 							{
-								url : "/movie/json/delWish/"+movieNo,	
-								method : "POST" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData , status) {
-									
-									alert("wishList No:" + JSONData.wishNo);
-							
-								}
-						});
-				});	
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								type : "GET" ,							
+							}).done(function(data) {
+						//정상 통신인 경우
+						if (data == 'add') {
+							var msg = '찜하기 신청';
+							alert(msg);
+						} else {
+							alert("찜하기 취소");
+						}
+					});
+				})
+				 
+				 
+				 /* 비동기 방식에서 heart 클릭이 잘 동작하지 않는 코딩 
+				 
+				// $("span:contains('찜하기')" ).on("click" , function() {
+				$(".glyphicon.glyphicon-heart").on("click" , function() {	
+					
+					 //var movieNo = $(this).next().val();		
+					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+	
+					var movieNo = $(this).find('#scMovieNo').val();		
+					var userId = $(this).find('#userId').val();			
+					
+					alert("movieNo: " + movieNo); 					
+					alert("userId: " + userId); 
+					
+				
+					//$(this).toggleClass($(this).find(".glyphicon glyphicon-heart-empty"));
+					
+					
+					//$(this).replaceClass('.glyphicon glyphicon-heart','.glyphicon glyphicon-heart-empty');
+					//$(this).toggleClass('glyphicon glyphicon-heart').toggleClass(".glyphicon glyphicon-heart-empty");
+					
+					
+					$(this).removeClass('glyphicon glyphicon-heart').addClass('glyphicon glyphicon-heart-empty');
+					//$(this).addClass('glyphicon glyphicon-heart-empty');
+					
+				
+					 if (userId != null && userId.length !=0) {
+						alert("userId: " + userId);
+					} else {
+						alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
+						location.href="/user/loginUser.jsp";
+					} 
+					
+					
+					if(userId == null || userId == ''){
+						alert("로그인 후 이용 가능합니다.");
+						return;
+					}
+					
+								
+					$.ajax( 
+							{
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								type : "GET" ,							
+							}).done(function(data) {
+						//정상 통신인 경우
+						if (data == 'add') {
+							var msg = '찜하기 신청';
+							alert(msg);
+						} else {
+							alert("찜하기 취소");
+						}
+					});
+				});	 */
 			});
 				 
+	
 				 
 		//============= "예약  Event 처리"  Event  처리 =============	
 		$(function() {
@@ -315,17 +542,20 @@
     						    
     						    </div>								
     							 
+    							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
+    							
+    							${movie.wishList.wishNo}
 							    <span>
-							    <c:set var="name" value="${wishlist.wishNo}"/>
-	 								<c:if test="${empty name}">
-									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#767676; text-align : center; margin:0 auto;"> 
+							    <c:set var="name" value="${movie.wishList.wishNo}"/>
+	 								<c:if test="${name eq '0'}">
+									     <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
 									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
-								    <c:if test="${not empty name}">
-									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#767676; text-align : center; margin:0 auto;">
+								    <c:if test="${name ne '0'}">
+									    <i class='glyphicon glyphicon-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						

@@ -17,6 +17,7 @@ import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieAPI;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
@@ -118,10 +119,6 @@ public class MovieDAOImpl implements MovieDAO {
 		return sqlSession.insert("MovieMapper.deleteMovie",movieNo);
 	}
 
-	// 마이페이지에서 위시리스트 불러오기
-	public List<WishList> getWishList(Search search, String userId) {
-		return null;
-	}
 	
 	// 감상평 보기
 	public List<MovieComment> getMovieCommentList(Search search, int movieNo) {
@@ -337,11 +334,39 @@ public class MovieDAOImpl implements MovieDAO {
 		
 		if(map.get("search")!=null){
 		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
-		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
+		tempMap.put("listWish", sqlSession.selectList("WishListMapper.getWishList",map));
 			return tempMap;
 		}else{
-			tempMap.put("list", sqlSession.selectList("WishListMapper.getAllWishList",map));
+			tempMap.put("listWish", sqlSession.selectList("WishListMapper.getAllWishList",map));
 			return tempMap;
 		}
 	}
+
+	//@Override
+	/*public List<WishList> getWishListMovie(Search search, User user) {
+		System.out.println("MovieDAOImpl의 getWishList 시작 ");
+		System.out.println("1. Search ==> "+ search);
+		System.out.println("2. userId ==> " + user.getUserId());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("userId", user.getUserId());
+		
+		System.out.println("3. map ==> " + map);
+		return (sqlSession.selectList("WishListMapper.getWishList",map));
+	}*/
+	
+	// 마이페이지에서 위시리스트 불러오기
+		public List<WishList> getWishList(Search search, String userId) {
+			System.out.println("MovieDAOImpl의 getWishList 시작 ");
+			System.out.println("1. Search ==> "+ search);
+			System.out.println("2. userId ==> " + userId);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("search", search);
+			map.put("userId", userId);
+			
+			System.out.println("3. map ==> " + map);
+			return (sqlSession.selectList("WishListMapper.getWishList",map));
+		}
+		
+	
 }

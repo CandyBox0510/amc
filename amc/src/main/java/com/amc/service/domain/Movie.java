@@ -2,8 +2,17 @@ package com.amc.service.domain;
 
 public class Movie {
 
+	private WishList wishList;
 	private String movieCd;
 	private int    movieNo;
+	
+	public WishList getWishList() {
+		return wishList;
+	}
+	public void setWishList(WishList wishList) {
+		this.wishList = wishList;
+	}
+
 	private String movieRegDate;
 	private String movieNm;
 	
@@ -271,18 +280,17 @@ public class Movie {
 	
 	//toString 해림수정
 
+	@Override
 	public String toString() {
-
-		return "Movie [movieCd=" + movieCd + ", movieNo=" + movieNo + ", movieRegDate=" + movieRegDate + ", movieNm="
-				+ movieNm + ", movieNmEn=" + movieNmEn + ", prdtYear=" + prdtYear + ", openDt=" + openDt + ", endDt="
-				+ endDt + ", synopsis=" + synopsis + ", trailer=" + trailer + ", typeNm=" + typeNm + ", prdtStatNm="
-				+ prdtStatNm + ", nationAlt=" + nationAlt + ", genres=" + genres + ", repNationNm=" + repNationNm
-				+ ", repGenreNm=" + repGenreNm + ", directors=" + directors + ", showTm=" + showTm + ", watchGradeNm="
-				+ watchGradeNm + ", postUrl=" + postUrl + ", actors=" + actors + ", steelCut=" + steelCut
-				+ ", steelCut1=" + steelCut1 + ", steelCut2=" + steelCut2 + ", steelCut3=" + steelCut3 + ", maleCnt="
-				+ maleCnt + ", femaleCnt=" + femaleCnt + ", age10s=" + age10s + ", age20s=" + age20s + ", age30s="
-				+ age30s + ", age40s=" + age40s + ", age50s=" + age50s + ", age60s=" + age60s + ", age60sMore="
-				+ age60sMore + "]";
-
+		return "Movie [wishList=" + wishList + ", movieCd=" + movieCd + ", movieNo=" + movieNo + ", movieRegDate="
+				+ movieRegDate + ", movieNm=" + movieNm + ", movieNmEn=" + movieNmEn + ", prdtYear=" + prdtYear
+				+ ", openDt=" + openDt + ", endDt=" + endDt + ", synopsis=" + synopsis + ", trailer=" + trailer
+				+ ", typeNm=" + typeNm + ", prdtStatNm=" + prdtStatNm + ", nationAlt=" + nationAlt + ", genres="
+				+ genres + ", repNationNm=" + repNationNm + ", repGenreNm=" + repGenreNm + ", directors=" + directors
+				+ ", showTm=" + showTm + ", watchGradeNm=" + watchGradeNm + ", postUrl=" + postUrl + ", actors="
+				+ actors + ", steelCut=" + steelCut + ", steelCut1=" + steelCut1 + ", steelCut2=" + steelCut2
+				+ ", steelCut3=" + steelCut3 + ", maleCnt=" + maleCnt + ", femaleCnt=" + femaleCnt + ", age10s="
+				+ age10s + ", age20s=" + age20s + ", age30s=" + age30s + ", age40s=" + age40s + ", age50s=" + age50s
+				+ ", age60s=" + age60s + ", age60sMore=" + age60sMore + "]";
 	}
 }

@@ -29,16 +29,17 @@
   		<result property="showTm" 			column="runningtime"		jdbcType="VARCHAR"/>  		
   		<result property="synopsis" 		column="synopsis" 			jdbcType="VARCHAR"/>  	
   		<result property="trailer" 			column="trailer" 			jdbcType="VARCHAR"/>  	
-  		<result property="maleCnt" 			column="male_count" 			jdbcType="NUMERIC"/>
-  		<result property="femaleCnt" 		column="female_count" 			jdbcType="NUMERIC"/>
-  		<result property="age10s"	 		column="age10s" 				jdbcType="NUMERIC"/>  
-  		<result property="age20s" 			column="age20s" 				jdbcType="NUMERIC"/>
-  		<result property="age30s" 	column="age30s" 			jdbcType="NUMERIC"/>
-  		<result property="age40s" 		column="age40s" 			jdbcType="NUMERIC"/>  		
-  		<result property="age50s" 			column="age50s"		jdbcType="NUMERIC"/>  		
-  		<result property="age60s" 		column="age60s" 			jdbcType="NUMERIC"/>  	
-  		<result property="age60sMore" 			column="age60more" 			jdbcType="NUMERIC"/>  
-  		
+  		<result property="maleCnt" 			column="male_count" 		jdbcType="NUMERIC"/>
+  		<result property="femaleCnt" 		column="female_count" 		jdbcType="NUMERIC"/>
+  		<result property="age10s"	 		column="age10s" 			jdbcType="NUMERIC"/>  
+  		<result property="age20s" 			column="age20s" 			jdbcType="NUMERIC"/>
+  		<result property="age30s" 			column="age30s" 			jdbcType="NUMERIC"/>
+  		<result property="age40s" 			column="age40s" 			jdbcType="NUMERIC"/>  		
+  		<result property="age50s" 			column="age50s"				jdbcType="NUMERIC"/>  		
+  		<result property="age60s" 			column="age60s" 			jdbcType="NUMERIC"/>  	
+  		<result property="age60sMore" 		column="age60more" 			jdbcType="NUMERIC"/>  
+
+		<association property="wishList"	resultMap="WishListMapper.wishListSelectMap"/>
   	
   		
   	</resultMap>
@@ -277,7 +278,8 @@
 				<if test="searchCondition != 1">
 						<if test="searchKeyword2 == 4">
 							WHERE movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate
+							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
 						</if>
 						<if test="searchKeyword2 == 5">
 							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate	

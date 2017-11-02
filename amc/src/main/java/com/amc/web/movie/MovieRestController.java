@@ -583,6 +583,8 @@ public class MovieRestController {
 		
 		list = ((List<WishList>)movieService.getWishList(tempMap).get("list"));
 		
+		System.out.println("list : " + list);
+		
 		JSONObject jsonObject = new JSONObject();
 		JSONObject response = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
@@ -594,9 +596,15 @@ public class MovieRestController {
 			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
 			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
 			
+			
 			jsonArray.add(jsonObject);
+			
+			jsonObject = new JSONObject();
 		}
 		response.put("wishList", jsonArray);
+		
+		System.out.println("response content" + response);
+		
 		return response.toString();
 	}
 
