@@ -43,15 +43,15 @@
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
         <!--   Sweetalert2 CDN  -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-	
-		<!--   semantic UI  -->
-		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-		<script
-		  src="https://code.jquery.com/jquery-3.1.1.min.js"
-		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-		  crossorigin="anonymous"></script>
-		<script src="../semantic/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+      <!--   semantic UI  -->
+      <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+      <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+      <script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
   IMP.init('imp41659269');
@@ -85,47 +85,47 @@
       }   
          
       function addCancelAlarm(){
-			var userId = $("input[name='userId']").val(); 
-			if( userId == null || userId == ''){
-				swal({
-					  title: '신청 실패',
-					  html: $('<div>')
-					    .addClass('some-class')
-					    .text('로그인 상태가 아닙니다'),
-					  animation: false,
-					  customClass: 'animated swing'
-					})
-				return;
-			}
-			$.ajax({
-			    		url: "/alarm/json/addCancelAlarm/",
-			    		type: 'POST',
-			    	}).done(function(result) {
-			    		console.log("result : " + result);
-			    		if ( result == 'success' ) {
-			    			var msg = '취소표 알림 신청 성공';
-			    			swal({
-			    				  //position: 'top-right',
-			    				  type: 'success',
-			    				  title: '취소표 알림 신청 성공!',
-			    				  showConfirmButton: true,
-			    				  timer: 2000
-			    				})
-			    		} else if( result == 'exceed'){
-			    			swal(
-			    					  '취소표알림 자리 수 초과!',
-			    					  '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
-			    					  'error'
-			    					)
-			    		} else {
-			    			swal(
-			    					  '중복 좌석 신청!',
-			    					  '신청한 좌석 중 기존에 중복된 좌석이 있습니다.'+"\n"+result,
-			    					  'error'
-			    					)
-			    		}
-			    	});
-		}	 
+         var userId = $("input[name='userId']").val(); 
+         if( userId == null || userId == ''){
+            swal({
+                 title: '신청 실패',
+                 html: $('<div>')
+                   .addClass('some-class')
+                   .text('로그인 상태가 아닙니다'),
+                 animation: false,
+                 customClass: 'animated swing'
+               })
+            return;
+         }
+         $.ajax({
+                   url: "/alarm/json/addCancelAlarm/",
+                   type: 'POST',
+                }).done(function(result) {
+                   console.log("result : " + result);
+                   if ( result == 'success' ) {
+                      var msg = '취소표 알림 신청 성공';
+                      swal({
+                           //position: 'top-right',
+                           type: 'success',
+                           title: '취소표 알림 신청 성공!',
+                           showConfirmButton: true,
+                           timer: 2000
+                         })
+                   } else if( result == 'exceed'){
+                      swal(
+                              '취소표알림 자리 수 초과!',
+                              '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
+                              'error'
+                            )
+                   } else {
+                      swal(
+                              '중복 좌석 신청!',
+                              '신청한 좌석 중 기존에 중복된 좌석이 있습니다.'+"\n"+result,
+                              'error'
+                            )
+                   }
+                });
+      }    
         
      function addBooking(){
          
@@ -207,9 +207,9 @@
 
         <!-- Header section -->
         <header class="header-wrapper">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
+         <!-- ToolBar Start /////////////////////////////////////-->
+         <jsp:include page="/layout/topToolbar.jsp" />
+         <!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
@@ -254,9 +254,9 @@
             <!-- style='width:100%' -->
          </div>
          <div class="col-sm-4 col-md-3">
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
@@ -379,7 +379,7 @@
 </body>
  <style>
       html{
- 	     height: auto;
+         height: auto;
       }
  </style>
 </html>

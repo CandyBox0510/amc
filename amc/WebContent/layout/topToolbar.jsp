@@ -170,7 +170,7 @@
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
-             <a href='/cinema/index2' class="logo">
+             <a href='/cinema/index' class="logo">
                  <!-- <img alt='logo' src="/images/logo.png"> -->
                  <img src="/images/amc.png">
              </a>
