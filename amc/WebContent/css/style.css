@@ -4638,10 +4638,11 @@ ul#navigation a:hover {
 }
 .comment .comment__reply {
   position: absolute;
-  top: 43px;
+  top: 10px;
   right: 0;
   font-size: 14px;
   color: #fe505a;
+  
 }
 .comment .comment__reply:before {
   content: "\f112";
@@ -7537,7 +7538,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   min-width: auto;
   min-height: auto;
   background-color: transparent;
-  background-image: url(../images/icons/right-arrow.svg);
+  /* background-image: url(../images/icons/right-arrow.svg); */
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -7574,7 +7575,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .tparrows.tp-rightarrow.hebe .slider__info:after {
   content: '';
-  background-image: url("../images/components/wave.svg");
+  /* background-image: url("../images/components/wave.svg"); */
   background-repeat: no-repeat;
   background-size: 48px 4px;
   width: 48px;

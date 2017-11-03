@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
+import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Booking;
@@ -49,6 +50,9 @@ public class BookingController {
 	@Autowired
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
+	@Autowired
+	@Qualifier("alarmServiceImpl")
+	private AlarmService alarmService;
 	
 	///Constructor
 	public BookingController(){
@@ -169,6 +173,8 @@ public class BookingController {
 		String status = cinemaService.cancelPay(booking.getImpId());
 		System.out.println("1. 환불 완료");
 		
+		int screenContentNo = booking.getScreenContentNo();
+		String alarmSeatNo = booking.getBookingSeatNo();
 		//환불 성공시
 		if(status.equals("cancelled")){
 			//2. 예매통계 업데이트하기 
@@ -185,6 +191,7 @@ public class BookingController {
 			}
 			
 			//4. 취소표 알리미 발송하기			
+			//alarmService.smsPush("cancelAlarm", screenContentNo+"", user.getUserId(),alarmSeatNo);
 			
 			return "redirect:/booking/getAdminBookingList";			
 		}else{
@@ -260,13 +267,13 @@ public class BookingController {
 
     	String subject = "AMC에서 예매하신 내역입니다.";	
     	StringBuilder sb = new StringBuilder();        
-        sb.append("회원님의 예매정보가 있는 QR코드입니다. 이미지를 클릭 하시면 회원가입 화면으로 이동합니다. <br/>" );
+        sb.append("회원님의 예매정보가 있는 QR코드입니다.<br/>" );
         sb.append("<a href=http://127.0.0.1:8080/user/addUser?email="+userEmailAddr+">");
         sb.append("<img src='"+booking.getQrUrl()+"'/></a>");        
         
         userService.send(subject, sb.toString(), "bitcampamc@gmail.com", userEmailAddr, null);
 		
-		return  "forward:/booking/addBooking.jsp";
+		return  "forward:/index.jsp";
 	}
 	
 }

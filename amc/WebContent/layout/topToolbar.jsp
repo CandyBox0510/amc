@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <!doctype html>
 <html>
@@ -258,17 +259,15 @@
                  <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
         	<!-- 유저가 비로그인 상태일 시 -->	
  			<c:if test="${empty sessionScope.user}">		
- 				<li>			
 					<form class="navbar-form navbar-right">						
 						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
 					</form>
-				</li>	
 			</c:if>	
 			
 			<c:if test="${!empty sessionScope.user}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" class="user-info">[${sessionScope.user.userName}]</a>
-					<li><a href="/user/logoutUser">로그아웃</a></li>
+					<a href="#" class="user-info">[${sessionScope.user.userName}]</a>
+					<a href="/user/logoutUser">로그아웃</a>
 				</ul>
 			</c:if> 
         	

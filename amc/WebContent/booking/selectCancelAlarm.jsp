@@ -54,7 +54,7 @@
       <script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
-  		
+
   function listener(event){      
       document.getElementById('child').contentWindow.postMessage(event.data,"*");
       alert(event.data);
@@ -80,6 +80,8 @@
            
    }
 
+
+
       
       if (window.addEventListener){
            addEventListener("message", listener, false);
@@ -87,6 +89,31 @@
            attachEvent("onmessage", listener)
       }
 
+         
+      function confirmSeat(){
+         
+         var clientId = $("input[name='clientId']").val();
+         
+           $.ajax(
+                  {
+                     url : "/booking/json/confirmSeat/"+clientId,            
+                     method : "GET" ,
+                     async : false,
+                     dataType : "json" ,
+                     headers : {
+                        "Accept" : "application/json",
+                        "Content-Type" : "application/json"
+                     },
+                     
+                     success : function(JSONData, status) {
+                        console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
+                            if(JSONData != ""){
+                               console.log('ajax로 좌석 rollback resCode: '+jsonData);
+                            }//end of if문
+                     }
+            });//end of ajax
+         
+      }   
          
       function addCancelAlarm(){
          var userId = $("input[name='userId']").val(); 
@@ -145,13 +172,6 @@
         
      }
 
-   
-      if (window.addEventListener){
-        addEventListener("message", listener, false);
-   } else {
-        attachEvent("onmessage", listener)
-   }
-   
 
    function selectCancelAlarm(){
       $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
@@ -210,7 +230,9 @@
    
          <div class="col-sm-8 com-md-9">   
             <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            
+            <iframe id="child" src="http://192.168.0.32:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
             </iframe>
