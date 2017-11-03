@@ -66,6 +66,10 @@
    	<!-- z_YJ : 부트스트랩테마 적용을 위해서 설정 -->
    	<mvc:resources mapping="/cinema/**" location="/cinema/" />
    	
+   	<!-- z_YJ : 파노라마를 위해 적용 -->
+   	<mvc:resources mapping="/dist/**" location="/dist/" />
+   	<mvc:resources mapping="/demo/**" location="/demo/" />
+   	
    	<!-- new theme -->
    	<mvc:resources mapping="/fonts/**" location="/fonts/" />
    	<mvc:resources mapping="/js/**" location="/js/" />

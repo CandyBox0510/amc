@@ -699,7 +699,7 @@
                     <div class="col-xs-1 col-md-2"></div>
 
                     <div class="col-xs-4 col-md-2">
-                        <div> <br> <img src="${movie. postUrl}"> </div>
+                        <div> <br> <img src="${movie. postUrl}" style="width:150px;"> </div>
                     </div>
                     <div class="col-xs-6 col-md-6">
                         <div>

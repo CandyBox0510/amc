@@ -77,19 +77,25 @@
         <!-- Form element -->
         <script src="/js/external/form-element.js"></script>
         <!-- Form validation -->
-        <script src="/js/form.js"></script>
+        <!-- <script src="/js/form.js"></script> -->
+   		<!--이거주석처리안하면 로그인 안됨 -->
 
         <!-- Twitter feed -->
         <!-- <script src="/js/external/twitterfeed.js"></script> -->
+	   
+   
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+</head>
 
-        <!-- Custom -->
+  <!--       <script type="text/javascript">
         <!-- <script src="/js/custom.js"></script> -->
 		
-        <script type="text/javascript">
+         <script type="text/javascript">
              $(document).ready(function() {
                init_Home();
              });
-	    </script> 
+	    </script>  
 
 		<script type="text/javascript">
     	//============= "로그인"  Event 연결 =============
@@ -155,7 +161,8 @@
 				
 			});
 		});	
-		</script>
+    	</script>
+
 
 
 </head>
@@ -163,7 +170,7 @@
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
-             <a href='/cinema/index2' class="logo">
+             <a href='/cinema/index' class="logo">
                  <!-- <img alt='logo' src="/images/logo.png"> -->
                  <img src="/images/amc.png">
              </a>

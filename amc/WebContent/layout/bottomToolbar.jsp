@@ -5,6 +5,7 @@
             <section class="container">
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
+
                         <li><a href="/movie/getMovieList?menu=movie" class="nav-link__item">현재 상영 영화</a></li>
                         <li><a href="/movie/getMovieList?menu=commingsoon" class="nav-link__item">상영 예정 영화</a></li>
                         <li><a href="/movie/getMovieList?menu=preview" class="nav-link__item">시사회</a></li>
