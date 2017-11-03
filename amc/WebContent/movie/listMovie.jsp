@@ -369,7 +369,9 @@
         
         <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
+			<jsp:include page="/layout/topToolbar.jsp" />	
+			
+		
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
 
@@ -475,7 +477,8 @@
         
         <div class="bottom low ">
 			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
+			
+			
 			<!-- ToolBar End /////////////////////////////////////-->
   		</div>
 
@@ -508,7 +511,8 @@
         <script src="/js/custom.js"></script>
 		<!-- ------------------------------------  -->
 		
-	
+		<jsp:include page="/layout/loginModal.jsp" />
+		<jsp:include page="/layout/bottomToolbar.jsp" />
 		
 
 </body>

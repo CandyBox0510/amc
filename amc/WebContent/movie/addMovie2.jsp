@@ -44,7 +44,149 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
   
  
-
+ 
+<!-- ToolBar Start /////////////////////////////////////-->
+<div class="navbar  navbar-inverse navbar-fixed-top">
+	
+	<div class="container">
+	       <!-- 절대경로로 변경  -->
+		<a class="navbar-brand" href="/index.jsp">
+			<img src="/images/common/AMC_Logo.png" width="80px" height="30px"/>
+		</a>
+		
+		<!-- toolBar Button Start //////////////////////// -->
+		<div class="navbar-header">
+		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		    </button>
+		</div>
+		<!-- toolBar Button End //////////////////////// -->
+		
+	    <!--  dropdown hover Start -->
+		<div 	class="collapse navbar-collapse" id="target" 
+	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
+	         
+	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
+	             <ul class="nav navbar-nav">
+	             
+	              <!-- 영화 DrowDown -->
+	              <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span>영화</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">현재 상영영화</a></li>
+	                         <li><a href="#">상영 예정영화</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">시사회</a></li>
+	                     </ul>
+	                 </li>
+	                 
+	              <!-- 예매 DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>예매</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">영화 예매</a></li>
+		                         <li><a href="#">시사회 예매</a></li>
+		                     </ul>
+		                </li>
+		                
+	              <!-- 영화관  -->
+					  <li><a href="#">영화관</a></li>
+				
+				  <!-- 커뮤니티  -->  
+					  <li><a href="#">커뮤니티</a></li>
+		                
+	              <!-- 스토어 DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>스토어</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">굿즈</a></li>
+		                         <li><a href="#">스낵바</a></li>
+		                     </ul>
+		                </li>
+	                 
+	             <!-- 관리자메뉴 DrowDown  -->
+	             
+	               <c:if test="${sessionScope.user.role == 'admin'}">
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span >[관리자 메뉴]</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">회원관리</a></li>
+		                         <li><a href="#">상품관리</a></li>
+		                         <li><a href="#">판매관리</a></li>
+		                         <li><a href="#">영화관리</a></li>
+		                         <li><a href="#">상영관리</a></li>
+		                         <li><a href="#">예매관리</a></li>
+		                     </ul>
+		                </li>
+	                 </c:if>
+	                 
+	             </ul>
+	             
+	             
+	             
+	             <ul class="nav navbar-nav navbar-right">
+	             <!-- 유저가 로그인 상태일 시 -->
+	             	<c:if test="${sessionScope.user ne null }">
+		             	<li title="Click : 개인정보 수정"><a href="#">ID : [${sessionScope.user.userId }]</a></li>
+		             	<li><a href="#">로그아웃</a></li>
+		             	<li><a href="#">마이페이지</a></li>
+	             	</c:if>
+	             	
+	             <!-- 유저가 비로그인 상태일 시 -->	
+	             	<c:if test="${sessionScope.user eq null }">
+		             	<li>
+		             		<input type="text" name="userId" placeholder="아이디" width="300px">
+		             		<input type="text" name="password" placeholder="비밀번호" width="300px">
+		             	</li>
+		             	<input type="button" value="로그인">
+	             	</c:if>
+	            </ul>
+	           	 <!-- 유저가 비로그인 상태일 시 -->	
+             	<c:if test="${sessionScope.user eq null }">
+	             	<li>
+	             		<input type="text" name="userId" placeholder="아이디" width="300px">
+	             		<input type="text" name="password" placeholder="비밀번호" width="300px">
+	             	</li>
+	             	<input type="button" value="로그인">
+             	</c:if>
+ --%>	             	
+	 			<c:if test="${empty user}">					
+						<form class="navbar-form navbar-right">
+						<!-- <a data-toggle="modal" href="../user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static"> -->
+						<a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
+							<button type="button" class="btn btn-primary">Log in</button>
+						</a>
+							<button type="button" class="btn btn-primary">Sign in</button>
+						</form>
+					</li>	
+				</c:if>	
+				
+				<c:if test="${!empty user}">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" class="user-info">${sessionScope.user.userName}</a>
+						<li><a href="#">로그아웃</a></li>
+					</ul>
+				</c:if>     
+		
+		</div>
+		<!-- dropdown hover END -->	       
+	</div>
+</div>
  
  </head>
  
@@ -55,7 +197,126 @@
    
  <script type="text/javascript">
  
+	//============= START TOPTOOL BAR ==========================
 
+	function openHistory(){
+		popWin = window.open("../openHistory.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+	}
+
+		
+	//=============  현재 상영영화 Event  처리 =============	
+	$( "a:contains('현재 상영영화'),a:contains('ID')" ).on("click" , function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$(self.location).attr("href","/movie/getMovieList?menu=movie");
+	});
+	
+	
+	//=============  상영 예정영화 Event  처리 =============	
+	$( "a:contains('상영 예정영화')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=commingsoon");
+	});
+	
+	//=============  시사회 Event  처리 =============	
+	$( "a:contains('시사회')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=preview");
+	});
+	
+	//=============  예매 Event  처리 =============	
+	$( "a:contains('예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenMovieList");
+	});
+	
+	//=============  영화 예매 Event  처리 =============	
+	$( "a:contains('영화 예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenMovieList");
+	});
+	
+	//=============  시사회 예매 Event  처리 =============	
+	$( "a:contains('시사회 예매')" ).on("click" , function() {
+		$(self.location).attr("href","/booking/getScreenPreviewList");
+	});
+	
+	//=============  영화관 Event  처리 =============	
+	$( "a:contains('영화관')" ).on("click" , function() {
+		$(self.location).attr("href","/cinema/theaterInfo");
+	});
+	
+	//=============  커뮤니티 Event 처리 =============	
+	$( "a:contains('커뮤니티')" ).on("click" , function() {
+		$(self.location).attr("href","/community/getFreeBoardList");
+	});
+	
+	//============= 스토어 Event 처리 =============	
+	$( "a:contains('스토어')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  굿즈 Event 처리 =============	
+	$( "a:contains('굿즈')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  스낵바 Event 처리 =============	
+	$( "a:contains('스낵바')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getSnackList");
+	});
+	
+	//=============  회원관리 Event  처리 =============	
+	$( "a:contains('회원관리')" ).on("click" , function() {
+		$(self.location).attr("href","/user/getUserList");
+	});
+	
+	//=============  상품관리 Event  처리 =============	
+	$( "a:contains('상품관리')" ).on("click" , function() {
+		$(self.location).attr("href","/product/getGoodsList");
+	});
+	
+	//=============  판매관리 Event  처리 =============	
+	$( "a:contains('판매관리')" ).on("click" , function() {
+		$(self.location).attr("href","/purchase/getSaleList");
+	});
+	
+	//=============  영화관리 Event  처리 =============	
+	$( "a:contains('영화관리')" ).on("click" , function() {
+		$(self.location).attr("href","/movie/getMovieList?menu=manage");
+	});
+	
+	//=============  상영관리 Event  처리 =============	
+	$( "a:contains('상영관리')" ).on("click" , function() {
+		$(self.location).attr("href","/screen/getScreenList");
+	});
+	
+	//=============  예매관리 Event  처리 =============	
+	$( "a:contains('예매관리')" ).on("click" , function() {ss
+		$(self.location).attr("href","/booking/getAdminBookingList");
+	});
+	
+	
+	//============= login Event  처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("input:contains('로그인')").on("click" , function() {
+			$(self.location).attr("href","/user/loginUser");
+		}); 
+	 });
+	
+	//============= logout Event  처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("a:contains('로그아웃')").on("click" , function() {
+			$(self.location).attr("href","/user/logoutUser");
+		}); 
+	 });
+	
+	//=============  최근 본 상품  처리 =============	
+	 	$( "a:contains('최근 본 상품')" ).on("click" , function() {
+	 		openHistory();
+		});
+	
+ 
+    //============= END OF TOPTOOL BAR ==========================
+ 
+ 
  
         $(document).ready(function(){
          	
@@ -364,32 +625,10 @@
 			  );
 		  }) 
 		  
-		  
+		 
     </script>
 
 <body>
-<div class="wrapper">
-    	<c:set var="who" value=""/>
-    	<c:if test="${sessionScope.user.role ne 'admin'}">
-    		<c:set var="who" value="search"/>	
-    	</c:if>
-    	<c:if test="${sessionScope.user eq null || sessionScope.user eq ''}">
-    		<c:set var="who" value="search"/>	
-    	</c:if>
-    	<c:if test="${sessionScope.user.role eq 'admin'}">
-    		<c:set var="who" value="admin"/>	
-    	</c:if>
-        <!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
-   		
-</div>
 
 
 <form id="uploadForm" method="POST">  
