@@ -8,7 +8,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- d
+	<!-- 
 	  jQuery , Bootstrap CDN 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -266,43 +266,9 @@
 			</script>
 			<!-- 파노라마용 스크립트 end-->
 			
-			        <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">현재 상영 영화</a></li>
-                        <li><a href="#" class="nav-link__item">상영 예정 영화</a></li>
-                        <li><a href="#" class="nav-link__item">시사회</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">영화 예매</a></li>
-                        <li><a href="#" class="nav-link__item">시사회 예매</a></li>
-                        <li><a href="#" class="nav-link__item">영화관 정보</a></li>
-                        <li><a href="#" class="nav-link__item">커뮤니티</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">굿즈</a></li>
-                        <li><a href="#" class="nav-link__item">스낵바</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
-
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
-                    </div>
-                </div>
-            </section>
-        </footer>
+		<!-- bottomToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+	   	<!-- bottomToolBar End /////////////////////////////////////-->
 </div>
 
 		<!-- 슬릭 캐러셀 -->

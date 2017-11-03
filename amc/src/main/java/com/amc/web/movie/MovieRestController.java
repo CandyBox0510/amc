@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -611,6 +613,43 @@ public class MovieRestController {
 		System.out.println("response content" + response);
 
 		return response.toString();
+	}
+	
+	@RequestMapping( value="/json/getInfiWishList/{userId:.+}")
+	public Map<String,Object> getInfiWishList(@ModelAttribute("Search")Search search, 
+										HttpSession session,Model model,
+										@PathVariable("userId") String userId,
+										@RequestBody String jsonString) throws Exception {
+		
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
+		System.out.println((Long)(jo.get("currentPage")));
+		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		pageSize = 12;
+		
+		System.out.println("무한스크롤용 위시리스트 유저아이디 : " + userId);
+		
+		search.setPageSize(pageSize);
+		User user = (User)session.getAttribute("user");
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		
+		Map<String, Object> map = movieService.getWishList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		System.out.println("■■■위시리스트 확인■■■ : "+map.get("listWish"));
+		
+	    return map;
 	}
 
 }

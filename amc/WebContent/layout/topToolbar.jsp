@@ -251,7 +251,7 @@
                          <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">예매 목록</a></li>
                          <li><a href="/movie/getWishList" class="auth__function-item">위시리스트</a></li>
                          <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">취소표 알리미</a></li>
-                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=O" class="auth__function-item">티켓오픈시간 알리미</a></li>
+                         <li><a href="/alarm/getOpenAlarmList?alarmFlag=O" class="auth__function-item">티켓오픈시간 알리미</a></li>
                          <li><a href="/purchase/getPurchaseList" class="auth__function-item">스토어 구매 목록</a></li>
                      </ul>
                  </div>

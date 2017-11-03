@@ -68,8 +68,8 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public String addCancelAlarm(Alarm alarm) {
 
-		alarm.setAlarmSeatNo("1,2,3,4,10,20");
-		
+		/*alarm.setAlarmSeatNo("1,2,3,4,10,20");
+		test용
 		///////test User와 screenContentNo//////
 		User user = new User();
 		ScreenContent sc = new ScreenContent();
@@ -79,6 +79,7 @@ public class AlarmServiceImpl implements AlarmService {
 		alarm.setScreenContent(sc);
 		alarm.setAlarmFlag("C");
 		////////////////////////////////////////
+		*/
 		
 		//요청한 좌석 리스트
 		List<String> requestSeatList = new ArrayList<String>();
