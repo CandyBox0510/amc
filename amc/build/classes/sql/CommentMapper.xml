@@ -21,13 +21,13 @@
   	
   	  
    <insert id="addFreeBoardComment" parameterType="comment">
-	INSERT INTO freeboardcomment(comment_no, freeboard_no, user_id, comment_regDate, parent_no, comment_content)
+	INSERT INTO freeboardcomment(comment_no, freeboard_no, user_id, comment_regDate, parent_no, comment_level, comment_content)
 	VALUES(seq_freeboard_comment_no.nextval, #{freeBoard.freeBoardNo}, #{user.userId}, SYSDATE, 
-	<if test="parentCommentNo!=null">
-		#{parentCommentNo},
+	<if test="parentCommentNo!=0">
+		#{parentCommentNo}, 1,
 	</if>
-	<if test="parentCommentNo ==null">
-		0,
+	<if test="parentCommentNo ==0">
+		seq_freeboard_comment_no.currval, 0,
 	</if>
 		#{commentContent})
 	</insert>
@@ -38,7 +38,7 @@
 			comment_content = #{commentContent}
 		</set>
 		WHERE comment_no = #{commentNo}
-
+ 		
 	</update>
 	
 
@@ -46,6 +46,7 @@
 	<delete id="deleteFreeBoardComment" parameterType="int">
 		DELETE FROM freeboardcomment
 		WHERE comment_no = #{comment_no}
+		AND 1>=(SELECT COUNT(*) FROM freeboardcomment WHERE parent_no = #{commentContent}) 
 	</delete>
 	
 
@@ -53,21 +54,9 @@
    <select id="getFreeBoardCommentList" parameterType="map" resultMap="commentSelectMap">
 		SELECT * FROM (SELECT inner_table.*, ROWNUM AS row_seq
 										FROM (SELECT comment_no, freeboard_no, user_id, TO_CHAR(comment_regDate,'YYYY/MM/DD HH24:MI:SS') comment_regDate, 
-										parent_no, comment_content
+										parent_no, comment_content, comment_level
 													FROM freeboardcomment
-													WHERE freeboard_no = #{freeBoardNo} AND parent_no=0 ORDER BY comment_regDate DESC)inner_table
-										WHERE ROWNUM &lt; = #{search.endRowNum})	
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}	
-
-	</select> 
-	
-	<select id="getFreeBoardReplyCommentList" parameterType="map" resultMap="commentSelectMap">
-		SELECT * FROM (SELECT inner_table.*, ROWNUM AS row_seq
-										FROM (SELECT comment_no, freeboard_no, user_id, TO_CHAR(comment_regDate,'YYYY/MM/DD HH24:MI:SS') comment_regDate, 
-										parent_no, comment_content
-													FROM freeboardcomment
-													WHERE parent_no=#{parentCommentNo}
-													ORDER BY comment_regDate DESC)inner_table
+													WHERE freeboard_no = #{freeBoardNo} ORDER BY parent_no DESC, comment_level, comment_no DESC)inner_table
 										WHERE ROWNUM &lt; = #{search.endRowNum})	
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}	
 

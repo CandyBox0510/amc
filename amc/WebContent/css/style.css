@@ -4638,10 +4638,11 @@ ul#navigation a:hover {
 }
 .comment .comment__reply {
   position: absolute;
-  top: 43px;
+  top: 10px;
   right: 0;
   font-size: 14px;
   color: #fe505a;
+  
 }
 .comment .comment__reply:before {
   content: "\f112";

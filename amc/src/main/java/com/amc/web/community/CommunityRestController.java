@@ -1,7 +1,6 @@
 package com.amc.web.community;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.community.CommunityService;
 import com.amc.service.domain.Comment;
-import com.amc.service.domain.MovieComment;
 
 @RestController
 @RequestMapping("/community/*")
@@ -95,7 +94,7 @@ public class CommunityRestController {
 
 	// 해림 추가
 	@RequestMapping(value = "json/deleteComment/{commentNo}", method = RequestMethod.GET)
-	public void deleteComment(@PathVariable int commentNo) {
+	public int deleteComment(@PathVariable int commentNo) {
 
 		System.out.println("communityRestController의 deleteComment시작 ");
 
@@ -103,13 +102,14 @@ public class CommunityRestController {
 		communityService.deleteComment(commentNo);	
 		/// screenService.addScreenContent(screenContent);
 		System.out.println(" communityRestController deleteComment :: POST 끝.....");
-
+		System.out.println(communityService.deleteComment(commentNo)+"+++++++++++++");
+		return communityService.deleteComment(commentNo);	
 		
 
 	};
 	
 	// 해림 추가
-@RequestMapping(value = "json/getCommentList/{freeBoardNo}",  method = RequestMethod.GET)
+@RequestMapping(value = "json/getCommentList/{freeBoardNo}")
 	public List<Comment> getCommentList(@ModelAttribute("search") Search search, @PathVariable int freeBoardNo) throws Exception {
 		System.out.println("communityRestController의 getCommentList시작 ");
 		if (search.getCurrentPage() == 0) {
@@ -133,6 +133,29 @@ public class CommunityRestController {
 		
 		return list;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	@RequestMapping(value = "json/getReplyList",  method = RequestMethod.POST)
 	public  List<Comment> getReplyList( @ModelAttribute("search") Search search, @RequestBody Comment comment) throws Exception {
@@ -164,6 +187,57 @@ public class CommunityRestController {
 		
 		return list;
 	}
+	
+	
+	
+
+	@RequestMapping(value = "json/getFreeBoardTotalCount/{freeBoardNo}")
+	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, 
+			@PathVariable int freeBoardNo) throws Exception {		
+		
+		System.out.println("communityRestController의 getFreeBoardTotalCount 시작...");
+		System.out.println("1. search값 ==> " + search);
+		System.out.println("2. freeBoardNo ==> " + freeBoardNo);
+		int getFreeBoardTotalCount = communityService.getFreeBoardTotalCount(freeBoardNo);
+		System.out.println("3. getTotalCount의 값 ==> " + getFreeBoardTotalCount);
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		System.out.println("4. search ==> " + search);
+		
+
+		System.out.println("5. getFreeBoardTotalCount ==> " + getFreeBoardTotalCount);
+
+		Page resultPage = new Page(search.getCurrentPage(), getFreeBoardTotalCount, pageUnit, pageSize);
+		System.out.println("6. resultPage ==> " + resultPage);
+
+
+		System.out.println("communityRestController의 freeBoardCommentList메소드 끝");
+		
+		
+		return resultPage;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

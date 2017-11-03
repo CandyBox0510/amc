@@ -195,7 +195,7 @@
                  		   }
                  		   displayValue +=  '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> '+
                      	   '<input type="hidden" id="movieComment" value="'+val.movieComment+'"></span>'+
-                            '<span class="comment__delete" ><i class="fa fa-trash-o">  </i>'+
+                            '<span class="comment__delete" ><i class="fa fa-times">  </i>'+
                             '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
                             if(userRole == 'admin'){
                          	   displayValue += '<span class="comment__blind" >'+
@@ -242,6 +242,8 @@
          function fncGetMovieComment() {
         	 $("div[name='update"+$("input[name='movieCommentNo2']").val()+"']").html($("input[name='movieComment2']").val());
         	 
+        	alert( $("div[name='update"+$("input[name='movieCommentNo2']").val()+"']").html());
+        	alert( $("div[name='update"+$("input[name='movieCommentNo2']").val()+"']").html($("input[name='movieComment2']").val()));
         	 	
 				console.log(movieCommentNo);
 				console.log(movieComment);
@@ -337,9 +339,8 @@
                     			   displayValue +='<i class="fa fa-eraser">  </i>'
                     		   }
                     		   displayValue +=  '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> '+
-                        	   '<input type="hidden" id="movieComment" value=
-                        		   "'+val.movieComment+'"></span>'+
-                               '<span class="comment__delete" ><i class="fa fa-trash-o">  </i>'+
+                        	   '<input type="hidden" id="movieComment" value="'+val.movieComment+'"></span>'+
+                               '<span class="comment__delete" ><i class="fa fa-times">  </i>'+
                                '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
                                if(userRole == 'admin'){
                             	   displayValue += '<span class="comment__blind" >'+
@@ -570,10 +571,10 @@
 
         
         
-        	.movieComment {
-			  margin-bottom: 40px;
+        	.comment-form {
+			  margin-bottom: 60px;
 			}
-			.movieComment .movieComment__text {
+			.comment-form .movieComment__text {
 			  width: 100%;
 			  min-height: 78px;
 			  padding: 8px 19px;
@@ -585,16 +586,45 @@
 			  font-size: 13px;
 			  color: #b4b1b2;
 			}
-			.movieComment .movieComment__info {
+			.comment-form .movieComment__info {
 			  margin-top: 19px;
 			  font: 13px 'Roboto', sans-serif;
 			  color: #969b9f;
 			  display: inline-block;
 			}
-			.movieComment .movieComment__btn {
+			.comment-form .movieComment__btn {
 			  float: right;
 			  margin-top: 9px;
 			}
+			
+			
+			.comment {
+			  margin-bottom: 40px;
+			}
+			.comment .movieComment__text {
+			  width: 100%;
+			  min-height: 78px;
+			  padding: 8px 19px;
+			  -webkit-border-radius: 3px;
+			  -moz-border-radius: 3px;
+			  border-radius: 3px;
+			  background-color: #ffffff;
+			  border: solid 1px #dbdee1;
+			  font-size: 13px;
+			  color: #b4b1b2;
+			}
+			.comment .movieComment__info {
+			  margin-top: 19px;
+			  font: 13px 'Roboto', sans-serif;
+			  color: #969b9f;
+			  display: inline-block;
+			}
+			.comment .movieComment__btn {
+			  float: right;
+			  margin-top: 9px;
+			}
+			
+			
 		
       		body {
 				padding-top: 80px;
@@ -638,7 +668,7 @@
 
 				<div class="col-md-2">
 					<div>
-						<br> <img src="${movie. postUrl}">
+						<br> <img src="${movie. postUrl}" style="width:150px">
 					</div>
 				</div>
 
@@ -776,7 +806,7 @@
                  <h2 class="page-heading">감상평 </h2>
 
                 <div class="comment-wrapper">
-                    <div id="comment-form" class="movieComment">
+                    <div id="comment-form" class="comment-form">
                     	<c:if test="${user.userId !=null}">
                         <textarea class="movieComment__text" id="addMovieCommentText" placeholder='부적절한 글은 블라인드 처리 될 수 있습니다.'></textarea>
                         </c:if>
@@ -821,7 +851,7 @@
 	                            <input type="hidden" id="movieComment" value="${movieComment.movieComment }">
 	                            </span>
 	                       
-	                            <span class="comment__delete" ><i class="fa fa-trash-o"></i><input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }"></span>
+	                            <span class="comment__delete" ><i class="fa fa-times"></i><input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }"></span>
 		                        <c:if test="${user.role == 'admin'}">
 		                        <span class="comment__blind" >
 		                        <input type="hidden" id="movieCommentNo" value="${movieComment.movieCommentNo }">

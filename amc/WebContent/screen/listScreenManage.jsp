@@ -52,7 +52,7 @@
     <script type="text/javascript">
 			    function fncGetPageList(currentPage) {
 			        $("#currentPage").val(currentPage)
-			        $("form").attr("method", "POST").attr("action", "/community/getFreeBoardList").submit();
+			        $("form").attr("method", "POST").attr("action", "/screen/getScreenList").submit();
 			    }
 			    
 			    $(function() {
