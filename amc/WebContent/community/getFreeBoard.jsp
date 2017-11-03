@@ -148,15 +148,15 @@
          <input type="hidden" name='commentNo2' >
          <input type="hidden" name='comment2' >
          <input type="hidden" name="parentCommentNo2">
-         dddd
-         <input type="button" name="buttonFlag" id="buttonFlag" value="12">
+         
+         <input type="hidden" name="buttonFlag" id="buttonFlag" value="">
          <form class="search">
         	 <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
          </form>
          </div>
          </section>
         
-        
+        <jsp:include page="/layout/bottomToolbar.jsp" />
 
       
     </div>
@@ -195,6 +195,7 @@
                 </div>
 
             </section>
+            
         </div>
 
 		
@@ -454,7 +455,7 @@
 						success : function(JSONData, status) {
 							console.log("fncDeleteComment() JSONData "+ JSONData);
 							
-							if(JSONData == -1){
+							if(JSONData == 0){
 								alert("답글이 달린 댓글은 삭제가 불가능 합니다.");
 							}
 							//fncGetCommentList();
@@ -550,15 +551,27 @@
                     	 console.log(JSONData.endUnitPage);
                     	 
                     	 displayValue += '<div class="comment-more">'
-                    	alert(JSONData.endUnitPage + "JSONData.endUnitPage");
-                    	 alert(JSONData.currentPage + "JSONData.currentPage");
+               
                     	 if(JSONData.endUnitPage != JSONData.currentPage ){
                     		 displayValue +='<div id="watchlist"><i class="fa fa-comment"></i><span id="moreComment">댓글 더 보기</span><div>'
                     	 }
-                
+                    	 
+
                     	 displayValue += '</div>'
+                    	 
+                    		 buttonFlag = $("input[name='buttonFlag']").val();
+      
+                    	 
                     		 if(buttonFlag != "more"){
                     		 $(".comment-sets").html("");
+                    		 JSONData.currentPage = 1;
+ 
+                    		
+                    		 }else{
+           
+                    			 
+                    			 $("input[name='buttonFlag']").val("");
+                    			 
                     		 }
                     	 
                     		 $(".comment-sets").append(displayValue);
@@ -571,9 +584,8 @@
                     	 $(".commentHeader").append(display);
                     	 
                     	 $("#currentPage").val(JSONData.currentPage);
-                    	 $("input[name='buttonFlag']").val("");
-                    	 buttonFlag = $("input[name='buttonFlag']").val();
-                    	 alert("buttonFlag내부"+buttonFlag);
+                    	 //$("input[name='buttonFlag']").val("");
+                    	
                      }
               	 });
               	 
@@ -598,8 +610,8 @@
                 userId = $("input[name='userId']").val();
                 role = $("input[name='role']").val();
                 currentPage = $("#currentPage").val();
-                buttonFlag = $("hidden[name='buttonFlag']").val();	
-                alert(">>>"+  buttonFlag);
+                buttonFlag = $("input[name='buttonFlag']").val();	
+               
                // fncGetCommentList()
               fncGetPageList(currentPage) 
                 if($('html').height() < window.outerHeight){
@@ -633,19 +645,20 @@
     			
     			
     			
-    			
+    			//댓글달기
     			$(document).on("click", "#addCommentButton", function () {
     				parentCommentNo =  0;
     				comment = $("#addCommentText").val();    
     				fncAddComment(); 		
     			})
-    			
+    			//댓글/답글 삭제
     			$(document).on("click", ".comment__delete", function () {
     				commentNo=  $("#commentNo",$(this)).val();			
     				
 					fncDeleteComment();     			
 				})
             });
+            //댓글/답글 수정 아이콘누르기
 			$(document).on("click", ".comment__update", function () {
 				
 				commentNo=  $("#commentNo",$(this)).val();
@@ -654,6 +667,7 @@
        		 	fncGetComment();
 		
 			})
+			//댓글/답글수정
 			$(document).on("click", "#updateCommentButton", function () {
 	
        		 	commentNo = $(this).parent().find("#commentNo").val();
@@ -661,7 +675,7 @@
        		 	fncUpdateComment();
 		
 			})
-			
+			// 답글버튼누르기
 			$(document).on("click", ".comment_reply", function () {
 	
 				parentCommentNo = $("#parentCommentNo",$(this)).val();
@@ -671,7 +685,7 @@
 				fncTextareaReplyComment();
  
 			})
-			
+			//답글 달기
 			$(document).on("click", "#addReplyCommentButton", function () {
 				parentCommentNo = 	$("input[name='parentCommentNo2']").val();
 	
@@ -684,13 +698,13 @@
 			//댓글더보기
 			
 			$(document).on("click", "#watchlist", function () {
+				
 				currentPage = $("#currentPage").val();
 				test = 'more';
-				buttonFlag  = $("hidden[name='buttonFlag']").val();
-				alert($("#buttonFlag").val());
-				$("#buttonFlag").val(test);	
-				  buttonFlag  = $("hidden[name='buttonFlag']").val();	
-				alert("buttonFlag 클릭시 " + buttonFlag)
+				buttonFlag  = $("input[name='buttonFlag']").val();
+				
+				$("#buttonFlag").val('more');	
+
 				currentPage = parseInt(currentPage)+1
 				
 				fncGetPageList(currentPage);

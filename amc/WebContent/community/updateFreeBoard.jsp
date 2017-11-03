@@ -67,7 +67,7 @@
         </div>
         
         
-
+	<jsp:include page="/layout/bottomToolbar.jsp" />
       
     </div>
 

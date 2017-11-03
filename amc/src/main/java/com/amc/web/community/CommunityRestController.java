@@ -99,11 +99,11 @@ public class CommunityRestController {
 		System.out.println("communityRestController의 deleteComment시작 ");
 
 		System.out.println("1.commentNo ==> " + commentNo);
-		communityService.deleteComment(commentNo);	
+		int deleteComment = communityService.deleteComment(commentNo);	
 		/// screenService.addScreenContent(screenContent);
 		System.out.println(" communityRestController deleteComment :: POST 끝.....");
 		System.out.println(communityService.deleteComment(commentNo)+"+++++++++++++");
-		return communityService.deleteComment(commentNo);	
+		return deleteComment;	
 		
 
 	};
