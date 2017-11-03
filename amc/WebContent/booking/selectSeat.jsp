@@ -359,6 +359,14 @@
 
 			</div>
         </section>  
+          <div class="clearfix"></div>
+        
+        
+        <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  		</div>
        
          <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">

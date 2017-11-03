@@ -27,6 +27,7 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
    		</header>
 	
+<<<<<<< HEAD
 		<div class="container" id="body">
 			<div class="col-md-9" role="main">
 				<ul>	
@@ -130,6 +131,47 @@
 				
 			});
  
+		});
+
+	</script>
+=======
+</head>
+>>>>>>> refs/remotes/origin/master
+
+
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			
+			
+/* 			$('a.add:contains("확인")').bind('click',function(){
+				self.location.href = 'getGoodsList?menu=manage';
+			});
+			
+			$('a.add:contains("추가등록")').bind('click',function(){
+				self.location.href = 'addProduct';
+			}); */
+			
+			$('a.btn-default:contains("목록으로")').bind('click',function(){
+				self.location.href = 'getGoodsList?menu=${param.menu}'+'&searchKeyword=G';
+			});
+
+			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
+				
+				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+				
+				/* if("${param.menu=='search' && !empty user}"){
+					
+					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+										
+				}else{
+					alert("여기들어옴2");
+					 $('#login').onclick 
+				} */
+				
+			});
+
 		});
 
 	</script>

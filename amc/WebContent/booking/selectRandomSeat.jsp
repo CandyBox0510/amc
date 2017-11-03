@@ -281,7 +281,7 @@ function kakaoPay(){
    		</header>
 
    
-        
+        <br><br>
         <!-- Main content -->
         <div class="place-form-area">
         <section class="container">
@@ -320,7 +320,7 @@ function kakaoPay(){
 			<div  class="col-sm-8 com-md-9">
 
 
-				<iframe id="child" src="http://127.0.0.1:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+				<iframe id="child" src="http://192.168.0.32:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
 
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
@@ -347,6 +347,13 @@ function kakaoPay(){
 			</div>
 
         </section>  
+     	<div class="clearfix"></div>        
+        
+        <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  		</div>
        
          <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">

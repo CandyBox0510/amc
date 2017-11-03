@@ -104,7 +104,7 @@ public class UserController {
 				System.out.println("session ÀÇ user ´Â ³´ ³´¤¤»ñ³ª»ç³ªnull");
 			}
 		}*/
-		return "forward:/index.jsp";
+		return "redirect:/index.jsp";
 	}
 
 	@RequestMapping( value="getUser", method=RequestMethod.GET )

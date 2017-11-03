@@ -174,7 +174,8 @@
    		
     <input type="hidden" name="flag" value="1"> 
         <!-- Main content -->
-
+	
+        <!-- <section class="container" id="body"> -->
         <section class="container">
             <div class="order-container">
                 <div class="order">
@@ -364,6 +365,13 @@
                 </div>
 
             </section>
+        <div class="clearfix"></div>        
+        
+        <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  		</div>
         </div>
 
 		<!-- JavaScript-->
@@ -406,6 +414,8 @@
 </body>
 
 <style>
+/* #body{ padding: 100px} */
+
 html{
   height: auto;
 }
