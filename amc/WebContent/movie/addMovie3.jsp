@@ -442,19 +442,6 @@
 
 
 
-    <div class="container">
-                 <!-- Search bar -->
- 			<div class="col-sm-12">
- 			
-                <h1 class="page-heading"> 영화 등록  </h1> 
-                               
-				
-			      
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-		
-	</div>
-        
 
 <form id="uploadForm" method="POST">  
 	<br/> <br/>  <br/> <br/> 
@@ -485,18 +472,6 @@
 </form>  
 
 
-		<!--  Select Mobile menu  둘다있어야지 search가능함!!! 하단에 있어야지 생김 (이유모름)-->
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-		
-		
-        <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
-        <script src="/js/custom.js"></script>
-		<!-- ------------------------------------  -->
-		
-	
 		
 
 </body>
