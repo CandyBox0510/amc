@@ -5,7 +5,6 @@
             <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
             <html>
 
-<head> 
 
     
     <!-- Mobile Specific Metas-->
@@ -17,7 +16,8 @@
         <!-- Roboto -->
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
-    <!-- Stylesheets -->
+    	<!-- Stylesheets -->    
+    	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
 
         <!-- Mobile menu -->
         <link href="/css/gozha-nav.css" rel="stylesheet" />
@@ -79,7 +79,7 @@
     <script type="text/javascript">
 			    function fncGetPageList(currentPage) {
 			    	
-			    	alert("222")
+			    	//alert("222")
 			        $("#currentPage").val(currentPage)
 			        $("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=movie").submit();
 			    }
@@ -103,6 +103,21 @@
 					});
 					
 				 });
+				
+				
+				//============= "Banner Top Clieck "  Event  贸府 =============	
+				 $(function() {
+					 //==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( ".banner-top").on("click" , function() {
+						
+						alert("Banner Top Clieck ")
+						self.location = "/index.jsp";
+					});
+					
+				 });
+				
+				
+
 			    
 					//============= "澜己 八祸 Icon"  Event  贸府 =============	
 				 $(function() {
@@ -290,6 +305,13 @@
 
 	            $(document).ready(function() {
 	                init_CinemaList();
+	                
+	                //alert($('html').height() )
+	                //alert(window.outerHeight)
+	                if($('html').height() < window.outerHeight){
+	                	$('html').css('height', '100%');
+	                }
+	                
 	                $("#movie-search-sort").css("width","200px");
 	            });
 	            
@@ -338,13 +360,25 @@
 </head>
 
 <body>
-<jsp:include page="/layout/topToolbar.jsp" />
+    
+    
+        <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div>
+        
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
+
+
+
     <div class="container">
         
-
-        
         <!-- Main content -->
-        <section class="container">
+        <!--  <section class="container"> -->
         
                 <!-- Search bar -->
  			<div class="col-sm-12">
@@ -432,14 +466,22 @@
                             <a href='#' class="pagination__next">next</a>
                     </div>
               </div>
-          
+          		
             
         </section>
 
         <div class="clearfix"></div>
+        
+        
+        <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  		</div>
 
     </div>
     
+
 
     <!-- open/close -->
         <div class="overlay overlay-hugeinc">
@@ -466,8 +508,16 @@
         <script src="/js/custom.js"></script>
 		<!-- ------------------------------------  -->
 		
-		
+	
 		
 
 </body>
+
+<style>
+      html{
+ 	     height: auto;
+      }
+      
+</style>	
+
 </html>

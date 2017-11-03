@@ -85,10 +85,28 @@ public class CommunityServiceImpl implements CommunityService {
 		return getTotalCount;
 	}
 	
+	@Override
+	public int getFreeBoardTotalCount(int freeBoardNo) throws Exception {		
+		
+		System.out.println("communityServiceImpl의 getFreeBoardTotalCount 시작...");
+		System.out.println("1. search값 ==> " + freeBoardNo);
+		int getFreeBoardTotalCount = communityDAO.getFreeBoardTotalCount(freeBoardNo);
+		System.out.println("2. getTotalCount의 값 ==> " + getFreeBoardTotalCount);
+		System.out.println("communityServiceImpl의 getFreeBoardTotalCount 끝...");
+
+		return getFreeBoardTotalCount;
+	}
+	
 
 	@Override
-	public void addComment(Comment comment) {
-		// TODO Auto-generated method stub
+	public int addComment(Comment comment) {
+		System.out.println("communityServiceImpl의 addComment 시작...");
+		System.out.println("1. comment값 ==> " + comment);
+		
+	
+		System.out.println("communityServiceImpl의 addComment 끝...");
+		
+		return communityDAO.addComment(comment);
 
 	}
 
@@ -115,21 +133,25 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public void deleteComment(int commentNo) {
+	public int deleteComment(int commentNo) {
 		System.out.println("communityServiceImpl의 deleteComment 시작...");
 		System.out.println("1. commentNo값 ==> " + commentNo);
-		communityDAO.deleteComment(commentNo);
+		
 		
 		System.out.println("communityServiceImpl의 deleteComment 끝...");
+		
+		return communityDAO.deleteComment(commentNo);
 
 	}
 
 	@Override
-	public void updateComment(Comment comment) {
+	public int updateComment(Comment comment) {
 		System.out.println("communityServiceImpl의 updateComment 시작...");
 		System.out.println("1. comment값 ==> " + comment);
-		communityDAO.updateComment(comment);
+		
 		System.out.println("communityServiceImpl의 updateComment 끝...");
+		
+		return communityDAO.updateComment(comment);
 	}
 
 }

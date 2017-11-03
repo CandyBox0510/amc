@@ -44,368 +44,20 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script type="text/javascript">
-//imp초기화는 페이지 첫단에 해주는게 좋음
-  IMP.init('imp41659269');
-  	var things = "AMC : ";
-  		things += "예매"
-
-  	
-  	function kakaoPay(){
-  			alert("name : "+things);
-  				IMP.request_pay({
-  				    pg : 'kakao',
-  				    pay_method : 'kapy',
-  				    merchant_uid : 'merchant_' + new Date().getTime(),
-  				    name : things,
-  				    amount : "${booking.totalTicketPrice}", /* ticket or product price */
-  				    buyer_email : "${user.userId}",
-  				    buyer_name : "${user.userName}",
-  				    buyer_tel : "${user.phone1}-${user.phone2}-${user.phone3}",
-  				    buyer_addr : "${user.addr}+${user.addrDetail}"
-  				}, function(rsp) {
-  				    if ( rsp.success ){
-  						
-  				    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
-  				    	console.log("impuid : "+rsp.imp_uid);
-  				    	var impUid = rsp.imp_uid; 
-  				    	
-  				    	$.ajax({
-  				    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-  				    		type: 'GET',
-  				    	}).done(function(data) {
-  				    		alert("data : " + data);
-  				    		var payStatusCheck = (data.split(','))[0];
-  				    		var amountCheck = (data.split(','))[1];
-  				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
-  				    		
-  				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-  				    		if (  payStatusCheck == 'paid' && amountCheck == '${booking.totalTicketPrice}') {
-  				    			var msg = '결제가 완료되었습니다.';
-  				    			msg += '\n고유ID : ' + rsp.imp_uid;
-  				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-  				    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-  				    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
-
-  				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
-  				    			$("input[name='impId']").val(impUid);
-  				    			
-  				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
-  				    			
-  				    			addBooking();
-  				    			
-  				    		} else {
-  				    			alert("AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
-  				    			kakaoPayCancel(impUid);
-  				    			//[3] 아직 제대로 결제가 되지 않았습니다.
-  				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-  				    		}
-  				    	});
-  				    	
-  				    } else {
-  				        var msg = '결제에 실패하였습니다.';
-  				        var errorMsg = '실패사유 : ' + rsp.error_msg;
-  				        alert("AJAX 전 실패"+"\n"+msg+"\n"+errorMsg);
-  				    }//end of rsp.success else 
-  				}); //end of Imp.request_pay
-  			}//end of kakaoPay function
-  			
-  	function kakaoPayCancel(impUid){
-  		$.ajax({
-  		    		url: "/cinema/json/cancelPay/"+impUid,
-  		    		type: 'GET',
-  		    	}).done(function(data) {
-  		    		alert("data : " + data);
-  		    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-  		    		if ( data == 'cancelled' ) {
-  		    			var msg = '취소가 성공적으로 처리되었습니다.';
-  		    			/* msg += '\n고유ID : ' + rsp.imp_uid;
-  		    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-  		    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-  		    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
-
-  		    			alert("아작스 취소 후 "+"\n"+msg);
-  		    			
-  		    			//location.href="/index.jsp"
-  		    			location.href="/#"
-  		    			
-  		    		} else {
-  		    			alert("취소가 실패하였습니다.");
-  		    			//[3] 아직 제대로 결제가 되지 않았습니다.
-  		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-  		    		}
-  		    	});
-  	}//end of kakaoPayCancel function	
-  	
-  	function addBooking(){
-  						
-  		$("#addBooking").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();	
-  		
-  	}
-  	
-  	function a(){
-  		$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=123");
-  		alert($("input[name='qrUrl']").val());
-  	}
-  	
-  	$(document).ready(function() {
-  		var seatNo ="${booking.bookingSeatNo}"; 
-  	  $.ajax(
-  				{
-  					url : "/booking/json/getDisplaySeatNo/"+seatNo,						
-  					method : "GET" ,
-  					dataType : "json" ,
-  					headers : {
-  						"Accept" : "application/json",
-  						"Content-Type" : "application/json"
-  					},
-  					
-  					success : function(JSONData, status) {
-  						console.log('SeatNo 받아옴 : '+JSONData.str);								
-                        if(JSONData != ""){
-                        	$("#displaySeat").text(JSONData.str);
-                        }//end of if문
-
-  					}
-  			});//end of ajax
-  	})
-  	
-	function fncSendMail() {
-  		
-		 var email = $("#email").val();	
-		 var bookingNo = ${booking.bookingNo}+"";
-		 //var bookingNo = "b10100";
-		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) 
-			 || email == ""){
-	    	alert("이메일 형식이 아닙니다.");
-	    	return;
-	     }
-		alert("메일을 보냅니다. \n이메일주소 : "+email+"\n예매번호 : "+bookingNo);
-		self.location="/booking/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email;
-		
-			/* 	  //왜 restController로는 안될까..?	  
- 			$.ajax(
-	  				{
-	  					url : "/booking/json/sendEmailQR/"+bookingNo+"/"+email,						
-	  					method : "GET" ,
-	  					dataType : "json" ,
-	  					headers : {
-	  						"Accept" : "application/json",
-	  						"Content-Type" : "application/json"
-	  					},
-	  					
-	  					success : function(JSONData, status) {
-	  						console.log('JSONData 받아옴 : '+JSONData.str);								
-	                        if(JSONData == 1){
-	                        	alert("이메일로 QR코드를 전송했습니다.");
-	                        }//end of if문
-
-	  					}
-	  			});//end of ajax 
-	  			*/
-	}
-  	
-  	
-  	
-   </script>
-  <style>
-	   .contact-info {
-		  text-align: center;
-		}
-		.reservation-message {
-		  position: relative;
-		  font-size: 13px;
-		  /* padding-left: 45px; */
-		  margin-top: 10px;
-		  margin-bottom: 8px;
-		  
-		}
-		
-		.reservation-message:before {
-		  content: '';
-		  background-image: url(../images/icons/speech.svg);
-		  background-repeat: no-repeat;
-		  background-position: right center;
-		  -webkit-background-size: 42px 36px;
-		  background-size: 42px 36px;
-		  width: 45px;
-		  height: 40px;
-		  position: absolute;
-		  top: -4px;
-		  left: -1px;
-		}
-		.form .form__mail,
-		.form .form__message {
-		  margin-bottom: 10px;
-		  width: 100%;
-		  border: none;
-		  box-shadow: none;
-		  border: 1px solid #dbdee1;
-		  -webkit-border-radius: 3px;
-		  -moz-border-radius: 3px;
-		  border-radius: 3px;
-		  font-size: 13px;
-		  color: #b4b1b2;
-		  padding: 9px 18px 10px;
-		}
-		
-		.contact-info {
-		  text-align: center;
-		}
-		.contact-info .contact-info__field {
-		  position: relative;
-		  width: 460px;
-		  display: inline-block;
-		  margin-right: 20px;
-		}
-		.contact-info .contact-info__field .form__mail {
-		  padding-left: 35px;
-		}
-		.contact-info .contact-info__field:before {
-		  content: '';
-		  width: 39px;
-		  height: 39px;
-		  -webkit-border-radius: 3px 0 0 3px;
-		  -moz-border-radius: 3px 0 0 3px;
-		  border-radius: 3px 0 0 3px;
-		  background-color: #4c4145;
-		  position: absolute;
-		  top: 0px;
-		  left: 0;
-		}
-		.contact-info .contact-info__field:after {
-		  content: '';
-		  color: #b4b1b2;
-		  font: 13px "FontAwesome";
-		  position: absolute;
-		  top: 10px;
-		  left: 15px;
-		}
-		.contact-info .contact-info__field-mail:after {
-		  content: "\f0e0";
-		  left: 13px;
-		}
-		
-		.ticket .ticket__item {
-		  display: block;
-		  margin-bottom: 2.5px;
-		  font-family: 'PT Mono';
-		  font-size: 14px;
-		  text-transform: uppercase;
-		  text-align: left;
-		}
-		
-   </style> 
+ 
 </head>
 
 <body>
     <div class="wrapper place-wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+        	<img alt='top banner' src="../images/banners/space.jpg">
         </div>
-
-        <!-- Header section -->
-        <header class="header-wrapper">
-            <div class="container">
-                <!-- Logo link-->
-                <a href='index.html' class="logo">
-                    <img alt='logo' src="/images/logo.png">
-                </a>
-                
-                <!-- Main website navigation-->
-                <nav id="navigation-box">
-                    <!-- Toggle for mobile menu mode -->
-                    <a href="#" id="navigation-toggle">
-                        <span class="menu-icon">
-                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
-                              <span class="lines"></span>
-                            </span>
-                        </span>
-                    </a>
-                    
-                    <!-- Link navigation -->
-                    <ul id="navigation">
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="#">Pages</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="movie-page-left.html">Single movie (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-page-right.html">Single movie (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-page-full.html">Single movie (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-left.html">Movies list (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-right.html">Movies list (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-full.html">Movies list (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="single-cinema.html">Single cinema</a></li>
-                                <li class="menu__nav-item"><a href="cinema-list.html">Cinemas list</a></li>
-                                <li class="menu__nav-item"><a href="trailer.html">Trailers</a></li>
-                                <li class="menu__nav-item"><a href="rates-left.html">Rates (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="rates-right.html">Rates (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="rates-full.html">Rates (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="offers.html">Offers</a></li>
-                                <li class="menu__nav-item"><a href="contact.html">Contact us</a></li>
-                                <li class="menu__nav-item"><a href="404.html">404 error</a></li>
-                                <li class="menu__nav-item"><a href="coming-soon.html">Coming soon</a></li>
-                                <li class="menu__nav-item"><a href="login.html">Login/Registration</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="page-elements.html">Features</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="typography.html">Typography</a></li>
-                                <li class="menu__nav-item"><a href="page-elements.html">Shortcodes</a></li>
-                                <li class="menu__nav-item"><a href="column.html">Columns</a></li>
-                                <li class="menu__nav-item"><a href="icon-font.html">Icons</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="page-elements.html">Booking steps</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="book1.html">Booking step 1</a></li>
-                                <li class="menu__nav-item"><a href="book2.html">Booking step 2</a></li>
-                                <li class="menu__nav-item"><a href="book3-buy.html">Booking step 3 (buy)</a></li>
-                                <li class="menu__nav-item"><a href="book3-reserve.html">Booking step 3 (reserve)</a></li>
-                                <li class="menu__nav-item"><a href="book-final.html">Final ticket view</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="gallery-four.html">Gallery</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="gallery-four.html">4 col gallery</a></li>
-                                <li class="menu__nav-item"><a href="gallery-three.html">3 col gallery</a></li>
-                                <li class="menu__nav-item"><a href="gallery-two.html">2 col gallery</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="news-left.html">News</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="news-left.html">News (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="news-right.html">News (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="news-full.html">News (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-left.html">Single post (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-right.html">Single post (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-full.html">Single post (full widht)</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="#">Mega menu</a>
-                        </li>
-                    </ul>
-                </nav>
-                
-                <!-- Additional header buttons / Auth and direct link to booking-->
-                <div class="control-panel">
-                    <a href="#" class="btn btn--sign login-window">Sign in</a>
-                    <a href="#" class="btn btn-md btn--warning btn--book login-window">Book a ticket</a>
-                </div>
-
-            </div>
-        </header>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
         
         <!-- Search bar -->
         <div class="search-wrapper">
@@ -456,7 +108,7 @@
 								<%-- <span class="ticket__item ticket__date">${booking.screenContent.screenDate}</span> --%>
                                 <span class="ticket__item ticket__time">${booking.screenContent.screenOpenTime}</span>
                                 <span class="ticket__item">Cinema: <span class="ticket__cinema">Americode Cinema</span></span>
-                                <span class="ticket__item">Hall: <span class="ticket__hall">${booking.screenContent.screenTheater}관</span></span>
+                                <span class="ticket__item">Hall: <span class="ticket__hall"> <br>${booking.screenContent.screenTheater}관</span></span>
                                 <span class="ticket__item ticket__price">price: <strong class="ticket__cost">${booking.totalTicketPrice}원</strong></span>
                             </div>
 
@@ -603,7 +255,276 @@
 
             </section>
         </div>
+        </body>
+ <script type="text/javascript">
+//imp초기화는 페이지 첫단에 해주는게 좋음
+  IMP.init('imp41659269');
+  	var things = "AMC : ";
+  		things += "예매"
 
+  	
+  	function kakaoPay(){
+  			alert("name : "+things);
+  				IMP.request_pay({
+  				    pg : 'kakao',
+  				    pay_method : 'kapy',
+  				    merchant_uid : 'merchant_' + new Date().getTime(),
+  				    name : things,
+  				    amount : "${booking.totalTicketPrice}", /* ticket or product price */
+  				    buyer_email : "${user.userId}",
+  				    buyer_name : "${user.userName}",
+  				    buyer_tel : "${user.phone1}-${user.phone2}-${user.phone3}",
+  				    buyer_addr : "${user.addr}+${user.addrDetail}"
+  				}, function(rsp) {
+  				    if ( rsp.success ){
+  						
+  				    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
+  				    	console.log("impuid : "+rsp.imp_uid);
+  				    	var impUid = rsp.imp_uid; 
+  				    	
+  				    	$.ajax({
+  				    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+  				    		type: 'GET',
+  				    	}).done(function(data) {
+  				    		alert("data : " + data);
+  				    		var payStatusCheck = (data.split(','))[0];
+  				    		var amountCheck = (data.split(','))[1];
+  				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
+  				    		
+  				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+  				    		if (  payStatusCheck == 'paid' && amountCheck == '${booking.totalTicketPrice}') {
+  				    			var msg = '결제가 완료되었습니다.';
+  				    			msg += '\n고유ID : ' + rsp.imp_uid;
+  				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+  				    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+  				    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
 
-</body>
+  				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
+  				    			$("input[name='impId']").val(impUid);
+  				    			
+  				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
+  				    			
+  				    			addBooking();
+  				    			
+  				    		} else {
+  				    			alert("AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
+  				    			kakaoPayCancel(impUid);
+  				    			//[3] 아직 제대로 결제가 되지 않았습니다.
+  				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+  				    		}
+  				    	});
+  				    	
+  				    } else {
+  				        var msg = '결제에 실패하였습니다.';
+  				        var errorMsg = '실패사유 : ' + rsp.error_msg;
+  				        alert("AJAX 전 실패"+"\n"+msg+"\n"+errorMsg);
+  				    }//end of rsp.success else 
+  				}); //end of Imp.request_pay
+  			}//end of kakaoPay function
+  			
+  	function kakaoPayCancel(impUid){
+  		$.ajax({
+  		    		url: "/cinema/json/cancelPay/"+impUid,
+  		    		type: 'GET',
+  		    	}).done(function(data) {
+  		    		alert("data : " + data);
+  		    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+  		    		if ( data == 'cancelled' ) {
+  		    			var msg = '취소가 성공적으로 처리되었습니다.';
+  		    			/* msg += '\n고유ID : ' + rsp.imp_uid;
+  		    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+  		    			msg += '\n결제 금액 : ' + rsp.paid_amount;
+  		    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
+
+  		    			alert("아작스 취소 후 "+"\n"+msg);
+  		    			
+  		    			//location.href="/index.jsp"
+  		    			location.href="/#"
+  		    			
+  		    		} else {
+  		    			alert("취소가 실패하였습니다.");
+  		    			//[3] 아직 제대로 결제가 되지 않았습니다.
+  		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+  		    		}
+  		    	});
+  	}//end of kakaoPayCancel function	
+  	
+  	function addBooking(){
+  						
+  		$("#addBooking").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();	
+  		
+  	}
+  	
+  	function a(){
+  		$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=123");
+  		alert($("input[name='qrUrl']").val());
+  	}
+  	
+  	$(document).ready(function() {
+  		var seatNo ="${booking.bookingSeatNo}"; 
+  	  $.ajax(
+  				{
+  					url : "/booking/json/getDisplaySeatNo/"+seatNo,						
+  					method : "GET" ,
+  					dataType : "json" ,
+  					headers : {
+  						"Accept" : "application/json",
+  						"Content-Type" : "application/json"
+  					},
+  					
+  					success : function(JSONData, status) {
+  						console.log('SeatNo 받아옴 : '+JSONData.str);								
+                        if(JSONData != ""){
+                        	$("#displaySeat").text(JSONData.str);
+                        }//end of if문
+
+  					}
+  			});//end of ajax
+  	})
+  	
+	function fncSendMail() {
+  		
+		 var email = $("#email").val();	
+		 var bookingNo = "${booking.bookingNo}";
+		 //var bookingNo = "b10100";
+		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) 
+			 || email == ""){
+	    	alert("이메일 형식이 아닙니다.");
+	    	return;
+	     }
+		alert("메일을 보냅니다. \n이메일주소 : "+email+"\n예매번호 : "+bookingNo);
+		alert('고객님의 메일로 QR코드를 전송하였습니다.');
+		self.location="/booking/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email;
+
+		
+			/* 	  //왜 restController로는 안될까..?	  
+ 			$.ajax(
+	  				{
+	  					url : "/booking/json/sendEmailQR/"+bookingNo+"/"+email,						
+	  					method : "GET" ,
+	  					dataType : "json" ,
+	  					headers : {
+	  						"Accept" : "application/json",
+	  						"Content-Type" : "application/json"
+	  					},
+	  					
+	  					success : function(JSONData, status) {
+	  						console.log('JSONData 받아옴 : '+JSONData.str);								
+	                        if(JSONData == 1){
+	                        	alert("이메일로 QR코드를 전송했습니다.");
+	                        }//end of if문
+
+	  					}
+	  			});//end of ajax 
+	  			*/
+	}
+  	
+  	
+  	
+   </script>
+  <style>
+	   .contact-info {
+		  text-align: center;
+		}
+		.reservation-message {
+		  position: relative;
+		  font-size: 13px;
+		  /* padding-left: 45px; */
+		  margin-top: 10px;
+		  margin-bottom: 8px;
+		  
+		}
+		
+		.reservation-message:before {
+		  content: '';
+		  background-image: url(../images/icons/speech.svg);
+		  background-repeat: no-repeat;
+		  background-position: right center;
+		  -webkit-background-size: 42px 36px;
+		  background-size: 42px 36px;
+		  width: 45px;
+		  height: 40px;
+		  position: absolute;
+		  top: -4px;
+		  left: -1px;
+		}
+		.form .form__mail,
+		.form .form__message {
+		  margin-bottom: 10px;
+		  width: 100%;
+		  border: none;
+		  box-shadow: none;
+		  border: 1px solid #dbdee1;
+		  -webkit-border-radius: 3px;
+		  -moz-border-radius: 3px;
+		  border-radius: 3px;
+		  font-size: 13px;
+		  color: #b4b1b2;
+		  padding: 9px 18px 10px;
+		}
+		
+		.contact-info {
+		  text-align: center;
+		}
+		.contact-info .contact-info__field {
+		  position: relative;
+		  width: 460px;
+		  display: inline-block;
+		  margin-right: 20px;
+		}
+		.contact-info .contact-info__field .form__mail {
+		  padding-left: 35px;
+		}
+		.contact-info .contact-info__field:before {
+		  content: '';
+		  width: 39px;
+		  height: 39px;
+		  -webkit-border-radius: 3px 0 0 3px;
+		  -moz-border-radius: 3px 0 0 3px;
+		  border-radius: 3px 0 0 3px;
+		  background-color: #4c4145;
+		  position: absolute;
+		  top: 0px;
+		  left: 0;
+		}
+		.contact-info .contact-info__field:after {
+		  content: '';
+		  color: #b4b1b2;
+		  font: 13px "FontAwesome";
+		  position: absolute;
+		  top: 10px;
+		  left: 15px;
+		}
+		.contact-info .contact-info__field-mail:after {
+		  content: "\f0e0";
+		  left: 13px;
+		}
+		
+		.ticket .ticket__item {
+		  display: block;
+		  margin-bottom: 2.5px;
+		  font-family: 'PT Mono';
+		  font-size: 18px;
+		  text-transform: uppercase;
+		  text-align: left;
+		  vertical-align:middle
+		}
+		
+   </style> 
+		<script type="text/javascript">
+            $(document).ready(function() {
+                 if($('html').height() < window.outerHeight){
+                	$('html').css('height', '100%');
+                } 
+            });
+    		</script>
+		    
+
+    		
+    		<style type="text/css">
+    		 html{
+    		  height: auto;
+    		} 
+    		</style>
 </html>
+

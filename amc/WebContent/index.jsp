@@ -1,4 +1,5 @@
 
+
 <%@ page language="java" contentType="text/html;"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
@@ -820,7 +821,9 @@
                         
                         <div class="login__control">
                             <button type='button' id ='login' class="btn btn-md btn--warning btn--wider">로그인</button>
+
                             <a href="#" class="login__tracker form__tracker">회원 가입</a>
+
                             <a href="#" class="login__tracker form__tracker">아이디/비밀번호 찾기</a>
                         </div>
                     </form>
@@ -828,7 +831,9 @@
 
             </section>
         </div>
+
         
+
         
      </div>
 <!-- df

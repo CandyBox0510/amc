@@ -92,6 +92,11 @@
 
 	            $(document).ready(function() {
 	                init_CinemaList();
+	                
+	                if($('html').height() < window.outerHeight){
+	                	$('html').css('height', '100%');
+	                }
+	                
 	                $("#movie-search-sort").css("width","200px");
 	            });
 	            
@@ -104,7 +109,6 @@
 	   			});
 	   			
 	   		 });
-	            
 	            
 	            
 		</script>
@@ -152,11 +156,21 @@
 </head>
 
 <body>
-<jsp:include page="/layout/topToolbar.jsp" />
-    <div class="container">
-        
 
+     <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div>
         
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
+
+   
+    <div class="container">
+         
         <!-- Main content -->
         <section class="container">
         
@@ -231,6 +245,13 @@
         </section>
 
         <div class="clearfix"></div>
+        
+             
+        <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  		</div>
 
     </div>
     
@@ -283,9 +304,14 @@
         <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
         <script src="/js/custom.js"></script>
 		<!-- ------------------------------------  -->
-		
-		
-		
 
 </body>
+
+<style>
+      html{
+ 	     height: auto;
+      }
+      
+</style>	
+
 </html>

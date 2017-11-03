@@ -1,77 +1,41 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-<%@page import="com.amc.service.domain.User"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+       <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="/movie/getMovieList?menu=movie" class="nav-link__item">현재 상영 영화</a></li>
+                        <li><a href="/movie/getMovieList?menu=commingsoon" class="nav-link__item">상영 예정 영화</a></li>
+                        <li><a href="/movie/getMovieList?menu=preview" class="nav-link__item">시사회</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="/booking/getScreenMovieList" class="nav-link__item">영화 예매</a></li>
+                        <li><a href="/booking/getPreviewList" class="nav-link__item">시사회 예매</a></li>
+                        <li><a href="/cinema/theaterInfo.jsp" class="nav-link__item">영화관 정보</a></li>
+                        <li><a href="/community/getFreeBoardList" class="nav-link__item">커뮤니티</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="/product/getGoodsList?menu=search&searchKeyword=G" class="nav-link__item">굿즈</a></li>
+                        <li><a href="/product/getSnackList?menu=search&searchKeyword=S" class="nav-link__item">스낵바</a></li>
 
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-
-<head>
-<meta charset="EUC-KR">
-	
-</head>
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<div class="navbar  navbar-inverse navbar-fixed-bottom">
-	<div class="container"> 
-		<div id="modal-testNew" class="modal fade" tabindex="-1" role="dialog" 
-										aria-labelledby="테스트정보 등록" aria-describedby="테스트 모달">
-		    <div class="modal-dialog" style="width:1200px;height:700px">
-		        <div class="modal-content">
-		        </div>
-		    </div>
-		</div> 
-	</div>
-	
-	<div class="container">
-	       
-		<a class="navbar-brand" href="/index.jsp">
-			<img src="../images/common/AMC_Logo.png" width="80px" height="30px"/>
-		</a>
-		
-		<!-- toolBar Button Start //////////////////////// -->
-		<div class="navbar-header">
-		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		    </button>
-		</div>
-		<!-- toolBar Button End //////////////////////// -->
-		
-	    <!--  dropdown hover Start -->
-		<div 	class="collapse navbar-collapse" id="target" 
-	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
-	         
-	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
-	             <ul class="nav navbar-nav navbar-middle">
-	             
-	             	
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>
-	                 <li><a href="#"></a></li>	                 
-	                 <li><a href="#">Americode Company</a></li>
-	                 
-	                 
-	             </ul>
-	             
-	             
-	             
-	             <ul class="nav navbar-nav navbar-right">
-	             
-		             <li><a href="#">@Copyright 2017 Americode Cinema</a></li>
-
-	            </ul>
-		</div>
-		<!-- dropdown hover END -->	       
-	</div>
-</div>
-		<!-- ToolBar End /////////////////////////////////////-->
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
+                    </div>
+                </div>
+            </section>
+        </footer>

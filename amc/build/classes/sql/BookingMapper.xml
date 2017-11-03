@@ -27,6 +27,7 @@
   		<result property="screenContent.previewFlag"    column="preview_flag" 	 jdbcType="VARCHAR"/>
   		<result property="screenContent.previewTitle"   column="preview_title" 	 jdbcType="VARCHAR"/>
   		<result property="screenContent.inviteActor"    column="invite_actor" 	 jdbcType="VARCHAR"/>
+  		<result property="screenContent.screenTheater"  column="screen_theater"  jdbcType="VARCHAR"/>
 
   	</resultMap>
   	

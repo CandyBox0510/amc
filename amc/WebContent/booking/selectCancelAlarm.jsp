@@ -43,20 +43,51 @@
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
         <!--   Sweetalert2 CDN  -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-	
-		<!--   semantic UI  -->
-		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-		<script
-		  src="https://code.jquery.com/jquery-3.1.1.min.js"
-		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-		  crossorigin="anonymous"></script>
-		<script src="../semantic/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+      <!--   semantic UI  -->
+      <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+      <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+      <script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
-  IMP.init('imp41659269');
-   var things = "AMC : ";
-      things += "예매"
+
+  function listener(event){      
+      document.getElementById('child').contentWindow.postMessage(event.data,"*");
+      alert(event.data);
+      $("input[name='seats']").val(event.data);
+      
+        $.ajax({
+               url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
+               method : "GET" ,
+               dataType : "json" ,
+               headers : {
+                  "Accept" : "application/json",
+                  "Content-Type" : "application/json"
+               },                  
+               success : function(JSONData, status) {
+                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);
+                       if(JSONData != ""){
+                          $("#display2").val(JSONData.seatNo);
+                          alert($("#first").html());
+                          $("#first").html(JSONData.seatNo);
+                       }//end of if문
+               }
+      });//end of ajax
+           
+   }
+
+
+
+      
+      if (window.addEventListener){
+           addEventListener("message", listener, false);
+      } else {
+           attachEvent("onmessage", listener)
+      }
 
          
       function confirmSeat(){
@@ -85,111 +116,63 @@
       }   
          
       function addCancelAlarm(){
-			var userId = $("input[name='userId']").val(); 
-			if( userId == null || userId == ''){
-				swal({
-					  title: '신청 실패',
-					  html: $('<div>')
-					    .addClass('some-class')
-					    .text('로그인 상태가 아닙니다'),
-					  animation: false,
-					  customClass: 'animated swing'
-					})
-				return;
-			}
-			$.ajax({
-			    		url: "/alarm/json/addCancelAlarm/",
-			    		type: 'POST',
-			    	}).done(function(result) {
-			    		console.log("result : " + result);
-			    		if ( result == 'success' ) {
-			    			var msg = '취소표 알림 신청 성공';
-			    			swal({
-			    				  //position: 'top-right',
-			    				  type: 'success',
-			    				  title: '취소표 알림 신청 성공!',
-			    				  showConfirmButton: true,
-			    				  timer: 2000
-			    				})
-			    		} else if( result == 'exceed'){
-			    			swal(
-			    					  '취소표알림 자리 수 초과!',
-			    					  '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
-			    					  'error'
-			    					)
-			    		} else {
-			    			swal(
-			    					  '중복 좌석 신청!',
-			    					  '신청한 좌석 중 기존에 중복된 좌석이 있습니다.'+"\n"+result,
-			    					  'error'
-			    					)
-			    		}
-			    	});
-		}	 
+         var userId = $("input[name='userId']").val(); 
+         var alarmSeatNo = $("input[name='seats']").val(); 
+         var screenContentNo = $("input[name='screenContentNo']").val();
+         
+         if( userId == null || userId == ''){
+            swal({
+                 title: '신청 실패',
+                 html: $('<div>')
+                   .addClass('some-class')
+                   .text('로그인 상태가 아닙니다'),
+                 animation: false,
+                 customClass: 'animated swing'
+               })
+            return;
+         }
+         alert($("input[name='seats']").val());
+         $.ajax({
+                   url: "/alarm/json/addCancelAlarm?"+
+                		 "user.userId="+userId+
+                		 "&alarmSeatNo="+alarmSeatNo+
+                		 "&alarmFlag=C"+
+                		 "&screenContent.screenContentNo="+screenContentNo,
+                   type: 'POST',
+                }).done(function(result) {
+                   console.log("result : " + result);
+                   if ( result == 'success' ) {
+                      var msg = '취소표 알림 신청 성공';
+                      swal({
+                           //position: 'top-right',
+                           type: 'success',
+                           title: '취소표 알림 신청 성공!',
+                           showConfirmButton: true,
+                           timer: 2000
+                         })
+                   } else if( result == 'exceed'){
+                      swal(
+                              '취소표알림 자리 수 초과!',
+                              '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
+                              'error'
+                            )
+                   } else {
+                      swal(
+                              '중복 좌석 신청!',
+                              '신청한 좌석 중 기존에 중복된 좌석이 있습니다.'+"\n"+result,
+                              'error'
+                            )
+                   }
+                });
+      }    
         
      function addBooking(){
          
         $("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();   
         
      }
-     
-         
-   function listener(event){      
-        document.getElementById('child').contentWindow.postMessage(event.data,"*");
 
-        if(event.data == 'pay'){
-           alert('카카오페이 결제요청이왔습니다.');
-           kakaoPay();     
-           //지금은 쓰지않는다.
-        } else if(event.data.length>100){
-         alert('카카오페이관련 event 발생입니다.');
-           
-        } else if(event.data.indexOf("id")==0){
-           //alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
-           $("input[name='clientId']").val(event.data.split(",")[1]); 
-          
-        } else{
-           
-           alert('좌석번호를 받습니다.');
-           
-           $("input[name='bookingSeatNo']").val(event.data);
-           var no = ${screenContent.ticketPrice};
-           $.ajax(
-            {
-                url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,                  
-               method : "GET" ,
-               dataType : "json" ,
-               headers : {
-                  "Accept" : "application/json",
-                  "Content-Type" : "application/json"
-               },
-               
-               success : function(JSONData, status) {
-                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
-                      if(JSONData != ""){
-                         $("#seatNo").text(JSONData.seatNo);
-                         $("#headCount").text(JSONData.headCount);
-                         $("#totalPrice").text(JSONData.totalPrice);
-                         
-                         $("input[name='displaySeat']").val(JSONData.seatNo);
-                         $("input[name='headCount']").val(JSONData.headCount);
-                       $("input[name='totalTicketPrice']").val(JSONData.totalPrice);
-                      }//end of if문
-               }
-         });//end of ajax
-         
-                
-        }
 
-   }
-   
-   
-   if (window.addEventListener){
-        addEventListener("message", listener, false);
-   } else {
-        attachEvent("onmessage", listener)
-   }
-   
    function selectCancelAlarm(){
       $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
    }
@@ -207,9 +190,9 @@
 
         <!-- Header section -->
         <header class="header-wrapper">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
+         <!-- ToolBar Start /////////////////////////////////////-->
+         <jsp:include page="/layout/topToolbar.jsp" />
+         <!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
@@ -247,20 +230,22 @@
    
          <div class="col-sm-8 com-md-9">   
             <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            
+            <iframe id="child" src="http://192.168.0.32:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
             </iframe>
             <!-- style='width:100%' -->
          </div>
          <div class="col-sm-4 col-md-3">
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
-                          <li style="font-size:20px; color:black">Seat : </li>
+                          <li style="font-size:20px; color:black" id="first">Seat : </li>
                           <li>&nbsp;</li>
                           <li>&nbsp;</li>
                           <li>&nbsp;</li>
@@ -277,7 +262,7 @@
                           <li>&nbsp;</li>
                       </ul>
             </div>
-            <button class="ui brown button" style="width:100%; height:50%;"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <button class="ui brown button" style="width:100%; height:50%;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
          </div>
         </section>  
        
@@ -293,6 +278,7 @@
          <input type="hidden" name="impId" value="temp_imp_uid"/>
          <input type="hidden" name="qrUrl" value="temp_qrUrl"/>
          <input type="hidden" name="displaySeat" value="temp_displaySeat"/>
+         <input type="hidden" name="seats" value=""/>
       </form>
                 
        </div>
@@ -379,7 +365,7 @@
 </body>
  <style>
       html{
- 	     height: auto;
+         height: auto;
       }
  </style>
 </html>

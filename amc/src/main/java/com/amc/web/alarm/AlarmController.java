@@ -63,6 +63,7 @@ public class AlarmController {
 		tempMap.put("search", search);
 		tempMap.put("user", user);
 		tempMap.put("alarmFlag", alarmFlag);
+		System.out.println("리스트 불러올때 alarmFlag"+alarmFlag);
 		
 		Map<String, Object> map = alarmService.getCancelAlarmList(tempMap);
 		
@@ -76,10 +77,10 @@ public class AlarmController {
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("list", map.get("list"));
 		
-	    return "forward:/booking/listCacnelAlarm.jsp";
+	    return "forward:/alarm/listCancelAlarm.jsp";
 	}
 	
-	@RequestMapping( value="getOpenAlamList", method=RequestMethod.GET)
+	@RequestMapping( value="getOpenAlarmList", method=RequestMethod.GET)
 	public String getOpenAlarmList(@ModelAttribute("Search")Search search, @RequestParam("alarmFlag")String alarmFlag,
 										HttpSession session,Model model) throws Exception {
 		
@@ -95,6 +96,7 @@ public class AlarmController {
 		tempMap.put("search", search);
 		tempMap.put("user", user);
 		tempMap.put("alarmFlag", alarmFlag);
+		System.out.println("리스트 불러올때 alarmFlag"+alarmFlag);
 		
 		Map<String, Object> map = alarmService.getOpenAlarmList(tempMap);
 		
@@ -108,7 +110,7 @@ public class AlarmController {
 		model.addAttribute("resultPage",resultPage);
 		model.addAttribute("list", map.get("list"));
 		
-	    return "forward:/booking/listOpenAlarm.jsp";
+	    return "forward:/alarm/listOpenAlarm.jsp";
 	}
 
 }

@@ -44,15 +44,18 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   
+  <!--  스크립트에서 rollbackSeat 함수는 더이상 사용하지 않음. 컨트롤러에서도. -->
   <script type="text/javascript">
+  
   IMP.init('imp41659269');
 	var things = "AMC : ";
 		things += "예매"
 
 	
 	function kakaoPay(){
-			alert("name : "+things);
+			//alert("name : "+things);
 				IMP.request_pay({
 				    pg : 'kakao',
 				    pay_method : 'kapy',
@@ -110,16 +113,16 @@
 				    	});
 				    	
 				    } else {
-				        var msg = '222 결제에 실패하였습니다.';
+				        var msg = '결제에 실패하였습니다.';
 				        var errorMsg = '실패사유 : ' + rsp.error_msg;
-				        alert("AJAX 전 실패"+"\n"+msg+"\n"+errorMsg);
+				        alert(msg+"\n"+errorMsg);
 				        
 				        /**************************************/
 				        //node서버에 롤백 요청하기
 				        
-				        //self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
-				        alert('결제를 중단하셨습니다.');
-				        rollbackSeat();
+				        self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
+				        
+				        //rollbackSeat();
 				        
 				        
 				    }//end of rsp.success else 
@@ -127,14 +130,14 @@
 			}//end of kakaoPay function
 		
 			function rollbackSeat(){
-				
+				var clientId = $("input[name='clientId']").val();
 				var seatNos = $("input[name='bookingSeatNo']").val();
 				var screenNo = ${screenContent.screenContentNo};
 				
-				alert('seatNos : '+seatNos);
+				//alert('seatNos : '+seatNos);
 				  $.ajax(
 							{
-								url : "/booking/json/rollbackSeat/"+screenNo+"/"+seatNos,				
+								url : "/booking/json/rollbackSeat/"+screenNo+"/"+seatNos+"/"+clientId,				
 								method : "GET" ,
 								async : false,
 								dataType : "json" ,
@@ -165,7 +168,7 @@
 		function confirmSeat(){
 			
 			var clientId = $("input[name='clientId']").val();
-			alert('좌석을 확정합니다.');
+			//alert('좌석을 확정합니다.');
 			  $.ajax(
 						{
 							url : "/booking/json/confirmSeat/"+clientId,				
@@ -225,18 +228,18 @@
 		  document.getElementById('child').contentWindow.postMessage(event.data,"*");
 
 		  if(event.data == 'pay'){
-			  alert('카카오페이 결제요청이왔습니다.');
+			  //alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
-			  //지금은 쓰지않는다.
+			  
 		  } else if(event.data.length>100){
-			alert('카카오페이관련 event 발생입니다.');
+			//alert('카카오페이관련 event 발생입니다.');
 			  
 		  } else if(event.data.indexOf("id")==0){
-			  //alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
+			  alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
 			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
 		  } else{
-			  		  	
+			  alert("좌석번호  :"+event.data);		  	
 			  $("input[name='bookingSeatNo']").val(event.data);
 			  var no = ${screenContent.ticketPrice};
 			  $.ajax(
@@ -281,174 +284,20 @@
 
 
    </script> 
-   <style>
-   .abc{
-	  font-family: 'Hanna', sans-serif; 
-	 }
-	 .sits .sits__row .sits-state--your {
-	  text-indent: -9999px;
-	}
-	.sits .sits__row .sits-state--your:after {
-	  content: "\f00c";
-	  font: 13px "FontAwesome";
-	  color: #ffffff;
-	  position: absolute;
-	  top: 7px;
-	  left: 9px;
-	  z-index: 15;
-	  text-indent: 0px;
-	}
-   </style>
+
 </head>
 
 <body>
     <div class="wrapper place-wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="../images/banners/space.jpg">
         </div>
-
-        <!-- Header section -->
-        <header class="header-wrapper">
-            <div class="container">
-                <!-- Logo link-->
-                <a href='index.html' class="logo">
-                    <img alt='logo' src="/images/logo.png">
-                </a>
-                
-                <!-- Main website navigation-->
-                <nav id="navigation-box">
-                    <!-- Toggle for mobile menu mode -->
-                    <a href="#" id="navigation-toggle">
-                        <span class="menu-icon">
-                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
-                              <span class="lines"></span>
-                            </span>
-                        </span>
-                    </a>
-                    
-                    <!-- Link navigation -->
-                    <ul id="navigation">
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="#">Pages</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="movie-page-left.html">Single movie (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-page-right.html">Single movie (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-page-full.html">Single movie (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-left.html">Movies list (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-right.html">Movies list (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="movie-list-full.html">Movies list (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="single-cinema.html">Single cinema</a></li>
-                                <li class="menu__nav-item"><a href="cinema-list.html">Cinemas list</a></li>
-                                <li class="menu__nav-item"><a href="trailer.html">Trailers</a></li>
-                                <li class="menu__nav-item"><a href="rates-left.html">Rates (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="rates-right.html">Rates (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="rates-full.html">Rates (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="offers.html">Offers</a></li>
-                                <li class="menu__nav-item"><a href="contact.html">Contact us</a></li>
-                                <li class="menu__nav-item"><a href="404.html">404 error</a></li>
-                                <li class="menu__nav-item"><a href="coming-soon.html">Coming soon</a></li>
-                                <li class="menu__nav-item"><a href="login.html">Login/Registration</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="page-elements.html">Features</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="typography.html">Typography</a></li>
-                                <li class="menu__nav-item"><a href="page-elements.html">Shortcodes</a></li>
-                                <li class="menu__nav-item"><a href="column.html">Columns</a></li>
-                                <li class="menu__nav-item"><a href="icon-font.html">Icons</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="page-elements.html">Booking steps</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="book1.html">Booking step 1</a></li>
-                                <li class="menu__nav-item"><a href="book2.html">Booking step 2</a></li>
-                                <li class="menu__nav-item"><a href="book3-buy.html">Booking step 3 (buy)</a></li>
-                                <li class="menu__nav-item"><a href="book3-reserve.html">Booking step 3 (reserve)</a></li>
-                                <li class="menu__nav-item"><a href="book-final.html">Final ticket view</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="gallery-four.html">Gallery</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="gallery-four.html">4 col gallery</a></li>
-                                <li class="menu__nav-item"><a href="gallery-three.html">3 col gallery</a></li>
-                                <li class="menu__nav-item"><a href="gallery-two.html">2 col gallery</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="news-left.html">News</a>
-                            <ul>
-                                <li class="menu__nav-item"><a href="news-left.html">News (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="news-right.html">News (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="news-full.html">News (full widht)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-left.html">Single post (rigth sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-right.html">Single post (left sidebar)</a></li>
-                                <li class="menu__nav-item"><a href="single-page-full.html">Single post (full widht)</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <span class="sub-nav-toggle plus"></span>
-                            <a href="#">Mega menu</a>
-                               <ul class="mega-menu container">
-                                    <li class="col-md-3 mega-menu__coloum">
-                                        <h4 class="mega-menu__heading">Now in the cinema</h4>
-                                         <ul class="mega-menu__list">
-                                            <li class="mega-menu__nav-item"><a href="#">The Counselor</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Bad Grandpa</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Blue Is the Warmest Color</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Capital</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Spinning Plates</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Bastards</a></li>
-                                          </ul>
-                                      </li>
-                                        
-                                      <li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading">
-                                          <ul class="mega-menu__list">
-                                            <li class="mega-menu__nav-item"><a href="#">Gravity</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Captain Phillips</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Carrie</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Cloudy with a Chance of Meatballs 2</a></li>
-                                          </ul>
-                                      </li>
-                                      
-                                      <li class="col-md-3 mega-menu__coloum">
-                                        <h4 class="mega-menu__heading">Ending soon</h4>
-                                          <ul class="mega-menu__list">
-                                            <li class="mega-menu__nav-item"><a href="#">Escape Plan</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Rush</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Prisoners</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Enough Said</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">The Fifth Estate</a></li>
-                                            <li class="mega-menu__nav-item"><a href="#">Runner Runner</a></li>
-                                          </ul>
-                                      </li>
-                                    
-                                      <li class="col-md-3 mega-menu__coloum mega-menu__coloum--outheading">
-                                          <ul class="mega-menu__list">
-                                            <li class="mega-menu__nav-item"><a href="#">Insidious: Chapter 2</a></li>
-                                          </ul>
-                                      </li>
-                               </ul>
-                        </li>
-                    </ul>
-                </nav>
-                
-                <!-- Additional header buttons / Auth and direct link to booking-->
-                <div class="control-panel">
-                    <a href="#" class="btn btn--sign login-window">Sign in</a>
-                    <a href="#" class="btn btn-md btn--warning btn--book login-window">Book a ticket</a>
-                </div>
-
-            </div>
-        </header>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
         
         <!-- Main content -->
         <div class="place-form-area">
@@ -485,8 +334,9 @@
           </div>
           <!--  only UI -->
 	
-			<div class="col-sm-8 com-md-9">	
-				<iframe id="child" src= "http://127.0.0.1:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}"
+
+			<div class="col-sm-8 col-md-9">	
+				<iframe id="child" src= "http://192.168.0.32:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}"
 				style='width:100%; height:400px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
@@ -497,12 +347,12 @@
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>
-                          <li><a href="#" class="category__item">Title: ${movie.movieNm} ${screenContent.previewTitle}</a></li>
-                          <li><a href="#" class="category__item">Tickets:<span id="headCount"></span></a></li>
-                          <li><a href="#" class="category__item">Seats: <span id="seatNo"></span></a></li>
-                          <li><a href="#" class="category__item">Theater: ${screenContent.screenTheater}상영관</a></li>
-                          <li><a href="#" class="category__item">Date & Time: ${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
-                          <li><a href="#" class="category__item">Total Price:<span id="totalPrice">0</span>원</a></li>
+                          <li><a href="#" class="category__item abc">${movie.movieNm} ${screenContent.previewTitle}</a></li>
+                          <li><a href="#" class="category__item abc">Tickets:<span id="headCount"></span></a></li>
+                          <li><a href="#" class="category__item abc">Seats: <span id="seatNo"></span></a></li>
+                          <li><a href="#" class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>
+                          <li><a href="#" class="category__item abc">${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
+                          <li><a href="#" class="category__item abc">Total Price:<span id="totalPrice">0</span>원</a></li>
                       </ul>
                       
                   </div> 
@@ -524,7 +374,8 @@
 			<input type="hidden" name="displaySeat" value="temp_displaySeat"/>
 		</form>
                 
-       </div>        	
+       </div>     
+          	
      </div>
   
 
@@ -558,7 +409,37 @@
 		<script type="text/javascript">
             $(document).ready(function() {
                 init_BookingOne();
+                
+                if($('html').height() < window.outerHeight){
+                	$('html').css('height', '100%');
+                }
             });
 		</script>
-</body>
+  
+
+		</body>
+		<style type="text/css">
+		html{
+		  height: auto;
+		}
+
+   .abc{ 
+	  font-family: 'Hanna', sans-serif; 
+	  font-size: 120%;
+	   line-height:4.3em
+	 }
+	 .sits .sits__row .sits-state--your {
+	  text-indent: -9999px;
+	}
+	.sits .sits__row .sits-state--your:after {
+	  content: "\f00c";
+	  font: 13px "FontAwesome";
+	  color: #ffffff;
+	  position: absolute;
+	  top: 7px;
+	  left: 9px;
+	  z-index: 15;
+	  text-indent: 0px;
+	}
+   </style>
 </html>
