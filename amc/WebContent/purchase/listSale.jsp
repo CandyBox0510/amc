@@ -7,31 +7,67 @@
 
 <html>
 <head>
-	<title>AMC</title>
+	<title>AMC 판매 목록</title>
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+		<div class="container" id="body">
+			<div class="row">
+				<h1 class="page-header">인기품목</h1>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:200px; height:200px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:150px; height:150px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:100px; height:100px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:80px; height:80px;">
+					</div>
+				</div>
+			</div>
+			<hr/>
+			
+			<div class="text-info">
+				<h3>판매목록조회</h3>
+		    </div>
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<style>
-		body{
-			padding-top : 70px;
-		}
-		label {
-			display: inline-block;
-			width: 10em;
-		}
-	</style>
-	
+			<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
+			
+			<table class="table table-hover table-striped" >
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>상품명</th>
+						<th>구매자 ID</th>
+						<th>배송 희망일</th>
+						<th>현재상태</th>
+						<th>배송현황</th>
+					</tr>
+				</thead>
+	      	</table>
+		</div>
+	</div>
+</body>
 	<script type="text/javascript">
 		var currentPage = 0,
 			searchKeyword = 'saleList';
@@ -145,67 +181,7 @@
 		});
 		
 	</script>
-
-</head>
-
-<body bgcolor="#ffffff" text="#000000">
-
-<%-- 	<jsp:include page="../layout/topToolbar.jsp">
-		<jsp:param name="uri" value="../"/>
-	</jsp:include>
- --%>
-	<div class="container">
-	
-		<div class="row">
-			<h1 class="page-header">인기품목</h1>
-			
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 popular">
-					<h4><span class="badge"></span></h4>
-					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:200px; height:200px;">
-				</div>
-				<div class="col-xs-12 col-sm-3 popular">
-					<h4><span class="badge"></span></h4>
-					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:150px; height:150px;">
-				</div>
-				<div class="col-xs-12 col-sm-3 popular">
-					<h4><span class="badge"></span></h4>
-					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:100px; height:100px;">
-				</div>
-				<div class="col-xs-12 col-sm-3 popular">
-					<h4><span class="badge"></span></h4>
-					<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:80px; height:80px;">
-				</div>
-			</div>
-		</div>
-
-		<hr/>
-		
-		<div class="text-info">
-			<h3>판매목록조회</h3>
-	    </div>
-
-		<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
-		<table class="table table-hover table-striped" >
-      
-			<thead>
-				<tr>
-					<th>No</th>
-					<th>상품명</th>
-					<th>구매자 ID</th>
-					<th>배송 희망일</th>
-					<th>현재상태</th>
-					<th>배송현황</th>
-				</tr>
-			</thead>
-       
-			<tbody>
-		
-			</tbody>
-      
-      </table>
-		
-		
-	</div>
-</body>
+	<style>
+		#body{ padding-top: 100px; }
+	</style>
 </html>

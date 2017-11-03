@@ -7,28 +7,134 @@
 
 <html>
 <head>
-	<title>Model2 MVC Shop</title>
+	<title>Americode Cinema add product</title>
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<style>
-		body{
-			padding-top : 70px;
-		}
-	</style>
-	
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+
+		<div class="container" id="body">
+			<div class="page-header col-sm-offset-2 col-sm-10">
+				<h1>상품 등록</h1>
+			</div>
+			
+			<form class="add-product form-horizontal">
+				<div class="form-group">
+					<div class="form-group">
+			  			<label for="prodType" class="col-sm-3 control-label">상품 구분</label>
+			 	 			<div class="col-sm-3">			  		
+			  	  				<input type='radio' name='prodType' value='G' checked="checked">굿즈&emsp;&emsp;&emsp;&emsp;
+								<input type='radio' name='prodType' value='S'>스낵바
+			  				</div>
+		  			</div>
+					<br/>
+					<div class="row">
+						<label for="inputProdName" class="col-sm-3 control-label">상품명</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="inputProdName" name="prodName" placeholder="상품명">
+							</div>
+							<span class="col-sm-6"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputProdDetail" class="col-sm-3 control-label">상품상세정보</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputProdDetail" name="prodDetail" placeholder="상세정보">
+						</div>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputProdSetInfo" class="col-sm-3 control-label">상품구성정보</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" id="inputProdDetail" name="prodSetInfo" placeholder="상세정보">
+						</div>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputStock" class="col-sm-3 control-label">상품수량</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="inputStock" name="totalStock" placeholder="최소 수량은 1개 입니다.">
+	<!-- 					<input type="hidden"  class="form-control" id="inputStock" name="stock"> -->
+						</div>
+						<span class="col-sm-6"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="salesOpenDate" class="col-sm-3 control-label">판매시작일</label>
+						<div class="col-sm-3">
+							<input type="date" class="form-control" id="salesOpenDate" name="salesOpenDate" readonly>
+						</div>
+						<label for="salesEndDate" class="col-sm-3 control-label">판매종료일</label>
+						<div class="col-sm-3">
+							<input type="date" class="form-control" id="salesEndDate" name="salesEndDate" readonly>
+						</div>
+						<span class="col-sm-6"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputPrice" class="col-sm-3 control-label">가격</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="prodPrice" name="prodPrice" >
+						</div>
+						<span class="col-sm-6"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputPrice" class="col-sm-3 control-label">유효 기간</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="expiryDate" name="expiryDate" >
+						</div>
+						<span class="col-sm-6"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<label for="inputFile" class="col-sm-3 control-label">상품이미지</label>
+						<div class="col-sm-6">
+							<input type="file" class="form-control" id="inputFile" name="file" >
+						</div>
+						<span class="col-sm-3"></span>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="button" class="btn btn-success">
+								등록하기
+							</button>
+							
+							<!-- Modal -->
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-body">
+											<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+											<h4 class="modal-title" id="myModalLabel">상품 등록 중입니다..</h4>
+										</div>
+									</div>
+								</div>
+							</div>
+		
+						</div>
+					</div>
+			
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+
 	<script type="text/javascript">
 	
 		function fncAddProduct(){
@@ -145,7 +251,6 @@
 			 }
 			});
 
-
 			
 		})//fncAddProduct cdn 포함
 		
@@ -158,125 +263,11 @@
 		}
 		
 	</script>
-
-</head>
-
-<body bgcolor="#ffffff" text="#000000">
-
-	<jsp:include page="../layout/topToolbar.jsp">
-		<jsp:param name="uri" value="../"/>
-	</jsp:include>
-
-<div class="container">
-
-	<div class="page-header col-sm-offset-2 col-sm-10">
-		<h1>상품 등록</h1>
-	</div>
-	<form class="add-product form-horizontal">
-		<div class="form-group">
-			<div class="form-group">
-			  <label for="prodType" class="col-sm-3 control-label">상품 구분</label>
-			 	 <div class="col-sm-3">			  		
-			  	  	<input type='radio' name='prodType' value='G' checked="checked">굿즈&emsp;&emsp;&emsp;&emsp;
-					<input type='radio' name='prodType' value='S'>스낵바
-			  	</div>
-		  	</div>
-			<br/>
-			<div class="row">
-				<label for="inputProdName" class="col-sm-3 control-label">상품명</label>
-				<div class="col-sm-3">
-					<input type="text" class="form-control" id="inputProdName" name="prodName" placeholder="상품명">
-				</div>
-				<span class="col-sm-6"></span>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="inputProdDetail" class="col-sm-3 control-label">상품상세정보</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" id="inputProdDetail" name="prodDetail" placeholder="상세정보">
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="inputProdSetInfo" class="col-sm-3 control-label">상품구성정보</label>
-				<div class="col-sm-9">
-					<input type="text" class="form-control" id="inputProdDetail" name="prodSetInfo" placeholder="상세정보">
-				</div>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="inputStock" class="col-sm-3 control-label">상품수량</label>
-				<div class="col-sm-3">
-					<input type="text" class="form-control" id="inputStock" name="totalStock" placeholder="최소 수량은 1개 입니다.">
-<!-- 					<input type="hidden"  class="form-control" id="inputStock" name="stock"> -->
-				</div>
-				<span class="col-sm-6"></span>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="salesOpenDate" class="col-sm-3 control-label">판매시작일</label>
-				<div class="col-sm-3">
-					<input type="date" class="form-control" id="salesOpenDate" name="salesOpenDate" readonly>
-				</div>
-				<label for="salesEndDate" class="col-sm-3 control-label">판매종료일</label>
-				<div class="col-sm-3">
-					<input type="date" class="form-control" id="salesEndDate" name="salesEndDate" readonly>
-				</div>
-				<span class="col-sm-6"></span>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="inputPrice" class="col-sm-3 control-label">가격</label>
-				<div class="col-sm-3">
-					<input type="text" class="form-control" id="prodPrice" name="prodPrice" >
-				</div>
-				<span class="col-sm-6"></span>
-			</div>
-			<br/>
-				<div class="row">
-				<label for="inputPrice" class="col-sm-3 control-label">유효 기간</label>
-				<div class="col-sm-3">
-					<input type="text" class="form-control" id="expiryDate" name="expiryDate" >
-				</div>
-				<span class="col-sm-6"></span>
-			</div>
-			<br/>
-			<div class="row">
-				<label for="inputFile" class="col-sm-3 control-label">상품이미지</label>
-				<div class="col-sm-6">
-					<input type="file" class="form-control" id="inputFile" name="file" >
-				</div>
-				<span class="col-sm-3"></span>
-			</div>
-			<br/>
-			<div class="row">
-				<div class="col-sm-offset-3 col-sm-9">
-					<button type="button" class="btn btn-success">
-						등록하기
-					</button>
-					
-					<!-- Modal -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-body">
-									<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-									<h4 class="modal-title" id="myModalLabel">상품 등록 중입니다..</h4>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
-
-
-
-
-
-</body>
-
+	<style type="text/css">
+	 	#body{ padding-top: 100px; }
+	 	html{
+        	height: auto;
+  		}
+	 
+	</style>
 </html>

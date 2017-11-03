@@ -15,26 +15,142 @@
 	<!-- 카카오 API -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-	<title>Login Demo - Kakao JavaScript SDK</title>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<!-- 카카오 API -->
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<!-- 다음 주소 CDN -->
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body{
-			padding-top : 70px;
-		}
-    </style>
-    
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+
+		<!--  화면구성 div Start /////////////////////////////////////-->
+		<div class="container">
+			<div class="page-header col-sm-offset-2 col-sm-10">	
+				<h1>회 원 가 입</h1>
+			</div>
+			<!-- form Start /////////////////////////////////////-->
+			<form class="form-horizontal">
+				<div class="form-group">
+			    	<label for="userId" class="col-sm-3 control-label">아 이 디</label>
+			    	<div class="col-sm-3">
+			   			<input type="text" class="form-control" value="${email}" id="userId" name="userId" placeholder="ID입력" aria-describedby="helpBlock" readonly/>
+			    	</div>	
+			    	<span id="helpBlock" class="help-block col-sm-6"></span>		    
+			  	</div>
+			  	
+			  	<div class="form-group">
+			    	<label for="password" class=" col-sm-3 control-label">비밀번호</label>
+			    	<div class="col-sm-3">
+			      		<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+			    	</div>
+			  	</div>
+			  
+				<div class="form-group">
+					<label for="password2" class=" col-sm-3 control-label">비밀번호 확인</label>
+					<div class="col-sm-3">
+						<input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
+					</div>
+					<span id="helpBlock2" class="help-block2 col-sm-6"></span>
+				</div>
+			  
+				<div class="form-group">
+					<label for="userName" class=" col-sm-3 control-label">이름</label>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
+					</div>
+				</div>
+			 
+				<span>		  
+					<div class="form-group">
+						<label for="birth" class="col-sm-3 control-label">생 년 월 일</label>
+							<div class="col-sm-4">
+								<input type="date" class="form-control" name="birth" id="birth" placeholder="생년월일" >
+							</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="calendarType" class="col-sm-3 control-label">양력음력 구분</label>
+							<div class="col-sm-4">			  		
+								<input type='radio' name='calendarType' value='S' checked="checked">양력
+								<input type='radio' name='calendarType' value='L'>음력
+							</div>
+					</div>
+					 
+					<div class="form-group">
+						<label for="gender" class="col-sm-3 control-label">양력음력 구분</label>
+							<div class="col-sm-4">			  		
+								<input type='radio' name='gender' value='M' checked="checked">남자
+								<input type='radio' name='gender' value='F'>여자
+							</div>
+					</div>
+				</span>
+			  
+				<div class="form-group">
+					<label for="ssn" class=" col-sm-3 control-label">우편번호</label>
+						<div class="col-sm-4">		      
+							<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
+							<strong class="text-danger">입력전 중복확인 부터..</strong>			    
+						</div>
+				
+						<div class="col-sm-3" >
+							<input type="button" class="btn btn-info" onclick="execDaumPostcode()" value="우편번호 찾기" readonly="readonly" >
+						</div>
+				</div>	
+							
+				<div class="form-group">
+					<label for="ssn" class=" col-sm-3 control-label">주소</label>
+						<div class="col-sm-4">
+							<input type="text" name='addr' class="form-control" id="address" placeholder="주소">
+						</div>
+				</div>
+					
+				<div class="form-group">
+					<label for="ssn" class=" col-sm-3 control-label">상세주소</label>
+						<div class="col-sm-4">			
+							<input type="text" name='addrDetail' class="form-control" id="address_detail" placeholder="상세주소">
+						</div>
+				</div>	
+  		  
+				<div class="form-group">
+					<label for="phone" class=" col-sm-3 control-label">휴대전화번호</label>
+						<div class="col-sm-2">
+							<select class="form-control" name="phone1" id="phone1">
+								<option value="010" >010</option>
+								<option value="011" >011</option>
+								<option value="016" >016</option>
+								<option value="018" >018</option>
+								<option value="019" >019</option>
+							</select>
+						</div>
+ 
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="phone2" name="phone2" placeholder="번호">
+						</div>
+						  
+						<div class="col-sm-2">
+							<input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
+						</div>
+				</div>
+		  
+				<div class="form-group">
+					<div class="col-sm-offset-4  col-sm-4 text-center">
+						<button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
 	<script type="text/javascript">
 		var check = false;
 		//============= "가입"  Event 연결 =============
@@ -243,153 +359,5 @@
 		    }
 
 	</script>		
-    
-</head>
-
-<body bgcolor="#ffffff" text="#000000">
-
-	<jsp:include page="../layout/topToolbar.jsp">
-		<jsp:param name="uri" value="../"/>
-	</jsp:include>
-
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-
-		<div class="page-header col-sm-offset-2 col-sm-10">	
-		<h1>회 원 가 입</h1>
-		</div>
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-			
-		  <div class="form-group">
-		    <label for="userId" class="col-sm-3 control-label">아 이 디</label>
-		    <div class="col-sm-3">
-		   	 <input type="text" class="form-control" value="${email}" id="userId" name="userId" placeholder="ID입력" aria-describedby="helpBlock" readonly/>
-		    <!--  <input type="text" class="form-control" id="first_email" placeholder="ID입력" aria-describedby="helpBlock" />
-		       @<input type="text" class="form-control" id="last_email" placeholder="이메일입력" aria-describedby="helpBlock" />
-		    	<select id="email_select">
-		    		<option value="" selected>::선택하기::</option>
-		    		<option value="naver.com">naver.com</option>
-		    		<option value="nate.com">nate.com</option>
-		    		<option value="daum.net">daum.net</option>
-		    		<option value="gmail.com">gmail.com</option>
-		    		<option value="1">::직접입력::</option>
-		    	</select> -->
-		    </div>	
-		    <span id="helpBlock" class="help-block col-sm-6"></span>		    
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password" class=" col-sm-3 control-label">비밀번호</label>
-		    <div class="col-sm-3">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password2" class=" col-sm-3 control-label">비밀번호 확인</label>
-		    <div class="col-sm-3">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
-		    </div>
-		     <span id="helpBlock2" class="help-block2 col-sm-6"></span>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="userName" class=" col-sm-3 control-label">이름</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
-		    </div>
-		  </div>
-		 
-		   <span>		  
-		  
-		  <div class="form-group">
-			  <label for="birth" class="col-sm-3 control-label">생 년 월 일</label>
-			 	 <div class="col-sm-4">
-			  		<input type="date" class="form-control" name="birth" id="birth" placeholder="생년월일" >
-			  	</div>
-			</div>
-		  
-		  <div class="form-group">
-			  <label for="calendarType" class="col-sm-3 control-label">양력음력 구분</label>
-			 	 <div class="col-sm-4">			  		
-			  	  	<input type='radio' name='calendarType' value='S' checked="checked">양력
-					<input type='radio' name='calendarType' value='L'>음력
-			  	</div>
-		  </div>
-		  
-		  <div class="form-group">
-			  <label for="gender" class="col-sm-3 control-label">양력음력 구분</label>
-			 	 <div class="col-sm-4">			  		
-			  	  	<input type='radio' name='gender' value='M' checked="checked">남자
-					<input type='radio' name='gender' value='F'>여자
-			  	</div>
-		  </div>
-		  
-		 
-		  </span>
-		  
-		  <div class="form-group">
-		    <label for="ssn" class=" col-sm-3 control-label">우편번호</label>
-		    <div class="col-sm-4">		      
-			    <input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
-			    	  	<strong class="text-danger">입력전 중복확인 부터..</strong>			    
-				</div>
-				
-				<div class="col-sm-3" >
-					<input type="button" class="btn btn-info" onclick="execDaumPostcode()" value="우편번호 찾기" readonly="readonly" >
-				</div>
-			</div>	
-				
-				<div class="form-group">
-				  <label for="ssn" class=" col-sm-3 control-label">주소</label>
-				    <div class="col-sm-4">
-						<input type="text" name='addr' class="form-control" id="address" placeholder="주소">
-					</div>
-				</div>
-				
-				<div class="form-group">
-				  <label for="ssn" class=" col-sm-3 control-label">상세주소</label>
-				    <div class="col-sm-4">			
-						<input type="text" name='addrDetail' class="form-control" id="address_detail" placeholder="상세주소">
-					</div>
-				</div>	
-			
-			<!-- <h1>참조 : http://postcode.map.daum.net/guide</h1> -->
-		  		  
-		  <div class="form-group">
-		    <label for="phone" class=" col-sm-3 control-label">휴대전화번호</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="phone1" id="phone1">
-				  	<option value="010" >010</option>
-					<option value="011" >011</option>
-					<option value="016" >016</option>
-					<option value="018" >018</option>
-					<option value="019" >019</option>
-				</select>
-		    </div>
-		   
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone2" name="phone2" placeholder="번호">
-		    </div>
-		    
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
-		    </div>
-		  </div>
-		  		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
-		    </div>
-		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-		
- 	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-	
-	
-</body>
 
 </html>
