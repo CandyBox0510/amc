@@ -89,14 +89,14 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 	@Override
-	public void addComment(Comment comment) {
+	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
 		System.out.println("communityDAOImpl의 addComment 시작...");
 		System.out.println("1. comment값 ==> " + comment);
 		int addComment = sqlSession.insert("CommentMapper.addFreeBoardComment", comment);
 		System.out.println("2. addComment의 값 ==> " + addComment);
 		System.out.println("communityDAOImpl의 addComment 끝...");
-
+		return addComment;
 	}
 
 	@Override
@@ -135,22 +135,34 @@ public class CommunityDAOImpl implements CommunityDAO {
 	}
 
 	@Override
-	public void deleteComment(int commentNo) {
+	public int deleteComment(int commentNo) {
 		System.out.println("communityDAOImpl의 deleteComment 시작...");
 		System.out.println("1. commentNo값 ==> " + commentNo);
 		int deleteComment = sqlSession.delete("CommentMapper.deleteFreeBoardComment", commentNo);
 		System.out.println("2. deleteFreeBoard의 값 ==> " + deleteComment);
 		System.out.println("communityDAOImpl의 deleteComment 끝...");
-
+		return deleteComment;
 	}
 
 	@Override
-	public void updateComment(Comment comment) {
+	public int updateComment(Comment comment) {
 		System.out.println("communityDAOImpl의 updateComment 시작...");
 		System.out.println("1. comment값 ==> " + comment);
 		int updateComment = sqlSession.update("CommentMapper.updateFreeBoardComment", comment);
 		System.out.println("2. addFreeBoard의 값 ==> " + updateComment);
 		System.out.println("communityDAOImpl의 updateComment 끝...");
+		return updateComment;
 	}
+	
+	@Override
+	public int getFreeBoardTotalCount(int freeBoardNo) {
+		System.out.println("communityDAOImpl의 getFreeBoardTotalCount 시작...");
+		System.out.println("1. freeBoardNo값 ==> " + freeBoardNo);
+		int getFreeBoardTotalCount = sqlSession.selectOne("CommentMapper.getFreeBoardTotalCount", freeBoardNo);
+		System.out.println("2. addFreeBoard의 값 ==> " + getFreeBoardTotalCount);
+		System.out.println("communityDAOImpl의 updateComment 끝...");
+		return getFreeBoardTotalCount;
+	}
+	
 
 }

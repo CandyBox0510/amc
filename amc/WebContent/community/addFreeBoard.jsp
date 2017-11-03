@@ -68,7 +68,7 @@
         
         
 
-      
+      <jsp:include page="/layout/bottomToolbar.jsp" />
     </div>
 
     <!-- open/close -->
@@ -105,6 +105,7 @@
                 </div>
 
             </section>
+            
         </div>
 
          <script src="/js/external/modernizr.custom.js"></script> 

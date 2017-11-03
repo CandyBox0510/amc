@@ -800,7 +800,7 @@
                 <div class="col-sm-4 col-sm-offset-4">
                     <button type="button" class="overlay-close">Close</button>
                     <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">sign in <br><span class="login-edition">Welcome to AMC!</span></p>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
 
                         <div class="social social--colored">
                                 <a href='#' class="social__variant fa fa-facebook"></a>

@@ -78,7 +78,7 @@ var things = "AMC : ";
 
 
 function kakaoPay(){
-		alert("name : "+things);
+		//alert("name : "+things);
 			IMP.request_pay({
 			    pg : 'kakao',
 			    pay_method : 'kapy',
@@ -92,7 +92,7 @@ function kakaoPay(){
 			}, function(rsp) {
 			    if ( rsp.success ){
 					
-			    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
+			    	//alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
 			    	console.log("impuid : "+rsp.imp_uid);
 			    	var impUid = rsp.imp_uid; 
 			    	
@@ -153,7 +153,7 @@ function kakaoPay(){
 	function confirmSeat(){
 			
 		var clientId = $("input[name='clientId']").val();
-		alert('좌석을 확정합니다.');
+		//alert('좌석을 확정합니다.');
 		  $.ajax(
 					{
 						url : "/booking/json/confirmSeat/"+clientId,				
@@ -197,7 +197,7 @@ function kakaoPay(){
   	}//end of kakaoPayCancel function	
   	
 	function addBooking(){
-		alert('addBooking 실행 ');
+		//alert('addBooking 실행 ');
 		$("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();	
 		
 	}
@@ -205,7 +205,7 @@ function kakaoPay(){
 		  document.getElementById('child').contentWindow.postMessage(event.data,"*");
 	
 		  if(event.data == 'pay'){
-			  alert('카카오페이 결제요청이왔습니다.');
+			  //alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
 		
 		  }else if(event.data == 'failed'){
@@ -214,7 +214,7 @@ function kakaoPay(){
 			self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
 			
 		  } else if(event.data.length>100){
-			alert('카카오페이 결제진행 관련 알림입니다.');
+			//alert('카카오페이 결제진행 관련 알림입니다.');
 			  
 		  } else if(event.data.indexOf("id")==0){
 			  //클라이언트 아이디를 전송받음
@@ -319,7 +319,9 @@ function kakaoPay(){
 	
 			<div  class="col-sm-8 com-md-9">
 
+
 				<iframe id="child" src="http://127.0.0.1:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>

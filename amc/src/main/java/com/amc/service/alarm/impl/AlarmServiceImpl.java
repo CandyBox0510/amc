@@ -56,6 +56,9 @@ public class AlarmServiceImpl implements AlarmService {
 	
 	@Value("#{commonProperties['fromPhoneNo'] ?: '00000000000'}")
 	String fromPhoneNo;
+	
+	@Value("#{commonProperties['kakaoAK'] ?: 'kakaoAK Check Plz'}")
+	String kakaoAK;
 
 	Map<String, String> header = new HashMap<String, String>();
 	Map<String, Object> body = new HashMap<String, Object>();
@@ -174,14 +177,18 @@ public class AlarmServiceImpl implements AlarmService {
 				"https://api-sens.ncloud.com/v1/sms/services/" + naverServiceId + "/messages", "POST");
 		
 		//naver sms 헤더 설정
-		header.clear();
+		if(header != null){
+			header.clear();
+		}
 		header.put("Content-Type", "application/json; charset=UTF-8");
 		header.put("X-NCP-auth-key", naver_X_NCP_auth_key);
 		header.put("X-NCP-service-secret", naver_X_NCP_service_secret);
 
 		
 		////////////naver sms 바디 설정 start//////////////
-		body.clear();
+		if(header != null){
+			body.clear();	
+		}
 		body.put("type", "sms");
 		body.put("from", fromPhoneNo);
 
@@ -239,6 +246,51 @@ public class AlarmServiceImpl implements AlarmService {
 		restApiUtil.disConnection();
 		
 		return status;
+	}
+
+	
+	
+	@Override
+	public String appPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception {
+		
+		RestApiUtil restApiUtil = new RestApiUtil("https://kapi.kakao.com/v1/push/send", "POST");
+		
+		//kakao push 헤더 설정
+		if(header != null){
+			header.clear();
+		}
+		header.put("Host", "kapi.kakao.com");
+		header.put("Authorization", kakaoAK);
+		
+		// userId가 있다 = 한사람에게 보낸다 <-----> userId가 없다 한사람or여러사람에게 보낸다
+		if (!userId.equals("")) {
+			System.out.println("AlarmServiceImpl :: userId 는 Not Null");
+			body.put("to", userId);
+		} else {
+			System.out.println("AlarmServiceImpl :: userId 는 Null");
+			List<String> list = new ArrayList<>(); 
+			
+			//문자를 보낼 대상을 뽑아온다(알람은 0~* 명으로 인원을 뽑아와야함)
+			for(String uuid : (List<String>)this.userList(type, serialNo, alarmSeatNo).get("uuid")){
+				list.add(uuid);
+			}
+			if(list.size() == 0){
+				return "noOne";
+			}
+			body.put("uuids", list);
+		}
+		
+		String message = this.pushValue(type, serialNo, alarmSeatNo).get("content");
+		
+		String messageForm = "{\"for_gcm\":{\"custom_field\":{\"message\":\""+message+"\"}}}";
+		
+		System.out.println("appPush messageForm"+messageForm);
+		
+		body.put("push_message", messageForm);
+		
+		String response = restApiUtil.restApiResponse(header, body);
+		
+		return null;
 	}
 
 	public Map<String, Object> userList(String type, String serialNo, String alarmSeatNo) {

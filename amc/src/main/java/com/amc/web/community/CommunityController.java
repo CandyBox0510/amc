@@ -243,7 +243,7 @@ System.out.println("0. userId ==> " + userId);
 
 		System.out.println("3. list ==> " + list);
 		
-		int totalCount = communityService.getTotalCount(search);
+		int totalCount = communityService.getFreeBoardTotalCount(freeBoardNo);
 		
 		System.out.println("4. totalCount ==> " + totalCount);
 
@@ -263,8 +263,11 @@ System.out.println("0. userId ==> " + userId);
 		model.addAttribute("totalCount", map.get("totalCount"));
 		model.addAttribute("resultPage", resultPage);
 
-		System.out.println("MovieController의 freeBoardCommentList메소드 끝");
+		System.out.println("CommunityController의 freeBoardCommentList메소드 끝");
 		return "forward:/community/getFreeBoard.jsp";
 	}
+	
+	
+	
 	
 }

@@ -43,15 +43,15 @@
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
         <!--   Sweetalert2 CDN  -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-	
-		<!--   semantic UI  -->
-		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-		<script
-		  src="https://code.jquery.com/jquery-3.1.1.min.js"
-		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-		  crossorigin="anonymous"></script>
-		<script src="../semantic/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+      <!--   semantic UI  -->
+      <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+      <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+      <script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
 	function listener(event){		
@@ -76,6 +76,7 @@
 			  
 	}
 
+<<<<<<< HEAD
 		
 		if (window.addEventListener){
 			  addEventListener("message", listener, false);
@@ -127,6 +128,144 @@
 			    	});
 		}	
 			
+=======
+         
+      function confirmSeat(){
+         
+         var clientId = $("input[name='clientId']").val();
+         
+           $.ajax(
+                  {
+                     url : "/booking/json/confirmSeat/"+clientId,            
+                     method : "GET" ,
+                     async : false,
+                     dataType : "json" ,
+                     headers : {
+                        "Accept" : "application/json",
+                        "Content-Type" : "application/json"
+                     },
+                     
+                     success : function(JSONData, status) {
+                        console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
+                            if(JSONData != ""){
+                               console.log('ajax로 좌석 rollback resCode: '+jsonData);
+                            }//end of if문
+                     }
+            });//end of ajax
+         
+      }   
+         
+      function addCancelAlarm(){
+         var userId = $("input[name='userId']").val(); 
+         if( userId == null || userId == ''){
+            swal({
+                 title: '신청 실패',
+                 html: $('<div>')
+                   .addClass('some-class')
+                   .text('로그인 상태가 아닙니다'),
+                 animation: false,
+                 customClass: 'animated swing'
+               })
+            return;
+         }
+         $.ajax({
+                   url: "/alarm/json/addCancelAlarm/",
+                   type: 'POST',
+                }).done(function(result) {
+                   console.log("result : " + result);
+                   if ( result == 'success' ) {
+                      var msg = '취소표 알림 신청 성공';
+                      swal({
+                           //position: 'top-right',
+                           type: 'success',
+                           title: '취소표 알림 신청 성공!',
+                           showConfirmButton: true,
+                           timer: 2000
+                         })
+                   } else if( result == 'exceed'){
+                      swal(
+                              '취소표알림 자리 수 초과!',
+                              '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
+                              'error'
+                            )
+                   } else {
+                      swal(
+                              '중복 좌석 신청!',
+                              '신청한 좌석 중 기존에 중복된 좌석이 있습니다.'+"\n"+result,
+                              'error'
+                            )
+                   }
+                });
+      }    
+        
+     function addBooking(){
+         
+        $("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();   
+        
+     }
+     
+         
+   function listener(event){      
+        document.getElementById('child').contentWindow.postMessage(event.data,"*");
+
+        if(event.data == 'pay'){
+           alert('카카오페이 결제요청이왔습니다.');
+           kakaoPay();     
+           //지금은 쓰지않는다.
+        } else if(event.data.length>100){
+         alert('카카오페이관련 event 발생입니다.');
+           
+        } else if(event.data.indexOf("id")==0){
+           //alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
+           $("input[name='clientId']").val(event.data.split(",")[1]); 
+          
+        } else{
+           
+           alert('좌석번호를 받습니다.');
+           
+           $("input[name='bookingSeatNo']").val(event.data);
+           var no = ${screenContent.ticketPrice};
+           $.ajax(
+            {
+                url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,                  
+               method : "GET" ,
+               dataType : "json" ,
+               headers : {
+                  "Accept" : "application/json",
+                  "Content-Type" : "application/json"
+               },
+               
+               success : function(JSONData, status) {
+                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
+                      if(JSONData != ""){
+                         $("#seatNo").text(JSONData.seatNo);
+                         $("#headCount").text(JSONData.headCount);
+                         $("#totalPrice").text(JSONData.totalPrice);
+                         
+                         $("input[name='displaySeat']").val(JSONData.seatNo);
+                         $("input[name='headCount']").val(JSONData.headCount);
+                       $("input[name='totalTicketPrice']").val(JSONData.totalPrice);
+                      }//end of if문
+               }
+         });//end of ajax
+         
+                
+        }
+
+   }
+   
+   
+   if (window.addEventListener){
+        addEventListener("message", listener, false);
+   } else {
+        attachEvent("onmessage", listener)
+   }
+   
+   function selectCancelAlarm(){
+      $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
+   }
+
+>>>>>>> refs/remotes/origin/master
 
    </script> 
 </head>
@@ -140,9 +279,9 @@
 
         <!-- Header section -->
         <header class="header-wrapper">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
+         <!-- ToolBar Start /////////////////////////////////////-->
+         <jsp:include page="/layout/topToolbar.jsp" />
+         <!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
@@ -180,16 +319,20 @@
    
          <div class="col-sm-8 com-md-9">   
             <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
+<<<<<<< HEAD
             <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+=======
+            <iframe id="child" src="http://192.168.0.32:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+>>>>>>> refs/remotes/origin/master
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
             </iframe>
             <!-- style='width:100%' -->
          </div>
          <div class="col-sm-4 col-md-3">
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
-         	<div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
+            <div class="row"><p/></div>
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
@@ -312,7 +455,7 @@
 </body>
  <style>
       html{
- 	     height: auto;
+         height: auto;
       }
  </style>
 </html>

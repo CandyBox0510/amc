@@ -19,17 +19,19 @@ public interface CommunityService {
 	public void updateFreeBoard(FreeBoard freeBoard);
 	
 	// restController에서 사용
-	public void addComment(Comment comment);
+	public int addComment(Comment comment);
 
-	public void deleteComment(int commentNo);
+	public int deleteComment(int commentNo);
 
-	public void updateComment(Comment comment);
+	public int updateComment(Comment comment);
 
 	int getTotalCount(Search search) throws Exception;
 
 	List<Comment> getCommentList(Search search, int freeBoardNo);
 
 	List<Comment> getReplyList(Search search, int parentCommentNo);
+
+	int getFreeBoardTotalCount(int freeBoardNo) throws Exception;
 
 	
 }
