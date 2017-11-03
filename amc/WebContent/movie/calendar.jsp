@@ -197,8 +197,14 @@ $(window).load( function() {
 		    console.log(movieEvents);
 		}; */
 
+ 
 		
-	 $(window).load( function() {			
+	 $(window).load( function() {	
+		 
+		/* 	   if($('html').height() < window.outerHeight){
+	           	$('html').css('height', '100%');
+	           } */
+	
 			var movieEvents =  $.ajax({
 			      url: "/movie/json/movieOnSchedule", //컨트롤러 URL					   
 			      dataType: 'json',				    
@@ -226,5 +232,26 @@ $(window).load( function() {
 </script>
 <body>
 
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> 
+    
+    <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  	</div>
+
+
+
+</body>
+
+<style>
+      html{
+ 	     height: auto;
+      }
+      
+</style>	
 
 </html>
