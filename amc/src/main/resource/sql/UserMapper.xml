@@ -8,6 +8,7 @@
  	
 
 	<resultMap id="userSelectMap" type="user">
+		<result property="userNo"			column="user_no"			jdbcType="NUMERIC"/>
 		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
 		<result property="userName"			column="user_name" 			jdbcType="VARCHAR"/>
 		<result property="password" 		column="password" 			jdbcType="VARCHAR"/>
@@ -28,9 +29,9 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users	( user_id, user_name, password, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate) 
+		INTO users	( user_no, user_id, user_name, password, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
 		VALUES	 	( #{userId}, #{userName}, #{password}, 'user', #{birth}, 
-						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE )
+						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
 	 </insert>
 	 
 	 <!-- SQL : UPDATE (DeleteUser)-->
@@ -53,7 +54,7 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_id, user_name, birth, sl_yn, gender, password, role, phone1, phone2, phone3, user_regdate, addr, addr_detail  		
+		user_id, user_name, birth, sl_yn, gender, password, role, phone1, phone2, phone3, user_regdate, addr, addr_detail, user_no  		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -123,4 +124,12 @@
 					</if> 
 				) countTable						
 	 </select> 
+	 
+	 <update	id="updateUuid"	parameterType="user" >
+	   	UPDATE users
+	   		<set>
+		   		uuid 	= #{userNo},
+	   		</set>
+	   	WHERE user_id = #{userId}
+	 </update>
 </mapper>

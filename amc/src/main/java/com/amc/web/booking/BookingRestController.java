@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amc.common.Search;
 import com.amc.service.booking.BookingService;
+import com.amc.service.domain.Booking;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.screen.ScreenService;
+import com.amc.service.user.UserService;
 import com.amc.web.cinema.HttpRequestToNode;
 
 @RestController
@@ -35,6 +37,11 @@ public class BookingRestController {
 		@Autowired
 		@Qualifier("screenServiceImpl")
 		private ScreenService screenService;
+		
+		///Field
+		@Autowired
+		@Qualifier("userServiceImpl")
+		private UserService userService;
 		//setter Method 구현 않음
 		
 		public BookingRestController() {
@@ -92,7 +99,7 @@ public class BookingRestController {
 		}
 
 		@RequestMapping(value="/json/confirmSeat/{clientId}", method=RequestMethod.GET)
-		public int rollbackSeat(@PathVariable("clientId") String clientId, Model model) throws Exception{
+		public int confirmSeat(@PathVariable("clientId") String clientId, Model model) throws Exception{
 			
 	
 			String urlStr = "http://localhost:52273/confirmSeat";
@@ -111,8 +118,33 @@ public class BookingRestController {
 				System.out.println("몽고DB가 꺼져있나봅니다!");
 				return -1;
 			}
-
 		}
+		
+		@RequestMapping(value="json/rollbackSeat/{screenContentNo}/{seatNo}", method=RequestMethod.GET)
+		public int rollbackSeat(@PathVariable("screenContentNo") int screenContentNo, 
+												@PathVariable("seatNo") String seatNo, Model model) throws Exception{
+			
+	
+			String urlStr = "http://localhost:52273/deleteResv";
+			String body = "screenNo="+screenContentNo+"&seat="+seatNo;
+			
+			try {
+				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
+				if(responseCode ==200){
+					System.out.println("몽고DB에서 예매 취소를 성공하였습니다.");
+					return 1;
+				}else{
+					System.out.println("몽고DB에서 예매 취소를 실패하였습니다.");
+					return -1;
+				}				
+			} catch (Exception e) {
+				System.out.println("몽고DB가 꺼져있나봅니다!");
+				return -1;
+			}
+		
+		}
+		
+		
 
 
 }

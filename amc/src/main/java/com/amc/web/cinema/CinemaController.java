@@ -45,7 +45,7 @@ public class CinemaController {
 		
 		String searchKeyword = search.getSearchKeyword();
 		
-		System.out.println("통합검색 서치키워드 : " + search.getSearchKeyword());
+		System.out.println("통합검색 서치키워드 : " + searchKeyword);
 		
 		model.addAttribute("unifiedSearch",cinemaService.unifiedSearch(searchKeyword));
 		
@@ -59,13 +59,4 @@ public class CinemaController {
 		
 		return "forward:/index.jsp";
 	}
-	
-	@RequestMapping(value="index2", method=RequestMethod.GET)
-	public String index2(Model model) throws Exception{
-		
-		model.addAttribute("indexList",cinemaService.index());
-		
-		return "forward:/test.jsp";
-	}
-	
 }

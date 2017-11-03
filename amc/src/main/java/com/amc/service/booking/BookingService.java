@@ -36,8 +36,6 @@ public interface BookingService {
 		
 	public void selectCancelAlarm(int screenContentNo);
 	
-	public void sendEmailQR(String bookinNo, String email);
-	
 	public void sendPhoneQR(String bookingNo, String phone);
 	
 	public Map<String,Object> getUserBookingList(Map<String,Object> map);

@@ -1,5 +1,6 @@
 package com.amc.service.user;
 
+import java.io.IOException;
 import java.util.Map;
 
 import com.amc.common.Search;
@@ -43,4 +44,6 @@ public interface UserService {
 	     *  @param from 보내는 메일 주소
 	     *  @param to 받는 메일 주소
 	     *  @param filePath 첨부 파일 경로: 첨부파일 없을시 null **/
+	
+	public String addUuid(String token, String userId) throws Exception;
 }

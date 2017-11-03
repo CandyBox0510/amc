@@ -143,7 +143,8 @@ public class ProductController {
 			
 	@RequestMapping(value="getGoodsList")
 	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
+								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								HttpSession session) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -158,12 +159,17 @@ public class ProductController {
 		search.setPageUnit(pageUnit);		
 		// Business logic 수행
 		Map<String , Object> map=productService.getGoodsList(search);
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$############# MAP :"+map);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-	
+		
+		System.out.println("session 이거뭐야 :"+session.getAttribute("user"));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@LIST :"+map.get("list"));
+		System.out.println("############################### MAP :"+map);
+		
 		return "forward:/product/listGoodsProduct.jsp?menu="+menu;
 	}
 	

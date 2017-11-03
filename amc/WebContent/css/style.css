@@ -7263,7 +7263,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   content: '';
   background-image: url(../images/icons/speech.svg);
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center center;
   -webkit-background-size: 42px 36px;
   background-size: 42px 36px;
   width: 45px;
@@ -7359,7 +7359,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .ticket .ticket__item {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-family: 'PT Mono';
   font-size: 14px;
   text-transform: uppercase;
@@ -7538,7 +7538,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   min-width: auto;
   min-height: auto;
   background-color: transparent;
-  background-image: url(../images/icons/right-arrow.svg);
+  /* background-image: url(../images/icons/right-arrow.svg); */
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
@@ -7575,7 +7575,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .tparrows.tp-rightarrow.hebe .slider__info:after {
   content: '';
-  background-image: url("../images/components/wave.svg");
+  /* background-image: url("../images/components/wave.svg"); */
   background-repeat: no-repeat;
   background-size: 48px 4px;
   width: 48px;
@@ -9272,6 +9272,9 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   background-repeat: no-repeat;
   background-position: 50% 7px;
 }
+.offer--alarm {
+  background-image: url(../images/icons/alarm-dark.svg);
+}
 .offer--winter {
   background-image: url(../images/icons/snow-dark.svg);
 }
@@ -9286,6 +9289,9 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .offer--gift {
   background-image: url(../images/icons/gift-dark.svg);
+}
+.offer--alarm:hover {
+  background-image: url(../images/icons/alarm-light.svg);
 }
 .offer--winter:hover {
   background-image: url(../images/icons/snow-light.svg);
@@ -9305,6 +9311,18 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .gallery-item .gallery-item--video:before,
 .gallery-item .gallery-item--video-link:before {
   background-color: #fe505a;
+}
+.gallery-item .gallery-item--blue-link:before {
+  background-color: #0080FF;
+}
+.gallery-item .gallery-item--success-link:before {
+  background-color: #5cb85c;
+}
+.gallery-item .gallery-item--goods-link:before {
+  background-color: #4c4145;
+}
+.gallery-item .gallery-item--info-link:before {
+  background-color: #5bc0de;
 }
 .choose-sits__info--first {
   border-right: 1px solid #4c4145;

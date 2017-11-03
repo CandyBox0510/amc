@@ -45,14 +45,14 @@
 	 
 	 <mvc:annotation-driven />
 	 
-	<mvc:interceptors>
+<!-- 	<mvc:interceptors>
 		
    		<mvc:interceptor>
 			<mvc:mapping path="/user/**"/>
 			<bean class="com.amc.common.web.LogonCheckInterceptor" />
    		</mvc:interceptor>
 
-   	</mvc:interceptors>
+   	</mvc:interceptors> -->
 
 	<!-- 홈페이지 메인 인덱스가 / 이기때문에 각 폴더가 URL로 주소가 아닌 폴더로 인식해서 들어가기 위해서 설정 -->
 	<mvc:resources mapping="/css/**" location="/css/" />
@@ -65,6 +65,10 @@
 	   	
    	<!-- z_YJ : 부트스트랩테마 적용을 위해서 설정 -->
    	<mvc:resources mapping="/cinema/**" location="/cinema/" />
+   	
+   	<!-- z_YJ : 파노라마를 위해 적용 -->
+   	<mvc:resources mapping="/dist/**" location="/dist/" />
+   	<mvc:resources mapping="/demo/**" location="/demo/" />
    	
    	<!-- new theme -->
    	<mvc:resources mapping="/fonts/**" location="/fonts/" />
@@ -129,6 +133,7 @@
 	<bean id="userServiceImpl" class="com.amc.service.user.impl.UserServiceImpl">
 	    <property name="javaMailSender" ref="javaMailSender" />
 	</bean>
+
     
     <bean id="uploadFilePath"
 				class="org.springframework.core.io.FileSystemResource">

@@ -21,11 +21,13 @@ import com.amc.common.Search;
 import com.amc.common.util.CommonUtil;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
 import com.amc.service.movie.MovieDAO;
 import com.amc.service.movie.MovieService;
+import javax.servlet.http.HttpSession;
 
 import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 
@@ -57,14 +59,16 @@ public class MovieServiceImpl implements MovieService {
 		return null;
 	}
 
-	@Override
-	public Map<String , Object > getMovieList(Search search) throws Exception {
+	
+	public Map<String , Object > getMovieList(Search search) throws Exception {		
 		
-		System.out.println("Search ::" + search);		
+		
+		System.out.println("Search ::" + search);
 		
 		List<Movie> list= movieDAO.getMovieList(search);
 		
-		System.out.println("list ::" + list);		
+		System.out.println("list ::" + list);	
+	
 		
 		int totalCount = movieDAO.getTotalCount(search);
 		
@@ -426,6 +430,15 @@ public class MovieServiceImpl implements MovieService {
 							   	         System.out.println("postUrl :" + postUrl  );  
 							   	    }            
 						    
+							   	   // 고해상도 스틸컷을 가져오기 해서 별도 작업을 함.
+							   	   /* 	   String delims ="_";
+							   	   String[] tokens = postUrl.split(delims);
+							   	   
+							   	   for (int i = 0; i < tokens.length; i++) {
+							   		   System.out.println("tokens value" + tokens[i]);
+							   	   }
+							   	   */
+							   	   
 						           
 						        } else {  // 에러 발생
 						           br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
@@ -585,4 +598,6 @@ public class MovieServiceImpl implements MovieService {
 	public Map<String,Object> getWishList(Map<String,Object> map) {
 		return movieDAO.getWishList(map);
 	}
+	
+	
 }
