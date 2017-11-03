@@ -55,6 +55,70 @@
   
   <script type="text/javascript">
   
+	//무한스크롤
+	var page = 2;
+	var all = '';
+	
+	$( window ).scroll(function(){
+		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
+			 $.ajax({
+					url:"/movie/json/getInfiCancelAlarmList/"+'${sessionScope.user.userId}',
+					method:"POST",
+					headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+					},
+					data:JSON.stringify({
+						currentPage : page,
+						alarm : C
+					}),
+					
+					success : function(JSONData, status){
+							
+								
+								var alarm = JSONData.list;
+								
+								for(i in JSONData.listWish){
+	
+									all = '<div class="col-sm-4 col-md-3">'
+									all += 	'<div class="gallery-item">'
+									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
+									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
+									all += 		'<div class="alert alert-info" role="alert">'
+									all +=			'<strong>취소표 신청 좌석</strong><br/>'
+									all +=           alarm[i].alarmSeatNo
+									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
+									all +=		'</div>'
+									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
+									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
+									all += 	   '<p class="gallery-item__name">'
+												if(alarm[i].screenContent.previewFlag == 'Y'){
+													all += alarm[i].screenContent.previewTitle
+												}else{
+													all += alarm[i].movie.movieNm
+												}
+									all += 	   '</p></a>'
+									all +=	'</div>'
+									all +='</div>'
+										
+									console.log($(".gallery-wrapper").html());
+									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+								}
+								
+/* 						//상품명 클릭시 getProduct
+						  $("tbody tr td:nth-child(2)").on("click", function(){
+							 console.log("히든1 : "+$(this).find('input').val());
+							 console.log("히든2 : "+$($(this).find('input')[1]).val());
+							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
+						 }) 
+						  */
+						  
+						//ajax 목록 링크 및 색 추가 끝
+					}
+			})//end ajax  
+			console.log(page++);
+		 }//end if문
+	 }); 
   
 
    </script> 
@@ -64,7 +128,7 @@
     <div class="wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->
@@ -80,34 +144,37 @@
                 <h2 class="page-heading">취소표 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
-	                 <%-- <c:set var="i" value="0" />
-					  <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
-						<c:set var="i" value="${ i+1 }" /> --%>
-						<c:forEach var="count" begin="1" end="9" step="1">
+	                 <c:set var="i" value="0" />
+					  <c:forEach var="alarm" items="${list}">
+						<c:set var="i" value="${ i+1 }" />
+						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
         				<div class="col-sm-4 col-md-3">
 						     <div class="gallery-item">
-	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg">
-	                                <img alt='' src="https://pbs.twimg.com/media/DMjnIyvUQAAYKLy.jpg" style="widht:524px; height:365px">
+	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: auto;">
 	                            </a>
 	                            <div class="alert alert-success" role="alert">
-  									<strong>취소표 신청 좌석</strong><br/>A30<a href="http://naver.com"><span class="label label-success">취소</span></a>
+  									<strong>취소표 신청 좌석</strong><br/>${alarm.alarmSeatNo}<a href="http://naver.com"><span class="label label-success">취소</span></a>
 								</div>
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
-	                                <p class="gallery-item__name">영화이름</p>
+                        	        <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
+	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
+	                                </c:if>
+	                                <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
+	                                	<p class="gallery-item__name">${alarm.screenContent.movie.movieNm}</p>
+	                                </c:if>
 	                            </a>
  	                         </div>       
 	                    </div>
-	                    </c:forEach>
-	             		<%-- </c:forEach> --%>	
+	                    <%-- </c:forEach> --%>
+	             		</c:forEach>	
 	                </div>
                 </div>
             </div>
         </section>
        
-       
-       
-       
+      
        <!-- bottomToolBar Start /////////////////////////////////////-->
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 	   <!-- bottomToolBar End /////////////////////////////////////-->

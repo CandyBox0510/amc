@@ -144,8 +144,8 @@
  	SELECT *							
 	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
 		 	 FROM 		(SELECT m.movie_title, s.preview_title, s.screen_opentime, s.ticket_opendate, 
-		 	 					s.screen_theater, s.invite_actor, s.preview_flag ,a.alarmseat_no, 
-		 	 					a.alarm_regdate, a.alarm_no, m.poster
+		 	 					s.screen_theater, s.invite_actor, s.preview_flag, a.alarmseat_no, 
+		 	 					a.alarm_regdate, a.alarm_no, m.poster 
 						FROM alarm a, screencontent s, movie m 
 						WHERE a.screencontent_no = s.screencontent_no AND s.movie_no = m.movie_no 
 							  AND user_id = #{user.userId}

@@ -84,7 +84,7 @@ public class ProductController {
 	public String getGoodsProduct( @RequestParam("prodNo") int prodNo,
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
-		
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
 		System.out.println("『『『『『『『『『『『『『『『『『『『"+product);
@@ -165,6 +165,7 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		/*model.addAttribute("search", map.get(search));*/
 		
 		System.out.println("session 戚暗更醤 :"+session.getAttribute("user"));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@LIST :"+map.get("list"));
@@ -175,7 +176,8 @@ public class ProductController {
 	
 	@RequestMapping(value="getSnackList")
 	public String getSnackList( @ModelAttribute("search") Search search , Model model ,
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword) throws Exception{
+								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								HttpSession session) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);

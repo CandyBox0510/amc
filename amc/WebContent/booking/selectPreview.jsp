@@ -115,7 +115,7 @@
 			$(".item").eq(1).html("");
 			$(".item").eq(2).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
-			alert('movie title clicked! : '+movieNo);
+			//alert('movie title clicked! : '+movieNo);
 			var flag = $("input:hidden[name='flag']").val();
 			
 			$.ajax(
@@ -154,7 +154,7 @@
    
 	//2. 날짜 클릭시
 	$(document).on("click", "li[name='screenDay']",  function(){
-		alert("날짜를 선택하셨습니다.");
+		//alert("날짜를 선택하셨습니다.");
 		
 		var date =  $($(this).find("input[name='day']")).val();
 		$(".item").eq(2).html("");
@@ -202,7 +202,7 @@
 		var contNo = $($(this).find("input[name='contNo']")).val();
 		
 		ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
-		alert("선택한 상영번호는 : "+contNo+", 티켓오픈타임은 :"+ticketOpenDate);
+		//alert("선택한 상영번호는 : "+contNo+", 티켓오픈타임은 :"+ticketOpenDate);
 		
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
@@ -225,10 +225,21 @@
 	}); */
 	
 	
-	$(document).on("click", "#gotoSeat",  function(){
+	$(document).on("click", "#gotoSeat",  function(e){
 		
-		var screenContentNo = $(".item").eq(3).text();	
-		self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+		//로그인 여부 체크
+		if( ${sessionScope.user==null} ){
+			
+			//alert('로그인 후 이용해 주세요');
+			//로그인 창 모달로 띄우기
+			e.preventDefault();
+	        $('.overlay').removeClass('close').addClass('open');
+			
+		}else{
+		
+			var screenContentNo = $(".item").eq(3).text();	
+			self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+		}
 
 	});
 	
@@ -246,15 +257,27 @@
     		}
     		
 	    }); */
-		$("#randomSeat").on("click", function(){
-    		var screeContentNo = $(".item").eq(3).text();
-			var headCount = $("select[name=randomCount]").val();
-			
-			if( headCount==0){
-    			alert("인원수를 먼저 선택해주세요.");
-    		}else{
-    			alert("랜덤좌석을 "+headCount+"석 신청합니다.");
-    			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
+		$("#randomSeat").on("click", function(e){
+			//로그인 여부 체크
+			if( ${sessionScope.user==(null)} ){
+				
+				//alert('로그인 후 이용해 주세요');
+				//로그인 창 모달로 띄우기
+				 
+		        e.preventDefault();
+		        $('.overlay').removeClass('close').addClass('open');
+				    
+				
+			}else{
+	    		var screeContentNo = $(".item").eq(3).text();
+				var headCount = $("select[name=randomCount]").val();
+				
+				if( headCount==0){
+	    			alert("인원수를 먼저 선택해주세요.");
+	    		}else{
+	    			alert("랜덤좌석을 "+headCount+"석 신청합니다.");
+	    			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
+				}
 			}
 	    });
 		
@@ -267,7 +290,7 @@
 
 <body>
 
-<div class="banner-top">
+        <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
         </div>
         <header class="header-wrapper header-wrapper--home">
@@ -457,7 +480,7 @@
     <!-- </div> -->
 
     <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
+         <div class="overlay overlay-hugeinc">
             
             <section class="container">
 
@@ -475,22 +498,23 @@
                         <p class="login__tracker">or</p>
                         
                         <div class="field-wrap">
-                        <input type='email' placeholder='Email' name='user-email' class="login__input">
-                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+                         <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">
+                        <input type='password' placeholder='Password' id='password' name='password' class="login__input">
 
                         <input type='checkbox' id='#informed' class='login__check styled'>
                         <label for='#informed' class='login__check-info'>remember me</label>
                          </div>
                         
                         <div class="login__control">
-                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <!-- <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button> -->
+                            <button type='button' id ='login' class="btn btn-md btn--warning btn--wider">sign in</button>
                             <a href="#" class="login__tracker form__tracker">Forgot password?</a>
                         </div>
                     </form>
                 </div>
 
             </section>
-        </div>
+        </div> 
 
 		<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
@@ -520,12 +544,19 @@
 		
 		<script type="text/javascript">
             $(document).ready(function() {
-                init_BookingOne();
+                //init_BookingOne();
+                
+                if($('html').height() < window.outerHeight){
+                	$('html').css('height', '100%');
+                }
             });
 		</script>
 
 </body>
 <style>
+html{
+  height: auto;
+}
 .time-select .time-select__item {
   position: relative;
   z-index: 10;

@@ -514,6 +514,8 @@ public class MovieController {
 			search.setCurrentPage(1);
 		}
 		
+		pageSize = 12;
+		
 		search.setPageSize(pageSize);
 		User user = (User)session.getAttribute("user");
 		
@@ -526,13 +528,13 @@ public class MovieController {
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 						pageUnit, pageSize);
 		
-		System.out.println("■■■위시리스트 확인■■■ : "+map.get("list"));
+		System.out.println("■■■위시리스트 확인■■■ : "+map.get("listWish"));
 		
 		model.addAttribute("search",search);
 		model.addAttribute("resultPage",resultPage);
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", map.get("listWish"));
 		
-	    return "forward:/booking/listWishList.jsp";
+	    return "forward:/movie/listWish.jsp";
 	}
 
 	

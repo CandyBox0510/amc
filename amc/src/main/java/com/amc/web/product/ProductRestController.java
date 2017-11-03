@@ -172,4 +172,9 @@ public class ProductRestController {
 		return map;
 	}
 	
+	@RequestMapping( value="getIndexProductList", method=RequestMethod.GET )
+	public Map<String, Object> getIndexProductList() throws Exception{
+		return productService.getIndexProductList();
+	}
+	
 }

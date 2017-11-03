@@ -142,11 +142,11 @@
 	$(document).on("click", "#gotoSeat",  function(){
 		
 		//로그인 여부 체크
-		if( ${sessionScope.user==(null)} ){
+		if( ${sessionScope.user}==(null) ){
 			
-			alert('로그인 후 이용해 주세요');
-			//로그인 창 모달로 띄우기
-			self.location= "/";
+			//alert('로그인 후 이용해 주세요');
+			e.preventDefault();
+	        $('.overlay').removeClass('close').addClass('open');
 			
 		}else{
 			
@@ -395,12 +395,21 @@
 		<script type="text/javascript">
             $(document).ready(function() {
                 init_BookingOne();
+                if($('html').height() < window.outerHeight){
+                	$('html').css('height', '100%');
+                }
+
+                
             });
 		</script>
 
 </body>
 
 <style>
+html{
+  height: auto;
+}
+
 .time-select .time-select__item {
   position: relative;
   z-index: 10;

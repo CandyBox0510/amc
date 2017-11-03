@@ -20,4 +20,5 @@ public interface ProductDAO {
 	
 	public void deleteProduct(int prodNo) throws Exception;
 
+	public Map<String, Object> getIndexProductList() throws Exception;
 }

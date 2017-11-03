@@ -54,7 +54,63 @@
 		<script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
-  
+	//무한스크롤
+	var page = 2;
+	var all = '';
+	
+	$( window ).scroll(function(){
+		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
+			 $.ajax({
+					url:"/movie/json/getInfiWishList/"+'${sessionScope.user.userId}',
+					method:"POST",
+					headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+					},
+					data:JSON.stringify({
+						currentPage : page
+					}),
+					
+					success : function(JSONData, status){
+							
+								
+								var wishList = JSONData.listWish;
+								
+								for(i in JSONData.listWish){
+	
+									all = '<div class="col-sm-4 col-md-3">'
+									all += 	'<div class="gallery-item">'
+									all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu=search">'
+									all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
+									all += 		'<div class="alert alert-info" role="alert">'
+									all +=			'<strong>'+wishList[i].wishFlag+'</strong><br/>'
+									all +=           wishList[i].movie.movieNm
+									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
+									all +=		'</div>'
+									all += 	   '<a href="'+wishList[i].movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
+									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
+									all += 	   '<p class="gallery-item__name">'+wishList[i].movie.movieNm+'</p></a>'
+									all +=	'</div>'
+									all +='</div>'
+										
+									console.log($(".gallery-wrapper").html());
+									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+								}
+								
+/* 						//상품명 클릭시 getProduct
+						  $("tbody tr td:nth-child(2)").on("click", function(){
+							 console.log("히든1 : "+$(this).find('input').val());
+							 console.log("히든2 : "+$($(this).find('input')[1]).val());
+							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
+						 }) 
+						  */
+						  
+						//ajax 목록 링크 및 색 추가 끝
+					}
+			})//end ajax  
+			console.log(page++);
+		 }//end if문
+	 }); 
   
 
    </script> 
@@ -64,7 +120,7 @@
     <div class="wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->
@@ -80,26 +136,28 @@
                 <h2 class="page-heading">나의 위시 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
-	                 <%-- <c:set var="i" value="0" />
-					  <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
-						<c:set var="i" value="${ i+1 }" /> --%>
-						<c:forEach var="count" begin="1" end="9" step="1">
+	                 <c:set var="i" value="0" />
+					  <c:forEach var="wishList" items="${list}">
+						<c:set var="i" value="${ i+1 }" />
+						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
         				<div class="col-sm-4 col-md-3">
 						     <div class="gallery-item">
-	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg">
-	                                <img alt='' src="https://pbs.twimg.com/media/DMjnIyvUQAAYKLy.jpg" style="widht:524px; height:365px">
+	                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=search">
+	                                <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px">
 	                            </a>
 	                            <div class="alert alert-info" role="alert">
-  									<strong>시사회 여부</strong><br/>영화 or 시사회<a href="http://naver.com"><span class="label label-info">취소</span></a>
+  									<strong>${wishList.wishFlag}</strong><br/>
+  									${wishList.movie.movieNm}
+  									<a href="http://naver.com"><span class="label label-info">취소</span></a>
 								</div>
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--info-link">
-	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
-	                                <p class="gallery-item__name">영화 or 시사회 이름</p>
+	                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
+	                                <p class="gallery-item__name">${wishList.movie.movieNm}</p>
 	                            </a>
  	                         </div>       
 	                    </div>
-	                    </c:forEach>
-	             		<%-- </c:forEach> --%>	
+	                    <%-- </c:forEach> --%>
+	             		</c:forEach>	
 	                </div>
                 </div>
             </div>
@@ -108,50 +166,16 @@
        
        
        
-       <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">현재 상영 영화</a></li>
-                        <li><a href="#" class="nav-link__item">상영 예정 영화</a></li>
-                        <li><a href="#" class="nav-link__item">시사회</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">영화 예매</a></li>
-                        <li><a href="#" class="nav-link__item">시사회 예매</a></li>
-                        <li><a href="#" class="nav-link__item">영화관 정보</a></li>
-                        <li><a href="#" class="nav-link__item">커뮤니티</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">굿즈</a></li>
-                        <li><a href="#" class="nav-link__item">스낵바</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
-
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
-                    </div>
-                </div>
-            </section>
-        </footer>
+       <!-- bottomToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+	   <!-- bottomToolBar End /////////////////////////////////////-->
      </div>
   
 
-
-   <!-- JavaScript-->
+d
+   <!-- JavaScript-->	
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -174,6 +198,7 @@
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
+        
       
       <script type="text/javascript">
             $(document).ready(function() {

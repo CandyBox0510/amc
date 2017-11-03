@@ -125,6 +125,7 @@
 					'Content-Type' : 'application/json'
 				},
 				success : function(data){
+					alert("¿©±äµå¾î¿È?");
 					var i;
 					for(i=0; i<4 ; i++){
 						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].prodImage!=null ? data.HP[i].prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF'));
@@ -149,10 +150,10 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
-	<jsp:include page="../layout/topToolbar.jsp">
+<%-- 	<jsp:include page="../layout/topToolbar.jsp">
 		<jsp:param name="uri" value="../"/>
 	</jsp:include>
-
+ --%>
 	<div class="container">
 	
 		<div class="row">

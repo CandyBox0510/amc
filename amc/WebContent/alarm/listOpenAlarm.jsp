@@ -85,7 +85,7 @@
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
 									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
 									all += 		'<div class="alert alert-info" role="alert">'
-									all +=			'<strong>'+티켓 오픈 일자+'</strong><br/>'
+									all +=			'<strong>티켓 오픈 일자</strong><br/>'
 									all +=           alarm[i].screenContent.ticketOpenDate
 									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
 									all +=		'</div>'
@@ -128,7 +128,7 @@
     <div class="wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->

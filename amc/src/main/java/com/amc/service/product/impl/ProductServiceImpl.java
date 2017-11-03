@@ -64,4 +64,10 @@ public class ProductServiceImpl implements ProductService {
 		productDAO.deleteProduct(prodNo);
 	}
 	
+	@Override
+	public Map<String, Object> getIndexProductList() throws Exception {
+		// TODO Auto-generated method stub
+		return productDAO.getIndexProductList();
+	}
+	
 }
