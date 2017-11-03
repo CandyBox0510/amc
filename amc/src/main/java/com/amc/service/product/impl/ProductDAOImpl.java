@@ -66,5 +66,13 @@ public class ProductDAOImpl implements ProductDAO{
 	public void deleteProduct(int prodNo) throws Exception {
 		sqlSession.update("ProductMapper.deleteProduct", prodNo);
 	}
+	
+	public Map<String,Object> getIndexProductList() throws Exception{
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("NP", sqlSession.selectOne("ProductMapper.newestProduct"));
+		map.put("HP", sqlSession.selectList("ProductMapper.hottestProduct"));
+		return map;
+	}
 
 }

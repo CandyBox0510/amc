@@ -16,25 +16,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<style>
-		body{
-			padding-top : 70px;
-		}
-	</style>
+ -->	
+
 	
 	<script type="text/javascript">
 	
 		$(function(){
 			
-			$('#tabs').tabs();
+			
 			
 /* 			$('a.add:contains("확인")').bind('click',function(){
 				self.location.href = 'getGoodsList?menu=manage';
@@ -49,7 +45,16 @@
 			});
 
 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
-				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+				
+				if("${param.menu=='search' && !empty user}"){
+					
+					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+										
+				}else{
+					alert("여기들어옴2");
+					/* $('#login').onclick */	
+				}
+				
 			});
 
 		});
@@ -58,25 +63,29 @@
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
+   <div class="wrapper">
+        <!-- Banner -->
+         <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
 
-
-	<jsp:include page="../layout/topToolbar.jsp">
-		<jsp:param name="uri" value="../"/>
-	</jsp:include>
 	
-	<div class="container">
+	<div class="container" id="body">
 		<div class="col-md-9" role="main">
 			<div id="tabs">
 			<ul>
 					<li>
-						<a href="#tabs-1">
 							<c:if test="${param.menu=='search'}">
 								상품상세정보
 							</c:if>
 							<c:if test="${param.menu=='manage'}">
 								수정된 정보
 							</c:if>
-						</a>
 					</li>
 				</ul>
 			
@@ -125,16 +134,58 @@
 						<dd>${product.prodSetInfo}</dd>
 					</dl>
 					<div class="btn-group" role="group">
-						<c:if test="${param.menu=='search' && !empty user}">
+						<a href="#" class="btn btn-success" role="button">구매하러가기</a>
+						<%-- <c:if test="${param.menu=='search' && !empty user}">
 							<a href="#" class="btn btn-success" role="button">구매하러가기</a>
-						</c:if>
+						</c:if> --%>
 						<a href="#" class="btn btn-default" role="button">목록으로</a>
 					</div>
 					
 				</div>
 			</div>
+		
+		
 		</div>
+		</div>
+	
 	</div>
+	<jsp:include page="/layout/loginModal.jsp" />
 
+</div>
 </body>
+
+<style type="text/css">
+ 	#body{ padding-top: 100px; }
+ 	.countPage {
+	  	font-size: 13px;
+	   	margin-top: 10px;
+	}
+	 
+ 	.search{
+		margin-right : 30px;
+	} 
+	
+ 	section{
+	margin-bottom : 30px
+	}
+	
+	.movieNm {
+		  font-size: 16px;
+		  font-weight: bold;
+		  display: block;
+		  margin-bottom: 5px;
+		  margin-top: 5px;
+		  
+	} 
+/* 	
+ 	body {
+		padding-top: 80px;
+	}  */
+	
+/* 	html{
+        		height: auto;
+  		}
+	  */
+</style>
+
 </html>

@@ -77,7 +77,7 @@
 	
 	<sql id="productList">
 		SELECT
-			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image
+			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate
 		FROM product p, transaction t
 		<where>
 			p.prod_no=t.prod_no(+)
@@ -88,7 +88,7 @@
 				AND p.prod_type='S'
 			</if>
 		</where>		
-		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image
+		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image, p.sales_opendate, p.sales_enddate
 		<trim prefix="HAVING" prefixOverrides="AND | OR">
 			<if test="!stockView">
 				p.stock-NVL(COUNT(t.IMP_ID),0) > 0
@@ -167,6 +167,39 @@
 			ORDER BY sales_stock DESC)inner)outer
 			WHERE outer.rn BETWEEN '1' AND '3'
 		</if>
+	</select>
+	
+	<select id="newestProduct" resultMap="productSelectMap">
+		SELECT
+			p1.prod_no, p1.prod_name, p1.prod_image
+		FROM
+			product p1, product p2
+		GROUP BY
+			p1.prod_no, p1.prod_name, p1.prod_image
+		HAVING
+			p1.prod_no IN MAX(p2.prod_no)
+	</select>
+	
+	<select id="hottestProduct" resultMap="productSelectMap">
+		SELECT
+			p.prod_no, p.prod_name, p.prod_image, it.tc stock
+		FROM
+			product p, (SELECT
+							t.prod_no, ROWNUM itr, t.tc
+						FROM
+							(SELECT 
+								prod_no, count(*) tc
+							 FROM
+							 	transaction
+							 GROUP BY
+							 	prod_no
+							 ORDER BY tc DESC
+							)t
+						)it
+		WHERE
+			p.prod_no IN (it.prod_no)
+		ORDER BY
+			it.itr
 	</select>
   
 </mapper>

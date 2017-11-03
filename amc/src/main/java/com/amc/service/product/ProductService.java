@@ -19,4 +19,6 @@ public interface ProductService {
 	
 	public void deleteProduct(int prodNo) throws Exception;
 	
+	public Map<String,Object> getIndexProductList() throws Exception;
+	
 }

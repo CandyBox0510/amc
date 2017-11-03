@@ -170,7 +170,8 @@
 		SELECT
 		COUNT(*)
 		FROM  
-		(	<if test="searchKeyword == 'purchaseList'"><include refid="purchaseList"/></if>	)
+		(	<if test="searchKeyword == 'purchaseList'"><include refid="purchaseList"/></if>
+			<if test="searchKeyword == 'saleList'"><include refid="saleList"/></if>	)
 			 
 	</select>	
 </mapper>

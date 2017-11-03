@@ -1,6 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <!doctype html>
 <html>
@@ -144,13 +144,14 @@
 									console.log(JSONData.userId);
 									
 									if( JSONData.role == 'not' ){
-										alert("탈퇴한회원...");
+										alert("탈퇴한회원입니다.");
 									}else if( JSONData !='' ){
 									//$(window.parent.document.location).attr("href","/index.jsp");
-									$(self.location).attr("href","/index.jsp");
+									/* $(self.location).attr("href","/index.jsp"); */ 
+									window.parent.document.location.reload();
 									
 									}else{
-										alert("아이디 , 패스워드를 확인하시고 다시 로그인1...");
+										alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요.");
 									}
 								},
 							error:function(request,status,error){
@@ -170,7 +171,7 @@
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
-             <a href='/cinema/index2' class="logo">
+             <a href='/cinema/index' class="logo">
                  <!-- <img alt='logo' src="/images/logo.png"> -->
                  <img src="/images/amc.png">
              </a>
@@ -228,7 +229,7 @@
                          <a href="#">[관리자 메뉴]</a>
 						<ul class="mega-menu__list">
                                  <li class="mega-menu__nav-item"><a href="/user/getUserList">회원 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage">상품 관리</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">상품 관리</a></li>
                                  <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">판매 관리</a></li>
                                  <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">영화 관리</a></li>
                                  <li class="mega-menu__nav-item"><a href="/screen/getScreenList">상영 관리</a></li>
@@ -258,17 +259,16 @@
                  <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
         	<!-- 유저가 비로그인 상태일 시 -->	
  			<c:if test="${empty sessionScope.user}">		
- 				<li>			
+					<!-- <form class="navbar-form navbar-right"> -->
 					<form class="navbar-form navbar-right">						
 						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
 					</form>
-				</li>	
 			</c:if>	
 			
 			<c:if test="${!empty sessionScope.user}">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" class="user-info">[${sessionScope.user.userName}]</a>
-					<li><a href="/user/logoutUser">로그아웃</a></li>
+					<a href="#" class="user-info">[${sessionScope.user.userName}] 님</a>&emsp;
+					<a href="/user/logoutUser">로그아웃</a>
 				</ul>
 			</c:if> 
         	
