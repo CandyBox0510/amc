@@ -167,13 +167,15 @@
 
 
 </head>
+	
+
 <div class="navbar  navbar-inverse navbar-fixed-top">
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
              <a href='/cinema/index' class="logo">
                  <!-- <img alt='logo' src="/images/logo.png"> -->
-                 <img src="/images/amc.png">
+                 <img src="/images/AMC_Logo.png">
              </a>
              
              <!-- Main website navigation-->
@@ -224,18 +226,22 @@
                              <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">胶臣官</a></li>
                          </ul>
                      </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="#">[包府磊 皋春]</a>
-						<ul class="mega-menu__list">
-                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">雀盔 包府</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">惑前 包府</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">魄概 包府</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">康拳 包府</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">惑康 包府</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">抗概 包府</a></li>
-                             </ul>
-                     </li>
+                     <c:if test="${!empty sessionScope.user}">
+						<c:if test="${sessionScope.user.role eq 'admin'}">
+	                     <li>
+	                         <span class="sub-nav-toggle plus"></span>
+	                         <a href="#">[包府磊 皋春]</a>
+							<ul class="mega-menu__list">
+	                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">雀盔 包府</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">惑前 包府</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">魄概 包府</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">康拳 包府</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">惑康 包府</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">抗概 包府</a></li>
+	                             </ul>
+	                     </li>
+	                     </c:if>
+                     </c:if>
                  </ul>
              </nav>
              
