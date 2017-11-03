@@ -581,6 +581,13 @@
  	</div>
  </div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
+ 	
+ 	     
+	<div class="bottom low ">
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+	</div>
 
 </form>
 </body>

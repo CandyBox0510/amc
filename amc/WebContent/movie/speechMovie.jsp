@@ -59,7 +59,7 @@
    
         function fncWebSpeech() {
     		// document.addPurchase.submit();
-    		$("form").attr("method","POST").attr("action","/movie/getMovieList?menu=search").submit();
+    		$("form").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
     		
     		
     		search.searchCondition=1 
@@ -217,6 +217,13 @@
         })(window);
           
     </script>
+    
+         
+    <div class="bottom low ">
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+	</div>
     
 </body>
 </html>
