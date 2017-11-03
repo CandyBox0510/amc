@@ -120,13 +120,14 @@ public class BookingRestController {
 			}
 		}
 		
-		@RequestMapping(value="json/rollbackSeat/{screenContentNo}/{seatNo}", method=RequestMethod.GET)
+		@RequestMapping(value="json/rollbackSeat/{screenContentNo}/{seatNo}/{clientId}", method=RequestMethod.GET)
 		public int rollbackSeat(@PathVariable("screenContentNo") int screenContentNo, 
-												@PathVariable("seatNo") String seatNo, Model model) throws Exception{
+								@PathVariable("seatNo") String seatNo, 
+								@PathVariable("clientId") String clientId, Model model) throws Exception{
 			
 	
 			String urlStr = "http://localhost:52273/deleteResv";
-			String body = "screenNo="+screenContentNo+"&seat="+seatNo;
+			String body = "screenNo="+screenContentNo+"&seat="+seatNo+"&clientId="+clientId;
 			
 			try {
 				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);

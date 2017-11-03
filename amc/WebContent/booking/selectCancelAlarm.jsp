@@ -54,37 +54,37 @@
 		<script src="../semantic/semantic.min.js"></script>
   
   <script type="text/javascript">
-  IMP.init('imp41659269');
-   var things = "AMC : ";
-      things += "예매"
+	function listener(event){		
+		document.getElementById('child').contentWindow.postMessage(event.data,"*");
+		$("input[name='seats']").val(event.data);
+		
+		  $.ajax({
+					url : "/booking/json/getDisplaySeatNo/"+event.data,						
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},						
+					success : function(JSONData, status) {
+						console.log('SeatNo 받아옴 : '+JSONData.str);								
+	                    if(JSONData != ""){
+	                    	$("#display2").val(JSONData.str);
+	                    }//end of if문
+					}
+		});//end of ajax
+			  
+	}
 
-         
-      function confirmSeat(){
-         
-         var clientId = $("input[name='clientId']").val();
-         
-           $.ajax(
-                  {
-                     url : "/booking/json/confirmSeat/"+clientId,            
-                     method : "GET" ,
-                     async : false,
-                     dataType : "json" ,
-                     headers : {
-                        "Accept" : "application/json",
-                        "Content-Type" : "application/json"
-                     },
-                     
-                     success : function(JSONData, status) {
-                        console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
-                            if(JSONData != ""){
-                               console.log('ajax로 좌석 rollback resCode: '+jsonData);
-                            }//end of if문
-                     }
-            });//end of ajax
-         
-      }   
-         
-      function addCancelAlarm(){
+		
+		if (window.addEventListener){
+			  addEventListener("message", listener, false);
+		} else {
+			  attachEvent("onmessage", listener)
+		}
+		
+		
+		function addCancelAlarm(){
 			var userId = $("input[name='userId']").val(); 
 			if( userId == null || userId == ''){
 				swal({
@@ -125,75 +125,8 @@
 			    					)
 			    		}
 			    	});
-		}	 
-        
-     function addBooking(){
-         
-        $("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();   
-        
-     }
-     
-         
-   function listener(event){      
-        document.getElementById('child').contentWindow.postMessage(event.data,"*");
-
-        if(event.data == 'pay'){
-           alert('카카오페이 결제요청이왔습니다.');
-           kakaoPay();     
-           //지금은 쓰지않는다.
-        } else if(event.data.length>100){
-         alert('카카오페이관련 event 발생입니다.');
-           
-        } else if(event.data.indexOf("id")==0){
-           //alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
-           $("input[name='clientId']").val(event.data.split(",")[1]); 
-          
-        } else{
-           
-           alert('좌석번호를 받습니다.');
-           
-           $("input[name='bookingSeatNo']").val(event.data);
-           var no = ${screenContent.ticketPrice};
-           $.ajax(
-            {
-                url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,                  
-               method : "GET" ,
-               dataType : "json" ,
-               headers : {
-                  "Accept" : "application/json",
-                  "Content-Type" : "application/json"
-               },
-               
-               success : function(JSONData, status) {
-                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);                        
-                      if(JSONData != ""){
-                         $("#seatNo").text(JSONData.seatNo);
-                         $("#headCount").text(JSONData.headCount);
-                         $("#totalPrice").text(JSONData.totalPrice);
-                         
-                         $("input[name='displaySeat']").val(JSONData.seatNo);
-                         $("input[name='headCount']").val(JSONData.headCount);
-                       $("input[name='totalTicketPrice']").val(JSONData.totalPrice);
-                      }//end of if문
-               }
-         });//end of ajax
-         
-                
-        }
-
-   }
-   
-   
-   if (window.addEventListener){
-        addEventListener("message", listener, false);
-   } else {
-        attachEvent("onmessage", listener)
-   }
-   
-   function selectCancelAlarm(){
-      $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
-   }
-
+		}	
+			
 
    </script> 
 </head>
@@ -247,7 +180,7 @@
    
          <div class="col-sm-8 com-md-9">   
             <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            <iframe id="child" src="http://192.168.0.20:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
             </iframe>
