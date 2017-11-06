@@ -52,6 +52,9 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
       <script src="../semantic/semantic.min.js"></script>
+      
+      <!-- hanna font -->
+      <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   
   <script type="text/javascript">
 
@@ -71,9 +74,8 @@
                success : function(JSONData, status) {
                   console.log('SeatNo 받아옴 : '+JSONData.seatNo);
                        if(JSONData != ""){
-                          $("#display2").val(JSONData.seatNo);
-                          alert($("#first").html());
-                          $("#first").html(JSONData.seatNo);
+                          $("#seatNo").html(JSONData.seatNo);
+                          alert($("#seatNo").html());
                        }//end of if문
                }
       });//end of ajax
@@ -245,21 +247,7 @@
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
-                          <li style="font-size:20px; color:black" id="first">Seat : </li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li style="font-size:20px; color:black">Seat : </li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li style="font-size:20px; color:black">Seat : </li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
-                          <li style="font-size:20px; color:black">Seat : </li>
-                          <li>&nbsp;</li>
-                          <li>&nbsp;</li>
+						<li><span class="category__item hanna">Seats: <span id="seatNo"></span></span></li>
                       </ul>
             </div>
             <button class="ui brown button" style="width:100%; height:50%;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
@@ -282,58 +270,16 @@
       </form>
                 
        </div>
-               <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Cities</a></li>
-                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
-                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
-                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
-                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
-                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
-                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
-                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
-                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
-                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
-
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                            <a href='#' class="social__variant fa fa-twitter"></a>
-                            <a href='#' class="social__variant fa fa-vk"></a>
-                            <a href='#' class="social__variant fa fa-instagram"></a>
-                            <a href='#' class="social__variant fa fa-tumblr"></a>
-                            <a href='#' class="social__variant fa fa-pinterest"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
-                    </div>
-                </div>
-            </section>
-        </footer>           
+       
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />       
      </div>
   
 
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -367,5 +313,11 @@
       html{
          height: auto;
       }
+      
+      .hanna{ 
+	  font-family: 'Hanna', sans-serif; 
+	  font-size: 120%;
+	   line-height:4.3em
+	 }
  </style>
 </html>

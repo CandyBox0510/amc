@@ -71,6 +71,9 @@ public interface MovieService {
 	
 	// 위시리스트 체크 온오프
 	public String switchWishList(WishList wishList);
+	
+	//나의 위시리스트에서 삭제하기 위해
+	public int deleteWishList(WishList wishList);
 
 	public Map<String,Object> getWishList(Map<String,Object> map);
 	

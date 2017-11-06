@@ -590,6 +590,7 @@ public class MovieServiceImpl implements MovieService {
 		return movieDAO.addWishList(wishList);
 	}
 	
+	@Override
 	public int deleteWishList(WishList wishList){
 		return movieDAO.deleteWishList(wishList);
 	}

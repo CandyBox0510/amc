@@ -624,7 +624,7 @@ public class MovieRestController {
 		Map<String,Object> tempMap = new HashMap<String,Object>();
 		
 		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
-		System.out.println((Long)(jo.get("currentPage")));
+		System.out.println("현재페이지 : " +(Long)(jo.get("currentPage")));
 		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
 		
 		if(search.getCurrentPage()==0){
@@ -650,6 +650,22 @@ public class MovieRestController {
 		System.out.println("■■■위시리스트 확인■■■ : "+map.get("listWish"));
 		
 	    return map;
+	}
+	
+	
+	@RequestMapping( value="/json/deleteWishList/{wishNo}")
+	public int deleteWishList(HttpSession session,Model model,
+											@PathVariable("wishNo")String wishNo
+											) throws Exception {
+		WishList wishList = new WishList();
+		Movie movie = new Movie();
+		User user = new User();
+		movie.setMovieNo(0);
+		wishList.setMovie(movie);
+		wishList.setUser(user);
+		wishList.setWishFlag("");
+		wishList.setWishNo(Integer.parseInt(wishNo));
+		return movieService.deleteWishList(wishList);
 	}
 
 }

@@ -81,5 +81,10 @@ public class AlarmDAOImpl implements AlarmDAO {
 	public String checkDuplicationSeat(Alarm alarm) {
 		return sqlSession.selectOne("AlarmMapper.checkDuplicationSeat",alarm);
 	}
+
+	@Override
+	public int deleteAlarm(Alarm alarm) {
+		return sqlSession.delete("AlarmMapper.deleteAlarm", alarm);
+	}
 	
 }
