@@ -107,6 +107,8 @@
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
 				
+				alert(id);
+				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
 					$("#userId").focus();

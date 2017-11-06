@@ -26,8 +26,8 @@
     
         <!-- Custom -->
         <link href="/css/style.css?v=1" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
-	<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css" />
+		<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick.css" />
+		<link rel="stylesheet" type="text/css" href="http://kenwheeler.github.io/slick/slick/slick-theme.css" />
 
 		
 		<!-- 우리가 가지고 있던 javaScript (현재 별문제 안됨)-->
