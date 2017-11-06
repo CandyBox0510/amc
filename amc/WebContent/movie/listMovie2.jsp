@@ -1,77 +1,94 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 
-<%@ page language="java" contentType="text/html;"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html>
+            <html>
 
-<!doctype html>
-<html>
 <head>
-
+   
 </head>
 
 <body>
-    <div class="wrapper">
-   		
-        <div class="banner-top">
+    
+   <div class="wrapper">
+        <!-- Banner -->
+         <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        <header class="header-wrapper header-wrapper--home">
+        </div> 
+          <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
-			
 			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+		  </header>  
     <div class="container">
-                
-        <div class="col-sm-12">
+        
+        <!-- Main content -->
+        <!--  <section class="container"> -->
+        
+                <!-- Search bar -->
+ 			<div class="col-sm-12">
  			
-                <h1 class="page-heading"> ÏÉÅÏòÅ ÏòàÏ†ï ÏòÅÌôî </h1>   
-                
-                   <div class="col-md-2 text-right">          
-                    <form class="form-inline" name="detailForm">
-                 
-				    <label class="sr-only" for="searchKeyword">Í≤ÄÏÉâÏñ¥</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="Í≤ÄÏÉâÏñ¥"
+                <h1 class="page-heading"> «ˆ¿Á ªÛøµ øµ»≠ </h1>                
+				
+			     <!--   <div class="col-md-2 text-right">           -->
+                  
+                   <%--  <form class="form-inline" name="detailForm">                 
+				    <label class="sr-only" for="searchKeyword">∞ÀªˆæÓ</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="∞ÀªˆæÓ"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  	 </form>
-				   </div>
-				   		
-				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
-				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	     
-        		  
-				  <!-- PageNavigation ÏÑ†ÌÉù ÌéòÏù¥ÏßÄ Í∞íÏùÑ Î≥¥ÎÇ¥Îäî Î∂ÄÎ∂Ñ -->
+				    		
+				  	</form> --%>
+			
+       				
+       					<div class="col-sm-4 text-right" style="border: 1px; width:350px;float:left">
+				                <form id='search-form' method='get' class="search" > 
+				                    <div class="together">
+				                    <input type="text" class="search__field"  id="searchKeyword" name="searchKeyword" placeholder="∞ÀªˆæÓ">
+					                   
+					                    <button type='submit' class="btn btn-md btn--danger search__button" name="search">∞Àªˆ</button>
+				                   		<br/></br>
+				                   		 <i class='fa fa-microphone' id="voidSearchIcon" style="font-size:20px;color:#717170"  ></i>	
+				                    <input type="hidden" id="currentPage" name="currentPage" value="0" />
+				               		</div>
+				                </form>
+					
+					  
+						  </div>  
+    
+               <br/>
+               <br/>
+               <br/>
+               <hr/>
+               
+               
+               
+       
+               
+                 <!--  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
+				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	 -->
+             
+				  <!-- PageNavigation º±≈√ ∆‰¿Ã¡ˆ ∞™¿ª ∫∏≥ª¥¬ ∫Œ∫– -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <!-- Login Common PlugIn -->
-				  <jsp:include page="/layout/loginModal.jsp" />   
-				  
-			  <hr/>   
-				  
-				  <div class="widget" align="center">	
-					  <button type="button" class="btn btn-thumnail">Ïç∏ÎÑ§ÏùºÎ°ú Î≥¥Í∏∞</button>
-					  <button type="button" class="btn btn-calendar">Ï∫òÎ¶∞ÎçîÎ°ú Î≥¥Í∏∞</button>
-					 
-					  <!-- <input type="submit" value="Ï∫òÎ¶∞ÎçîÎ°ú">   -->
-					
-				  </div>
-       
-        
+				  <jsp:include page="/layout/loginModal.jsp" />     
+              
+             
                 <div class="cinema-wrap">
 	            	<div class="row">
 				 		<c:set var="i" value="0" />
-                		 <c:forEach var="preview" items="${list }">
+                		 <c:forEach var="movie" items="${list }">
                 		 <c:set var="i" value="${i+1 }" />
                 		 
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
-	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
-	                                        <img id="poster"alt='' src="${preview.movie.postUrl}" >                                        
+	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
+	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">${preview.movie.movieNm}</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>Í∞êÎèÖ :${preview.movie.directors} </strong> </p>
-	                                    <p ><strong>Ìã∞ÏºìÏò§ÌîàÎÇ†Ïßú :${preview. ticketOpenDate} </strong> </p>
-	                                    <p ><strong>ÏÉÅÏòÅÎÇ†Ïßú :${preview.screenOpenTime} </strong> </p>
-	                    	     		<p ><strong>Í∞ÄÍ≤©  :${preview. ticketPrice} </strong> </p>
+	                                    <p ><strong>∞≥∫¿¿œ :${movie.openDt } </strong> </p>
+	                                    
 	                    	    <div style="text-align: left;">
     						    
     						    </div>								
@@ -81,8 +98,11 @@
 							    <span style="line-height:0%">
 							    <c:set var="name" value="${movie.wishList.wishNo}"/>
 	 								<c:if test="${name eq '0'}">
-									     <i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
-									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+								<%-- bootstrap icon¿Ã ¿€µø¿Ã µ«¡˙ æ ¿Ω      --%>
+								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
+										text-align : center; margin:0 auto;">   --%>	
+								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
@@ -100,19 +120,21 @@
 	                            <span style="line-height:0%">
 	                             
 	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
-	                            <i class='fa fa-bell' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">ÏòàÎß§ </i>   
+	                            <i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">øπ∏≈ </i>   
 	                            </span>
 	                         
-	                                    
+	                           
 	                                    	     
 	                                </div>
 	                            </div>                      
 	                    		
                 		 </c:forEach>
+                		  
 					</div>
 	           </div>     
-       
-          <div class="coloum-wrapper">
+                              
+ 				
+ 					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
 	                    	<c:if test="${resultPage.currentPage != 1 }">
 	                            <a href='#' class="pagination__prev">prev</a>
@@ -124,55 +146,67 @@
 	                      
 	                </div>
 	               
-              </div>    	
-			
-		
+              </div>
         
-        <div class="clearfix"></div>
-
+        
+      
+    </div>
+    	 <div class="clearfix"></div>	
+	
+	</div>	
+	
+	   
+        
+	 
 		<jsp:include page="/layout/bottomToolbar.jsp" />
-	
-        
-    </div> <!--Ïª®ÌÖåÏù¥ÎÑà ÎÅù -->
-
-  
-		    <script src="/js/custom.js"></script>
-	
+		
+		
+        <!-- Custom ¿Ã∞‘¿÷æÓæﬂ¡ˆ Ω∫≈©∑—≥ª∏±Ω√topπˆ∆∞¿÷¿Ω!!!!!!!!!!! -->
+       
+		<!-- ------------------------------------  -->
+		<script src="/js/custom.js"></script>
 </body>
+       
+    
   <!--  ///////////////////////// JavaScript ////////////////////////// -->   
    
     <script type="text/javascript">
-			    function fncGetPageList(currentPage) {
-			    	
-			    	//alert("222")
-			        $("#currentPage").val(currentPage)
-			        $("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=commingsoon").submit();
-			    }
+  //=============    ∞Àªˆ / page µŒ∞°¡ˆ ∞ÊøÏ ∏µŒ  Event  √≥∏Æ =============	
+				
+	  			function fncGetPageList(currentPage) {
+	  
+	  				//alert("1111")
+	  
+					$("#currentPage").val(currentPage)
+					$("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=search").submit();
+				
+					
+				}
 			    
-			     //============= "Í≤ÄÏÉâ"  Event  Ï≤òÎ¶¨ =============	
+			     //============= "∞Àªˆ"  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "button.btn.btn-default" ).on("click" , function() {
 						fncGetPageList(1);
 					});
 					
 				 });
 				
-				//============= "Í≤ÄÏÉâ Icon"  Event  Ï≤òÎ¶¨ =============	
+				//============= "∞Àªˆ Icon"  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					$( "#searchIcon").on("click" , function() {
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( ".btn.btn-md.btn--danger.search__button").on("click" , function() {
 						
-						alert("searchbutton called")
+						//alert("searchbutton called")
 						fncGetPageList(1);
 					});
 					
 				 });
 				
 				
-				//============= "Banner Top Clieck "  Event  Ï≤òÎ¶¨ =============	
+				//============= "Banner Top Clieck "  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( ".banner-top").on("click" , function() {
 						
 						alert("Banner Top Clieck ")
@@ -181,29 +215,12 @@
 					
 				 });
 				
-				   
-					//============= "Ï∫òÎ¶∞ÎçîÎ°ú Î≥¥Í∏∞"  Event  Ï≤òÎ¶¨ =============	
-					$(function() {
-						 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-calendar" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=calendar";	
-						});	
-					});
-					
-					//============= "Ïç∏ÎÑ§ÏùºÎ°ú Î≥¥Í∏∞"  Event  Ï≤òÎ¶¨ =============	
-					$(function() {
-						 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-thumnail" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=commingsoon";	
-						});	
-					});
-				
 				
 
 			    
-					//============= "ÏùåÏÑ± Í≤ÄÏÉâ Icon"  Event  Ï≤òÎ¶¨ =============	
+					//============= "¿Ωº∫ ∞Àªˆ Icon"  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "#voidSearchIcon").on("click" , function() {
 						self.location = "/movie/getMovieList?menu=voiceRegniiton";
 					});
@@ -211,9 +228,9 @@
 				 });
 				
 				
-					//============= "WishList(Ï∞ú) Event Ï≤òÎ¶¨" DeleteWish Event  Ï≤òÎ¶¨ =============	
+					//============= "WishList(¬Ú) Event √≥∏Æ" DeleteWish Event  √≥∏Æ =============	
 					$(function() {
-						 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+						 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 						 
 						  $(document).on("click", ".fa-heart-o", function () {
 
@@ -232,7 +249,7 @@
 									
 								
 								if(userId == null || userId == ''){
-									alert("Î°úÍ∑∏Ïù∏ ÌõÑ Ïù¥Ïö© Í∞ÄÎä•Ìï©ÎãàÎã§.");
+									alert("∑Œ±◊¿Œ »ƒ ¿ÃøÎ ∞°¥…«’¥œ¥Ÿ.");
 									return;
 								}
 								
@@ -242,12 +259,12 @@
 											url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
 											type : "GET" ,							
 										}).done(function(data) {
-									//Ï†ïÏÉÅ ÌÜµÏã†Ïù∏ Í≤ΩÏö∞
+									//¡§ªÛ ≈ÎΩ≈¿Œ ∞ÊøÏ
 									if (data == 'add') {
-										var msg = 'Ï∞úÌïòÍ∏∞ Ïã†Ï≤≠';
+										var msg = '¬Ú«œ±‚ Ω≈√ª';
 										alert(msg);
 									} else {
-										alert("Ï∞úÌïòÍ∏∞ Ï∑®ÏÜå");
+										alert("¬Ú«œ±‚ √Îº“");
 									}
 								});
 							
@@ -269,7 +286,7 @@
 							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
 						
 							if(userId == null || userId == ''){
-								alert("Î°úÍ∑∏Ïù∏ ÌõÑ Ïù¥Ïö© Í∞ÄÎä•Ìï©ÎãàÎã§.");
+								alert("∑Œ±◊¿Œ »ƒ ¿ÃøÎ ∞°¥…«’¥œ¥Ÿ.");
 								return;
 							}
 							
@@ -279,12 +296,12 @@
 										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
 										type : "GET" ,							
 									}).done(function(data) {
-								//Ï†ïÏÉÅ ÌÜµÏã†Ïù∏ Í≤ΩÏö∞
+								//¡§ªÛ ≈ÎΩ≈¿Œ ∞ÊøÏ
 								if (data == 'add') {
-									var msg = 'Ï∞úÌïòÍ∏∞ Ïã†Ï≤≠';
+									var msg = '¬Ú«œ±‚ Ω≈√ª';
 									alert(msg);
 								} else {
-									alert("Ï∞úÌïòÍ∏∞ Ï∑®ÏÜå");
+									alert("¬Ú«œ±‚ √Îº“");
 								}
 							});
 						})
@@ -292,23 +309,23 @@
 				});
 					
 					 
-				//============= "ÏòàÏïΩ  Event Ï≤òÎ¶¨"  Event  Ï≤òÎ¶¨ =============	
+				//============= "øπæ‡  Event √≥∏Æ"  Event  √≥∏Æ =============	
 				$(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					$("span:contains('ÏòàÎß§')" ).on("click" , function() {
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$("span:contains('øπ∏≈')" ).on("click" , function() {
 						 self.location = "/booking/getScreenMovieList";	
 					});	
 				});
 					
-			    $(function() {
-			        //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			/*     $(function() {
+			        //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			        $("button[name='search']").on("click", function() {
 			        	alert("222")
 			      
 			            fncGetPageList(1);
 			        });
 	      
-			    });
+			    }); */
 
 	            $(document).ready(function() {
 	                init_CinemaList();
@@ -377,10 +394,40 @@
 		display: table;
 
 	}
+	
+	.search .search__field {
+	  display: inline-block;
+	  width: 100%;
+	  padding: 9px 200px 9px 19px;
+	  margin-top: 14px;
+	  line-height: 18px;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  border: solid 1px #dbdee1;
+	  background-color: #fff;
+	  color: #4c4145;
+	  font-size: 13px;
+ 
+	}
+	
+	
+	.search .sbHolder .sbOptions {
+	  width: 400px;
+	  top: 37px !important;
+	  border: none;
+	  padding: 14px 7px;
+	  z-index: 23;
+	  background-color: #4c4145;
+	  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	}
 
     html{
      height: auto;
     }
       
 </style>	
+
 </html>
