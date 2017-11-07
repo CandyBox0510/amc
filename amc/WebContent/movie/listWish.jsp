@@ -248,17 +248,17 @@ d
       }
       .col-sm-4{
       	/* background-color: #EDEDED; */
-      	background-color: #e2e2e2;
+      	background-color: #d3fbff;
 /* 	    padding-top: 10px;
 	    padding-bottom: 20px;
 	    padding-left: 20px;
 	    padding-right: 20px; */
 	    /* margin-left: 1px;
 	    margin-right: 1px; */
-	    border-radius: 10px;
-	    border-color:#d2d2d2;
+	    border-radius: 15px;
+	    border-color:#000000;
 	    border-width: 30px;
- 	    box-shadow:0 3px 0 #cfcfcf; 
+ 	    box-shadow:inset 0 0 10px #63b2b5; 
       }
           
  </style>
