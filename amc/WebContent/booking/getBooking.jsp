@@ -55,7 +55,27 @@
 		$("#deleteBooking").on("click" , function() {
 			if(confirm("예매를 취소하시겠습니까?")){
 				var bookingNo = $("input[name='bookingNo']").val();
-				self.location = "/booking/deleteBooking?bookingNo="+bookingNo;
+				
+				$.ajax(
+						{
+							url : "/booking/json/refundBooking/"+bookingNo,					
+							method : "GET" ,
+							dataType : "json" ,
+							headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+							success : function(JSONData, status) {				
+								
+		                        if(JSONData == "refunded"){
+		                        	alert("정상적으로 환불처리되었습니다.");
+		                        	self.location = "/booking/deleteBooking?bookingNo="+bookingNo;
+		                        }else{
+		                        	alert("환불처리를 실패하였습니다. 관리자에게 문의해주세요.");		                        	
+		                        }		                           
+							}
+					});//end of ajax
+
 			}		
 		});
 		
@@ -172,11 +192,20 @@
 </head>
 		
 <body>
-
+ <!-- Banner -->
+        <div class="banner-top">
+        	<img alt='top banner' src="../images/banners/space.jpg">
+        </div>
+        <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+   		</header>
+   		<br><br>
 	<div class="container">
 	            <!-- Promo boxes -->
             <div class="content-wrapper">
-                <h2 class="heading heading--outcontainer">Promo boxes</h2>
+                  
                 
                 <div class="col-sm-3">
                   <div class="promo promo-field">
@@ -212,10 +241,12 @@
                       
                       
 						<form id='contact-info' method='post' novalidate="" class="form contact-info">
-			                   <div class="contact-info__field contact-info__field-mail"  >
-			                        <input type='email' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
-			                        class="form__mail" style="width:50%" autofocus autocomplete="off" required >		                     
-			                         <div class="watchlist list--download abc" id="sendQR">QR CODE 전송</div>                   
+			                   <div class="contact-info__field contact-info__field-mail" >
+			                   	<div class="in-line box">
+			                        <input type='text' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
+			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >		                     
+			                         <button class="watchlist list--download abc" id="sendQR">QR CODE 전송  </button>
+			                     </div>
 			                    </div> 			                                                              
 		                </form>
                 	
@@ -313,7 +344,23 @@
             </section>
         </div>
 
+</div>
 
 </body>
+<script type="text/javascript">
+      $(document).ready(function() {
+           if($('html').height() < window.outerHeight){
+          	$('html').css('height', '100%');
+          } 
+      });
+</script>
+
+
+
+<style type="text/css">
+ html{
+  height: auto;
+} 
+</style>
 </html>
 

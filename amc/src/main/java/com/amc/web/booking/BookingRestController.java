@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.booking.BookingService;
+import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Booking;
+import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.screen.ScreenService;
@@ -52,6 +54,9 @@ public class BookingRestController {
 		@Autowired
 		@Qualifier("userServiceImpl")
 		private UserService userService;
+		@Autowired
+		@Qualifier("cinemaServiceImpl")
+		private CinemaService cinemaService;
 		//setter Method 구현 않음
 		
 		@Value("#{commonProperties['pageUnit']}")
@@ -64,6 +69,31 @@ public class BookingRestController {
 		
 		public BookingRestController() {
 			System.out.println(this.getClass());
+		}
+		
+		//안드로이드 테스트용
+		@RequestMapping( value="json/testAndroid",  method=RequestMethod.POST)
+		public String testAndroid() throws Exception{
+			
+			System.out.println("json/booking/testAndroid : GET");
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("name", "yena");
+			jsonObj.put("subject", "computer");
+			String sendJson = jsonObj.toString();			
+			
+			return sendJson;
+		}
+		
+		//예매1단계 테스트용
+		@RequestMapping( value="json/getScreenMovieList", method=RequestMethod.POST)
+		public Movie getScreenMovieList(Model model) throws Exception{
+			
+			System.out.println("json/booking/getScreenMovieList : GET");
+			
+			List<Movie> movieList = bookingService.getScreenMovieList();
+			
+			return movieList.get(0);
 		}
 		
 
@@ -161,6 +191,20 @@ public class BookingRestController {
 				return -1;
 			}
 		
+		}
+		
+		@RequestMapping(value="/json/refundBooking/{bookingNo}", method=RequestMethod.GET)
+		public String refundBooking(@PathVariable("bookingNo") String bookingNo, Model model) throws Exception{
+			
+			Booking booking = bookingService.getBooking(bookingNo);
+			String status = cinemaService.cancelPay(booking.getImpId());
+			if(status.equals("canceled")){			
+				System.out.println("1. 환불 완료");
+				return "refunded";
+			}else{
+				return "failRefund";
+			}
+
 		}
 		
 		//회원용 예매목록조회

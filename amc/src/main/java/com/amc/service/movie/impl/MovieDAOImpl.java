@@ -307,6 +307,11 @@ public class MovieDAOImpl implements MovieDAO {
 	public List<Movie> uniMovieList(Search search) {
 		return sqlSession.selectList("MovieMapper.uniMovieList",search);
 	}
+	//예나 메소드 추가
+	@Override
+	public List<Movie> screenMovieList(Search search) {
+		return sqlSession.selectList("MovieMapper.screenMovieList",search);
+	}
 
 	@Override
 	public String checkWishList(WishList wishList) {

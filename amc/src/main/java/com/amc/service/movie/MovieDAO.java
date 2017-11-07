@@ -103,4 +103,6 @@ public interface MovieDAO {
 	public int deleteWishList(WishList wishList);
 
 	public Map<String, Object> getWishList(Map<String,Object> map);
+
+	public List<Movie> screenMovieList(Search search);
 }

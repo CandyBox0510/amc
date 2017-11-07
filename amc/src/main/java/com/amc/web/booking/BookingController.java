@@ -171,49 +171,53 @@ public class BookingController {
 	public String deleteBooking(@RequestParam("bookingNo") String bookingNo,
 								HttpSession session, Model model) throws Exception{
 		System.out.println("/booking/deleteBooking : GET");
-		//1. 환불조치하기
-		Booking booking = bookingService.getBooking(bookingNo);
-		String status = cinemaService.cancelPay(booking.getImpId());
-		System.out.println("1. 환불 완료");
 		
+		//1. 환불조치 성공시
+		Booking booking = bookingService.getBooking(bookingNo);
 		int screenContentNo = booking.getScreenContentNo();
-		String alarmSeatNo = booking.getBookingSeatNo();
-		//환불 성공시
-		if(status.equals("cancelled")){
-			//2. 예매통계 업데이트하기 
-			User user = (User) session.getAttribute("user");
-			booking.setHeadCount(booking.getHeadCount()*(-1));
-			bookingService.updateStatistic(user,booking);
-			System.out.println("2. 예매 통계 롤백 완료");
-			
-			//3. 몽고DB 삭제  & 오라클DB 삭제 
-			if(bookingService.deleteBooking(bookingNo) ==1){
-				System.out.println("3. 예매 내역삭제, 좌석현황 롤백 완료");
-			}else{
-				System.out.println("3. 예매 내역, 좌석현황 롤백 실패");
-			}
-			
-			//4. 취소표 알리미 발송하기			
-			//alarmService.smsPush("cancelAlarm", screenContentNo+"", user.getUserId(),alarmSeatNo);
-			
-			return "redirect:/booking/getAdminBookingList";			
+		String alarmSeats = booking.getBookingSeatNo();	
+
+		//2. 예매통계 업데이트하기 
+		User user = (User) session.getAttribute("user");
+		booking.setHeadCount(booking.getHeadCount()*(-1));
+		bookingService.updateStatistic(user,booking);
+		System.out.println("2. 예매 통계 롤백 완료");
+		
+		//3. 몽고DB 삭제  & 오라클DB 삭제 
+		if(bookingService.deleteBooking(bookingNo) ==1){
+			System.out.println("3. 예매 내역삭제, 좌석현황 롤백 완료");
 		}else{
-			
-			model.addAttribute("status", "success");// ?? 
-			return "forward:/booking/getBooking?bookingNo="+bookingNo;
+			System.out.println("3. 예매 내역, 좌석현황 롤백 실패");
 		}
+		
+		//4. 취소표 알리미 발송하기	
+		int length = (alarmSeats.split(",").length)/2;
+		for(int i=0;i<length;i+=2){						
+			String seat = alarmSeats.substring(i, i+2);
+			alarmService.smsPush("cancelAlarm", screenContentNo+"", user.getUserId(),seat);
+		}		
+		
+		return "redirect:/booking/getAdminBookingList";			
 	}
 	
 	//관리자 예매목록조회
-	@RequestMapping( value="getAdminBookingList", method=RequestMethod.GET)
+	@RequestMapping( value="getAdminBookingList")
 	public String getAdminBookingList(@ModelAttribute("Search") Search search,
 												Model model) throws Exception{
 		System.out.println("/booking/getAdminBookingList : GET");
 		
-		search.setCurrentPage(1);
-		search.setPageSize(10);
-		List<Booking> bookingList = bookingService.getBookingList(search); 
-		model.addAttribute("list", bookingList);
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+			
+		Map<String, Object> map= bookingService.getBookingList(search); 
+		
+		Page resultPage = new Page( search.getCurrentPage(), 
+				((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
 	
 		return "forward:/booking/listBookingAdmin.jsp";
 	}
