@@ -66,7 +66,7 @@ public class PurchaseController {
 	@RequestMapping( value="getPurchase", method=RequestMethod.GET )
 	public String getPurchase(	@ModelAttribute("purchase") Purchase purchase,
 								Model model	)throws Exception{
-		
+		System.out.println("getPurchase : "+purchase);
 		purchase = purchaseService.getPurchase(purchase);
 		model.addAttribute("purchase", purchase);
 		

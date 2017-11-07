@@ -116,6 +116,22 @@ public class UserRestController {
 	  
 	  return userService.getId(user);
    }
+	
+	@RequestMapping( value="kakaoLogin", method=RequestMethod.POST )
+	public User kakaoJsLogin(	@RequestBody User user,
+									HttpSession session ) throws Exception{
+		System.out.println("/user/json/kakaoLogin : POST");
+		System.out.println("::"+user);
+		User dbUser=userService.getUser(user.getUserId());
+		
+		if(dbUser==null){
+			System.out.println("널 값이다");
+		}else{
+				session.setAttribute("user", dbUser);
+		}
+		System.out.println("dbUser : " + dbUser);
+		return dbUser;
+	}
 
 	@RequestMapping(value="/androidGetUser")
 	public String androidGetUser(@RequestParam("email")String userId, 

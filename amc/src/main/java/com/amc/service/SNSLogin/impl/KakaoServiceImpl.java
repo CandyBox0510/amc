@@ -13,14 +13,21 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+/*import org.codehaus.jackson.type.TypeReference;*/
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.amc.common.util.RestApiUtil;
 import com.amc.service.SNSLogin.KakaoService;
+
+
+
+
+
 
 @Service("kakaoServiceImpl")
 public class KakaoServiceImpl implements KakaoService{
@@ -30,7 +37,7 @@ public class KakaoServiceImpl implements KakaoService{
 	//Rest Api KEY
 	private static final String RestApiKey = "23cb6e93a0ebb38a3ee3f59ebebe33a7";
 	//redirect_uri
-	private static final String Redirect_URL= "http://127.0.0.1:8080/user/json/kakaologin";
+	private static final String Redirect_URL= "http://127.0.0.1:8080/sns/kakaoLogin";
 	//Host
 	private static final String keyHost = "https://kauth.kakao.com";
 	
@@ -144,27 +151,28 @@ public class KakaoServiceImpl implements KakaoService{
 	@Override
 	public Map<String, String> JsonStringMap(String data) throws Exception {
 		// TODO JSON 데이터야 내게로 오너라
+		System.out.println("ddddddddddddddddddddd"+data);
 		Map<String, String> map = new HashMap<String, String>();
 		//1. map에 담아서 리턴해주기위해서 map 을 생성
 		ObjectMapper mapper = new ObjectMapper();
 		//2. ObjectMapper 객체 생성 ObjectMapper의 readValue() 를 통해서 Json 데이터를 변환시켜줄것이다. 
 		
 		try{
-			map = mapper.readValue(data, new TypeReference<HashMap<String, String>>() {
+			map = mapper.readValue(data, new TypeReference<HashMap<String, String>>(){
 			//3. 받아온 data를 TypeReference를 통해서 map으로 변환시켜준뒤에 mapper.readValue를 통해서 map에 저장해준다.
 			});
 		}catch(JsonParseException e){
-			//TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}catch(JsonMappingException e){
-			//TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}catch(IOException e){
-			//TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		//4.예외처리 까지 해준다.
-		
+
 		return map;
 		//5. 마지막으로 받아온 data를 map 에 저장이 완료되었으므로 map을 리턴시켜준다.
 	}

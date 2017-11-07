@@ -4,13 +4,21 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import com.amc.service.SNSLogin.InstaService;
 import com.amc.service.SNSLogin.KakaoService;
@@ -18,9 +26,9 @@ import com.amc.service.SNSLogin.NaverService;
 import com.amc.service.domain.User;
 import com.amc.service.user.UserService;
 
-@RestController
+@Controller
 @RequestMapping("/sns/*")
-public class SNSRestController {
+public class SNSController {
 	
 	@Autowired
 	@Qualifier("kakaoServiceImpl")
@@ -47,7 +55,7 @@ public class SNSRestController {
 		return "redirect:"+kakaoService.getCode();
 	}
 	
-	@RequestMapping(value="/kakaologin", method=RequestMethod.GET)
+	@RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
 	public String kakaoLogin(@RequestParam("code") String code) throws Exception{
 	
 		System.out.println("code : "+code);
@@ -70,19 +78,18 @@ public class SNSRestController {
 		String list = kakaoService.getAllList((String)map.get("access_token"));
 		System.out.println("list :"+list);
 		//JSON데이터 변환!
-		/*Map<String, String> getAllListMap = userService.JsonStringMap(list);*/
+		/*Map<String, String> getAllListMap = kakaoService.JsonStringMap(list);*/
 		
-		System.out.println(list.substring(4,20));
 		
-		/*		System.out.println("getAllListMap :"+getAllListMap);
-		System.out.println("id :"+(String)getAllListMap.get("kaccount_email"));
-		System.out.println("nickName :"+(String)getAllListMap.get("nickName"));
-		System.out.println("profileImageURL :"+(String)getAllListMap.get("profileImageURL"));
-		System.out.println("thumbnailURL :"+(String)getAllListMap.get("thumbnailURL"));
-		System.out.println("countryISO"+(String)getAllListMap.get("countryISO"));
-		*/		
+		JSONParser parser = new JSONParser();
+		JSONObject json = (JSONObject) parser.parse(list);	
 		
-		return "forward:/user/jason/loginUser";
+		System.out.println(json.get("kaccount_email"));
+		
+		String userId = json.get("kaccount_email").toString();
+		
+		/*return "forward:/user/jason/loginUser";*/
+		return "forward:/user/loginUser";
 		/*return "redirect:/user/addUser";*/ //UserController 부분에 있던 값
 	}
 	
@@ -103,7 +110,7 @@ public class SNSRestController {
 	
 	//TODO : 네이버 로그인 API 시작///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//http://127.0.0.1:8080/start
-	@RequestMapping(value="start", method=RequestMethod.GET)
+	@RequestMapping(value="naver", method=RequestMethod.GET)
 	public String naverStart() throws Exception{
 		System.out.println("naver start");		
 		return "redirect:"+naverService.getCode();
@@ -112,11 +119,11 @@ public class SNSRestController {
 	//TODO : CALL BACK URL
 	//	//http://127.0.0.1:8080/NaverLogin
 	@RequestMapping(value="NaverLogin", method=RequestMethod.GET)
-	public String naverLogin(@RequestParam("code")String code, @RequestParam("state")String state) throws Exception{
+	public String naverLogin(@RequestParam("code")String code, @RequestParam("state")String state, Model model) throws Exception{
 		System.out.println("code : " + code);
 		System.out.println("state : " + state);
 		
-/*		Map<String, String> mapResult = naverService.JSONStringToMap(naverService.getAccessToken(code, state));
+		Map<String, String> mapResult = naverService.JSONStringToMap(naverService.getAccessToken(code, state));
 
 		System.out.println("access_token :"+(String)mapResult.get("access_token"));
 		System.out.println("refresh_token :"+(String)mapResult.get("refresh_token"));
@@ -125,39 +132,38 @@ public class SNSRestController {
 		
 		//사용자 전체 정보받아오기를 시작합니다.
 		String list = naverService.getAllList((String)mapResult.get("token_type"), (String)mapResult.get("access_token"));
+		
 		System.out.println("list :"+list);
-*/		return null;
+		JSONObject json = (JSONObject) JSONValue.parse(list);	
+		String relist = json.get("response").toString();
 		
+		JSONParser parser = new JSONParser();
+		JSONObject rejson = (JSONObject) parser.parse(relist);	
 		
+		User user = new User();
+		user.setUserId(rejson.get("email").toString()); 
 		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		System.out.println(" user : "+user);
+		model.addAttribute("user", user);
 		
-/*		String data = (String)naverService.getAllList((String)mapResult.get("token_type"), (String)mapResult.get("access_token"));
-		System.out.println("data :"+data);
-*/		
+		return "forward:/sns/naverLogin/"+user.getUserId();
 		
+	}
+	
+	@RequestMapping( value="naverLogin/{userId:.+}", method=RequestMethod.GET )
+	public String naverLogin( @PathVariable String userId , HttpSession session ) throws Exception{
+		System.out.println("/sns/naverLogin : POST");
+		System.out.println("::"+userId);
+		User dbUser=userService.getUser(userId);
 		
-
-/*		String result = (String)naverService.getxml((String)mapResult.get("token_type"), (String)mapResult.get("access_token"));
-		System.out.println("result => " + result);
-*/		
-/*		JSONObject jsonObject = XML.toJSONObject(result);
-		System.out.println("jsonObject :"+jsonObject);
-*/		
-/*		JSONObject reponseData = jsonObject.getJSONObject("data");*/
-		/*System.out.println("responseData :"+reponseData);
-		Map<String, String> userMap = naverService.JSONStringToMap(reponseData.get("response").toString());
-		System.out.println("birthday :"+(String)userMap.get("birthday"));
-		System.out.println("profile_image :"+(String)userMap.get("profile_image"));
-		System.out.println("gender :"+(String)userMap.get("gender"));
-		System.out.println("enc_id :"+(String)userMap.get("enc_id"));
-		System.out.println("nickname :"+(String)userMap.get("nickname"));
-		System.out.println("name :"+(String)userMap.get("name"));
-		System.out.println("id :"+(String)userMap.get("id"));
-		System.out.println("email :"+(String)userMap.get("email"));
-		System.out.println("age :"+(String)userMap.get("age"));
-		*/
-	}	
+		if(dbUser==null){
+			System.out.println("널 값이다");
+		}else{
+			session.setAttribute("user", dbUser);
+		}
+			System.out.println("dbUser : " + dbUser);
+		return "redirect:/index.jsp";
+	}
 
 	//TODO : 인스타그램 로그인 API 시작///////////////////////////////////////////////////////////////////////////////////////////////////////////		
 	@RequestMapping(value="/AMC")

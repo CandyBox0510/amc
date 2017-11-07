@@ -15,8 +15,9 @@
 
                         <div class="social social--colored">
                                 <!-- <a href='' img src='../images/user/kakaobtn.png'></a>&emsp; -->
-                                <a href='/user/kakaogetCode' class="social_variant"><img src="../images/user/kakaobtn.png"></a>&emsp;
-                                <a href='/user/naver' class="social_variant"><img src="../images/user/naverbtn.PNG" width='10%'></a>
+                                <!-- <a href='/sns/kakaoGetCode' class="social_variant"><img src="../images/user/kakaobtn.png"></a>&emsp; -->
+                                <a href='javascript:loginWithKakao()' class="social_variant"><img src="../images/user/kakaobtn.png"></a>&emsp;
+                                <a href='/sns/naver' class="social_variant"><img src="../images/user/naverbtn.PNG" width='34px'></a>
                                <!--  <a href='#' class="social__variant fa fa-twitter"></a> -->
                                 
                         </div>

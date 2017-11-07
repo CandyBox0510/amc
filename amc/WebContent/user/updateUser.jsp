@@ -69,60 +69,62 @@
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="container" id="body">
 			<div class="page-header text-center">
-	       		<h3 class=" text-info">회원정보수정</h3>
+	       		<h3 class="text-info">회원정보수정</h3>
 		       	<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-		    </div>
-			<form class="form-horizontal">
-		  		<div class="form-group">
-			    	<label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
-				    	<div class="col-sm-4">
-				      		<input type="text" class="form-control" id="userId" name="userId" value="${user.userId }" placeholder="중복확인하세요"  readonly>
-				       		<span id="helpBlock" class="help-block">
-				      			<strong class="text-danger">아이디는 수정불가</strong>
-				      		</span>
+		    </div><br/><br/>
+			<form id="form" class="form row" method='post' novalidate="">
+		  		<div class="row">
+			    	<label for="userId" class="col-sm-offset-1 col-sm-3 control-label"><strong>아 이 디</strong></label>
+				    	<div class="col-sm-3" style="display:inline">
+				      		<input type="text" class="form__name" id="userId" name="userId" value="${user.userId }" readonly> 
 				    	</div>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+				    	<div class="col-sm-3">
+				    		<span id="helpBlock" class="help-block">
+			      					<strong class="text-danger">아이디는 수정불가</strong>
+			     				</span>
+				    	</div>
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
 		    		<div class="col-sm-3">
-		      			<input type="password" class="form-control" id="password" name="password" placeholder="변경비밀번호">
+		      			<input type="password" class="form__name" id="password" name="password" placeholder="변경비밀번호">
 		    		</div>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
 		    		<div class="col-sm-3">
-		      			<input type="password" class="form-control" id="password2" name="password2" placeholder="변경비밀번호 확인">
+		      			<input type="password" class="form__name" id="password2" name="password2" placeholder="변경비밀번호 확인">
 		    		</div>
-		     		<span id="helpBlock2" class="help-block2 col-sm-6"></span>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>		
-		    		<div class="col-sm-4">
-		      			<input type="text" class="form-control" id="userName" name="userName" value="${user.userName}" placeholder="변경회원이름">
+		     			<span id="helpBlock2" class="help-block2 col-sm-2"></span>
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"><strong>이름</strong></label>		
+		    		<div class="col-sm-3">
+		      			<input type="text" class="form__name" id="userName" name="userName" value="${user.userName}" placeholder="변경회원이름">
 		    		</div>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
-		    		<div class="col-sm-4">
-		      			<input type="text" class="form-control" id="addr" name="addr"  value="${user.addr}" placeholder="변경주소">
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label"><strong>주소</strong></label>
+		    		<div class="col-sm-3">
+		      			<input type="text" class="form__name" id="addr" name="addr"  value="${user.addr}" placeholder="변경주소">
 		    		</div>
-		  		</div>
-	  	  		<div class="form-group">
-		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label">상세주소</label>
-		    		<div class="col-sm-4">
-		      			<input type="text" class="form-control" id="addr" name="addr"  value="${user.addrDetail}" placeholder="변경주소">
+		  		</div><br/>
+	  	  		<div class="row">
+		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label"><strong>상세주소</strong></label>
+		    		<div class="col-sm-3">
+		      			<input type="text" class="form__name" id="addr" name="addr"  value="${user.addrDetail}" placeholder="변경주소">
 		    		</div>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label">가입일</label>
-		    		<div class="col-sm-4">
-		      			<input type="text" class="form-control" id="userRegDate" name="userRegDate"  value="${user.userRegDate}" readonly>
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="addr" class="col-sm-offset-1 col-sm-3 control-label"><strong>가입일</strong></label>
+		    		<div class="col-sm-3">
+		      			<input type="text" class="form__name" id="userRegDate" name="userRegDate"  value="${user.userRegDate}" readonly>
 		    		</div>
-		  		</div>
-		  		<div class="form-group">
-		    		<label for="phone" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
+		  		</div><br/>
+		  		<div class="row">
+		    		<label for="phone" class="col-sm-offset-1 col-sm-3 control-label"><strong>휴대전화번호</strong></label>
 		     		<div class="col-sm-2">
-				      	<select class="form-control" name="phone1" id="phone1">
+				      	<select class="search-sort" name="phone1" id="phone1">
 						  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
 							<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
 							<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
@@ -131,16 +133,16 @@
 						</select>
 		    		</div>
 		    		<div class="col-sm-2">
-		      			<input type="text" class="form-control" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="변경번호">
+		      			<input type="text" class="form__name" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="변경번호">
 		    		</div>
 		    		<div class="col-sm-2">
-		      			<input type="text" class="form-control" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="변경번호">
+		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="변경번호">
 		    		</div>
-	  			</div>
+	  			</div><br/><br/><br/>
 			  	<div class="form-group">
 			    	<div class="col-sm-offset-4  col-sm-4 text-center">
-			      		<button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-				  		<a class="btn btn-primary btn" id="back" role="button">취 &nbsp;소</a>
+			      		<button type="button" class="btn btn-md btn--info" id="update">수 &nbsp;정</button>
+				  		<button type="button" class="btn btn-md btn--info" id="back" role="button">취 &nbsp;소</button>
 			    	</div>
 			  	</div>
 			</form>
@@ -151,7 +153,7 @@
 			
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -181,7 +183,7 @@
 		//============= "수정"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "#update" ).on("click" , function() {
 				fncUpdateUser();
 			});
 		});	
@@ -252,11 +254,70 @@
 			//alert("phone : "+value);
 			$("input:hidden[name='phone']").val( value );
 				
-			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			$("#form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 		}
 	
 	</script>
 <style type="text/css">
  	#body{ padding-top: 100px; }
+ 	html{
+	        height: auto;
+	  	}
+	.btn {
+	  display: inline-block;
+	  margin-bottom: 0;
+	  font-weight: normal;
+	  text-align: center;
+	  vertical-align: middle;
+	  touch-action: manipulation;
+	  cursor: pointer;
+	  background-image: none;
+	  border: 1px solid transparent;
+	  white-space: nowrap;
+	  padding: 6px 12px;
+	  font-size: 14px;
+	  line-height: 1.42857143;
+	  border-radius: 4px;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}	
+	.btn-info {
+	  color: #ffffff;
+	  background-color: #1B516E;
+	  border-color: #3A199C;
+	}
+		  	
+	.form .form__name {
+	  margin-bottom: 10px;
+	  width: 100%;
+	  border: none;
+	  box-shadow: none;
+	  border: 1px solid #dbdee1;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  font-size: 13px;
+	  color: #b4b1b2;
+	  padding: 9px 18px 10px !important;
+	  position: relative;
+	}
+	
+	input, select {
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+	padding: 9px 18px 10px !important;
+	}
+
 </style>
 </html>
