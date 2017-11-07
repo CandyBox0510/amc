@@ -25,11 +25,7 @@ import com.amc.service.SNSLogin.KakaoService;
 @Service("kakaoServiceImpl")
 public class KakaoServiceImpl implements KakaoService{
 
-	///Field
-	@Autowired
-	@Qualifier("userDAO")
 
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	//Rest Api KEY
 	private static final String RestApiKey = "23cb6e93a0ebb38a3ee3f59ebebe33a7";

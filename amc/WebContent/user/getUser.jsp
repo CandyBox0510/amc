@@ -7,35 +7,155 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   <!-- sweetalert -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
-	
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
- 		body {
-            padding-top : 50px;
-        }
-     </style>
+   <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>회원 정보 조회</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+    <!-- Mobile Specific Metas-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
+
+        <!-- Modernizr --> 
+        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
+    
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
+        <!--   Sweetalert2 CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+        <!--   semantic UI  -->
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../semantic/semantic.min.js"></script>
+
+	   <!-- sweetalert -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+		<div class="container" id="body">
+			<div class="page-header">
+	       		<h3 class=" text-info">회원정보조회</h3>
+	       		<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+		    </div>
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
+				<div class="col-xs-8 col-md-4">${user.userId}</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
+				<div class="col-xs-8 col-md-4">${user.userName}</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>성별</strong></div>
+				<div class="col-xs-8 col-md-4">${user.gender}</div> 
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
+				<div class="col-xs-8 col-md-4">${user.addr}</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>상세주소</strong></div>
+				<div class="col-xs-8 col-md-4">${user.addrDetail}</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
+				<div class="col-xs-8 col-md-4">${ !empty user.phone1 ? user.phone1 : ''}&emsp;
+					${ !empty user.phone2 ? user.phone2 : ''}&emsp;${ !empty user.phone3 ? user.phone3 : ''}
+				</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
+				<div class="col-xs-8 col-md-4">${user.userRegDate}</div>
+			</div>
+			<hr/>
+			
+			<div class="row">
+		  		<div class="col-md-12 text-center ">
+		  			<button id="update" class="btn pull-center" type="button" class="btn btn-primary">회원정보수정</button>
+		  			<button id="delete" class="btn pull-right" type="button" class="btn btn-primary">회원탈퇴</button>
+				</div><br/>
+	 		</div>
+		</div>
+	</div>
+	
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+
+   <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+	
+</body>
 	<script type="text/javascript">
 		
 		//============= 회원정보수정 Event  처리 =============	
@@ -87,82 +207,12 @@
 		}
 		
 	</script>
+	<style type="text/css">
+ 	#body{ padding-top: 100px; }
+ 	
+	html{
+        height: auto;
+  	}
+	</style>
 	
-</head>
-
-<body>
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-		<div class="page-header">
-	       <h3 class=" text-info">회원정보조회</h3>
-	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-	    </div>
-	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userId}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userName}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>성별</strong></div>
-				<div class="col-xs-8 col-md-4">${user.gender}</div> 
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
-			<div class="col-xs-8 col-md-4">${user.addr}</div>
-		</div>
-		<hr/>
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상세주소</strong></div>
-			<div class="col-xs-8 col-md-4">${user.addrDetail}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-			<div class="col-xs-8 col-md-4">${ !empty user.phone1 ? user.phone1 : ''}&emsp;
-			${ !empty user.phone2 ? user.phone2 : ''}&emsp;${ !empty user.phone3 ? user.phone3 : ''}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userRegDate}</div>
-		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-md-12 text-center ">
-	  			<button id="update" class="btn pull-center" type="button" class="btn btn-primary">회원정보수정</button>
-	  			<button id="delete" class="btn pull-right" type="button" class="btn btn-primary" float = "right">회원탈퇴</button>
-		</div>
-		
-		<br/>
-		
- 	</div>
- 	<!--  화면구성 div Start /////////////////////////////////////-->
-
-</body>
-
 </html>

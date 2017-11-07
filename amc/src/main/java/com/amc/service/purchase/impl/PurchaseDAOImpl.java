@@ -12,7 +12,7 @@ import com.amc.common.Search;
 import com.amc.service.domain.Purchase;
 import com.amc.service.purchase.PurchaseDAO;
 
-@Repository("purchaseDAO")
+@Repository("purchaseDAOImpl")
 public class PurchaseDAOImpl implements PurchaseDAO{
 	
 	/*Field*/

@@ -14,12 +14,12 @@ import com.amc.service.product.ProductService;
 import com.amc.service.product.ProductDAO;
 
 
-@Service("productService")
+@Service("productServiceImpl")
 public class ProductServiceImpl implements ProductService {
 
 	///Field
 	@Autowired
-	@Qualifier("productDAO")
+	@Qualifier("productDAOImpl")
 	private ProductDAO productDAO;
 	
 	public ProductServiceImpl() {

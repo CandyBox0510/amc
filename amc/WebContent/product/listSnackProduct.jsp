@@ -163,7 +163,8 @@
 		
 		<div class="clearfix"></div>
 	</div>
-		
+		 
+		 <jsp:include page="/layout/bottomToolbar.jsp" />
 		 <jsp:include page="/layout/loginModal.jsp" />
 
    <!-- JavaScript-->

@@ -24,11 +24,6 @@ import com.amc.service.user.UserDAO;
 @Service("naverServiceImpl")
 public class NaverServiceImpl implements NaverService{
 
-	@Autowired
-	@Qualifier("userDAO")
-	private UserDAO userDAO;
-
-	
 	private static final String Client_ID = "OsZtgCKkqkHXDLoAg7uF";
 	private static final String Client_Secret = "BZCE1MVatO";
 	private static final String SURVICE_URL = "http://127.0.0.1:8080/user/json/start";

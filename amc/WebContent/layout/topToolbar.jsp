@@ -247,7 +247,7 @@
              
              <!-- Additional header buttons / Auth and direct link to booking-->
              <div class="control-panel">
-                 <div class="auth auth--home">
+                 <div class="auth auth--home" margin='100%'>
                    <div class="auth__show">
                    </div>
                    <a href="#" class="btn btn--sign btn--singin">
@@ -262,20 +262,20 @@
                          <li><a href="/purchase/getPurchaseList" class="auth__function-item">스토어 구매 목록</a></li>
                      </ul>
                  </div>
-                 <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
+                 
         	<!-- 유저가 비로그인 상태일 시 -->	
  			<c:if test="${empty sessionScope.user}">		
 					<!-- <form class="navbar-form navbar-right"> -->
 					<form class="navbar-form navbar-right">						
-						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
+						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">LOGIN</a> 
 					</form>
 			</c:if>	
 			
 			<c:if test="${!empty sessionScope.user}">
-				<ul class="nav navbar-nav navbar-right">
-					<a href="#" class="user-info">[${sessionScope.user.userName}] 님</a>&emsp;
+				<!-- <span class="nav navbar-nav navbar-right"> -->
+					<a href="#" class="user-info">[${sessionScope.user.userName}] 님</a>&emsp; 
 					<a href="/user/logoutUser">로그아웃</a>
-				</ul>
+				<!-- </span> -->
 			</c:if> 
         	
         	
