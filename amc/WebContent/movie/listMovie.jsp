@@ -1,88 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
-    <%@ page contentType="text/html; charset=EUC-KR" %>
+
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+            <!DOCTYPE html>
             <html>
 
+<head>
+   
+</head>
+
+<body>
+
 
     
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    	<!-- Stylesheets -->    
-    	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
+   <div class="wrapper">
+        <!-- Banner -->
+         <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+          <header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+		  </header>  
+    <div class="container">
         
-        <!--  얘네 쓰면 글씨크기 이상해짐(원래 우리가 가지고있던 css) -->
-       <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
-		<!--  -----------------------------------------------------------------------  -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+        <!-- Main content -->
+        <!--  <section class="container"> -->
+        
+        
+        
+      
+    </div>
+    	 <div class="clearfix"></div>	
+	
+	</div>	
+
+	
+	   
+        
+	 
+		<jsp:include page="/layout/bottomToolbar.jsp" />
 		
-		<!-- 우리가 가지고 있던 javaScript (현재 별문제 안됨)-->
-    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-        
-        
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-        
-        <!--  ///////////////////////// CSS ////////////////////////// -->
-		<style>
-		 body {
-	            padding-top: 70px;
-	            }
-	            .thumbnail {
-	            width: 300px;
-	            height: 250px;
-	            overflow: auto;
-	      }	
-	      
-	      #searchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	       
-	     #voidSearchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	      
-	    </style>
-        
+		
+        <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
+       
+		<!-- ------------------------------------  -->
+		<script src="/js/custom.js"></script>
+</body>
+       
     
   <!--  ///////////////////////// JavaScript ////////////////////////// -->   
    
     <script type="text/javascript">
-			    function fncGetPageList(currentPage) {
-			    	
-			    	//alert("222")
-			        $("#currentPage").val(currentPage)
-			        $("form").attr("method","POST").attr("action", "/movie/getMovieList?menu=movie").submit();
-			    }
+  //=============    검색 / page 두가지 경우 모두  Event  처리 =============	
+				
+	  			function fncGetPageList(currentPage) {
+	  
+	  				// alert("1111")
+	  
+					$("#currentPage").val(currentPage)
+					$(".form-search").attr("method","POST").attr("action", "/movie/getMovieList?menu=search").submit();
+				
+					
+				}
 			    
 			     //============= "검색"  Event  처리 =============	
 				 $(function() {
@@ -96,9 +77,9 @@
 				//============= "검색 Icon"  Event  처리 =============	
 				 $(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					$( "#searchIcon").on("click" , function() {
+					$( ".btn.btn-md.btn--danger.search__button").on("click" , function() {
 						
-						alert("searchbutton called")
+						//alert("searchbutton called")
 						fncGetPageList(1);
 					});
 					
@@ -110,8 +91,19 @@
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( ".banner-top").on("click" , function() {
 						
-						alert("Banner Top Clieck ")
+						//alert("Banner Top Clieck ")
 						self.location = "/index.jsp";
+					});
+					
+				 });
+				
+				//============= "검색 Icon"  Event  처리 =============	
+				 $(function() {
+					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "#searchIcon").on("click" , function() {
+						
+						//alert("searchbutton called")
+						fncGetPageList(1);
 					});
 					
 				 });
@@ -193,8 +185,8 @@
 						  $(document).on("click", ".fa-heart-o", function () {
 
 								
-								 //var movieNo = $(this).next().val();		
-								 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+								//var movieNo = $(this).next().val();		
+								//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
 				
 								var movieNo = $(this).find('#scMovieNo').val();		
 								var userId = $(this).find('#userId').val();			
@@ -202,24 +194,9 @@
 								alert("movieNo: " + movieNo); 					
 								alert("userId: " + userId); 
 								
-								//$(this).toggleClass('glyphicon glyphicon-heart-empty').toggleClass(".glyphicon glyphicon-heart");
-							
-								
-								//$(this).switchClass('glyphicon glyphicon-heart-empty','glyphicon glyphicon-heart');
-							    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+						 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
 							    
-							    //$(this).replaceClass('.glyphicon glyphicon-heart-empty','.glyphicon glyphicon-heart');
-								
-							    //$(this).addClass('glyphicon glyphicon-heart');
-								
-								
-								/* if (userId != null && userId.length !=0) {
-									alert("userId: " + userId);
-								} else {
-									alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
-									location.href="/user/loginUser.jsp";
-								} */
-								
+									
 								
 								if(userId == null || userId == ''){
 									alert("로그인 후 이용 가능합니다.");
@@ -289,11 +266,8 @@
 						 self.location = "/booking/getScreenMovieList";	
 					});	
 				});
-						
 					
-					
-					
-			    $(function() {
+			/*     $(function() {
 			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			        $("button[name='search']").on("click", function() {
 			        	alert("222")
@@ -301,7 +275,7 @@
 			            fncGetPageList(1);
 			        });
 	      
-			    });
+			    }); */
 
 	            $(document).ready(function() {
 	                init_CinemaList();
@@ -317,47 +291,40 @@
 	            
 		</script>
 		
-		<style type="text/css">
+		<!--  ///////////////////////// CSS ////////////////////////// -->
+<style type="text/css">
 
-		
-	
-		.countPage {
-		  font-size: 13px;
-		   margin-top: 10px;
-		}
-		
-		.search{
-			margin-right : 30px;
-		}
-		
+	 body {
+           padding-top: 70px;
+           }
+           .thumbnail {
+           width: 300px;
+           height: 250px;
+           overflow: auto;
+     }	
+     
+     #searchIcon
+      {     color: #fff;       		
+   			text-shadow: 1px 1px 1px #ccc;
+   			font-size: 1.5em;
+      }
+      
+    #voidSearchIcon
+      {     color: #fff;       		
+   			text-shadow: 1px 1px 1px #ccc;
+   			font-size: 1.5em;
+      }
+     
 
-		.movieNm {
-			  font-size: 16px;
-			  font-weight: bold;
-			  display: block;
-			  margin-bottom: 5px;
-			  margin-top: 5px;
+	.countPage {
+ 		 	font-size: 13px;
+   		 	margin-top: 10px;
+	}
 
-			}
-			
-		#poster{
-			height : calc(50vh - 100px);	
-			width : auto;	
-			height:260px; 
-			margin-left: auto;
-			margin-right: auto; 
-			display: table;
-		
-		}
-		
-		body {
-			padding-top: 80px;
-		}
+	.search{
+		 	margin-right : 30px;
+	}
 
-		
-		</style>
-    
-</head>
 
 <body>
     
@@ -374,7 +341,22 @@
 		
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
+	.movieNm {
+		  font-size: 16px;
+		  font-weight: bold;
+		  display: block;
+		  margin-bottom: 5px;
+		  margin-top: 5px;
 
+	}
+	
+	#poster{
+		height : calc(50vh - 100px);	
+		width : auto;	
+		height:260px; 
+		margin-left: auto;
+		margin-right: auto; 
+		display: table;
 
 
     <div class="container">
@@ -513,14 +495,21 @@
 		
 		<jsp:include page="/layout/loginModal.jsp" />
 		<jsp:include page="/layout/bottomToolbar.jsp" />
-		
+	.search .sbHolder .sbOptions {
+	  width: 400px;
+	  top: 37px !important;
+	  border: none;
+	  padding: 14px 7px;
+	  z-index: 23;
+	  background-color: #4c4145;
+	  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	}
 
-</body>
-
-<style>
-      html{
- 	     height: auto;
-      }
+    html{
+     height: auto;
+    }
       
 </style>	
 

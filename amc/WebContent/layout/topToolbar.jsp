@@ -107,6 +107,8 @@
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
 				
+				alert(id);
+				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
 					$("#userId").focus();
@@ -167,13 +169,15 @@
 
 
 </head>
+	
+
 <div class="navbar  navbar-inverse navbar-fixed-top">
 <!-- Header section -->
          <div class="container">
              <!-- Logo link-->
              <a href='/cinema/index' class="logo">
                  <!-- <img alt='logo' src="/images/logo.png"> -->
-                 <img src="/images/amc.png">
+                 <img src="/images/AMC_Logo.png">
              </a>
              
              <!-- Main website navigation-->
@@ -224,18 +228,22 @@
                              <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">스낵바</a></li>
                          </ul>
                      </li>
-                     <li>
-                         <span class="sub-nav-toggle plus"></span>
-                         <a href="#">[관리자 메뉴]</a>
-						<ul class="mega-menu__list">
-                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">회원 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">상품 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">판매 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">영화 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">상영 관리</a></li>
-                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">예매 관리</a></li>
-                             </ul>
-                     </li>
+                     <c:if test="${!empty sessionScope.user}">
+						<c:if test="${sessionScope.user.role eq 'admin'}">
+	                     <li>
+	                         <span class="sub-nav-toggle plus"></span>
+	                         <a href="#">[관리자 메뉴]</a>
+							<ul class="mega-menu__list">
+	                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">회원 관리</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">상품 관리</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">판매 관리</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">영화 관리</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">상영 관리</a></li>
+	                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">예매 관리</a></li>
+	                             </ul>
+	                     </li>
+	                     </c:if>
+                     </c:if>
                  </ul>
              </nav>
              

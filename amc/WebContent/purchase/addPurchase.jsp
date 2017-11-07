@@ -147,7 +147,8 @@
 			}); */
 			
 		 	$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
-				$('form').attr('method','post').attr('action','addPurchase').submit();
+				/* $('form').attr('method','post').attr('action','addPurchase').submit(); */
+				kakaoPay();
 			}); 
 			
 			$('.add-purchase .btn-info:contains("취소")').bind('click',function(){

@@ -34,6 +34,7 @@
 				<id property="screenContentNo" column="screencontent_no" jdbcType="INTEGER"/>
 				<result property="movie.movieNo" column="movie_no" jdbcType="NUMERIC"/>
 				<result property="movie.postUrl" column="poster" jdbcType="VARCHAR"/>
+				<result property="movie.movieNm" column="movie_title" jdbcType="VARCHAR"/>
 				<result property="screenDate" column="screen_date" jdbcType="DATE"/>
 				<result property="screenOpenTime" column="screen_openTime" jdbcType="DATE" />
 				<result property="screenEndTime" column="screen_endTime" jdbcType="DATE" />
@@ -149,10 +150,10 @@
 						FROM alarm a, screencontent s, movie m 
 						WHERE a.screencontent_no = s.screencontent_no AND s.movie_no = m.movie_no 
 							  AND user_id = #{user.userId}
-							  <if test="alamFlag == 'C'">
+							  <if test='alarmFlag == "C"'>
 							  AND alarm_flag = 'C' 
 							  </if>
-							  <if test="alamFlag == 'O'">
+							  <if test='alarmFlag == "O"'>
 							  AND alarm_flag = 'O'
 							  </if> 
 										) inner_table
@@ -164,10 +165,10 @@
  		SELECT COUNT(*) 
 		FROM alarm 
 		WHERE user_id = #{user.userId}
-		  <if test="alamFlag == 'C'">
+		  <if test='alarmFlag == "C"'>
 		  AND alarm_flag = 'C' 
 		  </if>
-		  <if test="alamFlag == 'O'">
+		  <if test='alamrFlag == "O"'>
 		  AND alarm_flag = 'O'
 		  </if> 
 	</select>

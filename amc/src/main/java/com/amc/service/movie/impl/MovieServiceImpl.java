@@ -147,7 +147,7 @@ public class MovieServiceImpl implements MovieService {
 				String genreNm ="";
 				String genreNms ="";
 				String postUrl = "";
-				String movieEndDate = "";		
+				//String movieEndDate = "";		
 				String syonpsis = "";
 				String trailer = "";
 				
@@ -161,12 +161,12 @@ public class MovieServiceImpl implements MovieService {
 				
 				System.out.println("MovieServiceImp addMovie :: movieCd " + movieCd);
 	     
-	            movieEndDate = movie.getEndDt();
+	            //movieEndDate = movie.getEndDt();
 	            syonpsis = movie.getSynopsis();
 	            trailer = movie.getTrailer();
 		     
 		        
-		        System.out.println("movieEndDate" + movieEndDate);
+		        //System.out.println("movieEndDate" + movieEndDate);
 		        System.out.println("syonpsis" + syonpsis);
 		        System.out.println("trailer" + trailer);
 				
@@ -191,6 +191,7 @@ public class MovieServiceImpl implements MovieService {
 			    String showTm = null;
 			    String movieNm = null;
 			    String openDt = null;
+			   
 				try {
 					jsonObject = new JSONObject(movieContentInfo);			
 					movieInfoResult = jsonObject.getString("movieInfoResult");
@@ -223,7 +224,7 @@ public class MovieServiceImpl implements MovieService {
 						
 					} else {
 						
-						   System.out.println("showTm :: " + showTm);
+						    System.out.println("showTm :: " + showTm);
 						    System.out.println("movieNm :: " + movieNm);
 						    System.out.println("openDt :: " + openDt);
 					    	    
@@ -459,7 +460,7 @@ public class MovieServiceImpl implements MovieService {
 						    movie.setMovieNm(movieNm);
 						    movie.setPostUrl(postUrl);	  
 						    movie.setShowTm(showTm);
-						    movie.setEndDt(movieEndDate);
+						    //movie.setEndDt(movieEndDate);
 						    movie.setSynopsis(syonpsis);
 						    movie.setTrailer(trailer);
 						    
@@ -471,11 +472,14 @@ public class MovieServiceImpl implements MovieService {
 						    System.out.println("watchGradeNm ::" + movie.getWatchGradeNm());
 						    System.out.println("showTm       ::" + movie.getShowTm());
 						    System.out.println("openDt       ::" + movie.getOpenDt());
-						    System.out.println("movieEndDate ::" + movie.getEndDt());
+						    //System.out.println("movieEndDate ::" + movie.getEndDt());
 						    System.out.println("syonpsis     ::" + movie.getSynopsis());
 						    System.out.println("trailer      ::" + movie.getTrailer());
+						    
+						 
 					    
 							return   movieDAO.addMovie(movie);
+							
 				
 					}
 					
@@ -484,7 +488,7 @@ public class MovieServiceImpl implements MovieService {
 				}
 				
 				
-		return -1;	    
+		return 0;	    
 			 
 	}
 

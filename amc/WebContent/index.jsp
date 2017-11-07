@@ -11,50 +11,13 @@
 <!doctype html>
 <html>
 <head>
-<!-- df
-	Basic Page Needs
-        <meta charset="utf-8">
-        <title>AMovie</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    Mobile Specific Metas
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    Fonts
-        Font awesome - icon font
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        Roboto
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
-        Open Sans
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
-    
-    Stylesheets
-
-        Mobile menu
-        <link href="css/gozha-nav.css" rel="stylesheet" />
-        Select
-        <link href="css/external/jquery.selectbox.css" rel="stylesheet" />
-
-        Slider Revolution CSS Files
-        <link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
-        <link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
-        <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">
-    
-        Custom
-        <link href="css/style.css?v=1" rel="stylesheet" />
-
-
-        Modernizr 
-        <script src="js/external/modernizr.custom.js"></script> -->
 
 </head>
 
 <body>
     <div class="wrapper">
-    	<c:set var="who" value=""/>
+   		 <!-- 세션체크 -->
+    	 <c:set var="who" value=""/>
     	<c:if test="${sessionScope.user.role ne 'admin'}">
     		<c:set var="who" value="search"/>	
     	</c:if>
@@ -63,7 +26,9 @@
     	</c:if>
     	<c:if test="${sessionScope.user.role eq 'admin'}">
     		<c:set var="who" value="admin"/>	
-    	</c:if>
+    	</c:if> 
+    	
+    	<!-- ------- -->
         <!-- Banner -->
         <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
@@ -71,6 +36,7 @@
         <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
+			
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
         <!-- Slider -->
@@ -754,136 +720,15 @@
         
         <div class="clearfix"></div>
 
-        <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">현재 상영 영화</a></li>
-                        <li><a href="#" class="nav-link__item">상영 예정 영화</a></li>
-                        <li><a href="#" class="nav-link__item">시사회</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">영화 예매</a></li>
-                        <li><a href="#" class="nav-link__item">시사회 예매</a></li>
-                        <li><a href="#" class="nav-link__item">영화관 정보</a></li>
-                        <li><a href="#" class="nav-link__item">커뮤니티</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">굿즈</a></li>
-                        <li><a href="#" class="nav-link__item">스낵바</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+        
+    </div> <!--컨테이너 끝 -->
 
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; AMC, 2017. All rights reserved. Done by AMC</p>
-                    </div>
-                </div>
-            </section>
-        </footer>
-    </div>
-
-    	<!-- open/close -->
-        <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
-
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">로그인<br><span class="login-edition">welcome to Americode Cinema!</span></p>
-
-                        <div class="social social--colored">
-                                <a href='#' class="social__variant fa fa-facebook"></a>
-                                <a href='#' class="social__variant fa fa-twitter"></a>
-                                <a href='#' class="social__variant fa fa-tumblr"></a>
-                        </div>
-
-                        <p class="login__tracker">환영합니다</br> 좋은시간보내세요!</p>
-                        
-                        <div class="field-wrap">
-                        <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">
-                        <input type='password' placeholder='Password' id='password' name='password' class="login__input">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>아이디 저장</label>
-                         </div>
-                        
-                        <div class="login__control">
-                            <button type='button' id ='login' class="btn btn-md btn--warning btn--wider">로그인</button>
-
-                            <a href="#" class="login__tracker form__tracker">회원 가입</a>
-
-                            <a href="#" class="login__tracker form__tracker">아이디/비밀번호 찾기</a>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-        </div>
+    	
 
         
-
-        
-     </div>
-<!-- df
-	JavaScript
-        jQuery 3.1.1 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        Migrate 
-        <script src="js/external/jquery-migrate-1.2.1.min.js"></script>
-        Bootstrap 3 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        Slider Revolution core JavaScript files
-        <script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js"></script>
-        <script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js"></script>
-
-        Slider Revolution extension scripts. 
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
-
-        Mobile menu
-        <script src="js/jquery.mobile.menu.js"></script>
-         Select
-        <script src="js/external/jquery.selectbox-0.2.min.js"></script>
-        Stars rate
-        <script src="js/external/jquery.raty.js"></script>
-        
-        Form element
-        <script src="js/external/form-element.js"></script>
-        Form validation
-        <script src="js/form.js"></script>
-
-        Twitter feed
-        <script src="js/external/twitterfeed.js"></script>
-
-        Custom
-        <script src="js/custom.js"></script>
-		
-	      <script type="text/javascript">
-              $(document).ready(function() {
-                init_Home();
-              });
-		    </script> -->
+</div>
 		    <script src="/js/custom.js"></script>
 		<script>
 		function unifiedSearch(){
