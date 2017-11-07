@@ -12,6 +12,7 @@
   		<result property="movie.movieNm" 					column="movie_title" 		jdbcType="VARCHAR"/>
   		<result property="movie.postUrl" 					column="poster" 			jdbcType="VARCHAR"/>
   		<result property="movie.movieNo" 					column="movie_no" 			jdbcType="NUMERIC"/>
+  		<result property="movie.openDt" 					column="movie_opendate" 	jdbcType="VARCHAR"/>
   		<result property="wishFlag"  						column="wish_flag"	 		jdbcType="VARCHAR"/>
   		<result property="wishRegDate"  					column="wish_regdate" 		jdbcType="DATE"/>
   	</resultMap>
@@ -31,14 +32,19 @@
 	<delete id="deleteWishList" parameterType="wishList">
 		DELETE
 		FROM wishlist
+		<if test="movie.movieNo != '0' and user.userId != '' and wishFlag != ''">
 		WHERE movie_no = #{movie.movieNo} AND user_id = #{user.userId} AND wish_flag = #{wishFlag}
+		</if>
+		<if test="wishNo != ''">
+		WHERE wish_no = ${wishNo}
+		</if>
 	</delete>
 	
  	<select  id="getWishList"  parameterType="map"	 resultMap="wishListSelectMap">
  	SELECT *							
 	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
 		 	 FROM 		(SELECT w.wish_no, w.wish_regdate, w.wish_flag,
-		 	 					m.poster, m.movie_no, m.movie_title
+		 	 					m.poster, m.movie_no, m.movie_title, to_char(m.movie_opendate, 'YYYY-MM-DD') movie_opendate
 						FROM wishlist w, movie m 
 						WHERE w.movie_no = m.movie_no  AND user_id = #{user.userId}) inner_table
 			 WHERE ROWNUM &lt;=#{search.endRowNum} )

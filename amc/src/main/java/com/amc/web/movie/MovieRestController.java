@@ -168,7 +168,7 @@ public class MovieRestController {
 		String movieName = "";
 		String genreNms = "";
 		String postUrl = "";
-		String movieEndDate = "";
+		//String movieEndDate = "";
 		String syonpsis = "";
 		String trailer = "";
 
@@ -177,15 +177,15 @@ public class MovieRestController {
 			movieCd = itemList[0].substring(1, 9);
 			movieName = itemList[1];
 			movieContry = itemList[2];
-			movieEndDate = itemList[3];
-			syonpsis = itemList[4];
-			trailer = itemList[5];
+			//movieEndDate = itemList[3];
+			syonpsis = itemList[3];
+			trailer = itemList[4];
 		}
 
 		System.out.println("movieCd : " + movieCd);
 		System.out.println("movieName : " + movieName);
 		System.out.println("movieContry : " + movieContry);
-		System.out.println("movieEndDate : " + movieEndDate);
+		//System.out.println("movieEndDate : " + movieEndDate);
 		System.out.println("syonpsis : " + syonpsis);
 		System.out.println("trailer : " + trailer);
 
@@ -193,7 +193,7 @@ public class MovieRestController {
 
 		Movie movie = new Movie();
 		movie.setMovieCd(movieCd);
-		movie.setEndDt(movieEndDate);
+		//movie.setEndDt(movieEndDate);
 		movie.setSynopsis(syonpsis);
 		movie.setTrailer(trailer);
 
@@ -207,7 +207,36 @@ public class MovieRestController {
 			return 0;
 		} else
 
-			return rtn = movieService.addMovie(movie);
+			rtn = movieService.addMovie(movie);
+		
+		
+			System.out.println("movieService.addMovie(movie) return code  :: " + rtn );
+			
+			
+	        if((rtn == 1 || rtn == 0))
+	        {
+	            System.out.println("New record added successfully! ");
+	            response.setContentType("text/xml");
+	            response.setCharacterEncoding("UTF-8");
+	
+	            //response.sendError(200, "success");
+	            response.setStatus(200, "OK");
+	
+	        }
+	        else
+	        {
+	            System.out.println("Failed to add Record! : ");
+	            response.setContentType("text/xml");
+	            response.setCharacterEncoding("UTF-8");
+	
+	            //response.sendError(399, "not Inserted successfully");   
+	            response.setStatus(404, "Error while inserting");   
+	        }           
+	
+		
+		return rtn ;
+			
+		
 	}
 
 	private final String PATH = "C:/amcPoster/";
@@ -624,7 +653,7 @@ public class MovieRestController {
 		Map<String,Object> tempMap = new HashMap<String,Object>();
 		
 		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
-		System.out.println((Long)(jo.get("currentPage")));
+		System.out.println("현재페이지 : " +(Long)(jo.get("currentPage")));
 		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
 		
 		if(search.getCurrentPage()==0){
@@ -650,6 +679,22 @@ public class MovieRestController {
 		System.out.println("■■■위시리스트 확인■■■ : "+map.get("listWish"));
 		
 	    return map;
+	}
+	
+	
+	@RequestMapping( value="/json/deleteWishList/{wishNo}")
+	public int deleteWishList(HttpSession session,Model model,
+											@PathVariable("wishNo")String wishNo
+											) throws Exception {
+		WishList wishList = new WishList();
+		Movie movie = new Movie();
+		User user = new User();
+		movie.setMovieNo(0);
+		wishList.setMovie(movie);
+		wishList.setUser(user);
+		wishList.setWishFlag("");
+		wishList.setWishNo(Integer.parseInt(wishNo));
+		return movieService.deleteWishList(wishList);
 	}
 
 }

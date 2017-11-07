@@ -36,7 +36,6 @@
         <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
-			
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
         <!-- Slider -->
@@ -433,10 +432,10 @@
                  <c:forEach var="count" begin="1" end="6">
                  <c:if test="${count <=2 }">
                      <div class="movie-beta__item ">
-                     	<c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
-                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
                         <%-- <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;"> --%>
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
@@ -456,10 +455,10 @@
                  </c:if>
                  <c:if test="${count == 3 }">
                      <div class="movie-beta__item third--item">
-                        <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                        <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
-                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
@@ -478,10 +477,10 @@
                  </c:if>
 				 <c:if test="${count == 4}">
                      <div class="movie-beta__item hidden-xs">
-                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq ''}">
+                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
-                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne ''}">
+                     	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </c:if>
                          <ul class="movie-beta__info">
@@ -585,7 +584,7 @@
                             <div class="movie movie--test movie--test--dark movie--test--left">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
+                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:280px;">
                                         <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -609,7 +608,7 @@
                             <div class="movie movie--test movie--test--light movie--test--left">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
+                                        <img alt='' src="${movie.postUrl}" style="width:100%; height:280px;">
                                         <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -633,7 +632,7 @@
                             <div class="movie movie--test movie--test--light movie--test--right">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
+                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:280px;">
                                     <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -657,7 +656,7 @@
                             <div class="movie movie--test movie--test--dark movie--test--right">
                                 <div class="movie__images">
                                     <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}" class="movie-beta__link">
-                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:auto;">
+                                    <img alt='' src="${movie.postUrl}" style="width:100%; height:280px;">
                                     <%-- <img alt='' src="${movie.postUrl}"> --%>
                                     </a>
                                 </div>
@@ -740,5 +739,11 @@
       html{
  	     height: auto;
       }
+      .movie-best .movie-beta__info {
+	    width: 100%;
+	   	 
+	  }
+      
+
  </style>
 </html>

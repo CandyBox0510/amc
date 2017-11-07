@@ -66,12 +66,17 @@
 	<delete id="deleteAlarm" parameterType="alarm">
 		DELETE
 		FROM alarm
-		WHERE screencontent_no = #{screenContent.screenContentNo} AND user_id = #{user.userId}
-		<if test="alarmSeatNo != null">
-			AND alarm_flag = 'C'
+		<if test="user.userId != null "> <!-- switch용 -->
+			WHERE screencontent_no = #{screenContent.screenContentNo} AND user_id = #{user.userId}
+			<if test="alarmSeatNo != null">
+				AND alarm_flag = 'C'
+			</if>
+			<if test="alarmSeatNo == null">
+				AND alarm_flag = 'O'
+			</if>
 		</if>
-		<if test="alarmSeatNo == null">
-			AND alarm_flag = 'O'
+		<if test="user.userId == null"> <!-- 마이페이지 리스트 용 -->
+			WHERE alarm_no = #{alarmNo}
 		</if>
 	</delete>
 	 
@@ -106,16 +111,7 @@
 				  FROM alarm WHERE screencontent_no = ${search.searchKeyword} AND alarm_flag = 'O')inner, users u
 			WHERE inner.user_Id = u.user_Id
 		</if>
-		
-		<!-- 마이페이지용  -->
-	 	<if test="search.searchCondition != 'openAlarm'">
-		 	SELECT * 
-		 	FROM alarm 
-			WHERE 
-			<if test="user.userId != ''">
-				user_id = #{user.userId} AND alarm_flag = 'O'
-			</if>
-		</if> 
+
  	</select>
  	
  	<select  id="getPushCancelAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
@@ -129,15 +125,6 @@
 			WHERE inner.user_Id = u.user_Id
 		</if>
 		
-		<!-- 마이페이지용  -->
-	 	<if test="search.searchCondition != 'cancelAlarm'">
-		 	SELECT * 
-		 	FROM alarm 
-			WHERE 
-			<if test="user.userId != ''">
-				user_id = #{user.userId} AND alarm_flag = 'C'
-			</if>
-		</if> 
  	</select>
  	
  	

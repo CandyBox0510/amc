@@ -53,8 +53,9 @@
 					     genre,rating,runningtime,synopsis,trailer)
 		VALUES (  	seq_movie_no.nextval, sysdate,
 	    <if test="openDt 		 != null">            #{openDt},  							</if>  
-		<if test="endDt 		 != null">			  to_date(#{endDt},'mm/dd/yyyy'),       </if>
-				  #{movieNm},
+	    		sysdate + 30,
+	    		  #{movieNm},
+	
 		<if test="postUrl   	 != null">			  #{postUrl},       					</if>	
 		<if test="directors 	 != null">			  #{directors},    						</if>
 	

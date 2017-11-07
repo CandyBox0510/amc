@@ -1,186 +1,256 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<!DOCTYPE html>
-
-<html lang="ko">
-	
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="org.springframework.util.StringUtils" %>
+<!doctype html>
+<html>
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
-   <!-- jQuery UI toolTip ªÁøÎ CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip ªÁøÎ JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-	  body {
-            padding-top : 50px;
-        }
-    </style>
+   <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
+    <!-- Mobile Specific Metas-->
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+    
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
+        <!--   Sweetalert2 CDN  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
 	
-		//=============    ∞Àªˆ / page µŒ∞°¡ˆ ∞ÊøÏ ∏µŒ  Event  √≥∏Æ =============	
-		function fncGetList(currentPage) {
-			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
-		}
-		
-		
-		//============= "∞Àªˆ"  Event  √≥∏Æ =============	
-		 $(function() {
-			 $( "button:contains('øπ')" ).on("click" , function() {
-			 self.location ="/booking/getBookingList?searchCondition=past";
-			 });
-		 });
-		
-		 $(function() {
-			 $( "button:contains('¡ˆ≥≠')" ).on("click" , function() {
-			 self.location ="/booking/getBookingList?searchCondition=now";
-			 });
-		 });
-		
-		
-		//============= øπ∏≈∏Ò∑œø° øπ∏≈ ªÛºº ∫∏±‚  Event  √≥∏Æ(Click) =============	
-		 $(function() {
-		
-			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "td:nth-child(3)" ).on("click" , function() {
-				 self.location ="/booking/getBooking?bookingNo="+$(this).text().trim();
-			});
-			
-			$( "td:nth-child(5)" ).on("click" , function() {
-				 self.location ="/booking/getBooking?bookingNo="+$(this).parent().find('input[type="hidden"]').val();
-			});
-			
-		});	
-		
-		
-		//============= øπ∏≈∏Ò∑œø° øπ∏≈¡§∫∏∫∏±‚  Event  √≥∏Æ (double Click)=============
-		 $(function() {
-			 
-			//==> userId LINK Event End User ø°∞‘ ∫∏¿œºˆ ¿÷µµ∑œ 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-			$("h7").css("color" , "red");
-			
-			//==> æ∆∑°øÕ ∞∞¿Ã ¡§¿««— ¿Ã¿Ø¥¬ ??
-			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-		});	
+		<!--   semantic UI  -->
+		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<script
+		  src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="../semantic/semantic.min.js"></script>
+  
+  <script type="text/javascript">
+  
+   
+	//Î¨¥ÌïúÏä§ÌÅ¨Î°§
+	var count = 2;
+	var all = '';
+	var condition = 'now';
 	
-	</script>
+	$( window ).scroll(function(){
+		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
+			 loadList(count,condition);
+			 console.log(count++);
+		 }//end ifÎ¨∏
+	 }); 
 	
+	$(function() {
+		$("#now").on("click",function(){
+			condition = 'now';
+			count = 2;
+			loadList(1,condition);
+		});
+		
+		$("#past").on("click",function(){
+			condition = 'past';
+			count = 2;
+			loadList(1,condition);
+		});
+	})
+	
+	function loadList(page,condition){
+		 $.ajax({
+				url:"/booking/json/getBookingList/",
+				method:"POST",
+				async : false,
+				headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+				},
+				data:JSON.stringify({
+					currentPage : page,
+					searchCondition : condition
+				}),
+				
+				success : function(JSONData, status){
+						
+								var booking = JSONData.list;
+								
+								for(i in JSONData.list){
+	
+									all = '<div class="col-sm-4 col-md-3">'
+									all += 	'<div class="gallery-item">'
+									all += 	  '<a href="/movie/getMovie?movieNo='+booking[i].movie.movieNo+'&menu='
+											   if(booking[i].screenContent.previewFlag == 'Y'){
+												    all += 'preview'
+											   }else{
+													all += 'movie'												   
+											   }
+									all +=	   '">'
+									all += 	  '<img src="' +booking[i].movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+									all += 		'<div class="alert alert-success" role="alert">'
+									all +=			'<strong><td align="left">'
+											   if(booking[i].screenContent.previewFlag == 'Y'){
+												    all += booking[i].screenContent.previewTitle
+											   }else{
+													all += booking[i].movie.movieNm												   
+											   }
+									all +=	 		'</td></strong>'
+									all +=          '<br/>ÏÉÅÏòÅÍ¥Ä : '+booking[i].screenContent.screenThater+' Í¥Ä'
+									all +=          '<br/>Ìã∞ÏºìÏàò : '+booking[i].headCount+' ( '+booking[i].bookingSeatNo+')'
+									all += 			'<span class="label label-success">'
+									all +=          '<input type="hidden" value="'+booking[i].bookingNo+'">'
+									all += 			'ÏòàÎß§ÎÇ¥Ïó≠</span></a>'
+									all +=		'</div>'
+									all += 	   '<a href="/booking/getBooking?bookingNo='+booking[i].bookingNo+'" class="gallery-item__descript gallery-item--success-link">'
+									all +=     '<span class="gallery-item__icon"><i class="fa fa-tag"></i></span>'
+									all += 	   '<p class="gallery-item__name">ÏòàÎß§ ÏÉÅÏÑ∏ Ï°∞Ìöå'
+									all += 	   '</p></a>'
+									all +=	'</div>'
+									all +='</div>'
+										
+									console.log($(".gallery-wrapper").html());
+									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+							}
+					//ajax Î™©Î°ù ÎßÅÌÅ¨ Î∞è ÏÉâ Ï∂îÍ∞Ä ÎÅù
+				}
+		})//end ajax  
+	}
+ 
+   </script> 
 </head>
 
 <body>
-	
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
-	<div class="container">
-	
-		<div class="page-header text-info">
-	       <h3>øπ∏≈∏Ò∑œ¡∂»∏</h3>
-	    </div>
-	    
-	    <!-- table ¿ß¬  ∞Àªˆ Start /////////////////////////////////////-->
-	    <div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		¿¸√º  ${resultPage.totalCount } ∞«ºˆ, «ˆ¿Á ${resultPage.currentPage}  ∆‰¿Ã¡ˆ
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-				  
-				  <button type="button" class="label label-info">øπ∏≈</button>
-				  <button type="button" class="label label-info">¡ˆ≥≠øπ∏≈</button>
-				  
-				  <!-- PageNavigation º±≈√ ∆‰¿Ã¡ˆ ∞™¿ª ∫∏≥ª¥¬ ∫Œ∫– -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-	    	</div>
-	    	
-		</div>
-		<!-- table ¿ß¬  ∞Àªˆ Start /////////////////////////////////////-->
-		
-		
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-            <th align="center">No</th>
-            <th align="left">øπ∏≈¿œ¿⁄</th>
-            <th align="left">øπ∏≈π¯»£</th>
-            <th align="left">øµ»≠ Ω√ªÁ»∏ ±∏∫–</th>
-            <th align="left">øµ»≠¡¶∏Ò</th>
-            <th align="left">ªÛøµ≥Ø¬•</th>
-            <th align="left">¡¬ºÆ</th>
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-		  <c:set var="i" value="0" />
-		  <c:forEach var="booking" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left">${booking.bookingRegDate}</td>
-			  <td align="left" title="Click : øπ∏≈ ªÛºº ¡∂»∏">${booking.bookingNo}</td>
-			  <td align="left">${booking.screenContent.previewFlag}</td>
-			  <c:if test="${booking.screenContent.previewFlag eq 'Y'}">
-			  	<td align="left">${booking.screenContent.previewTitle}</td>
-			  	<input type="hidden" value="${booking.bookingNo}">
-			  </c:if>
-			  <c:if test="${booking.screenContent.previewFlag eq 'N'}">
-			  	<td align="left">${booking.movie.movieNm}</td>
-			  	<input type="hidden" value="${booking.bookingNo}">
-			  </c:if>
-			  <td align="left">${booking.screenContent.screenDate}</td>
-			  <td align="left">${booking.headCount} (${booking.bookingSeatNo})</td>
-			</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table>
-	  <!--  table End /////////////////////////////////////-->
-	  
- 	</div>
- 	<!--  »≠∏È±∏º∫ div End /////////////////////////////////////-->
- 	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator.jsp"/>
-	<!-- PageNavigation End... -->
-	
-</body>
+    <div class="wrapper">
+        <!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="/images/banners/space.jpg">
+        </div>
 
+        <!-- Header section -->
+        <header class="header-wrapper">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+        </header>
+        
+        <!-- Main content -->
+        <section class="container">
+            <div class="col-sm-12">
+                <h2 class="page-heading">ÎÇòÏùò ÏòàÎß§ Î¶¨Ïä§Ìä∏</h2>
+                <p class="btn btn-md btn--danger" id="now">ÌòÑÏû¨ ÏòàÎß§ ÎÇ¥Ïó≠</p>
+                <p class="btn btn-md btn--danger" id="past">ÏßÄÎÇú ÏòàÎß§ ÎÇ¥Ïó≠</p>
+                <div class="row">
+	                <div class="gallery-wrapper">
+	                 <c:set var="i" value="0" />
+					  <c:forEach var="booking" items="${list}">
+						<c:set var="i" value="${ i+1 }" />
+        				<div class="col-sm-4 col-md-3">
+						     <div class="gallery-item">
+						     	<c:set var="what" value=""/>
+						     	<c:if test="${booking.screenContent.previewFlag eq 'Y'}">
+						     		<c:set var="what" value="preivew"/>
+						     	</c:if>
+						     	<c:if test="${booking.screenContent.previewFlag eq 'N'}">
+						     		<c:set var="what" value="movie"/>
+						     	</c:if>
+	                            <a href="/movie/getMovie?movieNo=${booking.movie.movieNo}&menu=${what}">
+	                                <img alt='' src="${booking.movie.postUrl}" style="width: 100%; height: 365px;">
+	                            </a>
+	                            <div class="alert alert-success" role="alert">
+  									<strong>
+  										<td align="left">
+  										<c:if test="${booking.screenContent.previewFlag eq 'Y'}">
+								     		${booking.screenContent.previewTitle}
+								     	</c:if>
+								     	<c:if test="${booking.screenContent.previewFlag eq 'N'}">
+								     		${booking.movie.movieNm}
+								     	</c:if>
+								     	</td>
+  									</strong>
+  									<br/>${booking.screenContent.screenOpenTime}
+  									<br/>ÏÉÅÏòÅÍ¥Ä : ${booking.screenContent.screenTheater} Í¥Ä
+  									<br/>Ìã∞ÏºìÏàò : ${booking.headCount} ( ${booking.bookingSeatNo})
+  									<span class="label label-success"><input type="hidden" value="${booking.bookingNo}">ÏòàÎß§ÎÇ¥Ïó≠</span>
+								</div>
+	                            <a href="/booking/getBooking?bookingNo=${booking.bookingNo}" class="gallery-item__descript gallery-item--success-link">
+	                                <span class="gallery-item__icon"><i class="fa fa-tag"></i></span>
+	                                <p class="gallery-item__name">ÏòàÎß§ ÏÉÅÏÑ∏ Ï°∞Ìöå</p>
+	                            </a>
+ 	                         </div>       
+	                    </div>
+	             		</c:forEach>	
+	                </div>
+                </div>
+            </div>
+        </section>
+       
+       
+       	<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+     </div>
+  
+
+
+   <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+      
+      <script type="text/javascript">
+            $(document).ready(function() {
+                init_BookingOne();
+            });
+      </script>
+</body>
+ <style>
+      html{
+ 	     height: auto;
+      }
+ </style>
 </html>

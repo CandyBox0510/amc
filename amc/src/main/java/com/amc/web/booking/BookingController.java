@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +23,7 @@ import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
+import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Booking;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
@@ -220,6 +223,7 @@ public class BookingController {
 	}
 	
 	//회원용 예매목록조회
+	@SuppressWarnings("unchecked")
 	@RequestMapping( value="getBookingList", method=RequestMethod.GET)
 	public String getBookingList(@ModelAttribute("Search")Search search,HttpSession session,Model model) throws Exception {
 		
@@ -240,6 +244,17 @@ public class BookingController {
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 						pageUnit, pageSize);
+		
+		BookingRestController brc = new BookingRestController();
+		
+		List<Booking> seatChangeList = (List<Booking>)(map.get("list"));
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		for(int i = 0; i < seatChangeList.size(); i++){
+			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getBookingSeatNo(), 10, model));
+			seatChangeList.get(i).setBookingSeatNo((String)jsonObject.get("seatNo"));
+		}
 		
 		model.addAttribute("search",search);
 		model.addAttribute("resultPage",resultPage);

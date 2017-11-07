@@ -1,10 +1,13 @@
 package com.amc.web.alarm;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
+import com.amc.service.domain.Alarm;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
+import com.amc.web.booking.BookingRestController;
 
 @Controller
 @RequestMapping("/alarm/*")
@@ -47,6 +52,7 @@ public class AlarmController {
 		return "forward:/booking/selectCancelAlarm.jsp";	
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="getCancelAlarmList", method=RequestMethod.GET)
 	public String getCancelAlarmList(@ModelAttribute("Search")Search search,@RequestParam("alarmFlag")String alarmFlag,
 										HttpSession session,Model model) throws Exception{
@@ -70,6 +76,17 @@ public class AlarmController {
 		Page resultPage	= 
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 						pageUnit, pageSize);
+		
+		BookingRestController brc = new BookingRestController();
+		
+		List<Alarm> seatChangeList = (List<Alarm>)(map.get("list"));
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		for(int i = 0; i < seatChangeList.size(); i++){
+			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getAlarmSeatNo(), 10, model));
+			seatChangeList.get(i).setAlarmSeatNo((String)jsonObject.get("seatNo"));
+		}
 		
 		System.out.println("■■■취소알람확인■■■ : "+map.get("list"));
 		

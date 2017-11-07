@@ -82,9 +82,6 @@ public interface MovieDAO {
 
 	// 회원이 하트를 눌렀을때 위시리스트에 존재 하는지 안하는지 확인(Count로)
 	public int existWish(int moiveNo, String userId);
-
-	// 존재하면 delete
-	public int deleteWish(int moiveNo, String userId);
 	
 	// 차트목록 가져오기
 	public List<Movie> getChart(int movieNo);

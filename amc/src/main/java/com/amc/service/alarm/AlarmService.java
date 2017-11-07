@@ -25,5 +25,6 @@ public interface AlarmService {
 	public String smsPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception;
 	
 	public String appPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception;
-
+	
+	public int deleteAlarm(Alarm alarm);
 }

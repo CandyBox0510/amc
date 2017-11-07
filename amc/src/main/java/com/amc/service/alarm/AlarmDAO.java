@@ -29,4 +29,6 @@ public interface AlarmDAO {
 	
 	public String checkDuplicationSeat(Alarm alarm);
 	
+	public int deleteAlarm(Alarm alarm);
+	
 }

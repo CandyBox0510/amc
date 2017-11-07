@@ -188,12 +188,6 @@ public class MovieApiDAOImpl implements MovieDAO {
 	}
 
 	@Override
-	public int deleteWish(int moiveNo, String userId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<Movie> getChart(int movieNo) {
 		// TODO Auto-generated method stub
 		return null;
