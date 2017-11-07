@@ -100,12 +100,130 @@
 		<script type="text/javascript">
     	//============= "로그인"  Event 연결 =============
 		$( function() {
+			$(".userManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/user/getUserList");
+				}
+			})
+			
+			$(".storeManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/product/getGoodsList?menu=manage&searchKeyword=G");
+				}
+				
+			})
+			
+			$(".purchaseManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/purchase/getSaleList?searchKeyword=saleList");
+				}
+			})
+			
+			$(".movieManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/movie/getMovieList?menu=manage");
+				}
+			})
+			
+			$(".screenManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/screen/getScreenList");
+				}
+			})
+			$(".bookingManage").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/booking/getAdminBookingList");
+				}
+			})
+			
+			$(".myInfo").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/user/getUser?=${sessionScope.user}");
+				}
+			})
+			
+			$(".myBooking").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/booking/getBookingList?searchCondition=now");
+				}
+			})
+			
+			$(".myWish").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/movie/getWishList");
+				}
+			})
+			
+			$(".myCancel").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/alarm/getCancelAlarmList?alarmFlag=C");
+				}
+			})
+			
+			$(".myOpen").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/alarm/getOpenAlarmList?alarmFlag=O");
+				}
+			})
+			
+			$(".myPurchase").on("click",function(){
+				if( '${sessionScope.user.userId}' == ''){
+					alert("로그인을 다시 해주세요");
+				    $('.overlay').removeClass('close').addClass('open');
+				}else{
+					location.replace("/purchase/getPurchaseList");
+				}
+			})
+			
+		    $('.overlay-close').click(function (e) {
+		        e.preventDefault;
+		        $('.overlay').removeClass('open').addClass('close');
+		
+		        setTimeout(function(){
+		            $('.overlay').removeClass('close');}, 500);
+		    });
+			
 			$("#userId").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#login").on("click" , function() {
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
+				
+				alert(id);
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
@@ -232,12 +350,12 @@
 	                         <span class="sub-nav-toggle plus"></span>
 	                         <a href="#">[관리자 메뉴]</a>
 							<ul class="mega-menu__list">
-	                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">회원 관리</a></li>
-	                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">상품 관리</a></li>
-	                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">판매 관리</a></li>
-	                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">영화 관리</a></li>
-	                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">상영 관리</a></li>
-	                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">예매 관리</a></li>
+	                                 <li class="mega-menu__nav-item userManage"><a href="#">회원 관리</a></li>
+	                                 <li class="mega-menu__nav-item storeManage"><a href="#">상품 관리</a></li>
+	                                 <li class="mega-menu__nav-item purchaseManage"><a href="#">판매 관리</a></li>
+	                                 <li class="mega-menu__nav-item movieManage"><a href="#">영화 관리</a></li>
+	                                 <li class="mega-menu__nav-item screenManage"><a href="#">상영 관리</a></li>
+	                                 <li class="mega-menu__nav-item bookingManage"><a href="#">예매 관리</a></li>
 	                             </ul>
 	                     </li>
 	                     </c:if>
@@ -246,7 +364,9 @@
              </nav>
              
              <!-- Additional header buttons / Auth and direct link to booking-->
+             
              <div class="control-panel">
+             	<c:if test="${!empty sessionScope.user}">
                  <div class="auth auth--home" margin='100%'>
                    <div class="auth__show">
                    </div>
@@ -254,14 +374,15 @@
                        	MyPage
                    </a>
                      <ul class="auth__function">
-                         <li><a href="/user/getUser" class="auth__function-item">내 정보 보기</a></li>
-                         <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">예매 목록</a></li>
-                         <li><a href="/movie/getWishList" class="auth__function-item">위시리스트</a></li>
-                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">취소표 알리미</a></li>
-                         <li><a href="/alarm/getOpenAlarmList?alarmFlag=O" class="auth__function-item">티켓오픈시간 알리미</a></li>
-                         <li><a href="/purchase/getPurchaseList" class="auth__function-item">스토어 구매 목록</a></li>
+                         <li class="myInfo"><a href="#" class="auth__function-item">내 정보 보기</a></li>
+                         <li class="myBooking"><a href="#" class="auth__function-item">예매 목록</a></li>
+                         <li class="myWish"><a href="#" class="auth__function-item">위시리스트</a></li>
+                         <li class="myCancel"><a href="#" class="auth__function-item">취소표 알리미</a></li>
+                         <li class="myOpen"><a href="#" class="auth__function-item">티켓오픈시간 알리미</a></li>
+                         <li class="myPurchase"><a href="#" class="auth__function-item">스토어 구매 목록</a></li>
                      </ul>
                  </div>
+                 </c:if>
                  
         	<!-- 유저가 비로그인 상태일 시 -->	
  			<c:if test="${empty sessionScope.user}">		
@@ -278,10 +399,27 @@
 				<!-- </span> -->
 			</c:if> 
         	
-        	
         	</div>
         	
          	
 	 </div>
 </div>
+<style>
+
+ul#navigation {
+	margin : auto;
+	width : 50%;
+	padding : 0 0 0 100px;
+	float: none;
+	/* min-width:200px; */
+}
+.auth--home {
+  position: relative;
+  top: -10px;
+  right: 155px;
+}
+
+
+</style>
 </html>
+

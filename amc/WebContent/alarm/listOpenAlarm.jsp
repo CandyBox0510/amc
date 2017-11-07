@@ -56,40 +56,68 @@
   <script type="text/javascript">
   
 	//무한스크롤
-	var page = 2;
+	var count = 2;
 	var all = '';
 	
 	$( window ).scroll(function(){
 		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
+			 loadList(count);
+			 console.log(count++);
+		 }//end if문
+	 }); 
+	
+	 $(function() {
+		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $( ".label-danger" ).on("click" , function() {
 			 $.ajax({
-					url:"/movie/json/getInfiOpenAlarmList/"+'${sessionScope.user.userId}',
-					method:"POST",
-					headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-					},
-					data:JSON.stringify({
-						currentPage : page,
-						alarm : O
-					}),
-					
-					success : function(JSONData, status){
-							
-								
+	               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+	               method : "GET" ,
+	               async : false,
+	               success : function(data, status) {
+	                  if(data == 1){
+	                	 $(".gallery-wrapper").empty();
+ 						for(var i = 1; i < count+1; i++ ){
+							loadList(i);
+						} 
+	                  }
+	               }
+	      });//end of ajax
+		});
+	 })
+  
+	function loadList(page){
+		 var O = 'O';
+		 $.ajax({
+				url:"/alarm/json/getInfiOpenAlarmList/"+'${sessionScope.user.userId}',
+				method:"POST",
+				async : false,
+				headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+				},
+				data:JSON.stringify({
+					currentPage : page,
+					alarmFlag : O
+				}),
+				
+				success : function(JSONData, status){
+						
 								var alarm = JSONData.list;
 								
-								for(i in JSONData.listWish){
+								for(i in JSONData.list){
 	
 									all = '<div class="col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
-									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
-									all += 		'<div class="alert alert-info" role="alert">'
+									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+									all += 		'<div class="alert alert-danger" role="alert">'
 									all +=			'<strong>티켓 오픈 일자</strong><br/>'
 									all +=           alarm[i].screenContent.ticketOpenDate
-									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
+									all += 			'<span class="label label-danger">'
+									all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
+									all += 			'취소</span></a>'
 									all +=		'</div>'
-									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
+									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--video-link">'
 									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
 									all += 	   '<p class="gallery-item__name">'
 												if(alarm[i].screenContent.previewFlag == 'Y'){
@@ -103,23 +131,27 @@
 										
 									console.log($(".gallery-wrapper").html());
 									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
-								}
-								
-/* 						//상품명 클릭시 getProduct
-						  $("tbody tr td:nth-child(2)").on("click", function(){
-							 console.log("히든1 : "+$(this).find('input').val());
-							 console.log("히든2 : "+$($(this).find('input')[1]).val());
-							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
-						 }) 
-						  */
-						  
-						//ajax 목록 링크 및 색 추가 끝
-					}
-			})//end ajax  
-			console.log(page++);
-		 }//end if문
-	 }); 
-  
+									
+									$( ".label-danger" ).on("click" , function() {
+										 $.ajax({
+								               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+								               method : "GET" ,
+								               async : false,
+								               success : function(data, status) {
+								                  if(data == 1){
+								                	  $(".gallery-wrapper").empty();
+													for(var i = 1; i < count+1; i++ ){
+														loadList(i);
+													}
+								                  }
+								               }
+								      });//end of ajax
+								});
+							}
+					//ajax 목록 링크 및 색 추가 끝
+				}
+		})//end ajax  
+	}
 
    </script> 
 </head>
@@ -147,16 +179,16 @@
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
         				<div class="col-sm-4 col-md-3">
 						     <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
-	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: auto;">
+	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            </a>
 	                            <div class="alert alert-danger" role="alert">
-  									<strong>티켓 오픈 일자</strong><br/>${alarm.screenContent.ticketOpenDate}<a href="http://naver.com"><span class="label label-danger">취소</span></a>
+  									<strong>티켓 오픈 일자</strong><br/>${alarm.screenContent.ticketOpenDate}
+  									<span class="label label-danger"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
-	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
 	                                <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
 	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
@@ -167,7 +199,6 @@
 	                            </a>
  	                         </div>       
 	                    </div>
-	                    <%-- </c:forEach> --%>
 	             		</c:forEach>	
 	                </div>
                 </div>
@@ -175,9 +206,8 @@
         </section>
        
        
-       <!-- bottomToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-	   <!-- bottomToolBar End /////////////////////////////////////-->
+       	<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
      </div>
   
 

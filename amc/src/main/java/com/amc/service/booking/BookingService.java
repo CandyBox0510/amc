@@ -32,7 +32,7 @@ public interface BookingService {
 	
 	public Booking getBooking(String bookingNo);
 	
-	public List<Booking> getBookingList(Search search);
+	public Map<String,Object> getBookingList(Search search);
 		
 	public void selectCancelAlarm(int screenContentNo);
 	

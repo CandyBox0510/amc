@@ -2,7 +2,7 @@
 <%@ page pageEncoding="UTF-8"%>
 
 <!doctype html>
-<html lang="ko">
+
 	    <!-- open/close -->
         <div class="overlay overlay-hugeinc">
             
@@ -24,7 +24,7 @@
                         <p class="login__tracker">환영합니다<br/> 좋은시간보내세요!</p>
                         
                         <div class="field-wrap">
-                        <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">
+                        <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">                       
                         <input type='password' placeholder='Password' id='password' name='password' class="login__input">
 
                         <input type='checkbox' id='#informed' class='login__check styled'>

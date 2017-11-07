@@ -55,63 +55,95 @@
   
   <script type="text/javascript">
 	//무한스크롤
-	var page = 2;
+	var count = 2;
 	var all = '';
 	
 	$( window ).scroll(function(){
 		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
-			 $.ajax({
-					url:"/movie/json/getInfiWishList/"+'${sessionScope.user.userId}',
-					method:"POST",
-					headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-					},
-					data:JSON.stringify({
-						currentPage : page
-					}),
-					
-					success : function(JSONData, status){
-							
-								
-								var wishList = JSONData.listWish;
-								
-								for(i in JSONData.listWish){
-	
-									all = '<div class="col-sm-4 col-md-3">'
-									all += 	'<div class="gallery-item">'
-									all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu=search">'
-									all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
-									all += 		'<div class="alert alert-info" role="alert">'
-									all +=			'<strong>'+wishList[i].wishFlag+'</strong><br/>'
-									all +=           wishList[i].movie.movieNm
-									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
-									all +=		'</div>'
-									all += 	   '<a href="'+wishList[i].movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
-									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
-									all += 	   '<p class="gallery-item__name">'+wishList[i].movie.movieNm+'</p></a>'
-									all +=	'</div>'
-									all +='</div>'
-										
-									console.log($(".gallery-wrapper").html());
-									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
-								}
-								
-/* 						//상품명 클릭시 getProduct
-						  $("tbody tr td:nth-child(2)").on("click", function(){
-							 console.log("히든1 : "+$(this).find('input').val());
-							 console.log("히든2 : "+$($(this).find('input')[1]).val());
-							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
-						 }) 
-						  */
-						  
-						//ajax 목록 링크 및 색 추가 끝
-					}
-			})//end ajax  
-			console.log(page++);
+			 loadList(count);
+			 console.log(count++);
 		 }//end if문
-	 }); 
-  
+	 });
+	
+	 $(function() {
+		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $( ".label-info" ).on("click" , function() {
+			 $.ajax({
+	               url : "/movie/json/deleteWishList/"+$(this).find('input').val(),                  
+	               method : "GET" ,
+	               async : false,
+	               success : function(data, status) {
+	                  if(data == 1){
+	                	 $(".gallery-wrapper").empty();
+ 						for(var i = 1; i < count+1; i++ ){
+							loadList(i);
+						} 
+	                  }
+	               }
+	      });//end of ajax
+		});
+	 })
+	 
+	 function loadList(page){
+		 $.ajax({
+				url:"/movie/json/getInfiWishList/"+'${sessionScope.user.userId}',
+				method:"POST",
+				async : false,
+				headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+				},
+				data:JSON.stringify({
+					currentPage : page
+				}),
+				
+				success : function(JSONData, status){
+						
+							
+							var wishList = JSONData.listWish;
+							
+							for(i in JSONData.listWish){
+
+								all = '<div class="col-sm-4 col-md-3">'
+								all += 	'<div class="gallery-item">'
+								all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu=movie">'
+								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 		'<div class="alert alert-info" role="alert">'
+								all +=			'<strong>'+wishList[i].wishFlag+'</strong><br/>'
+								all +=           wishList[i].movie.movieNm
+								all += 			'<span class="label label-info">'
+								all +=          '<input type="hidden" value="'+wishList[i].wishNo+'">'
+								all += 			'취소</span></a>'
+								all +=		'</div>'
+								all += 	   '<a href="/movie/getMovie?movieNo='+wishList[i].movie.postUrl+'&menu=movie" class="gallery-item__descript gallery-item--info-link">'
+								all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
+								all += 	   '<p class="gallery-item__name">'+wishList[i].movie.movieNm+'</p></a>'
+								all +=	'</div>'
+								all +='</div>'
+									
+								console.log($(".gallery-wrapper").html());
+								$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+								
+								$( ".label-info" ).on("click" , function() {
+										 $.ajax({
+								               url : "/movie/json/deleteWishList/"+$(this).find('input').val(),                  
+								               method : "GET" ,
+								               async : false,
+								               success : function(data, status) {
+								                  if(data == 1){
+								                	  $(".gallery-wrapper").empty();
+													for(var i = 1; i < count+1; i++ ){
+														loadList(i);
+													}
+								                  }
+								               }
+								      });//end of ajax
+								});
+							}
+					//ajax 목록 링크 및 색 추가 끝
+				}
+		})//end ajax  
+	 }
 
    </script> 
 </head>
@@ -140,19 +172,20 @@
 					  <c:forEach var="wishList" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
 						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-sm-4 col-md-3" id="${wishList.wishNo}">
 						     <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=search">
-	                                <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px">
+	                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie">
+	                                <%-- <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px"> --%>
+	                                <img src="${wishList.movie.postUrl}" style="widht:100%; height:365px">
 	                            </a>
 	                            <div class="alert alert-info" role="alert">
   									<strong>${wishList.wishFlag}</strong><br/>
   									${wishList.movie.movieNm}
-  									<a href="http://naver.com"><span class="label label-info">취소</span></a>
+  										<span class="label label-info"><input type="hidden" value="${wishList.wishNo }">취소</span>
 								</div>
-	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--info-link">
+	                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie" class="gallery-item__descript gallery-item--info-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
-	                                <p class="gallery-item__name">${wishList.movie.movieNm}</p>
+	                                <p class="gallery-item__name">개봉일 : ${wishList.movie.openDt}</p>
 	                            </a>
  	                         </div>       
 	                    </div>
@@ -199,6 +232,9 @@ d
         <!-- Custom -->
         <script src="/js/custom.js"></script>
         
+        <!-- Swiper -->
+        <script src="/js/external/swiper.js"></script>
+        
       
       <script type="text/javascript">
             $(document).ready(function() {
@@ -210,5 +246,20 @@ d
       html{
  	     height: auto;
       }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #d3fbff;
+/* 	    padding-top: 10px;
+	    padding-bottom: 20px;
+	    padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #63b2b5; 
+      }
+          
  </style>
 </html>
