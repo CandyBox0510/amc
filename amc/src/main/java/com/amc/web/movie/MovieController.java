@@ -241,9 +241,7 @@ public class MovieController {
 		// System.out.println("Date format before :: openDate :: " +
 		// movie.getOpenDt());
 
-		// SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
-		// Date opendate = dt.parse(movie.getOpenDt().toString());
-		// Date enddate = dt.parse(movie.getEndDt().toString());
+	
 
 		String steelCuts = movie.getSteelCut();
 		System.out.println("steelCut" + steelCuts);
@@ -295,6 +293,23 @@ public class MovieController {
 		model.addAttribute("search", search);
 
 		if (menu.equals("manage")) {
+			
+			SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
+			
+			System.out.println( "openDate" + movie.getOpenDt().toString());
+			System.out.println( "endDate" + movie.getEndDt().toString());
+						
+					
+			String openD = movie.getOpenDt().toString();
+			String endD = movie.getEndDt().toString();
+			
+			String convertOpenDate = openD.replace("/", "-");
+			String convertEndDate = endD.replace("/", "-");
+			
+		
+			movie.setOpenDt(convertOpenDate);
+			movie.setEndDt(convertEndDate);
+			
 			System.out.println("updateMovie.jsp called");
 			System.out.println(movie + "°Ù¹«ºñ¾×¼Ç");
 			return "forward:/movie/updateMovie.jsp";
@@ -409,6 +424,7 @@ public class MovieController {
         System.out.println("genre    : "  + movie.getGenres());
         System.out.println("rating   : "  + movie.getWatchGradeNm());
         System.out.println("openDate : "  + movie.getOpenDt());
+        
         System.out.println("RunningTime :"  + movie.getShowTm());
         System.out.println("EndDate : "  + movie.getEndDt());
         System.out.println("PostUrl : "  + movie.getPostUrl());

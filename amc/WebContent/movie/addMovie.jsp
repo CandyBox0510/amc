@@ -64,7 +64,7 @@
         <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css"> -->
     
         <!-- Custom -->
-        <link href="/css/style2.css?v=1" rel="stylesheet" />
+        <link href="/css/jqGridStyle.css?v=1" rel="stylesheet" />
 
 
         <!-- Modernizr --> 
