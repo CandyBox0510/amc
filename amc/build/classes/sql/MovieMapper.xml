@@ -352,7 +352,29 @@
 	                                 ORDER BY movie_no DESC ) inner_table
 	              ) ORDER BY row_seq
 	</select>
-	<!-- 예나 사용 sql 생성 -->
+	
+	<!-- 예나 사용 sql 생성/ 영화예매 1단계용 -->
+	<!-- <select id="screenMovieList" parameterType="search" resultMap="movieSelectMap">
+		SELECT m.movie_no, m.movie_title
+		FROM   movie m, screencontent s
+		WHERE
+			s.preview_flag = 'N'
+			AND m.movie_no = s.movie_no
+			AND s.screen_opentime <![CDATA[>=]]> SYSDATE
+		ORDER BY m.movie_no DESC
+	</select> -->
+	
+	<!--  상영등록 안되서 temporary로 만든거. 지우기 -->
+	<select id="screenMovieList" parameterType="search" resultMap="movieSelectMap">
+		SELECT m.movie_no, m.movie_title
+		FROM   movie m
+		ORDER BY m.movie_no DESC
+	</select>
+	
+	
+	
+	
+	
 	<update  id="updateStatistic" parameterType="search">
   		UPDATE movie 
   		<set>

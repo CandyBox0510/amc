@@ -267,6 +267,12 @@ public class MovieApiDAOImpl implements MovieDAO {
 		return tempMap;
 	}
 
+	@Override
+	public List<Movie> screenMovieList(Search search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	/*public List<WishList> getWishListMovie(Search search, User user) {
 		// TODO Auto-generated method stub

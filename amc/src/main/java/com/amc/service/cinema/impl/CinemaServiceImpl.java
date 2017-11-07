@@ -201,6 +201,7 @@ public class CinemaServiceImpl implements CinemaService {
         
         JSONObject jsonObj = (JSONObject)JSONValue.parse(firstJsonData);
         
+        System.out.println("취소시 jsonObj String : " + jsonObj);
         //jsonData중에 response내용 추출(response가 json형식임)
         String res = jsonObj.get("response").toString();
         System.out.println("res : " + res);
