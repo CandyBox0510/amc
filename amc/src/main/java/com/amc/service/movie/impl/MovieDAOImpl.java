@@ -209,9 +209,11 @@ public class MovieDAOImpl implements MovieDAO {
 	    System.out.println("watchGradeNm ::" + movie.getWatchGradeNm());
 	    System.out.println("showTm       ::" + movie.getShowTm());
 	    System.out.println("openDt       ::" + movie.getOpenDt());
-	    System.out.println("movieEndDate ::" + movie.getEndDt());
+	    /*  System.out.println("movieEndDate ::" + movie.getEndDt());*/
 	    System.out.println("syonpsis     ::" + movie.getSynopsis());
 	    System.out.println("trailer      ::" + movie.getTrailer());
+	    
+	    System.out.println("movie context call : " + movie);
     	
 		
 		return sqlSession.insert("MovieMapper.addMovie",movie);

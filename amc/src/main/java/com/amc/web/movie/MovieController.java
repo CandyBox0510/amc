@@ -90,6 +90,7 @@ public class MovieController {
 		User user = (User)session.getAttribute("user");		
 		
 		System.out.println("pagesize " + search.getPageSize());
+		
 		System.out.println("search " + search);
 		
 		System.out.println("menu :" + request.getParameter("menu"));

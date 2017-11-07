@@ -151,7 +151,7 @@
            
 
                 <div class="tags-area tags-area--thin" style="height : 50px">
-                 <p>æ»≥Á«œººøµ</p>
+                 <p>æ»≥Á</p>
 
                     <div class="tags tags--unmarked tags--aside">
                         <span class="tags__label">Sorted by:</span>
