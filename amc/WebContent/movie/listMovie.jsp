@@ -28,6 +28,111 @@
         <!-- Main content -->
         <!--  <section class="container"> -->
         
+                <!-- Search bar -->
+ 			<div class="col-sm-12">
+ 			
+                <h1 class="page-heading"> 현재 상영 영화 </h1>                
+				
+			    	<div class="col-md-2 text-right">          
+	                      <form class="form-search" name="detailForm">
+	                 
+						    <label class="sr-only" for="searchKeyword">검색어</label>
+						    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+						    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+					  	 </form>
+				   </div>
+				   		
+				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
+				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	  
+             		  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <!-- Login Common PlugIn -->
+				  <jsp:include page="/layout/loginModal.jsp" />   
+				  
+				  <hr/>   
+				  
+              
+             
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <!-- Login Common PlugIn -->
+				  <jsp:include page="/layout/loginModal.jsp" />     
+              
+             
+                <div class="cinema-wrap">
+	            	<div class="row">
+				 		<c:set var="i" value="0" />
+                		 <c:forEach var="movie" items="${list }">
+                		 <c:set var="i" value="${i+1 }" />
+                		 
+	                            <div class="col-xs-6 col-sm-3 cinema-item">
+	                                <div class="cinema">
+	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
+	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
+	                                    </a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
+	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
+	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
+	                                    
+	                    	    <div style="text-align: left;">
+    						    
+    						    </div>								
+    							 
+    							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
+     						
+							    <span style="line-height:0%">
+							    <c:set var="name" value="${movie.wishList.wishNo}"/>
+	 								<c:if test="${name eq '0'}">
+								<%-- bootstrap icon이 작동이 되질 않음      --%>
+								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
+										text-align : center; margin:0 auto;">   --%>	
+								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
+									     </i> 						
+								    </c:if>	
+								    
+								    <c:if test="${name ne '0'}">
+									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
+									    </i> 						
+									</c:if>	
+							   </span>                                                   
+
+	                             &nbsp;&nbsp;
+
+	                            <span style="line-height:0%">
+	                             
+	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
+	                            <i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            </span>
+	                         
+	                           
+	                                    	     
+	                                </div>
+	                            </div>                      
+	                    		
+                		 </c:forEach>
+                		  
+					</div>
+	           </div>     
+                              
+ 				
+ 					<div class="coloum-wrapper">
+	                    <div class="pagination paginatioon--full">
+	                    	<c:if test="${resultPage.currentPage != 1 }">
+	                            <a href='#' class="pagination__prev">prev</a>
+	                    	</c:if>
+	                     	<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">	            
+	                            <a href='#' class="pagination__next">next</a>
+	                      	</c:if>
+	                    </div>
+	                      
+	                </div>
+	               
+              </div>
         
         
       
@@ -119,63 +224,6 @@
 					});
 					
 				 });
-				
-				//============= "WishList(찜) Event 처리" AddWish Event  처리 =============	
-					$(function() {
-						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					 
-						// $("span:contains('찜하기')" ).on("click" , function() {
-					/* 	$(".glyphicon.glyphicon-heart-empty").on("click" , function() {	
-							
-							 //var movieNo = $(this).next().val();		
-							 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
-			
-							var movieNo = $(this).find('#scMovieNo').val();		
-							var userId = $(this).find('#userId').val();			
-							
-							alert("movieNo: " + movieNo); 					
-							alert("userId: " + userId); 
-							
-							//$(this).toggleClass('glyphicon glyphicon-heart-empty').toggleClass(".glyphicon glyphicon-heart");
-						
-							
-							//$(this).switchClass('glyphicon glyphicon-heart-empty','glyphicon glyphicon-heart');
-						    $(this).removeClass('glyphicon glyphicon-heart-empty').addClass('glyphicon glyphicon-heart');
-						    
-						    //$(this).replaceClass('.glyphicon glyphicon-heart-empty','.glyphicon glyphicon-heart');
-							
-						    //$(this).addClass('glyphicon glyphicon-heart');
-							
-							
-							 if (userId != null && userId.length !=0) {
-								alert("userId: " + userId);
-							} else {
-								alert('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?');
-								location.href="/user/loginUser.jsp";
-							} 
-							
-							
-							if(userId == null || userId == ''){
-								alert("로그인 후 이용 가능합니다.");
-								return;
-							}
-							
-										
-							$.ajax( 
-									{
-										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-										type : "GET" ,							
-									}).done(function(data) {
-								//정상 통신인 경우
-								if (data == 'add') {
-									var msg = '찜하기 신청';
-									alert(msg);
-								} else {
-									alert("찜하기 취소");
-								}
-							});
-						});	 */
-					});
 				
 				
 					//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
@@ -326,21 +374,6 @@
 	}
 
 
-<body>
-    
-    
-        <!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        
-        <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />	
-			
-		
-			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
 	.movieNm {
 		  font-size: 16px;
 		  font-weight: bold;
@@ -358,143 +391,25 @@
 		margin-right: auto; 
 		display: table;
 
-
-    <div class="container">
-        
-        <!-- Main content -->
-        <!--  <section class="container"> -->
-        
-                <!-- Search bar -->
- 			<div class="col-sm-12">
- 			
-                <h1 class="page-heading"> 현재 상영 영화 </h1>                
-				
-			       <div class="col-md-2 text-right">          
-                    <form class="form-inline" name="detailForm">
-                 
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  	 </form>
-				   </div>
-				   		
-				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
-				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	  
-			        
-             		  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-              
-             
-                <div class="cinema-wrap">
-	            	<div class="row">
-				 		<c:set var="i" value="0" />
-                		 <c:forEach var="movie" items="${list }">
-                		 <c:set var="i" value="${i+1 }" />
-                		 
-	                            <div class="col-xs-6 col-sm-3 cinema-item">
-	                                <div class="cinema">
-	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=search' class="cinema__images">
-	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
-	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" class="movieNm">${movie.movieNm }</a>
-	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
-	                                    
-	                    	    <div style="text-align: left;">
-    						    
-    						    </div>								
-    							 
-    							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
-     						
-							    <span style="line-height:0%">
-							    <c:set var="name" value="${movie.wishList.wishNo}"/>
-	 								<c:if test="${name eq '0'}">
-								<%-- bootstrap icon이 작동이 되질 않음      --%>
-								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
-										text-align : center; margin:0 auto;">   --%>	
-								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
-											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
-							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
-									     </i> 						
-								    </c:if>	
-								    
-								    <c:if test="${name ne '0'}">
-									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
-									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
-							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
-									    </i> 						
-									</c:if>	
-							   </span>                                                   
-
-	                             &nbsp;&nbsp;
-
-	                            <span style="line-height:0%">
-	                             
-	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
-	                            <i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
-	                            </span>
-	                         
-	                                    
-	                                    	     
-	                                </div>
-	                            </div>                      
-	                    		
-                		 </c:forEach>
-					</div>
-	           </div>     
-                              
- 					<div class="pagination paginatioon--full">
-                            <a href='#' class="pagination__prev">prev</a>
-                            <a href='#' class="pagination__next">next</a>
-                    </div>
-              </div>
-          		
-            
-        </section>
-
-        <div class="clearfix"></div>
-        
-        
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			
-			
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
-
-    </div>
-    
-
-
-    <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
-
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                   
-
-            </section>
-        </div>
-
-
-
-		<!--  Select Mobile menu  둘다있어야지 search가능함!!! 하단에 있어야지 생김 (이유모름)-->
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-		
-		
-        <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
-        <script src="/js/custom.js"></script>
-		<!-- ------------------------------------  -->
-		
-		<jsp:include page="/layout/loginModal.jsp" />
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+	}
+	
+	.search .search__field {
+	  display: inline-block;
+	  width: 100%;
+	  padding: 9px 200px 9px 19px;
+	  margin-top: 14px;
+	  line-height: 18px;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  border: solid 1px #dbdee1;
+	  background-color: #fff;
+	  color: #4c4145;
+	  font-size: 13px;
+ 
+	}
+	
+	
 	.search .sbHolder .sbOptions {
 	  width: 400px;
 	  top: 37px !important;
