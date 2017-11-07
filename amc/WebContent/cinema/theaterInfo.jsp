@@ -132,6 +132,16 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
+        
+        <!-- Search bar -->
+        <div class="search-wrapper">
+            <div class="container container--add">
+                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
+                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
+                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
+                </form>
+            </div>
+        </div>
 		
 					
         <section class="container">
@@ -284,6 +294,10 @@
           	  prevArrow : '<button type="button" class="slick-prev">Previous</button>'
             });
           });
+         
+         function unifiedSearch(){
+ 	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").attr("accept-charset","EUC-KR").submit();
+ 	   	 }
          </script>
 </body>
  <style>http://127.0.0.1:8080/images/theater/theater2.JPG

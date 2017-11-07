@@ -72,12 +72,16 @@
 		$("#now").on("click",function(){
 			condition = 'now';
 			count = 2;
+			alert("11");
+			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
 		
 		$("#past").on("click",function(){
 			condition = 'past';
 			count = 2;
+			alert("22");
+			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
 	})
@@ -161,6 +165,9 @@
         <!-- Main content -->
         <section class="container">
             <div class="col-sm-12">
+            	<p/>
+            	<p/>
+            	<p/>
                 <h2 class="page-heading">나의 예매 리스트</h2>
                 <p class="btn btn-md btn--danger" id="now">현재 예매 내역</p>
                 <p class="btn btn-md btn--danger" id="past">지난 예매 내역</p>
@@ -251,6 +258,22 @@
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #c1ffbc;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a5ff9e; 
       }
  </style>
 </html>

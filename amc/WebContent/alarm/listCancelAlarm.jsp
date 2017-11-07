@@ -119,9 +119,9 @@
 								all +=    '">'
 								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365;"></a>'
 								all += 		'<div class="alert alert-info" role="alert">'
-								all +=			'<strong>취소표 신청 좌석</strong><br/>'
+								all +=			'<strong>취소표 신청 좌석</strong><br/>['
 								all +=           alarm[i].alarmSeatNo
-								all += 			'<span class="label label-success">'
+								all += 			' ]<span class="label label-success">'
 								all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
 								all +=			'취소</span></a>'
 								all +=		'</div>'
@@ -179,6 +179,9 @@
         <!-- Main content -->
         <section class="container">
             <div class="col-sm-12">
+                    <p/>
+	               	<p/>
+	               	<p/>
                 <h2 class="page-heading">취소표 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
@@ -196,7 +199,7 @@
 	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365;">
 	                            
 	                            <div class="alert alert-success" role="alert">
-  									<strong>취소표 신청 좌석</strong><br/>${alarm.alarmSeatNo}
+  									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]
   									<span class="label label-success"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
@@ -258,6 +261,22 @@
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #c1ffbc;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a5ff9e; 
       }
  </style>
 </html>

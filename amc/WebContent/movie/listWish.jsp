@@ -167,6 +167,9 @@
             <div class="col-sm-12">
                 <h2 class="page-heading">나의 위시 리스트</h2>
                 <div class="row">
+                    <p/>
+                	<p/>
+                	<p/>
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="wishList" items="${list}">
@@ -249,6 +252,8 @@ d
       .col-sm-4{
       	/* background-color: #EDEDED; */
       	background-color: #d3fbff;
+      	margin-top:5px;
+      	margin-bottom:5px;
 /* 	    padding-top: 10px;
 	    padding-bottom: 20px;
 	    padding-left: 20px;
@@ -260,6 +265,9 @@ d
 	    border-width: 30px;
  	    box-shadow:inset 0 0 10px #63b2b5; 
       }
+      .gallery-item .gallery-item--info-link:before {
+  background-color: #5bc0de;
+}
           
  </style>
 </html>
