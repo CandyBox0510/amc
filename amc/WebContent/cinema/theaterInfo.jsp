@@ -266,9 +266,8 @@
 			</script>
 			<!-- 파노라마용 스크립트 end-->
 			
-		<!-- bottomToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-	   	<!-- bottomToolBar End /////////////////////////////////////-->
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
 </div>
 
 		<!-- 슬릭 캐러셀 -->

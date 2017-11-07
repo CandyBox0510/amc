@@ -266,14 +266,7 @@ public class MovieDAOImpl implements MovieDAO {
 		return 0;
 	}
 
-	@Override
-	public int deleteWish(int moiveNo, String userId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
-
-		
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		
@@ -296,7 +289,7 @@ public class MovieDAOImpl implements MovieDAO {
 	}
 	
 	@Override
-	public int  dupMovieChk(Search search) throws Exception {
+	public int dupMovieChk(Search search) throws Exception {
 	
 		return (sqlSession.selectOne("MovieMapper.dupMovieChk",search));
 			
@@ -313,6 +306,11 @@ public class MovieDAOImpl implements MovieDAO {
 	@Override
 	public List<Movie> uniMovieList(Search search) {
 		return sqlSession.selectList("MovieMapper.uniMovieList",search);
+	}
+	//예나 메소드 추가
+	@Override
+	public List<Movie> screenMovieList(Search search) {
+		return sqlSession.selectList("MovieMapper.screenMovieList",search);
 	}
 
 	@Override

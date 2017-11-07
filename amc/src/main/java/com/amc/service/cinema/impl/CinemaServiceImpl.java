@@ -131,7 +131,7 @@ public class CinemaServiceImpl implements CinemaService {
 	@Override
 	public String cancelPay(String impUid) throws Exception {
 		
-		String result = "";
+		String result = "fail";
 		
 		if(((this.checkPay(impUid)).split(","))[0].equals("paid")){
 			
@@ -141,10 +141,12 @@ public class CinemaServiceImpl implements CinemaService {
 			JSONObject cancelObj = 
 					this.getImportResponseJSONObject(this.getConAndBody("https://api.iamport.kr/payments/cancel", "cancelPay",addInfo));
 			
-			return cancelObj.get("status").toString();
-			
+			if(cancelObj != null){
+				return cancelObj.get("status").toString();	
+			}else{
+				return result;
+			}
 		}
-		
 		return result;
 	}
 	
@@ -201,11 +203,15 @@ public class CinemaServiceImpl implements CinemaService {
         
         JSONObject jsonObj = (JSONObject)JSONValue.parse(firstJsonData);
         
+        System.out.println("취소시 jsonObj String : " + jsonObj);
         //jsonData중에 response내용 추출(response가 json형식임)
-        String res = jsonObj.get("response").toString();
-        System.out.println("res : " + res);
-                
-		return (JSONObject)JSONValue.parse(res);
+        if(jsonObj.get("response") != null){
+        	String res = jsonObj.get("response").toString();
+            System.out.println("res : " + res);
+            return (JSONObject)JSONValue.parse(res);
+        }else{
+        	return null;
+        }
 	}
 	
 	public Map<String,Object> getConAndBody(String inputUrl, String behavior) throws Exception{

@@ -6,7 +6,7 @@
 <head>
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMovie - Booking step 1</title>
+        <title>AMovie - (Preview)Booking step 1</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -39,7 +39,13 @@
         <script src="/js/external/modernizr.custom.js"></script>
     
     	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
   
+  		<link rel="stylesheet" type="text/css" href="/semantic/semantic.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+		
+		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		
   <script type="text/javascript">
    $( function() {
 		
@@ -69,7 +75,7 @@
 	                            $(JSONData).each(
 	                               function(){	
 	                            	   
-	                            	   str+=  '<li class="time-select__item" name="screenDay">'+this.substring(3,5)+'일'
+	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this.substring(3,5)+'일'
 	                            	   str+=    '<input type="hidden" name="day" value='+this.substring(3,5)+'>'	
 									   str+=  '</li>';
 	                               });//end of each fnc                            
@@ -109,7 +115,7 @@
                            $(JSONData).each(
                               function(){
                             	  
-                           	   str+= '<li class="time-select__item" name="screenTime">시간 : '+this.screenOpenTime
+                           	   str+= '<li class="time-select__item abc" name="screenTime">시간 : '+this.screenOpenTime
                            	   +     ', 상영번호 : '+this.screenContentNo+''
                            	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
                            	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
@@ -142,7 +148,7 @@
 	$(document).on("click", "#gotoSeat",  function(){
 		
 		//로그인 여부 체크
-		if( ${sessionScope.user}==(null) ){
+		if( ${sessionScope.user==null} ){
 			
 			//alert('로그인 후 이용해 주세요');
 			e.preventDefault();
@@ -174,7 +180,7 @@
    		
     <input type="hidden" name="flag" value="1"> 
         <!-- Main content -->
-	
+	<br><br>
         <!-- <section class="container" id="body"> -->
         <section class="container">
             <div class="order-container">
@@ -196,20 +202,20 @@
 
         <section class="container">
             <div class="col-sm-12">
-                
+                <br>
                 <h2 class="page-heading">Movie</h2>
 
                 <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">영화 제목</p>
                             </div>
                             
                             <ul class="col-sm-6 items-wrap">
                             <c:set var="i" value="0" />
 							  <c:forEach var="movie" items="${movieList}">
 								<c:set var="i" value="${ i+1 }" />										  
-								  <li class="time-select__item" name="movieName">${movie.movieNm}
+								  <li class="time-select__item abc" name="movieName">${movie.movieNm}
 								  	<input type="hidden" name="movieNo" value="${movie.movieNo}">
 								  	<input type="hidden" name="movieName" value="${movie.movieNm}">
 								  </li>
@@ -217,25 +223,21 @@
                             </ul>                        
                         </div>
                    </div>
-               	
-                <h2 class="page-heading">Date</h2>
 
                 <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">날짜</p>
                             </div>
                             <ul class="col-sm-6 items-wrap">
                             </ul>
                         </div>
                    </div>
 
-                <h2 class="page-heading">Pick time</h2>
-
                 <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
                             <div class="col-sm-3">
-                                <p class="time-select__place">Cineworld</p>
+                                <p class="time-select__place abc">시간</p>
                             </div>
                             <ul class="col-sm-6 items-wrap">
 
@@ -244,7 +246,7 @@
                     </div>
 
 				<br><br>
-                <div class="choose-indector choose-indector--time">
+                <div class="choose-indector choose-indector--time abc">
                     <strong>Choosen: </strong>
                     <span class="choosen-area">
                     	<span class="item"></span>
@@ -485,6 +487,9 @@ html{
   top: 8px;
   right: 21px;
 
+}
+.abc{
+	  font-family: 'Hanna', sans-serif; 
 }
 
 </style>

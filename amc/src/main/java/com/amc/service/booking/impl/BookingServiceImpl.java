@@ -58,10 +58,10 @@ public class BookingServiceImpl implements BookingService {
         String today = simpleDateFormat.format(calendar.getTime());
         System.out.println("Today : " + today);
         Search search = new Search();
-        search.setSearchCondition("3");
+        search.setSearchCondition("3"); //이제 필요없음
         search.setSearchKeyword(today);
         
-	    List<Movie> todayMovieList = movieDAO.uniMovieList(search);
+	    List<Movie> todayMovieList = movieDAO.screenMovieList(search);
 	    System.out.println("todayMovieList : "+todayMovieList);
 
 		return todayMovieList;
@@ -193,7 +193,7 @@ public class BookingServiceImpl implements BookingService {
 
 
 	@Override
-	public List<Booking> getBookingList(Search search) {
+	public Map<String,Object> getBookingList(Search search) {
 		return bookingDAO.getBookingList(search);
 	}
 	
