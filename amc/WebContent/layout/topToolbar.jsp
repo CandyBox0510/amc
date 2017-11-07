@@ -159,7 +159,7 @@
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
 				}else{
-					location.replace("/user/getUser?=${sessionScope.user}");
+					location.replace("/user/getUser?userId=${sessionScope.user.userId}");
 				}
 			})
 			
@@ -173,7 +173,9 @@
 			})
 			
 			$(".myWish").on("click",function(){
-				if( '${sessionScope.user.userId}' == ''){
+				alert('${sessionScope.user.userId}');
+				alert('${sessionScope.user}');
+				if( '${sessionScope.user.userId}' == '' || '${sessionScope.user}' == null){
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
 				}else{

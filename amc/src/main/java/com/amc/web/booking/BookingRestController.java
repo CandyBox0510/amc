@@ -120,7 +120,7 @@ public class BookingRestController {
 		public int confirmSeat(@PathVariable("clientId") String clientId, Model model) throws Exception{
 			
 	
-			String urlStr = "http://localhost:52273/confirmSeat";
+			String urlStr = "http://192.168.0.32:52273/confirmSeat";
 			String body = "clientId="+clientId;
 			
 			try {
@@ -171,7 +171,7 @@ public class BookingRestController {
 			
 			Map<String,Object> tempMap = new HashMap<String,Object>();
 			
-			JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
+			org.json.simple.JSONObject jo = (org.json.simple.JSONObject)JSONValue.parse(jsonString);
 			System.out.println((Long)(jo.get("currentPage")));
 			System.out.println((String)(jo.get("searchCondition")));
 			String searchCondition = (String)(jo.get("searchCondition"));
@@ -200,10 +200,10 @@ public class BookingRestController {
 			
 			List<Booking> seatChangeList = (List<Booking>)(map.get("list"));
 			
-			JSONObject jsonObject = new JSONObject();
+			org.json.simple.JSONObject jsonObject = new org.json.simple.JSONObject();
 			
 			for(int i = 0; i < seatChangeList.size(); i++){
-				jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getBookingSeatNo(), 10, model));
+				jsonObject = (org.json.simple.JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getBookingSeatNo(), 10, model));
 				seatChangeList.get(i).setBookingSeatNo((String)jsonObject.get("seatNo"));
 			}
 			

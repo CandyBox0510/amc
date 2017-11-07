@@ -685,7 +685,7 @@
 
         <body>
 
-            <jsp:include page="/layout/topToolbar.jsp" />
+            <%-- <jsp:include page="/layout/topToolbar.jsp" /> --%>
 
 
 
