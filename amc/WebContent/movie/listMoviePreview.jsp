@@ -21,11 +21,11 @@
 			
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
-    <div class="container">
+    <div class="container" id="body">
                 
         <div class="col-sm-12">
  			
-                <h1 class="page-heading"> 상영 예정 영화 </h1>   
+                <h1 class="page-heading"> 시사회 영화 </h1>   
                 
                    <div class="col-md-2 text-right">          
                     <form class="form-inline" name="detailForm">
@@ -327,7 +327,7 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-	 body {
+	 #body {
            padding-top: 70px;
            }
            .thumbnail {

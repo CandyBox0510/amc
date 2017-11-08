@@ -21,7 +21,7 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
 		  </header>  
-    <div class="container">
+    <div class="container" id="body">
         
         <!-- Main content -->
         <!--  <section class="container"> -->
@@ -280,8 +280,8 @@
 							var movieNo = $(this).find('#scMovieNo').val();		
 							var userId = $(this).find('#userId').val();			
 							
-							alert("movieNo: " + movieNo); 					
-							alert("userId: " + userId); 
+							// alert("movieNo: " + movieNo); 					
+							// alert("userId: " + userId); 
 							
 							
 							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
@@ -321,7 +321,7 @@
 			    $(function() {
 			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			        $("button[name='search']").on("click", function() {
-			        	alert("222")
+			        	// alert("222")
 			      
 			            fncGetPageList(1);
 			        });
@@ -345,7 +345,7 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-	 body {
+	 #body {
            padding-top: 70px;
            }
            .thumbnail {
