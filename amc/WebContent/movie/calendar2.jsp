@@ -10,75 +10,85 @@
 
 
 <head>
-	
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
+	<!-- Bootstrap Dropdown Hover CSS -->
+   	<link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+   
+    <!-- jQuery UI toolTip 사용 CSS-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery UI toolTip 사용 JS-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+		
 
 <!-- META ===================================================== -->
     <title>Monthly - A jQuery Calendar Plugin</title>
     <meta name="description" content="A method for responsive tables">
 
-    <link rel="stylesheet" href="../css/monthly.css">
-	
+<!-- Favicon  ========================================== -->
+
+
+<!-- CSS ======================================================
+	<link rel="stylesheet" href="css/responsivetables.css">-->
+	<!-- Demo CSS (don't use) -->
+
+   <link rel="stylesheet" href="../css/monthly.css">
+	<style type="text/css">
+		body {
+			font-family: Malgun Gothic;
+			background-color: #f0f0f0;
+			padding: 0em 1em;
+		}
+		#mycalendar {
+			width: 100%;
+			margin: 2em auto 0 auto;
+			max-width: 80em;
+			border: 1px solid #666;
+		}
+	</style>
+
+	<link rel="stylesheet" href="../css/monthly.css">
 </head>
 <body>
+	<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/topToolbar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+<br/>
 
-	<div class="wrapper">
-
-
- 	<!-- Banner -->
-     <div class="banner-top">
-         <img alt='top banner' src="../images/banners/space.jpg">
-     </div> 
-
-	 <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			
-			<!-- ToolBar End /////////////////////////////////////-->
-	 </header>  
-
-
+<!-- <div class="widget" align="center">	
+		  <button type="button" class="btn btn-thumnail">썸네일로 보기</button>
+		  <button type="button" class="btn btn-calendar">캘린더로 보기</button>		
+</div> -->
 
 <div class="page">	
 	 
 		<br/><br/><br/><br/>
 		
-		<jsp:include page="/layout/loginModal.jsp" />   
 		
-		
-	<div style="border: 1px dashed #BDBDBD; background-color: #819E9C;  width: 1000px; height: 50px; margin-left: auto;
-	 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
-			<!-- <div style="width:100%; max-width:1000px; display:inline-block; margin:auto"> -->
-			    <button type="button" class="btn btn-thumnail">썸네일로 보기</button>
-				<button type="button" class="btn btn-calendar">캘린더로 보기</button>	
-				
-				<hr/>
-					
-				<div class="monthly" id="mycalendar"></div>
-			</div>
+<div style="border: 1px dashed #BDBDBD; background-color: #819E9C;  width: 1000px; height: 50px; margin-left: auto;
+ 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+		<!-- <div style="width:100%; max-width:1000px; display:inline-block; margin:auto"> -->
+		    <button type="button" class="btn btn-thumnail">썸네일로 보기</button>
+			<button type="button" class="btn btn-calendar">캘린더로 보기</button>	
 			
-	</div>
-	
-
-
-
-
-    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
-    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
-    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
-    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> 
-    
-    <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-		 
-			<!-- ToolBar End /////////////////////////////////////-->
-  	</div>
-  
-
-
+			<hr/>
+				
+			<div class="monthly" id="mycalendar"></div>
+		</div>
+		
 </div>
 
-</body>
 
 <!-- JS ======================================================= -->
 <script type="text/javascript" src="../javascript/jquery.js"></script>
@@ -220,25 +230,28 @@ $(window).load( function() {
 
 
 </script>
+<body>
+
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> <br/>
+    <br/> <br/>  <br/> <br/>  <br/> <br/>  <br/> 
+    
+    <div class="bottom low ">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+  	</div>
 
 
-<style type="text/css">
-		body {
-			font-family: Malgun Gothic;
-			background-color: #f0f0f0;
-			padding: 0em 1em;
-		}
-		#mycalendar {
-			width: 100%;
-			margin: 2em auto 0 auto;
-			max-width: 80em;
-			border: 1px solid #666;
-		}		
-		html{
+
+</body>
+
+<style>
+      html{
  	     height: auto;
       }
-</style>
-
-
+      
+</style>	
 
 </html>

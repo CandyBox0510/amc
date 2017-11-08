@@ -327,6 +327,14 @@ public class MovieRestController {
 		}
 		search.setPageSize(pageSize);
 		
+		search.setSearchKeyword2("5");
+		
+		System.out.println("상영 예정 영화 콜 !!!!");
+		
+		if (search.getSearchKeyword() != null) {				
+			search.setSearchCondition("1");	
+		}
+		
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
 		
