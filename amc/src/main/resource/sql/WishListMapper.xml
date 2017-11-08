@@ -51,11 +51,12 @@
 		WHERE user_id = #{user.userId}
 	</select>
 	
- 	<select  id="getAllWishList"  parameterType="map"	 resultMap="wishListSelectMap">
+ 	<select  id="getAllWishList"  parameterType="map"	 resultMap="wishListSelectMap">desc wishlist
  	SELECT w.wish_no, w.wish_regdate, w.wish_flag,
 		   m.poster, m.movie_no, m.movie_title
 	FROM wishlist w, movie m 
 	WHERE w.movie_no = m.movie_no  AND user_id = #{user.userId}
  	</select>
-
+ 	
+ 	
 </mapper>

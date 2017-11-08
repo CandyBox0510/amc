@@ -1,824 +1,949 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-        <html>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
+<html>
 
-        <head>
-            <meta charset="EUC-KR">
-            
-            	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-	
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<head>
+<meta charset="EUC-KR">
 
-            <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<!--          <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
 
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  -->
-            <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
-      <!--       
-     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	 -->
-	
+</head>
 
-            <script type="text/javascript">
-                function fncGetScreenContent() { // 수정을 위한 영화 상영 정보 가져오기
-                    $("td:nth-child(11)").on("click", function() {
-                        var screenContentNo = $("input[name='screenContentNo2']", $(this)).val();
+<body>
 
-                        console.log(screenContentNo + "screenContentNo2가왜안나온다냐");
-                        $.ajax({
-                            url: "/screen/json/updateScreenContent/" + screenContentNo,
-                            method: "GET",
-                            dataType: "json",
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-Type": "application/json"
-                            },
-                            success: function(JSONData, status) {
-                                var screenDateTest = JSONData.screenDate;
-                                screenDateTest = screenDateTest.replace(/\//gi, "-");
+	<div class="wrapper">
+		<!-- Banner -->
+		<div class="banner-top">
+			<img alt='top banner' src="/images/banners/space.jpg">
+		</div>
 
-                                $("input[name='screenDate' ]").val(screenDateTest);
-                                $("input[name='screenContentOpenTime' ]").val(JSONData.screenOpenTime);
-                                $("input[name='screenContentEndTime' ]").val(JSONData.screenEndTime);
-                                $("select[name='screenTheater' ]").val(JSONData.screenTheater);
-                                $("input[name='ticketPrice' ]").val(JSONData.ticketPrice);
-                                $("input[name='previewTitle' ]").val(null);
-                                $("input[name='previewOpenDate' ]").val(null);
-                                $("input[name='previewOpenTime' ]").val(null);
-                                $("input[name='inviteActor' ]").val(null);
-                                $("input[name='previewChecked' ]").attr("checked", false);
-                                $("input:hidden[name='screenContentNo']").val(JSONData.screenContentNo);
+		<!-- Header section -->
+		<header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+		</header>
 
-                                if (JSONData.previewFlag == 'Y') {
-                                   // $("input[name='previewChecked' ]").attr("checked", true);
-									 $("#previewChecked").prop("checked", true);
-									 console.log("음");
-                                    var previewOpenDate = JSONData.ticketOpenDate;
-                                    previewOpenDate = previewOpenDate.substr(0, 10);
-                                    previewOpenDate = previewOpenDate.replace(/\//gi, "-");
+		<div class="toolBar"></div>
+		<section class="container ">
+			<div class="movie">
+				<h2 class="page-heading">영화 상영 관리</h2>
 
-                                    var previewOpenTime = JSONData.ticketOpenDate;
-                                    previewOpenTime = previewOpenTime.substr(11, 15);
+				<div class="movie__info">
+					<div class="col-sm-4 col-md-3 movie-mobile">
+						<div class="movie__images">
+							<img alt='' src="${movie. postUrl}" width='250px'>
+						</div>
+					</div>
+					<div class="col-sm-8 col-md-9">
+						<p class="movie__time">
+							<input type="hidden" name='showTm' value="${movie.showTm }"> ${movie.showTm }분
+						</p>
+						<p class="movie__option">
+							<strong>제목 : </strong>${movie.movieNm }</p>
+						<p class="movie__option">
+							<strong>개봉일 : </strong> <input type="hidden" name='openDt' value="${movie.openDt }">${movie.openDt }</p>
+						<p class="movie__option">
+							<strong>상영마감일 : </strong><input type="hidden" name='endDt' value="${movie.endDt }">${movie.endDt }</p>
+						<p class="movie__option">
+							<strong>감독 : </strong>${movie.directors }</p>
+						<p class="movie__option">
+							<strong>배우 : </strong>${movie.actors }</p>
+						<p class="movie__option">
+							<strong>장르 : </strong>${movie.genres }</p>
+						<p class="movie__option">
+							<strong>관람등급: </strong>${movie.watchGradeNm }</p>
+						<p class="movie__option">
+							<i class="fa fa-bars" onclick="history.go(-1)"> &nbsp;&nbsp; 상영목록으로</i>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 col-sm-12 text-right">
+				<button class="btn btn-md btn--default" type="button" id="addButton">상영등록</button>
+			</div>
+			<div class="screenContentList">
+				<table class="screenContentTable">
+					<tr class="row col-md-12 col-sm-12 listTitle text-center">
+						<td class="col-md-2 col-sm-2">상영번호</td>
+						<td class="col-md-1 col-sm-1">상영일자</td>
+						<td class="col-md-1 col-sm-1">상영시간</td>
+						<td class="col-md-1 col-sm-1">상영관</td>
+						<td class="col-md-1 col-sm-1">가격</td>
+						<td class="col-md-1 col-sm-1">시사회</td>
+						<td class="col-md-2 col-sm-2">제목</td>
+						<td class="col-md-2 col-sm-2">티켓오픈날짜</td>
+						<td class="col-md-1 col-sm-1">초대배우</td>
+					</tr>
 
-                                    $("input[name='previewTitle' ]").val(JSONData.previewTitle);
-                                    $("input[name='previewOpenDate' ]").val(previewOpenDate);
-                                    $("input[name='previewOpenTime' ]").val(previewOpenTime);
-                                    $("input[name='inviteActor' ]").val(JSONData.inviteActor);
-                                    
-                                    $("input[name='previewTitle' ]").removeAttr("readonly");
-                                    $("input[name='previewOpenDate' ]").removeAttr("readonly");
-                                    $("input[name='previewOpenTime' ]").removeAttr("readonly");
-                                    $("input[name='inviteActor' ]").removeAttr("readonly");
-                                    
-                                    console.log("8.++++++");
+				</table>
 
-                                    
-                                }else{
-                                	
-                                	   console.log("9.++++++");
+			</div>
+		</section>
+		<div>
+			<input type="hidden" name="screenOpenTime"> <input type="hidden" name="screenEndTime2"> <input type="hidden" name="previewFlag"> <input type="hidden" name="ticketOpenDate"> <input type="hidden" name='movieNo' value='${movie.movieNo }'>
+		</div>
 
-                                	   
-                                	   
-                                	$("input[name='previewTitle' ]").attr("readonly", true);
-                                    $("input[name='previewOpenDate' ]").attr("readonly", true);
-                                    $("input[name='previewOpenTime' ]").attr("readonly", true);
-                                    $("input[name='inviteActor' ]").attr("readonly", true);
-                                }
 
-                                $("#addScreenContent").remove();
-                                $("#updateScreenContent").remove();
 
-                                var displayValue = "<button type='button' class='btn btn-primary' id='updateScreenContent'>수정</button>"
 
-                                $("#button").html(displayValue);
-                                
-                                console.log("1.++++++");
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+	</div>
 
-                             
-                                $("#updateScreenContent").on("click", function() {
-                                	 console.log("2.++++++");
-                                    fncUpdateScreenContent();
-                                })
-                            }
-                        })
 
-                    })
+
+
+
+
+
+	<div class="ui  tiny modal addScreenContentModal">
+
+
+		<div class="ui header">상영등록</div>
+
+		<div class="addScreenContentWrapper col-md-12 col-sm-12">
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영일자</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" name="screenDate" readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영관</div>
+				<div class="col-md-6 col-sm-6">
+					<select name="screenTheater" disabled="disabled">
+						<option value="1">1상영관</option>
+						<option value="2">2상영관</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영시작시간</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="time" name='screenContentOpenTime' readonly="readonly">
+				</div>
+			</div>
+			<div class="endTime">
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영종료시간</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="time" name='screenContentEndTime' readonly="readonly">
+				</div>
+			</div>
+
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">가격</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="가격" name='ticketPrice'>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">시사회</div>
+				<div class="col-md-1 col-sm-1">
+					<input type="checkbox" class="checkbox styled" name='previewChecked'>
+				</div>
+				<div class="col-md-5 col-sm-5 checkPreviewWrapper"></div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">시사회제목</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="시사회제목" name='previewTitle' readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">티켓오픈날짜</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" name='previewOpenDate' readonly="readonly"><input type="time" name='previewOpenTime' readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 addScreenContentTitle">초대배우</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="초대배우" name='inviteActor' readonly="readonly">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="actions">
+			<div class="ui positive right labeled icon button actionAddButton">
+				등록 <i class="checkmark icon"></i>
+			</div>
+			<div class="ui black deny button actionCancleButton">취소</div>
+
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+	<div class="ui  tiny modal updateScreenContentModal">
+
+
+
+		<div class="ui header">상영수정</div>
+
+		<div class="updateScreenContentWrapper col-md-12 col-sm-12">
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영일자</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" name="screenDate" readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영관</div>
+				<div class="col-md-6 col-sm-6">
+					<select name="screenTheater" disabled="disabled">
+						<option value="1">1상영관</option>
+						<option value="2">2상영관</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영시작시간</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="time" name='screenContentOpenTime' readonly="readonly">
+				</div>
+			</div>
+			<div class="endTime">
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영종료시간</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="time" name='screenContentEndTime' readonly="readonly">
+				</div>
+			</div>
+
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">가격</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="가격" name='ticketPrice'>
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회</div>
+				<div class="col-md-1 col-sm-1">
+					<input type="checkbox" class="checkbox styled" name='previewChecked' id="previewChecked">
+				</div>
+				<div class="col-md-5 col-sm-5 checkPreviewWrapper"></div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회제목</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="시사회제목" name='previewTitle' readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">티켓오픈날짜</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" name='previewOpenDate' readonly="readonly"><input type="time" name='previewOpenTime' readonly="readonly">
+				</div>
+			</div>
+			<div>
+				<div class="col-md-6 col-sm-6 updateScreenContentTitle">초대배우</div>
+				<div class="col-md-6 col-sm-6">
+					<input type="text" placeholder="초대배우" name='inviteActor' readonly="readonly">
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="actions">
+			<div class="ui positive right labeled icon button actionUpdateButton">
+				수정 <i class="checkmark icon"></i>
+			</div>
+			<div class="ui black deny button actionCancleButton">취소</div>
+
+		</div>
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+
+<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+<!-- jQuery UI -->
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+<!-- Custom -->
+<script src="/js/custom.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
+
+<script type="text/javascript">
+    function fncAddTime() {
+
+        $("input[name='screenContentEndTime']").val(null);
+
+        showTm += 30;
+
+        $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
+        var date = new Date(Date.parse(screenOpenTime) + showTm * 1000 * 60);
+        var yyyy = date.getFullYear();
+        var mm = date.getMonth() + 1;
+        var dd = date.getDate();
+        var hh = date.getHours();
+        var mi = date.getMinutes();
+        function ten(n) { // 받은 수가 두자리수이하일때
+            return n < 10 ? "0" + n : n;
+        }
+
+        $("input[name='screenContentEndTime']").val(ten(hh) + ":" + ten(mi));
+
+        $("input:hidden[name='screenEndTime2']").val(ten(yyyy) + "/" + ten(mm) + "/" + ten(dd) + " " + ten(hh) + ":" + ten(mi));
+        var screenEndTime = $("input:hidden[name='screenEndTime2']").val();
+
+    }
+
+    function fncCheckScreenDupTime() {
+        screenDate = $("input[name='screenDate']").val();
+        screenTheater = $("option:selected").val();
+        screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
+        screenEndTime = $("input:hidden[name='screenEndTime2']").val();
+
+        $.ajax({
+            url : "/screen/json/checkScreenDupTime/",
+            method : 'POST',
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            data : JSON.stringify({
+                screenDate : screenDate,
+                screenOpenTime : screenOpenTime,
+                screenEndTime : screenEndTime,
+                screenTheater : screenTheater
+            }),
+            dataType : "text",
+            success : function(JSONData, status) {
+
+                $(".dupTime").remove();
+                display = '<div class="dupTime">' + '<div class="col-md-12 col-sm-12 checkDupTime  text-center"  '
+                if (JSONData == "true") {
+                    display += 'style="color:blue;font-size:13px;" >' + '등록 가능한 시간입니다.'
+                } else {
+                    display += 'style="color:red;font-size:13px;" >' + '중복된 시간입니다 다른시간을 선택해주세요'
+                }
+                display += '</div>'
+                $(".endTime").append(display);
+            }
+        });
+    }
+
+    function fncCheckScreenDupPreview() {
+        movieNo = $("input[name='movieNo']").val();
+
+        $.ajax({
+            url : "/screen/json/checkScreenDupPreview/",
+            method : 'post',
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            data : JSON.stringify({
+                movie : {
+                    movieNo : movieNo
+                }
+            }),
+            dataType : "text",
+            success : function(JSONData, status) {
+                if (JSONData != 0) {
+                    $(".checkPreview").remove();
+                    $(".checkPreviewWrapper").html("<span style='color:red' class='checkPreview'>이미 이 영화에 시사회가 있습니다.</span>");
+
+                }
+            }
+        })
+    }
+    /* 
+     //등록이나 수정완료시 input박스 지우기
+     function funClearInputBox() {
+     $("input[name='screenDate']").val(null);
+     $("select[name='screenTheater']").val("1");
+     $("input[name='screenContentOpenTime']").val(null);
+     $(".screenContentEndTime").val(null);
+
+     $("span .checkbox").css("background-position","0px 0px") 
+     $("input[name='previewChecked']").prop("checked", false ); 
+
+     $("input[name='previewTitle']").val(null);
+     $("input[name='previewOpenDate']").val(null);
+     $("input[name='previewOpenTime']").val(null);
+     $("input[name='inviteActor']").val(null);
+
+     $("input[name='ticketPrice']").val(null);
+     $("input[name='previewFlag']").val(null);
+     $("input[name='ticketOpenDate']").val(null);
+
+     $("input[name='previewTitle']").attr("readonly", true);
+     $("input[name='previewOpenTime']").attr("readonly", true);
+     $("input[name='inviteActor']").attr("readonly", true);
+
+     $("select[name='screenTheater']").attr("disabled", "disabled");
+     $("input[name='screenContentOpenTime']").attr("readonly", true);
+     $(".dupTime").remove();
+     $(".checkPreview").remove();
+
+     $("input[name='previewOpenDate']").datepicker("option", "disabled", true);
+     } */
+
+    function fncAddScreenContent() {
+        movieNo = $("input[name='movieNo']").val();
+        screenDate = $("input[name='screenDate']").val();
+        screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
+        screenEndTime = $("input:hidden[name='screenEndTime2']").val();
+        screenTheater = $("option:selected").val();
+        ticketPrice = $("input[name='ticketPrice']").val();
+        previewChecked = $("input[name='previewChecked']").is(":checked");
+        previewTitle = $("input[name='previewTitle']").val();
+        ticketOpenDate = $("input[name='previewOpenDate']").val() + " " + $("input[name='previewOpenTime']").val();
+        inviteActor = $("input[name='inviteActor']").val();
+        previewFlag = ""
+        if (previewChecked == true) {
+            previewFlag = "Y";
+        } else {
+            previewFlag = "N";
+        }
+        $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
+        $("input:hidden[name='previewFlag']").val(previewFlag);
+        $("input:hidden[name='ticketOpenDate']").val(ticketOpenDate);
+
+        $.ajax({
+            url : "/screen/json/addScreenContent/",
+            method : 'POST',
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            data : JSON.stringify({
+                screenDate : screenDate,
+                screenOpenTime : screenOpenTime,
+                screenEndTime : screenEndTime,
+                screenTheater : screenTheater,
+                ticketPrice : ticketPrice,
+                previewTitle : previewTitle,
+                ticketOpenDate : ticketOpenDate,
+                inviteActor : inviteActor,
+                previewFlag : previewFlag,
+                movie : {
+                    movieNo : movieNo
+                }
+            }),
+            dataType : "text",
+            success : function(JSONData, status) {
+
+                if (JSONData == -1) {
+                    alert("상영시간이 중복되었습니다. 다시 선택해주세요");
+                } else if (JSONData == -2) {
+                    alert("이미 이영화에 시사회가 등록되어 있습니다.");
+
+                } else if (JSONData == -3) {
+                    alert("몽고DB연결실패!");
+
+                } else {
+                    // fncGetScreenContentList();
+                    alert("등록완료");
+                    fncGetScreenContentList();
+                    /*  funClearInputBox() */
+
                 }
 
-                function fncAddScreenContent() { // 상영정보 등록하기
+            }
+        });
 
-                    var movieNo = $("input[name='movieNo']").val();
-                    var screenDate = $("input[name='screenDate']").val();
-                    var screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
-                    //   var screenEndTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentEndTime']").val();
-                    var screenEndTime = $("input:hidden[name='screenEndTime']").val();
-                    var screenTheater = $("option:selected").val();
-                    var ticketPrice = $("input[name='ticketPrice']").val();
-                    var previewChecked = $("input[name='previewChecked']").is(":checked");
-                    var previewTitle = $("input[name='previewTitle']").val();
-                    var ticketOpenDate = $("input[name='previewOpenDate']").val() + " " + $("input[name='previewOpenTime']").val();
-                    var inviteActor = $("input[name='inviteActor']").val();
+    }
 
-                    if (previewChecked == true) {
-                        var previewFlag = "Y";
-                    } else {
-                        var previewFlag = "N";
+    function fncGetScreenContent() { //  수정을 위한 값 가져오기
+
+        $.ajax({
+            url : "/screen/json/updateScreenContent/" + screenContentNo,
+            method : "GET",
+            dataType : "json",
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            success : function(JSONData, status) {
+
+                var screenDateTest = JSONData.screenDate;
+                screenDateTest = screenDateTest.replace(/\//gi, "-");
+                $(".updateScreenContentModal input[name='screenDate' ]").val(screenDateTest);
+                $(".updateScreenContentModal input[name='screenContentOpenTime' ]").val(JSONData.screenOpenTime);
+                $(".updateScreenContentModal  input[name='screenContentEndTime' ]").val(JSONData.screenEndTime);
+                $(".updateScreenContentModal select[name='screenTheater' ]").val(JSONData.screenTheater);
+                $(".updateScreenContentModal input[name='ticketPrice' ]").val(JSONData.ticketPrice);
+
+                $(".updateScreenContentModal input[name='previewTitle' ]").val(null);
+                $(".updateScreenContentModal input[name='previewOpenDate' ]").val(null);
+                $(".updateScreenContentModal input[name='previewOpenTime' ]").val(null);
+                $(".updateScreenContentModal input[name='inviteActor' ]").val(null);
+
+                if (JSONData.previewFlag == 'Y') {
+                    $(".updateScreenContentModal input[name='screenContentOpenTime' ]").removeAttr("readonly");
+                    $(".updateScreenContentModal select[name='screenTheater']").removeAttr("disabled");
+
+                }
+                previewChecked = $("#previewChecked").is(":checked");
+
+                if (JSONData.previewFlag == 'Y') {
+                    /*   $("input[name='previewChecked']").prop("checked", true); */
+                    // $("input[name='previewChecked']").prop("checked");
+                    $("#previewChecked").attr("checked", true);
+
+                    // $(".updateScreenContentModal input[name='previewChecked']").prop("checked", true);
+
+                    var previewOpenDate = JSONData.ticketOpenDate;
+                    previewOpenDate = previewOpenDate.substr(0, 10);
+                    previewOpenDate = previewOpenDate.replace(/\//gi, "-");
+                    var previewOpenTime = JSONData.ticketOpenDate;
+                    previewOpenTime = previewOpenTime.substr(11, 15);
+                    $(".updateScreenContentModal input[name='previewTitle' ]").val(JSONData.previewTitle);
+                    $(".updateScreenContentModal input[name='previewOpenDate' ]").val(previewOpenDate);
+                    $(".updateScreenContentModal input[name='previewOpenTime' ]").val(previewOpenTime);
+                    $(".updateScreenContentModal input[name='inviteActor' ]").val(JSONData.inviteActor);
+
+                    $(".updateScreenContentModal input[name='previewTitle' ]").removeAttr("readonly");
+                    $(".updateScreenContentModal input[name='previewOpenTime' ]").removeAttr("readonly");
+                    $(".updateScreenContentModal input[name='inviteActor' ]").removeAttr("readonly");
+
+                } else {
+
+                    $(".updateScreenContentModal input[name='previewChecked']").prop("checked", false);
+
+                    $(".updateScreenContentModal input[name='previewTitle' ]").attr("readonly", true);
+                    $(".updateScreenContentModal input[name='previewOpenDate' ]").attr("readonly", true);
+                    $(".updateScreenContentModal input[name='previewOpenTime' ]").attr("readonly", true);
+                    $(".updateScreenContentModal input[name='inviteActor' ]").attr("readonly", true);
+                }
+
+            },
+        })
+
+    }
+
+    function fncUpdateScreenContent() { //상영정보 수정 
+
+        screenDate = $(".updateScreenContentModal input[name='screenDate']").val();
+
+        screenOpenTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentOpenTime']").val();
+        // var screenEndTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentEndTime']").val();
+
+        screenTheater = $(".updateScreenContentModal option:selected").val();
+
+        ticketPrice = $(".updateScreenContentModal input[name='ticketPrice']").val();
+
+        previewChecked = $(".updateScreenContentModal input[name='previewChecked']").is(":checked");
+
+        previewTitle = $(".updateScreenContentModal input[name='previewTitle']").val();
+
+        ticketOpenDate = $(".updateScreenContentModal input[name='previewOpenDate']").val() + " " + $(".updateScreenContentModal input[name='previewOpenTime']").val();
+
+        inviteActor = $(".updateScreenContentModal input[name='inviteActor']").val();
+
+        movieNo = $("input[name='movieNo']").val();
+
+        screenContentNo = $("input[name='screenContentNo']").val();
+
+        screenEndTime = $("input:hidden[name='screenEndTime2']").val();
+
+        screenEndTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentEndTime']").val();
+
+        if (previewChecked == true) {
+            var previewFlag = "Y";
+        } else {
+            var previewFlag = "N";
+        }
+        $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
+        $("input:hidden[name='screenEndTime2']").val(screenEndTime);
+        $("input:hidden[name='previewFlag']").val(previewFlag);
+        $("input:hidden[name='ticketOpenDate']").val(ticketOpenDate);
+
+        $.ajax({
+            url : "/screen/json/updateScreenContent/",
+            method : 'POST',
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            data : JSON.stringify({
+                screenContentNo : screenContentNo,
+                screenDate : screenDate,
+                screenOpenTime : screenOpenTime,
+                screenEndTime : screenEndTime,
+                screenTheater : screenTheater,
+                ticketPrice : ticketPrice,
+                previewTitle : previewTitle,
+                ticketOpenDate : ticketOpenDate,
+                inviteActor : inviteActor,
+                previewFlag : previewFlag,
+                movie : {
+                    movieNo : movieNo
+                }
+            }),
+            dataType : "text",
+            success : function(JSONData, status) {
+
+                if (JSONData == -1) {
+                    alert("상영시간이 중복되었습니다. 다시 선택해주세요");
+                } else if (JSONData == -2) {
+                    alert("이미 이영화에 시사회가 등록되어 있습니다.");
+                } else if (JSONData == -3) {
+                    alert('DB연결에 실패하였습니다.')
+                } else {
+                    alert("수정완료");
+                    fncGetScreenContentList();
+                    /*  funClearInputBox() */
+                }
+            }
+        });
+
+    }
+
+    function fncDeleteScreenContent() { // 상영삭제
+
+        if (confirm("정말 상영정보를 지우겠습니까? ") == true) {
+            $.ajax({
+                url : "/screen/json/deleteScreenContent/" + screenContentNo,
+                method : "GET",
+                dataType : "json",
+                headers : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                success : function(JSONData, status) {
+
+                    fncGetScreenContentList();
+                },
+            })
+        } else {
+            return;
+        }
+
+    }
+
+    function fncGetScreenContentList() { // 한영화에 등록되어있는 상영에 대한 정보 리스트를 가져옴
+        var movieNo = $("input[name='movieNo']").val();
+        $.ajax({
+            url : "/screen/json/getScreenContentList/" + movieNo,
+            method : "GET",
+            dataType : "json",
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            success : function(JSONData, status) {
+                $(".listData").remove();
+                display = '';
+                result = JSONData;
+                $.each(result, function(idx, val) {
+
+                    display += '<tr class="row col-md-12 col-sm-12 listData text-center">' + '<td class="col-md-2 col-sm-2">' + val.screenContentNo + '<i class="fa fa-eraser"> </i> <i class="fa fa-times"> </i>' + '<input type="hidden" name="screenContentNo" value="'+val.screenContentNo+'">' + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenDate + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenOpenTime + '-' + val.screenEndTime + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenTheater + '</td>' + '<td class="col-md-1 col-sm-1">' + val.ticketPrice + '</td>' + '<td class="col-md-1 col-sm-1">' + val.previewFlag + '</td>' + '<td class="col-md-2 col-sm-2">'
+                    if (val.previewTitle != null) {
+                        display += val.previewTitle
                     }
-
-                    $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
-                    //  $("input:hidden[name='screenEndTime']").val(screenEndTime);
-                    $("input:hidden[name='previewFlag']").val(previewFlag);
-                    $("input:hidden[name='ticketOpenDate']").val(ticketOpenDate);
-
-                    $.ajax({
-                        url: "/screen/json/addScreenContent/" + movieNo,
-                        method: 'POST',
-
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        data: JSON.stringify({
-                            screenDate: screenDate,
-                            screenOpenTime: screenOpenTime,
-                            screenEndTime: screenEndTime,
-                            screenTheater: screenTheater,
-                            ticketPrice: ticketPrice,
-                            previewTitle: previewTitle,
-                            ticketOpenDate: ticketOpenDate,
-                            inviteActor: inviteActor,
-                            previewFlag: previewFlag
-                        }),
-                        dataType: "text",
-
-                        success: function(JSONData, status) {
-
-                            $("#previewChecked").prop("checked", false);
-                            $("input[type !='hidden']").val(null);
-                            $("#screenTheater").val('1');
-                            $("input[name='previewTitle' ]").attr("readonly", true);
-                            $("input[name='previewOpenDate' ]").attr("readonly", true);
-                            $("input[name='previewOpenTime' ]").attr("readonly", true);
-                            $("input[name='inviteActor' ]").attr("readonly", true);
-
-                            if (JSONData == -1) {
-                                alert("상영시간이 중복되었습니다. 다시 선택해주세요");
-                            } else if (JSONData == -2) {
-                                alert("이미 이영화에 시사회가 등록되어 있습니다.");
-                                
-                            } else {
-                                fncGetScreenContentList();
-                            }
-                        }
-
-                    });
-
-                }
-
-                function fncGetScreenContentList() { // 한영화에 등록되어있는 상영에 대한 정보 리스트를 가져옴
-                    var movieNo = $("input[name='movieNo']").val();
-
-                    $.ajax({
-                        url: "/screen/json/getScreenContentList/" + movieNo,
-                        method: "GET",
-                        dataType: "json",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        success: function(JSONData, status) {
-
-                            //  $("input[name='screenContentTable']").remove();
-                                                        $("#screenContentTBody").remove();
-                                                        
-
-                                                        var result = JSONData;
-                                                        var displayValue =  "<tbody id='screenContentTBody'>"
-                                                    
-                                                        $.each(result, function(idx, val) {
-                                                        	var preview = val.previewFlag;
-                                                        	displayValue += 
-                                                        		"<tr class='text-center'>"+
-                                                            	"<td>"+val.screenContentNo+"</td>"+
-                                                            	"<td>"+val.screenDate+"</td>"+
-                                                            	"<td>"+val.screenTheater+"</td>"+
-                                                            	"<td>"+val.screenOpenTime+"</td>"+
-                                                            	"<td>"+val.screenEndTime+"</td>"+
-                                                            	"<td>"+val.ticketPrice+"</td>"+
-                                                            	"<td>"+val.previewFlag+"</td>"+
-                                                            	"<td>"
-                                                            	if (val.previewTitle != null) {
-                                                            		displayValue += val.previewTitle
-                                                            	}
-                                                            	displayValue += "</td><td>"
-                                                            	if (val.previewTitle != null) {
-                                                            		displayValue += val.ticketOpenDate
-                                                            	}
-                                                            	displayValue += "</td> <td>"
-                                                            	if (val.previewTitle != null) {
-                                                            		displayValue += val.inviteActor
-                                                            	}
-                                                            	displayValue += "</td> <td> <input type='hidden' name='screenContentNo2' value='"+val.screenContentNo+"'><i class='glyphicon glyphicon-pencil'></i></td>"+
-                                                            	"<td><input type='hidden' name='screenContentNo2' value='"+val.screenContentNo+"'><i class='glyphicon glyphicon-trash'></i><td>"
-                                                            	"</tr>"
-                                                            	
-                                                        })
-                                                        displayValue +=  "</tbody>"
-                               
-                                                        $("#screenContentTHead").after(displayValue);
-                                                     
-                                                        console.log("3.++++++");
-                                                      
-                                                        $("#previewChecked").prop("checked", false);
-                                                        $("input[type !='hidden']").val(null);
-                                                        $("#screenTheater").val('1');
-                                                        $("input[name='previewTitle' ]").attr("readonly", true);
-                                                        $("input[name='previewOpenDate' ]").attr("readonly", true);
-                                                        $("input[name='previewOpenTime' ]").attr("readonly", true);
-                                                        $("input[name='inviteActor' ]").attr("readonly", true);
-
-                           /*  $("#screenContentTBody").remove();
-
-                            var result = JSONData;
-                            var displayValue =
-                                "<table class='table table-hover' id='screenContentTable' width='800px'>" +
-                                "<thead id='screenContentTHead' >" +
-                                "<tr>" +
-                                "<th class='text-center' width='4%'>상영번호</th>" +
-                                "<th class='text-center' width='8%'>상영일자</th>" +
-                                "<th class='text-center' width='8%'>상영관</th>" +
-                                "<th class='text-center' width='8%'>상영시작시간</th>" +
-                                "<th class='text-center' width='8%'>상영종료시간</th>" +
-                                "<th class='text-center' width='8%'>가격</th>" +
-                                "<th class='text-center' width='5%'>시사회</th>" +
-                                "<th class='text-center' width='13%'>시사회제목</th>" +
-                                "<th class='text-center' width='10%'>티켓오픈날짜</th>" +
-                                "<th class='text-center' width='18%'>초대배우</th>" +
-                                "<th class='text-center' width='5%'>수정</th>" +
-                                "<th class='text-center' width='5%'>삭제</th>" +
-                                "</tr>" +
-                                "</thead>" +
-                                "<tbody id='screenContentTBody' width='800px'>"
-
-
-
-                            $.each(result, function(idx, val) {
-                                var preview = val.previewFlag;
-                                displayValue +=
-                                    "<tr class='text-center'>" +
-                                    "<td>" + val.screenContentNo + "</td>" +
-                                    "<td>" + val.screenDate + "</td>" +
-                                    "<td>" + val.screenTheater + "</td>" +
-                                    "<td>" + val.screenOpenTime + "</td>" +
-                                    "<td>" + val.screenEndTime + "</td>" +
-                                    "<td>" + val.ticketPrice + "</td>" +
-                                    "<td>" + val.previewFlag + "</td>" +
-                                    "<td>"
-                                if (val.previewTitle != null) {
-                                    displayValue += val.previewTitle
-                                }
-                                displayValue += "</td><td>"
-                                if (val.previewTitle != null) {
-                                    displayValue += val.ticketOpenDate
-                                }
-                                displayValue += "</td> <td>"
-                                if (val.previewTitle != null) {
-                                    displayValue += val.inviteActor
-                                }
-                                displayValue += "</td> <td> <input type='hidden' name='screenContentNo2' value='" + val.screenContentNo + "'><i class='glyphicon glyphicon-pencil'></i></td>" +
-                                    "<td><input type='hidden' name='screenContentNo2' value='" + val.screenContentNo + "'><i class='glyphicon glyphicon-trash'></i><td>"
-                                "</tr>"
-
-                            })
-                            displayValue +=
-                                "<tr>" +
-                                "<td></td>" +
-                                
-                                "<td><input type='date' class='form-control input-sm' name='screenDate' id='screenDate'></td>" +
-                                "<td>" +
-                                " <select class='form-control input-sm' name='screenTheater' id='screenTheater'>" +
-                                "<option value='1'>1상영관</option>" +
-                                "<option value='2'>2상영관</option>	" + 
-                                "</select>" +
-                                "</td>" +
-                                "<td><input type='time' class='form-control input-sm' name='screenContentOpenTime'></td>" +
-                                "<td><input type='time' class='form-control input-sm' name='screenContentEndTime' readonly='readonly'></td>" +
-                                "<td><input type='text' class='form-control input-sm' placeholder='가격' name='ticketPrice'></td>" +
-                                "<td><input type='checkbox' class='checkbox '  name='previewChecked' id='previewChecked'></td>" +
-                                "<td><input type='text' class='form-control input-sm' placeholder='시사회제목' name='previewTitle' readonly='readonly'></td>" +
-                                "<td><input type='date' class='form-control input-sm' name='previewOpenDate' id='previewOpenDate' readonly='readonly'>" +
-                                "<input type='time' class='form-control input-sm' name='previewOpenTime' readonly='readonly'></td>" +
-                                "<td><input type='text' class='form-control input-sm' placeholder='초대배우' name='inviteActor' readonly='readonly'></td>" +
-                                "<td> <div id ='button'><button type='button' class='btn btn-primary' id='addScreenContent'>등록</button></div></td>" +
-                                " <td></td>" +
-                                "</tr>" +
-                                "</tbody>" +
-                                "</table>"
-
-                            $("#screenContentTHead").after(displayValue); */
-
-                            $("td:nth-child(11)").on("click", function() {
-                            	 console.log("4.++++++");
-                                fncGetScreenContent();
-                            })
-
-                            $("td:nth-child(12)").on("click", function() {
-                                fncDeleteScreenContent();
-                            })
-                            $("#addScreenContent").remove();
-                            $("#updateScreenContent").remove();
-
-                            var displayValue = "<button type='button' class='btn btn-primary' id='addScreenContent'>등록</button>"
-
-                            $("#button").html(displayValue);
-
-                            $("#addScreenContent").on("click", function() {
-                                fncAddScreenContent();
-
-                            });
-                            
-                            $("input[name='screenContentOpenTime']").on("change", function() {
-                                addTime();
-                            })
-                            $("input[name='screenDate").on("change", function() {
-                                fncNotEmptyScreenContent();
-
-                            })
-
-                            $("select[name='screenTheater']").on("click", function() {
-                                fncNotEmptyScreenContent();
-                            })
-                            
-
-
-                        }
-
-                    });
-                }
-
-
-
-                function fncUpdateScreenContent() { //상영정보 수정 
-
-                    var screenDate = $("input[name='screenDate']").val();
-                    var screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
-                    // var screenEndTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentEndTime']").val();
-
-                    var screenTheater = $("option:selected").val();
-                    var ticketPrice = $("input[name='ticketPrice']").val();
-                    var previewChecked = $("input[name='previewChecked']").is(":checked");
-                    var previewTitle = $("input[name='previewTitle']").val();
-                    var ticketOpenDate = $("input[name='previewOpenDate']").val() + " " + $("input[name='previewOpenTime']").val();
-                    var inviteActor = $("input[name='inviteActor']").val();
-                    var movieNo = $("input[name='movieNo']").val();
-                    var screenContentNo = $("input[name='screenContentNo']").val();
-                    addTime();
-                    var screenEndTime = $("input:hidden[name='screenEndTime']").val();
-
-
-                    console.log(screenEndTime + "나와라좀");
-                    if (previewChecked == true) {
-                        var previewFlag = "Y";
-                    } else {
-                        var previewFlag = "N";
+                    display += '</td>' + '<td class="col-md-2 col-sm-2">'
+                    if (val.previewTitle != null) {
+                        display += val.ticketOpenDate
                     }
-
-
-
-                    $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
-                    // $("input:hidden[name='screenEndTime']").val(screenEndTime);
-                    $("input:hidden[name='previewFlag']").val(previewFlag);
-                    $("input:hidden[name='ticketOpenDate']").val(ticketOpenDate);
-
-                    console.log(movieNo + "왜안돼");
-                    $.ajax({
-                        url: "/screen/json/updateScreenContent/" + movieNo,
-                        method: 'POST',
-
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        data: JSON.stringify({
-                            screenContentNo: screenContentNo,
-                            screenDate: screenDate,
-                            screenOpenTime: screenOpenTime,
-                            screenEndTime: screenEndTime,
-                            screenTheater: screenTheater,
-                            ticketPrice: ticketPrice,
-                            previewTitle: previewTitle,
-                            ticketOpenDate: ticketOpenDate,
-                            inviteActor: inviteActor,
-                            previewFlag: previewFlag
-
-                        }),
-                        dataType: "text",
-
-                        success: function(JSONData, status) {
-				
-                            $("#previewChecked").prop("checked", false);
-                            $("input[type !='hidden']").val(null);
-                            $("#screenTheater").val('1');
-                            $("input[name='previewTitle' ]").attr("readonly", true);
-                            $("input[name='previewOpenDate' ]").attr("readonly", true);
-                            $("input[name='previewOpenTime' ]").attr("readonly", true);
-                            $("input[name='inviteActor' ]").attr("readonly", true);
-                            
-                            console.log(JSONData +'sdsdsdsdsdds')
-
-                            if (JSONData == -1) {
-                                alert("상영시간이 중복되었습니다. 다시 선택해주세요");
-                            } else if (JSONData == -2) {
-                                alert("이미 이영화에 시사회가 등록되어 있습니다.");
-                            } else if(JSONData == -3){
-                            	 alert('DB연결에 실패하였습니다.')
-                            }else {
-                                fncGetScreenContentList();
-                            }
-
-
-                            fncGetScreenContentList();
-                        }
-
-
-
-                    });
-
-                }
-
-                function fncDeleteScreenContent() { // 상영삭제
-                    $("td:nth-child(12)").on("click", function() {
-
-                        var screenContentNo = $("input[name='screenContentNo2']", $(this)).val();
-
-
-
-                        if (confirm("정말 상영정보를 지우겠습니까? ") == true) {
-
-                            $.ajax({
-                                url: "/screen/json/deleteScreenContent/" + screenContentNo,
-                                method: "GET",
-                                dataType: "json",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json"
-                                },
-                                success: function(JSONData, status) {
-                                    console.log(JSONData);
-
-
-                                    fncGetScreenContentList();
-                                },
-
-                            })
-
-                        } else {
-                            return;
-                        }
-                    })
-                }
-
-                function fncNotEmptyScreenContent() { //그시간 그상영관에 등록되어있는 시간가져오기
-
-
-
-                    var screenDate = $("input[name='screenDate']").val();
-                    var screenTheater = $("option:selected").val();
-                    $.ajax({
-                        url: "/screen/json/notEmptyScreenContent/",
-                        method: "POST",
-                        dataType: "json",
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        data: JSON.stringify({
-                            screenDate: screenDate,
-                            screenTheater: screenTheater
-                        }),
-                        success: function(JSONData, status) {
-
-
-                            var displayValue = "<b>현재 " + screenDate + " " + screenTheater + "상영관에 예약되어있는 시간입니다. <br> </b> "
-                            var result = JSONData;
-                            $.each(result, function(idx, val) {
-                                displayValue += "[" + val.screenOpenTime + " - " + val.screenEndTime + "] "
-                            })
-
-
-                            $("#checkDupTime").val(null);
-                            $("#checkDupTime").html(displayValue);
-
-                        }
-                    })
-
-
-                }
-
-                function addTime() { // 영화시작시간을 입력하면 러닝타임+30분을 더하여 입력한다.
-
-                    //  $("input[name='screenContentOpenTime']").on("change", function () {
-                    $("input[name='screenContentEndTime']").val(null);
-                    var screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
-
-
-                    var showTm = parseInt($("input[name='showTm']").val());
-                    showTm += 30;
-
-                    $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
-                    var date = new Date(Date.parse(screenOpenTime) + showTm * 1000 * 60);
-
-                    var yyyy = date.getFullYear();
-                    var mm = date.getMonth() + 1;
-                    var dd = date.getDate();
-                    var hh = date.getHours();
-                    var mi = date.getMinutes();
-
-                    function ten(n) { // 받은 수가 두자리수이하일때
-                        return n < 10 ? "0" + n : n;
+                    display += '</td>' + '<td class="col-md-1 col-sm-1">'
+                    if (val.previewTitle != null) {
+                        display += val.inviteActor
                     }
-
-
-
-                    $("input[name='screenContentEndTime']").val(ten(hh) + ":" + ten(mi));
-
-                    //var test = ten(yyyy)+"/"+ten(mm)+"/"+ten(dd)+" "+ten(hh)+":"+ten(mi);
-                    $("input:hidden[name='screenEndTime']").val(ten(yyyy) + "/" + ten(mm) + "/" + ten(dd) + " " + ten(hh) + ":" + ten(mi));
-                    var screenEndTime = $("input:hidden[name='screenEndTime']").val();
-                    console.log(screenEndTime + "??>>?");
-                    //  })
-
-                }
-
-                $(function() {
-                    $("#addScreenContent").on("click", function() {
-                        fncAddScreenContent();
-                    });
-
-                });
-
-
-                $(function() {
-                    fncGetScreenContent();
-                    fncDeleteScreenContent();
-                    //  fncNotEmptyScreenContent();
-                    //addTime();
-                    //dateSelect();
+                    display += '</td>' + '</tr>'
 
                 })
 
-                $(function() {
-                    $("input[name='screenContentOpenTime']").on("change", function() {
-                        addTime();
-                    })
-                    $("input[name='previewChecked']").on("click", function() { //시사회 체크하면 뒤에  input 활성화 체크해제시 비활성화
-                        var previewChecked = $("input[name='previewChecked']").is(":checked");
-                        if (previewChecked == true) {
-                            $("input[name='previewTitle' ]").removeAttr("readonly");
-                            $("input[name='previewOpenDate' ]").removeAttr("readonly");
-                            $("input[name='previewOpenTime' ]").removeAttr("readonly");
-                            $("input[name='inviteActor' ]").removeAttr("readonly");
-                        } else {
-                            $("input[name='previewTitle' ]").val(null);
-                            $("input[name='previewOpenDate' ]").val(null);
-                            $("input[name='previewOpenTime' ]").val(null);
-                            $("input[name='inviteActor' ]").val(null);
+                console.log("display + " + display);
 
-                            $("input[name='previewTitle' ]").attr("readonly", true);
-                            $("input[name='previewOpenDate' ]").attr("readonly", true);
-                            $("input[name='previewOpenTime' ]").attr("readonly", true);
-                            $("input[name='inviteActor' ]").attr("readonly", true);
-                        }
-                    })
+                $(".listTitle").after(display);
 
-                    $("input[name='screenDate").on("change", function() {
-                        fncNotEmptyScreenContent();
+            }
+        });
+    }
 
-                    })
+    $(document).ready(function() {
+        fncGetScreenContentList();
+        openDt = $("input[name='openDt']").val();
+        endDt = $("input[name='endDt']").val();
 
-                    $("select[name='screenTheater']").on("click", function() {
-                        fncNotEmptyScreenContent();
-                    })
-                    $("button[name='contentList']").on("click", function () {
-                    	$(self.location).attr("href","/screen/getScreenList");
-					})
+        var today = new Date();
 
-                })
-                
-                $(function() {
-                var 	openDt = new Date($("input[name='openDt']").val());
-                var endDt = new Date($("input[name='endDt']").val());
+        var year = today.getFullYear();
+        var month = today.getMonth();
+        var date = today.getDate();
+        month = (month < 10) ? '0' + month : month;
+        date = (date < 10) ? '0' + date : date;
+        today = new Date(year, month, date);
+
+        openDt = new Date(openDt);
+        endDt = new Date(endDt);
+
+        minDate = openDt
+
+        if (openDt < today) {
+            date = today.getDate() + 1;
+            today.setDate(date);
+            minDate = today
+        }
+
+        $("input[name='screenDate']").datepicker({
+            dateFormat : 'yy-mm-dd',
+            minDate : minDate,
+            maxDate : endDt
+        });
+
+        var movieNo = $("input[name='movieNo']").val();
+        $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
+
+        var screenDate = $("input[name='screenDate']").val();
+
+        $(document).on("change", "input[name='screenDate']", function() {
+            screenDate = $("input[name='screenDate']").val();
+
+            if ($("input[name='screenContentOpenTime']").val() != "") {
+                fncCheckScreenDupTime()
+            }
+
+            $("select[name='screenTheater']").removeAttr("disabled");
+            $("input[name='screenContentOpenTime']").removeAttr("readonly");
+            $("input[name='previewOpenDate']").val("");
+            $(document).on("click", "span.checkbox", function() {
+                previewChecked = $("input[name='previewChecked']").is(":checked");
+
                 var today = new Date();
-                var startDt 
-               	var screenDate
-                console.log("+++"+screenDate)
-                
-               
-                console.log("openDt "+ openDt);
-                console.log("today "+ today);
-                console.log(openDt > today)
-                
-                if(openDt > today){
-            		startDt = openDt
-            	}else{
-            		startDt = today
-            	}
-                
-                
-                console.log("startDt " + startDt);
-                console.log("endDt " + endDt);
-    $( "#screenDate" ).datepicker({
-    	dateFormat : 'yy-mm-dd',
-    	minDate : startDt,
-    	maxDate : endDt,
-    	
-    });
- 
-     $("input[name='screenDate").on("change", function() {
-                	screenDate = new Date( $("input[name='screenDate").val());
-                	console.log(screenDate);
-                    $( "#previewOpenDate" ).datepicker({
-                    	dateFormat : 'yy-mm-dd',
-                    	minDate : today,
-                    	maxDate : screenDate
-                    	
+
+                var year = today.getFullYear();
+                var month = today.getMonth();
+                var date = today.getDate();
+                month = (month < 10) ? '0' + month : month;
+                date = (date < 10) ? '0' + date : date;
+                today = new Date(year, month, date);
+
+                screenDate = new Date(screenDate);
+                date = screenDate.getDate() - 1;
+                screenDate.setDate(date);
+  
+                if (previewChecked == true) {
+                    $("input[name='previewOpenDate']").datepicker({
+                        dateFormat : 'yy-mm-dd',
+                        minDate : today,
+                        maxDate : screenDate
                     });
-                })
-                
+                } else {
+                    $("input[name='previewOpenDate']").val("");
+                    //$("input[name='previewOpenDate']").datepicker("option", "disabled", true);
 
-    
-    
-});
-                
-                
-            </script>
-
-            <style>
-                body {
-                    padding-top: 70px;
                 }
-            </style>
+            });
+        })
 
-        </head>
+        $(document).on("change", "select[name='screenTheater']", function() {
+            screenDate = $("input[name='screenDate']").val();
+            if ($("input[name='screenContentOpenTime']").val() != "") {
+                fncCheckScreenDupTime()
+            }
+            $("select[name='screenTheater']").removeAttr("disabled");
+            $("input[name='screenContentOpenTime']").removeAttr("readonly");
+        })
 
-        <body>
+        $(document).on("change", "input[name='screenContentOpenTime']", function() {
+            screenDate = $("input[name='screenDate']").val();
+            screenTheater = $("option:selected").val();
+            screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
+            showTm = parseInt($("input[name='showTm']").val());
 
-            <jsp:include page="/layout/topToolbar.jsp" />
+            if ($("input[name='screenDate']").val().length == 0) {
 
+                screenOpenTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentOpenTime']").val();
 
+            }
 
-            <div class="container">
-                <div class="page-header">
-                    <h2 class=" text-info">영화 상영 관리</h2>
-                </div>
-      
-                <div class="row">
+            fncAddTime();
+            fncCheckScreenDupTime()
+        })
 
-                    <div class="col-xs-1 col-md-2"></div>
+        $(document).on("click", ".actionAddButton", function() {
 
-                    <div class="col-xs-4 col-md-2">
-                        <div> <br> <img src="${movie. postUrl}" style="width:150px;"> </div>
-                    </div>
-                    <div class="col-xs-6 col-md-6">
-                        <div>
-                            <h3 class=" text-info">${movie.movieNm }</h3>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">영화번호 </div>
-                            <div class="col-xs-8">${movie.movieNo}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">개봉일 </div>
-                            <div class="col-xs-8"><input type="hidden" name='openDt' value="${movie.openDt }">${movie.openDt }</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">상영마감일 </div>
-                            <div class="col-xs-8"><input type="hidden" name='endDt' value="${movie.endDt }">${movie.endDt }</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">감독 </div>
-                            <div class="col-xs-8">${movie.directors }</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">배우 </div>
-                            <div class="col-xs-8">${movie.actors }</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">장르 </div>
-                            <div class="col-xs-8">${movie.genres }</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">러닝타임 </div>
-                            <div class="col-xs-8">${movie.showTm }분</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">관람등급 </div>
-                            <div class="col-xs-8">${movie.watchGradeNm }</div>
-                        </div>
-                    </div>
-                    <div class="col-xs-1 col-md-2"></div>
-                </div>
+            fncAddScreenContent();
+        })
 
+        $(document).on("click", ".actionUpdateButton", function() {
 
-                <div>
-                    <div id='screenContentAfterTable'></div>
-                    <form name='screenContent' id='screenContent' method="post">
-                        <table class="table table-hover" id='screenContentTable'>
-                            <thead id="screenContentTHead">
-                                <tr>
-                                    <th class="text-center" width="4%">상영번호</th>
-                                    <th class="text-center" width="8%">상영일자</th>
-                                    <th class="text-center" width="8%">상영관</th>
-                                    <th class="text-center" width="8%">상영시작시간</th>
-                                    <th class="text-center" width="8%">상영종료시간</th>
-                                    <th class="text-center" width="8%">가격</th>
-                                    <th class="text-center" width="5%">시사회</th>
-                                    <th class="text-center" width="13%">시사회제목</th>
-                                    <th class="text-center" width="10%">티켓오픈날짜</th>
-                                    <th class="text-center" width="18%">초대배우</th>
-                                    <th class="text-center" width="5%">수정</th>
-                                    <th class="text-center" width="5%">삭제</th>
-                                </tr>
-                            </thead>
-                            <tbody id="screenContentTBody">
-                                <c:set var="i" value="0" />
-                                <c:forEach var="screenContent" items="${list }">
-                                    <c:set var="i" value="${i+1 }" />
-                                    <tr class="text-center">
-                                        <td>${screenContent.screenContentNo }</td>
-                                        <td>${screenContent.screenDate }</td>
-                                        <td>${screenContent.screenTheater }</td>
-                                        <td>${screenContent.screenOpenTime }</td>
-                                        <td>${screenContent.screenEndTime }</td>
-                                        <td>${screenContent.ticketPrice }</td>
-                                        <td>${screenContent.previewFlag }</td>
-                                        <td>${screenContent.previewTitle }</td>
-                                        <td>${screenContent.ticketOpenDate}</td>
-                                        <td>${screenContent.inviteActor}</td>
-                                        <td><input type="hidden" name="screenContentNo2" value='${screenContent.screenContentNo }'><i class="glyphicon glyphicon-pencil"></i></td>
-                                        <td><input type="hidden" name="screenContentNo2" value='${screenContent.screenContentNo }'><i class="glyphicon glyphicon-trash"></i></td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                           <tbody>
-                                <tr>
-                                    <td colspan="2"><input type="text"  class="form-control input-sm" name='screenDate' id='screenDate' placeholder="상영일자"   readonly="readonly"></td>
-                                    <td>
-                                        <select class="form-control input-sm" name="screenTheater" id="screenTheater">
-       								<option value="1">1상영관</option>						
-       								<option value="2">2상영관</option>				
-       								</select>
-                                    </td>
-                                    <td><input type="time" class="form-control input-sm" name='screenContentOpenTime'></td>
-                                    <td><input type="time" class="form-control input-sm" name='screenContentEndTime' readonly="readonly"></td>
-                                    <td><input type="text" class="form-control input-sm" placeholder="가격" name='ticketPrice'></td>
-                                    <td><input type="checkbox" class="checkbox " name='previewChecked' id="previewChecked"></td>
-                                    <td><input type="text" class="form-control input-sm" placeholder="시사회제목" name='previewTitle' readonly="readonly"></td>
-                                    <td><input type="text" class="form-control input-sm" name='previewOpenDate' id='previewOpenDate' readonly="readonly"><input type="time" class="form-control input-sm" name='previewOpenTime' readonly="readonly"></td>
-                                    <td><input type="text" class="form-control input-sm" placeholder="초대배우" name='inviteActor' readonly="readonly"></td>
-                                    <td>
-                                        <div id="button"><button type="button" class="btn btn-primary" id="addScreenContent">등록</button></div>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="screenContentNo">
-                        <input type="hidden" name="screenOpenTime">
-                        <input type="hidden" name="screenEndTime">
-                        <input type="hidden" name="previewFlag">
-                        <input type="hidden" name="ticketOpenDate">
-                        <input type="hidden" name='movieNo' value='${movie.movieNo }'>
-                        <input type="hidden" name='showTm' value='${movie.showTm }'>
-                        <div id="checkDupTime" style="background-color:lightgray;"> </div>
+            fncUpdateScreenContent();
+        })
 
-                    </form>
-                   <p align="middle"><button type="button" class="btn btn-primary" name="contentList">상영목록으로 가기</button> </p>
-                    <div></div>
-                </div>
-            </div>
-        </body>
+        $(document).on("click", ".fa-times", function() {
+            screenContentNo = ($(this).next().val());
+            fncDeleteScreenContent();
+        })
 
-        </html>
+        $(document).on("click", ".fa-eraser", function() {
+            screenContentNo = ($(this).next().next().val());
+
+            fncGetScreenContent();
+
+            $(".updateScreenContentModal").modal('show');
+        })
+
+        $(document).on("click", "span.checkbox", function() {
+            previewChecked = $("input[name='previewChecked']").is(":checked");
+
+            if (previewChecked == true) {
+                $("input[name='previewTitle']").removeAttr("readonly");
+                $("input[name='previewOpenTime']").removeAttr("readonly");
+                $("input[name='inviteActor']").removeAttr("readonly");
+                //fncCheckScreenDupPreview()
+            } else {
+                $("input[name='previewTitle']").attr("readonly", true);
+                $("input[name='previewOpenTime']").attr("readonly", true);
+                $("input[name='inviteActor']").attr("readonly", true);
+                $(".checkPreview").remove();
+            }
+        });
+
+        $("#addButton").click(function() {
+            $(".addScreenContentModal").modal('show');
+        });
+
+        $(".addScreenContentModal").modal({
+            autofocus : false,
+            closable : false,
+            onApprove : function() {
+                window.location.reload()
+                return false;
+            },
+            onDeny : function() {
+                /*  funClearInputBox() */
+                window.location.reload()
+            }
+        });
+
+        $(".updateScreenContentModal").modal({
+            autofocus : false,
+            closable : false,
+            onApprove : function() {
+                window.location.reload()
+                return false;
+            },
+            onDeny : function() {
+                /* funClearInputBox() */
+                window.location.reload()
+            }
+        });
+
+    });
+</script>
+<style type="text/css">
+.toolBar {
+	margin-top: 100px
+}
+
+input, select {
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+	padding: 5px 5px 5px;
+}
+
+.addScreenContentWrapper, .updateScreenContentWrapper {
+	padding: 10px 10px 10px 10px;
+}
+
+.addScreenContentWrapper>div, .updateScreenContentWrapper>div {
+	height: 40px;
+	margin: 10px 10px 10px 10px;
+}
+
+.addScreenContentWrapper button, .updateScreenContentWrapper button {
+	padding: 5px 5px 5px 5px;
+}
+
+#addButton {
+	padding: 5px 5px 5px 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.addScreenContentTitle, .updateScreenContentTitle {
+	color: #4C4145;
+	font-size: 13px;
+}
+
+.listTitle {
+	font-size: 10px;
+	font-weight: bold;
+	height: 40px;
+	vertical-align: middle;
+	padding-top: 5px;
+	color: #FFFFFF;
+	background-color: #4C4145;
+}
+
+.listData {
+	font-size: 10px;
+	height: 40px;
+	vertical-align: middle;
+	padding-top: 5px;
+	color: #4C4145;
+}
+
+.checkDupTime {
+	color: #4C4145;
+	height: 40px;
+	vertical-align: middle;
+}
+
+input[readonly="readonly"], select[disabled="disabled"] {
+	background-color: #dbdee1;
+}
+
+.fa-bars {
+	background-color: #4C4145;
+	padding: 7px 7px 7px 7px;
+	border-width: 1px;
+	border-color: #4C4145;
+	border-style: solid;
+	border-radius: 5px;
+	color: #ffffff;
+}
+</style>
+</html>
