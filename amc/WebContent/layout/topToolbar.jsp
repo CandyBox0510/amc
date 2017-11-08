@@ -173,8 +173,6 @@
 			})
 			
 			$(".myWish").on("click",function(){
-				alert('${sessionScope.user.userId}');
-				alert('${sessionScope.user}');
 				if( '${sessionScope.user.userId}' == '' || '${sessionScope.user}' == null){
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
@@ -225,7 +223,6 @@
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
 				
-				alert(id);
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');

@@ -117,8 +117,8 @@
 												all += "search"
 											}
 								all +=    '">'
-								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365;"></a>'
-								all += 		'<div class="alert alert-info" role="alert">'
+								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 		'<div class="alert alert-success" role="alert">'
 								all +=			'<strong>취소표 신청 좌석</strong><br/>['
 								all +=           alarm[i].alarmSeatNo
 								all += 			' ]<span class="label label-success">'
@@ -196,7 +196,7 @@
 	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
 	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview"></a>
 	                            </c:if>
-	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365;">
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            
 	                            <div class="alert alert-success" role="alert">
   									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]

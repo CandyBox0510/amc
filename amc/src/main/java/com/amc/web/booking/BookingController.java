@@ -31,6 +31,7 @@ import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 import com.amc.service.user.UserService;
+import com.amc.web.alarm.AlarmRestController;
 import com.amc.web.cinema.HttpRequestToNode;
 
 @Controller
@@ -194,7 +195,9 @@ public class BookingController {
 		int length = (alarmSeats.split(",").length)/2;
 		for(int i=0;i<length;i+=2){						
 			String seat = alarmSeats.substring(i, i+2);
-			alarmService.smsPush("cancelAlarm", screenContentNo+"", user.getUserId(),seat);
+			/*AlarmRestController ar = new AlarmRestController();
+			ar.push(type, serialNo, userId, alarmSeatNo);*/
+			alarmService.smsPush("cancelAlarm", screenContentNo+"", "",seat);
 		}		
 		
 		return "redirect:/booking/getAdminBookingList";			

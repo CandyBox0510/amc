@@ -60,13 +60,7 @@
 						{
 							url : "/booking/json/refundBooking/"+bookingNo,					
 							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function(JSONData, status) {				
-								
+							success : function(JSONData, status) {										
 		                        if(JSONData == "refunded"){
 		                        	alert("정상적으로 환불처리되었습니다.");
 		                        	self.location = "/booking/deleteBooking?bookingNo="+bookingNo;

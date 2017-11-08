@@ -153,7 +153,7 @@
                    } else if( result == 'exceed'){
                       swal(
                               '취소표알림 자리 수 초과!',
-                              '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
+                              '신청 가능한 취소표알림 수 초과 (1인당 최대4 좌석)',
                               'error'
                             )
                    } else {
@@ -234,9 +234,9 @@
           <!--  only UI -->
    
          <div class="col-sm-8 com-md-9">   
-            <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            
-            <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            <%-- <iframe id="child" src="http://192.168.0.32:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
+            <iframe id="child" src="http://192.168.0.32:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}"
+            <%-- <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" --%> 
 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
@@ -310,7 +310,11 @@
             $(document).ready(function() {
                 init_BookingOne();
             });
+    		
       </script>
+      
+      <!-- Custom -->
+      <script src="/js/custom.js"></script>
 </body>
  <style>
       html{

@@ -49,8 +49,8 @@ public class AlarmServiceImpl implements AlarmService {
 	@Qualifier("bookingDAOImpl")
 	BookingDAO bookingDAO;
 	
-	/*@Autowired
-	@Qualifier("userDAOImpl")*/
+	@Autowired
+	@Qualifier("userDAOImpl")
 	UserDAO userDAO;
 
 	@Autowired

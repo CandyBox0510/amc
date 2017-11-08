@@ -198,7 +198,8 @@ public class BookingRestController {
 			
 			Booking booking = bookingService.getBooking(bookingNo);
 			String status = cinemaService.cancelPay(booking.getImpId());
-			if(status.equals("canceled")){			
+			System.out.println("status■■:"+status);
+			if(status.equals("cancelled")){			
 				System.out.println("1. 환불 완료");
 				return "refunded";
 			}else{
