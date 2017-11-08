@@ -177,6 +177,8 @@ public class AlarmServiceImpl implements AlarmService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public String smsPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception {
+		
+		System.out.println("SMSPUSH 준비작업 // ■type="+type+" ■serialNo="+serialNo+" ■userId="+userId+" ■alarmSeatNo="+alarmSeatNo);
 
 		RestApiUtil restApiUtil = new RestApiUtil(
 				"https://api-sens.ncloud.com/v1/sms/services/" + naverServiceId + "/messages", "POST");
@@ -259,11 +261,16 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public String appPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception {
 		
+		System.out.println("APPPUSH 준비작업 // ■type="+type+" ■serialNo="+serialNo+" ■userId="+userId+" ■alarmSeatNo="+alarmSeatNo);
+		
 		RestApiUtil restApiUtil = new RestApiUtil("https://kapi.kakao.com/v1/push/send", "POST");
 		
 		//kakao push 헤더 설정
 		if(header != null){
 			header.clear();
+		}
+		if(body != null){
+			body.clear();
 		}
 		header.put("Host", "kapi.kakao.com");
 		header.put("Authorization", kakaoAK);
@@ -287,9 +294,10 @@ public class AlarmServiceImpl implements AlarmService {
 			body.put("uuids", list);
 		}
 		
-		String message = this.pushValue(type, serialNo, alarmSeatNo).get("content");
+		String message = this.pushValue(type, serialNo, alarmSeatNo).get("appContent");
+		String subject = this.pushValue(type, serialNo, alarmSeatNo).get("subject");
 		
-		String messageForm = "{\"for_gcm\":{\"custom_field\":{\"message\":\""+message+"\"}}}";
+		String messageForm = "{\"for_gcm\":{\"custom_field\":{\"message\":\""+message+"\",\"subject\":\""+subject+"\"}}}";
 		
 		System.out.println("appPush messageForm<<<<<<<<"+messageForm+">>>>>>>");
 		
@@ -380,6 +388,7 @@ public class AlarmServiceImpl implements AlarmService {
 			screenContent = screenDAO.getScreenContent(Integer.parseInt(serialNo));
 			pushValue.put("subject", "티켓 오픈 알림!");
 			pushValue.put("content", "[티켓 오픈 알림]\n"+screenContent.getPreviewTitle()+"\n 30분 후 티켓 오픈!");
+			pushValue.put("appContent", "[티켓 오픈 알림]"+screenContent.getPreviewTitle()+" , 30분 후 티켓 오픈!");
 			break;
 			
 		case "cancelAlarm":
@@ -391,7 +400,8 @@ public class AlarmServiceImpl implements AlarmService {
 				title = movieDAO.getMovie(screenContent.getMovie().getMovieNo()).getMovieNm();
 			}
 			pushValue.put("subject", "티켓 취소 알림!");
-			pushValue.put("content", "[티켓 취소 알림]\n영화 : "+title+"\n좌석 :"+alarmSeatNo+" 취소되었습니다!");
+			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+alarmSeatNo+" 취소되었습니다!");
+			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+alarmSeatNo+" 취소되었습니다!");
 			break;
 			
 		case "userCertification":

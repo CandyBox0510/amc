@@ -125,7 +125,7 @@ public class BookingServiceImpl implements BookingService {
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
-		String urlStr = "http://localhost:52273/deleteResv";
+		String urlStr = "http://183.98.215.171:52273/deleteResv";
 		String body = "screenNo="+booking.getScreenContentNo()+"&seat="+booking.getBookingNo();
 		try {
 			int responseCode = HttpRequestToNode.httpRequest(urlStr, body);

@@ -192,13 +192,13 @@ public class BookingController {
 		}
 		
 		//4. 취소표 알리미 발송하기	
-		int length = (alarmSeats.split(",").length)/2;
-		for(int i=0;i<length;i+=2){						
-			String seat = alarmSeats.substring(i, i+2);
-			/*AlarmRestController ar = new AlarmRestController();
-			ar.push(type, serialNo, userId, alarmSeatNo);*/
-			alarmService.smsPush("cancelAlarm", screenContentNo+"", "",seat);
-		}		
+		String[] temp = alarmSeats.split(",");
+		for(int i = 1; i<temp.length+1; i++){
+			if(i%2 == 0){
+				alarmService.smsPush("cancelAlarm", screenContentNo+"", "",temp[i-2]+","+temp[i-1]);
+				alarmService.appPush("cancelAlarm", screenContentNo+"", "",temp[i-2]+","+temp[i-1]);
+			}
+		}
 		
 		return "redirect:/booking/getAdminBookingList";			
 	}

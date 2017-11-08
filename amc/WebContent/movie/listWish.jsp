@@ -175,12 +175,14 @@
 					  <c:forEach var="wishList" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
 						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
-        				<div class="col-sm-4 col-md-3" id="${wishList.wishNo}">
+        				<div class="col-xs-6 col-sm-4 col-md-3" id="${wishList.wishNo}">
 						     <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie">
-	                                <%-- <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px"> --%>
-	                                <img src="${wishList.movie.postUrl}" style="widht:100%; height:365px">
-	                            </a>
+						     	<div style="overflow-y:hidden; height:365px;">
+		                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie">
+		                                <%-- <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px"> --%>
+		                                <img src="${wishList.movie.postUrl}" style="width:100%; height:auto;">
+		                            </a>
+	                            </div>
 	                            <div class="alert alert-info" role="alert">
   									<strong>${wishList.wishFlag}</strong><br/>
   									${wishList.movie.movieNm}
