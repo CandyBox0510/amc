@@ -83,6 +83,12 @@
         <!-- Twitter feed -->
         <!-- <script src="/js/external/twitterfeed.js"></script> -->
 	   
+	   	<!-- 카카오 로그인 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+   
+   
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
@@ -200,6 +206,7 @@
 			})
 			
 			$(".myPurchase").on("click",function(){
+				alert("oops!");
 				if( '${sessionScope.user.userId}' == ''){
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
@@ -279,7 +286,138 @@
 				
 			});
 		});	
-    	</script>
+
+    	
+		//============= 카카오 로그인 =============
+		function loginWithKakao() {
+			alert("일로는 들어와?");
+			Kakao.init('fc5658887af25f840e94144f6722b228');
+			// 로그인 창을 띄웁니다.
+			Kakao.Auth.login({
+		 		success: function(authObj) {
+		   			var accessToken = Kakao.Auth.getAccessToken();
+		    		Kakao.Auth.setAccessToken(accessToken);
+		    
+		    		Kakao.API.request({
+		    			url: '/v1/user/me',
+		       			success: function(res) {
+			        		console.log("response 확인 :: " + res);
+			           		var userId = res.kaccount_email;       
+			           		/* var tempId = userId.replace(".", ","); */
+			           		console.log("userId :: " + userId);
+			           		/* console.log("tempId :: " + tempId); */
+			           		$.ajax(
+			            		{
+			                   		/* url : "/user/json/loginUser/"+tempId, */
+			                   		url : "/user/json/kakaoLogin", 
+			                      	method : "POST",
+			                      	dataType : "json",
+			                      	headers : {
+			                       		"Accept" : "application/json",
+			                       		"Content-Type" : "application/json"
+			                      	},
+									data : JSON.stringify({
+										userId : userId
+										/* password : pw */
+									}),
+
+			                      	success : function(JSONData, status) {     
+			                       		if(JSONData.user == null ) {
+			                       			alert(JSONData);
+			                       			alert("반갑습네다.");
+			                       			location.reload();                 
+			                         	}else if(JSONData.user == ''){
+			                         		alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");  
+			                       			$(self.location).attr("href","/user/addUser");
+			
+			                       	  		location.reload();
+			                         	}else{
+			                       	  		location.reload();
+			                         	}
+			                      	}
+			                });
+		          		}                  
+		      		});
+			  	},
+			   	fail: function(err) {
+			   		alert(JSON.stringify(err));
+			   	}
+		  	});
+		}
+		
+		
+		$(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("a:contains('로그아웃')").on("click" , function() {
+				alert("카카오로그아웃");
+				logoutWithKakao();
+			}); 
+		});
+	 
+		function logoutWithKakao() {
+			 Kakao.init('fc5658887af25f840e94144f6722b228'); 
+			 Kakao.Auth.logout(function(){
+				setTimeout(function(){
+					location.href="/user/logoutUser/"
+				},300);
+				}); 
+		}
+		
+	   	function openHistory(){
+	   		popWin = window.open("../openHistory.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+	   	}
+
+		//=============  최근 본 상품  처리 =============	
+	 	$( "a:contains('최근 본 상품')" ).on("click" , function() {
+	 		openHistory();
+		});
+ 	
+
+/* 	    //============ 네이버 ==============
+	    var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N","http://127.0.0.1:8080");
+		var state = naver_id_login.getUniqState();
+		naver_id_login.setButton("green", 3,52);
+		naver_id_login.setDomain(".service.com");
+		naver_id_login.setState(state);
+		naver_id_login.init_naver_id_login();
+		function naverSignInCallback() {
+			
+			var userId=naver_id_login.getProfileData('email');    
+		 	var tempId = userId.replace(".", ",");
+		 	console.log("userId :: " + userId);
+		 	console.log("tempId :: " + tempId);
+	 
+	 
+	 		$.ajax(
+	        	{
+		        	url : '/user/checkUserId/'+tempId,
+		            method : "POST",
+		            dataType : "json",
+		            headers : {
+		                "Accept" : "application/json",
+		                "Content-Type" : "application/json"
+		            },
+		            context : this,
+		            success : function(JSONData, status) {     
+		            	if(JSONData.user ==null ) {
+		            		alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");
+		            		self.location="/view/user/addUserView.jsp?userId="+userId;                 
+	                }else if(JSONData.user.role == 4){
+	              		alert("탈퇴한 계정입니다.");
+	              		$(self.location).attr("href","/user/logout");
+	              		location.reload();
+	                }else{
+	              	  location.reload();
+	                }
+	             }
+	       	});   
+	    }                  
+	    
+	 	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+ */
+		
+		
+	</script>		
 
 
 
@@ -294,7 +432,6 @@
                  <!-- <img alt='logo' src="/images/logo.png"> -->
                  <img src="/images/AMC_Logo.png">
              </a>
-             
              <!-- Main website navigation-->
              <nav id="navigation-box">
                  <!-- Toggle for mobile menu mode -->
@@ -366,7 +503,7 @@
              
              <div class="control-panel">
              	<c:if test="${!empty sessionScope.user}">
-                 <div class="auth auth--home">
+                 <div class="auth auth--home" margin='100%'>
                    <div class="auth__show">
                    </div>
                    <a href="#" class="btn btn--sign btn--singin">
@@ -382,21 +519,20 @@
                      </ul>
                  </div>
                  </c:if>
-                 <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
-        	<!-- 유저가 비로그인 상태일 시 -->	
- 			<c:if test="${empty sessionScope.user}">		
-					<!-- <form class="navbar-form navbar-right"> -->
-					<form class="navbar-form navbar-right">						
-						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
-					</form>
-			</c:if>	
-			
-			<c:if test="${!empty sessionScope.user}">
-				<ul class="nav navbar-nav navbar-right">
-					<a href="#" class="user-info">[${sessionScope.user.userName}] 님</a>&emsp;
-					<a href="/user/logoutUser">로그아웃</a>
-				</ul>
-			</c:if> 
+                      
+                  <div id="user" margin='100%'>
+		        	<!-- 유저가 비로그인 상태일 시 -->	
+		 			<c:if test="${empty sessionScope.user}" >		
+							<form class="navbar-form navbar-right" >						
+								<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">LOGIN</a> 
+							</form>
+					</c:if>	
+					
+					<c:if test="${!empty sessionScope.user}">
+							<a href="#" class="btn--sign" style="text-decoration:none">[${sessionScope.user.userName}] 님&emsp;</a> 
+							<a href="/user/logoutUser" class="btn--sign" style="text-decoration:none">로그아웃</a>
+					</c:if> 
+				</div>
         	
         	</div>
         	
@@ -404,6 +540,7 @@
 	 </div>
 </div>
 <style>
+a.no-uline { text-decoration:none }
 
 ul#navigation {
 	margin : auto;
@@ -418,6 +555,42 @@ ul#navigation {
   right: 155px;
 }
 
+ul#user {
+/* 	margin : auto;
+	width : 10%;
+	padding-top : 10px;
+	padding-right : 10px;
+	padding-bottom : 10px;
+	padding-left : 10px;
+	float: right; */
+	/* min-width:200px; */
+}
+
+.btn--sign {
+  font: 13px 'Roboto', sans-serif;
+  font-weight: bold;
+  line-height:0%
+  text-transform: uppercase;
+  color: #CFD2D4;
+  position: relative;
+  padding-bottom : 50px;
+  margin-right: 3px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-decoration:none;
+}
+
+div#user {
+  position: relative;
+  top: -24px;
+  right: 10px;
+  text-decoration:none;
+}
+
+.btn-control--home {
+  margin-top: 25px;
+}
 
 </style>
 </html>

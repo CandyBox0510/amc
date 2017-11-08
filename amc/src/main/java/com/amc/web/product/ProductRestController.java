@@ -32,7 +32,7 @@ public class ProductRestController {
 	
 	///Field
 	@Autowired
-	@Qualifier("productService")
+	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	//setter Method 구현 않음
 			

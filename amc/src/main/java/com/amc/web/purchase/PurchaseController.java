@@ -26,11 +26,11 @@ public class PurchaseController {
 
 	/*Field*/
 	@Autowired
-	@Qualifier("purchaseService")
+	@Qualifier("purchaseServiceImpl")
 	private PurchaseService purchaseService;
 	
 	@Autowired
-	@Qualifier("productService")
+	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")
@@ -66,7 +66,7 @@ public class PurchaseController {
 	@RequestMapping( value="getPurchase", method=RequestMethod.GET )
 	public String getPurchase(	@ModelAttribute("purchase") Purchase purchase,
 								Model model	)throws Exception{
-		
+		System.out.println("getPurchase : "+purchase);
 		purchase = purchaseService.getPurchase(purchase);
 		model.addAttribute("purchase", purchase);
 		
