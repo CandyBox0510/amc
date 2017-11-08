@@ -223,6 +223,7 @@
 		            $('.overlay').removeClass('close');}, 500);
 		    });
 			
+			
 			$("#userId").focus();
 			
 			//==> DOM Object GET 3°¡Áö ¹æ¹ý ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -480,6 +481,10 @@
                              <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">½º³¼¹Ù</a></li>
                          </ul>
                      </li>
+                     <li class="visible-xs hidden-sm hidden-md hidden-lg">
+                     	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
+                     	<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> 
+                     </li>
                      <c:if test="${!empty sessionScope.user}">
 						<c:if test="${sessionScope.user.role eq 'admin'}">
 	                     <li>
@@ -496,6 +501,7 @@
 	                     </li>
 	                     </c:if>
                      </c:if>
+
                  </ul>
              </nav>
              
@@ -529,14 +535,14 @@
 					</c:if>	
 					
 					<c:if test="${!empty sessionScope.user}">
-							<a href="#" class="btn--sign" style="text-decoration:none">[${sessionScope.user.userName}] ´Ô&emsp;</a> 
-							<a href="/user/logoutUser" class="btn--sign" style="text-decoration:none">·Î±×¾Æ¿ô</a>
+					<div class="hidden-xs">
+						<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a> 
+						<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a>
+					</div>
 					</c:if> 
 				</div>
         	
         	</div>
-        	
-         	
 	 </div>
 </div>
 <style>
@@ -593,5 +599,12 @@ div#user {
 }
 
 </style>
+<script>
+$( function() {
+	if( '${sessionScope.user.role}' == 'admin'){
+		$("ul#navigation").css("padding","0 0 0 20px");
+	}
+})
+</script>
 </html>
 

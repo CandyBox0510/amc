@@ -106,7 +106,7 @@
 								
 								for(i in JSONData.list){
 	
-									all = '<div class="col-sm-4 col-md-3">'
+									all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+booking[i].movie.movieNo+'&menu='
 											   if(booking[i].screenContent.previewFlag == 'Y'){
@@ -156,14 +156,14 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
             	<p/>
             	<p/>
@@ -176,7 +176,7 @@
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="booking" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 						     	<c:set var="what" value=""/>
 						     	<c:if test="${booking.screenContent.previewFlag eq 'Y'}">

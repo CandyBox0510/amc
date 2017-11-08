@@ -69,19 +69,21 @@
 	 $(function() {
 		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 $( ".label-danger" ).on("click" , function() {
-			 $.ajax({
-	               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
-	               method : "GET" ,
-	               async : true,
-	               success : function(data, status) {
-	                  if(data == 1){
-	                	 $(".gallery-wrapper").empty();
- 						for(var i = 1; i < count+1; i++ ){
-							loadList(i);
-						} 
-	                  }
-	               }
-	      });//end of ajax
+			 if(confirm("삭제하시겠습니까?")!=0){ 
+				 $.ajax({
+		               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+		               method : "GET" ,
+		               async : true,
+		               success : function(data, status) {
+		                  if(data == 1){
+		                	 $(".gallery-wrapper").empty();
+	 						for(var i = 1; i < count+1; i++ ){
+								loadList(i);
+							} 
+		                  }
+		               }
+		      	});//end of ajax
+			 }
 		});
 
 		//처음 로딩시 처음 있는 목록들에게 타이머 설정	
@@ -114,7 +116,7 @@
 								
 								for(i in JSONData.list){
 	
-									all = '<div class="col-sm-4 col-md-3">'
+									all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
 									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
@@ -144,19 +146,21 @@
 									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
 									
 									$( ".label-danger" ).on("click" , function() {
-										 $.ajax({
-								               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
-								               method : "GET" ,
-								               async : false,
-								               success : function(data, status) {
-								                  if(data == 1){
-								                	  $(".gallery-wrapper").empty();
-													for(var i = 1; i < count+1; i++ ){
-														loadList(i);
-													}
-								                  }
-								               }
-								     	 });//end of ajax
+										if(confirm("삭제하시겠습니까?")!=0){
+											 $.ajax({
+									               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+									               method : "GET" ,
+									               async : false,
+									               success : function(data, status) {
+									                  if(data == 1){
+									                	  $(".gallery-wrapper").empty();
+														for(var i = 1; i < count+1; i++ ){
+															loadList(i);
+														}
+									                  }
+									               }
+									     	 });//end of ajax
+										}
 									});
 									//alert(alarm[i].alarmNo);
 									dpTime(alarm[i].alarmNo);
@@ -233,14 +237,14 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
             		<p/>
                 	<p/>
@@ -252,7 +256,7 @@
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
 						<input type="hidden" value="${alarm.alarmNo}" name="${i-1}"/>
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
 	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">

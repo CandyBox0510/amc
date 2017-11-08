@@ -69,19 +69,21 @@
 	 $(function() {
 		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 $( ".label-success" ).on("click" , function() {
-			 $.ajax({
-	               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
-	               method : "GET" ,
-	               async : false,
-	               success : function(data, status) {
-	                  if(data == 1){
-	                	 $(".gallery-wrapper").empty();
- 						for(var i = 1; i < count+1; i++ ){
-							loadList(i);
-						} 
-	                  }
-	               }
-	      });//end of ajax
+			 if(confirm("삭제하시겠습니까?")!=0){
+				 $.ajax({
+		               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+		               method : "GET" ,
+		               async : false,
+		               success : function(data, status) {
+		                  if(data == 1){
+		                	 $(".gallery-wrapper").empty();
+	 						for(var i = 1; i < count+1; i++ ){
+								loadList(i);
+							} 
+		                  }
+		               }
+		      	});//end of ajax
+			 }
 		});
 	 })
 
@@ -108,7 +110,7 @@
 							
 							for(i in JSONData.list){
 
-								all = '<div class="col-sm-4 col-md-3">'
+								all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 								all += 	'<div class="gallery-item">'
 								all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu='
 											if(alarm[i].screenContent.previewFlag == 'Y'){
@@ -140,6 +142,7 @@
 								console.log($(".gallery-wrapper").html());
 								$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
 								$( ".label-success" ).on("click" , function() {
+									if(confirm("삭제하시겠습니까?")!=0){
 									 $.ajax({
 							               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
 							               method : "GET" ,
@@ -152,7 +155,8 @@
 												}
 							                  }
 							               }
-							      });//end of ajax
+							     	  });//end of ajax
+									}
 							});
 						}
 				}
@@ -170,14 +174,14 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
                     <p/>
 	               	<p/>
@@ -188,7 +192,7 @@
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 						     	<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
 	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search"></a>
