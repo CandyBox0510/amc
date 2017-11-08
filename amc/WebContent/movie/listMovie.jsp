@@ -3,9 +3,10 @@
 
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             <!DOCTYPE html>
-            <html>
+            <html class="no-js" lang="ko">
 
 <head>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
    
 </head>
 
@@ -156,7 +157,46 @@
 		<!-- ------------------------------------  -->
 		<script src="/js/custom.js"></script>
 		<%-- <jsp:include page="/movie/speechMovie.jsp" />  --%>
+		
 	
+		
+		
+		<!--  Semantic UI modal windows pop-up 용  -->
+		
+		
+<!-- <div class="center"> -->
+	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 100px; margin-left: auto;
+ 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+		
+		<div class="ui basic modal">
+		  <div class="content" >
+		   	<p>영화 음성 검색 중....
+		   		<form id="webspeech"  method="POST">  
+		   				<div class="image content">
+						       <img src="../images/movie/speechListening2.gif">    
+						         <div class="example">
+						               영화 검색 :
+						            <input type="search" name="abc" id="speech-transcript">    
+						            <input type="button" value="클릭후 말해주세요 " id="speech-btn" class="positive ui button">  
+						            
+						            <br/>
+						        
+							        <i class='fa fa-check fa-5x' id="voidSearchOk" style="color:green"></i>  &nbsp;	
+    
+						             
+						         	<div class="form-group">    
+							    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
+							        <input type="hidden" class="form-control" id="voiceSearchKeyword" name="searchKeyword" value="" > 
+    			
+   									 </div>   
+      							 </div>
+						 </div>
+		   		</form>
+		  </div>
+	</div>
+</div>
+	
+
 	
 </body>
        
@@ -218,7 +258,97 @@
 					});
 					
 				 });
+				
+				//============= "음성 검색 실행 함수 " 처리 =============	
+			   function fncWebSpeech() {
+		    		// document.addPurchase.submit();
+		    		alert("speech post call...")
+		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+		    	}
+		    	
+		    	$(function() {
+		    			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		    			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		    			 $( "#voidSearchOk" ).on("click" , function() {
+		    					//Debug..
+		    					// <!-- <a href="javascript:history.go(-1)"></a> -->
+		    					//console.log("value : "+$("#voidSearchOk" ).val());
+		    					fncWebSpeech()
+		    			});
+		    	});	
+				
 			
+	    	   (function (window, undefined) {
+	                "use strict";
+	                
+	                var document = window.document,
+	                    docElement = document.documentElement,
+	                    SpeechRecognition = window.webkitSpeechRecognition ||
+	                                        window.mozSpeechRecognition ||
+	                                        window.msSpeechRecognition ||
+	                                        window.oSpeechRecognition ||
+	                                        window.SpeechRecognition;
+	                function addClass(className) {
+	                    docElement.className = docElement.className + ' ' + className;
+	                }
+	                docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
+	                if ( SpeechRecognition !== undefined ) {
+	                    addClass('feature');
+	                } else {
+	                    addClass('no-feature');
+	                }
+	            })(window);
+	    	   
+	    	   
+	    	   var speech_text ="";   
+	    	    
+	           (function speechFunction(window, undefined) {
+	               "use strict";
+	               var speechBtn = document.getElementById('speech-btn'),
+	                   SpeechRecognition = window.webkitSpeechRecognition ||
+	                                       window.mozSpeechRecognition ||
+	                                       window.msSpeechRecognition ||
+	                                       window.oSpeechRecognition ||
+	                                       window.SpeechRecognition,
+	                   speechTranscript = document.getElementById('speech-transcript'),
+	                   
+	                  
+	                   sr;
+	               if ( SpeechRecognition !== undefined ) {
+	                   sr = new SpeechRecognition();
+	                   speechBtn.addEventListener('click', function () {
+	                       sr.start();
+	                   });
+	                   sr.onaudiostart = function () {
+	                       speechBtn.setAttribute('disabled', 'disabled');
+	                       speechBtn.value = "말해주세요!";                             
+	                       
+	                   };
+	                   sr.onspeechstart = function () {
+	                       speechBtn.value = "듣고 있습니다....";
+	                   };
+	                   sr.onspeechend = function () {
+	                       speechBtn.value = '...그리고 끝내주세요...';
+	                   };
+	                   sr.onend = function () {
+	                       speechBtn.value = '계속 하려면 여기를 클릭해주세요!';
+	                       speechBtn.removeAttribute('disabled');
+	                   };
+	                   sr.onresult = function (event) {
+	                       speechTranscript.value = event.results[0][0].transcript;
+	                      
+	                       console.log("speechTranscript :: " + speechTranscript.value);
+	                       $("#voidSearchOk").val(speechTranscript.value);
+	                       alert("speeach2 : "+$("#voidSearchOk").val()); 
+	                       
+	                       var voiceSearch = $("#voidSearchOk").val();
+	                       $("#voiceSearchKeyword").val(voiceSearch);
+	                       alert("speeach2"  + voiceSearch);                  
+	                       
+	                   };
+	               }
+	          })(window);
+		    	
 
 				
 				// 음성 Pop-up 재 구성 
@@ -241,7 +371,11 @@
 				  $(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "#voidSearchIcon").on("click" , function() {
-						self.location = "/movie/getMovieList?menu=voiceRegniiton";
+						alert("modal start...")
+						$('.ui.basic.modal')  
+						  .modal('show')
+						;
+						/* self.location = "/movie/getMovieList?menu=voiceRegniiton"; */
 					});
 					
 				 }); 
@@ -363,6 +497,8 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
+
+	
 	 #body {
            padding-top: 70px;
            }
@@ -582,13 +718,24 @@
 	.speech .speech__control {
 	  text-align: center;
 	}
-
-
-		
+	
+   .no-js .content,
+   .feature .no,
+   .no-feature .yes,
+   .no-feature .example {
+   
+    display: none;
+    }
+   
+   
     html{
      height: auto;
     }
       
 </style>	
+
+ <!-- Semantic  UI Applied -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
 
 </html>
