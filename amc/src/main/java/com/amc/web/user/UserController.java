@@ -107,9 +107,10 @@ public class UserController {
 		return "redirect:/index.jsp";
 	}
 
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
+	@RequestMapping( value="/getUser", method={RequestMethod.GET, RequestMethod.POST} )
+	public String getUser( @RequestParam(value="userId", required=false) String userId , Model model, HttpSession session ) throws Exception {
 		
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+userId);
 		System.out.println("/user/getUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
@@ -167,7 +168,6 @@ public class UserController {
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
 		userService.updateUser(user);
-		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
 		if(sessionId.equals(user.getUserId())){
 			session.setAttribute("user", user);

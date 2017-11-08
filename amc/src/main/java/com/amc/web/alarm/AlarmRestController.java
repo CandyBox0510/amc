@@ -29,6 +29,7 @@ import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.User;
+import com.amc.web.booking.BookingRestController;
 
 
 @RestController
@@ -78,30 +79,35 @@ public class AlarmRestController {
 						@RequestParam(value="userId",defaultValue="")String userId,
 						@RequestParam(value="alarmSeatNo",defaultValue="")String alarmSeatNo
 						) throws Exception{
-		
-		System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId );
-		
-		String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
-		
-		String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+
+		if(!type.equals("") || type !=null){
+			
+			System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
+			
+			String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+			
+			if(!type.equals("userCertification") || !type.equals("booking")){
+				String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+			}
+		}
 		
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/json/getInfiCancelAlarmList/{userId:.+}")
-	public String getInfiCancelAlarmList(@ModelAttribute("Search")Search search,
+	public Map<String,Object> getInfiCancelAlarmList(@ModelAttribute("Search")Search search,
 											@PathVariable("userId") String userId,
 											@RequestBody String jsonString,
 											HttpSession session,Model model) throws Exception{
 		
 		Map<String,Object> tempMap = new HashMap<String,Object>();
-		String alarmFlag = "";
 		
 		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
 		System.out.println((Long)(jo.get("currentPage")));
 		System.out.println((String)(jo.get("alarmFlag")));
 		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
-		alarmFlag = (String)(jo.get("alarmFlag"));
+		String alarmFlag = (String)(jo.get("alarmFlag"));
 		
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
@@ -122,29 +128,35 @@ public class AlarmRestController {
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 						pageUnit, pageSize);
 		
-		System.out.println("■■■취소알람확인■■■ : "+map.get("list"));
+		BookingRestController brc = new BookingRestController();
 		
-		model.addAttribute("search",search);
-		model.addAttribute("resultPage",resultPage);
-		model.addAttribute("list", map.get("list"));
+		List<Alarm> seatChangeList = (List<Alarm>)(map.get("list"));
 		
-	    return "forward:/alarm/listCacnelAlarm.jsp";
+		JSONObject jsonObject = new JSONObject();
+		
+		for(int i = 0; i < seatChangeList.size(); i++){
+			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getAlarmSeatNo(), 10, model));
+			seatChangeList.get(i).setAlarmSeatNo((String)jsonObject.get("seatNo"));
+		}
+		
+		System.out.println("■■■무스 취소알람확인■■■ : "+map.get("list"));
+		
+	    return map;
 	}
 	
 	@RequestMapping( value="/json/getInfiOpenAlarmList/{userId:.+}")
-	public String getInfiOpenAlarmList(@ModelAttribute("Search")Search search, 
+	public Map<String,Object> getInfiOpenAlarmList(@ModelAttribute("Search")Search search, 
 										   @PathVariable("userId") String userId,
 										   @RequestBody String jsonString,
 										   HttpSession session,Model model) throws Exception {
-		
+
 		Map<String,Object> tempMap = new HashMap<String,Object>();
-		String alarmFlag = "";
 		
 		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
 		System.out.println((Long)(jo.get("currentPage")));
 		System.out.println((String)(jo.get("alarmFlag")));
 		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
-		alarmFlag = (String)(jo.get("alarmFlag"));
+		String alarmFlag = (String)(jo.get("alarmFlag"));
 		
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
@@ -165,13 +177,21 @@ public class AlarmRestController {
 				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
 						pageUnit, pageSize);
 		
-		System.out.println("■■■오픈알람확인■■■ : "+map.get("list"));
+		System.out.println("■■■무스 오픈알람확인■■■ : "+map.get("list"));
 		
-		model.addAttribute("search",search);
-		model.addAttribute("resultPage",resultPage);
-		model.addAttribute("list", map.get("list"));
+	    return map;
+	}
+	
+	@RequestMapping( value="/json/deleteAlarm/{alarmNo}")
+	public int deleteAlarm(@ModelAttribute("User")User user,
+								@ModelAttribute("Alarm")Alarm alarm,
+										   @PathVariable("alarmNo") String alarmNo,
+										   HttpSession session,Model model) throws Exception {
+				
+		alarm.setAlarmNo(Integer.parseInt(alarmNo));
+		alarm.setUser(user);
 		
-	    return "forward:/alarm/listOpenAlarm.jsp";
+		return alarmService.deleteAlarm(alarm);
 	}
 	
 }

@@ -1,177 +1,416 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    <%@ page contentType="text/html; charset=EUC-KR" %>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-            <html>
+<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
+<%@page import="com.amc.service.domain.User"%>
+
+<%@page import="java.util.Arrays"%>
+<%@page import="java.net.URLDecoder"%>
+<%@page import="java.net.URLEncoder"%>
+<%@page import="kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService"%> 
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Collection"%>
+<%@page import="net.sf.json.JSONObject"%>
+<%@page import="net.sf.json.util.JSONBuilder"%>
+<%@page import="net.sf.json.JSONArray"%>
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+   
+<html lang="UTF-8">
+	
+
+<head>
+   <meta charset="UTF-8">
+   
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">  
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-/1.7.1/css/bootstrap-datepicker.css" />
+    
+     
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
+    
+<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMovie</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
     
     <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <meta content="telephone=no" name="format-detection">
+    
     <!-- Fonts -->
         <!-- Font awesome - icon font -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
+        <!-- Open Sans -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
     
-    	<!-- Stylesheets -->    
-    	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+    <!-- Stylesheets -->
 
         <!-- Mobile menu -->
         <link href="/css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
         <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+
+        <!-- Slider Revolution CSS Files -->
+        <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+        <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
+        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
     
         <!-- Custom -->
         <link href="/css/style.css?v=1" rel="stylesheet" />
-        
-        <!--  ¾ê³× ¾²¸é ±Û¾¾Å©±â ÀÌ»óÇØÁü(¿ø·¡ ¿ì¸®°¡ °¡Áö°íÀÖ´ø css) -->
-       <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
-		<!--  -----------------------------------------------------------------------  -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-		
-		<!-- ¿ì¸®°¡ °¡Áö°í ÀÖ´ø javaScript (ÇöÀç º°¹®Á¦ ¾ÈµÊ)-->
-    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-        
-        
+
+
         <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-        <!-- Migrate --> 
+         <script src="/js/external/modernizr.custom.js"></script> 
+        
+        <!-- JavaScript-->
+		<!-- jQuery 3.1.1 --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate  -->
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- Bootstrap 3 --> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Slider Revolution core JavaScript files -->
+        <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
+
+        <!-- Slider Revolution extension scripts. --> 
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+        <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Stars rate -->
+        <script src="/js/external/jquery.raty.js"></script>
+        
         <!-- Form element -->
         <script src="/js/external/form-element.js"></script>
         <!-- Form validation -->
-        <script src="/js/form.js"></script>
-        
-        <!--  ///////////////////////// CSS ////////////////////////// -->
-		<style>
-		 body {
-	            padding-top: 70px;
-	            }
-	            .thumbnail {
-	            width: 300px;
-	            height: 250px;
-	            overflow: auto;
-	      }	
-	      
-	      #searchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	       
-	     #voidSearchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	      
-	    </style>
-        
-    
-  <!--  ///////////////////////// JavaScript ////////////////////////// -->   
+        <!-- <script src="/js/form.js"></script> -->
+   		<!--ì´ê±°ì£¼ì„ì²˜ë¦¬ì•ˆí•˜ë©´ ë¡œê·¸ì¸ ì•ˆë¨ -->
+
+        <!-- Twitter feed -->
+        <!-- <script src="/js/external/twitterfeed.js"></script> -->
+	   
    
-    <script type="text/javascript">
-    
-    $(document).ready(function(){
-    	
-    	 
-     	$( function() {
- 			$("#userId").focus();
- 			
- 			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 			$("#login").on("click" , function() {
- 				var id=$("#userId").val();
- 				var pw=$("input:password").val();
- 				
- 				if(id == null || id.length <1) {
- 					alert('ID ¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
- 					$("#userId").focus();
- 					return;
- 				}
- 				
- 				if(pw == null || pw.length <1) {
- 					alert('ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
- 					$("#password").focus();
- 					return;
- 				}
- 				
- 				$.ajax( 
- 						{	
- 							url : "/user/json/loginUser",
- 							method : "POST" ,
- 							async : false,
- 							headers : {
- 								"Accept" : "application/json",
- 								"Content-Type" : "application/json"
- 							},
- 							data : JSON.stringify({
- 								userId : id,
- 								password : pw
- 							}),
- 							success : function(JSONData , status) {
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>  
+   
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+  
+  
+  
+ 
+ 
+<!-- ToolBar Start /////////////////////////////////////-->
+<div class="navbar  navbar-inverse navbar-fixed-top">
+	
+	<div class="container">
+	       <!-- ì ˆëŒ€ê²½ë¡œë¡œ ë³€ê²½  -->
+		<a class="navbar-brand" href="/index.jsp">
+			<img src="/images/common/AMC_Logo.png" width="80px" height="30px"/>
+		</a>
+		
+		<!-- toolBar Button Start //////////////////////// -->
+		<div class="navbar-header">
+		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		    </button>
+		</div>
+		<!-- toolBar Button End //////////////////////// -->
+		
+	    <!--  dropdown hover Start -->
+		<div 	class="collapse navbar-collapse" id="target" 
+	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
+	         
+	         	<!-- Tool Bar ë¥¼ ë‹¤ì–‘í•˜ê²Œ ì‚¬ìš©í•˜ë©´.... -->
+	             <ul class="nav navbar-nav">
+	             
+	              <!-- ì˜í™” DrowDown -->
+	              <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span>ì˜í™”</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">í˜„ì¬ ìƒì˜ì˜í™”</a></li>
+	                         <li><a href="#">ìƒì˜ ì˜ˆì •ì˜í™”</a></li>
+	                         <li class="divider"></li>
+	                         <li><a href="#">ì‹œì‚¬íšŒ</a></li>
+	                     </ul>
+	                 </li>
+	                 
+	              <!-- ì˜ˆë§¤ DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>ì˜ˆë§¤</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">ì˜í™” ì˜ˆë§¤</a></li>
+		                         <li><a href="#">ì‹œì‚¬íšŒ ì˜ˆë§¤</a></li>
+		                     </ul>
+		                </li>
+		                
+	              <!-- ì˜í™”ê´€  -->
+					  <li><a href="#">ì˜í™”ê´€</a></li>
+				
+				  <!-- ì»¤ë®¤ë‹ˆí‹°  -->  
+					  <li><a href="#">ì»¤ë®¤ë‹ˆí‹°</a></li>
+		                
+	              <!-- ìŠ¤í† ì–´ DrowDown  -->
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span>ìŠ¤í† ì–´</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">êµ¿ì¦ˆ</a></li>
+		                         <li><a href="#">ìŠ¤ë‚µë°”</a></li>
+		                     </ul>
+		                </li>
+	                 
+	             <!-- ê´€ë¦¬ìë©”ë‰´ DrowDown  -->
+	             
+	               <c:if test="${sessionScope.user.role == 'admin'}">
+		              <li class="dropdown">
+		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+		                         <span >[ê´€ë¦¬ì ë©”ë‰´]</span>
+		                         <span class="caret"></span>
+		                     </a>
+		                     <ul class="dropdown-menu">
+		                         <li><a href="#">íšŒì›ê´€ë¦¬</a></li>
+		                         <li><a href="#">ìƒí’ˆê´€ë¦¬</a></li>
+		                         <li><a href="#">íŒë§¤ê´€ë¦¬</a></li>
+		                         <li><a href="#">ì˜í™”ê´€ë¦¬</a></li>
+		                         <li><a href="#">ìƒì˜ê´€ë¦¬</a></li>
+		                         <li><a href="#">ì˜ˆë§¤ê´€ë¦¬</a></li>
+		                     </ul>
+		                </li>
+	                 </c:if>
+	                 
+	             </ul>
+	             
+	             
+	             
+	             <ul class="nav navbar-nav navbar-right">
+	             <!-- ìœ ì €ê°€ ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->
+	             	<c:if test="${sessionScope.user ne null }">
+		             	<li title="Click : ê°œì¸ì •ë³´ ìˆ˜ì •"><a href="#">ID : [${sessionScope.user.userId }]</a></li>
+		             	<li><a href="#">ë¡œê·¸ì•„ì›ƒ</a></li>
+		             	<li><a href="#">ë§ˆì´í˜ì´ì§€</a></li>
+	             	</c:if>
+	             	
+	             <!-- ìœ ì €ê°€ ë¹„ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->	
+	             	<c:if test="${sessionScope.user eq null }">
+		             	<li>
+		             		<input type="text" name="userId" placeholder="ì•„ì´ë””" width="300px">
+		             		<input type="text" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸" width="300px">
+		             	</li>
+		             	<input type="button" value="ë¡œê·¸ì¸">
+	             	</c:if>
+	            </ul>
+	           	 <!-- ìœ ì €ê°€ ë¹„ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->	
+             	<c:if test="${sessionScope.user eq null }">
+	             	<li>
+	             		<input type="text" name="userId" placeholder="ì•„ì´ë””" width="300px">
+	             		<input type="text" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸" width="300px">
+	             	</li>
+	             	<input type="button" value="ë¡œê·¸ì¸">
+             	</c:if>
+ --%>	             	
+	 			<c:if test="${empty user}">					
+						<form class="navbar-form navbar-right">
+						<!-- <a data-toggle="modal" href="../user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static"> -->
+						<a data-toggle="modal" href="/user/loginUser" data-target="#modal-testNew" role="button" data-backdrop="static">
+							<button type="button" class="btn btn-primary">Log in</button>
+						</a>
+							<button type="button" class="btn btn-primary">Sign in</button>
+						</form>
+					</li>	
+				</c:if>	
+				
+				<c:if test="${!empty user}">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#" class="user-info">${sessionScope.user.userName}</a>
+						<li><a href="#">ë¡œê·¸ì•„ì›ƒ</a></li>
+					</ul>
+				</c:if>     
+		
+		</div>
+		<!-- dropdown hover END -->	       
+	</div>
+</div>
+ 
+ </head>
+ 
+   
+ 
+ 
 
- 								//Debug...
- 								//alert(status);
- 								//alert("JSONData : \n"+JSONData);
- 								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
- 								//alert("JSONData : "+ JSONData );
- 								//alert("status : "+ status );
- 									//alert(JSONData.role);
- 									console.log(JSONData.userId);
- 									
- 									if( JSONData.role == 'not' ){
- 										alert("Å»ÅğÇÑÈ¸¿ø...");
- 									}else if( JSONData !='' ){
- 									//$(window.parent.document.location).attr("href","/index.jsp");
- 									$(self.location).attr("href","/index.jsp");
- 									
- 									}else{
- 										alert("¾ÆÀÌµğ , ÆĞ½º¿öµå¸¦ È®ÀÎÇÏ½Ã°í ´Ù½Ã ·Î±×ÀÎ1...");
- 									}
- 								},
- 							error:function(request,status,error){
- 								//alert(error);
- 								//alert("¾ÆÀÌµğ , ÆĞ½º¿öµå¸¦ È®ÀÎÇÏ½Ã°í ´Ù½Ã ·Î±×ÀÎ2...");
- 						    }
- 					}); 
- 				
- 			});
- 		});	
-     	
-     	
-   	
-     	function delButton (cellvalue, options, rowObject) {
-     		   return '<input type="button" onclick="delete('+cellvalue+')" value="DEL"/>'; 
-     	 };
-     	 
-     	 
-     	function UploadImage(response, postdata) {
-     		
+   
+ <script type="text/javascript">
+ 
+	
+ <script type="text/javascript">
+     $(document).ready(function() {
+       init_Home();
+     });
+</script>  
 
-     		    var data = $.parseJSON(response.responseText);
+<script type="text/javascript">
+//============= "ë¡œê·¸ì¸"  Event ì—°ê²° =============
+$( function() {
+	$("#userId").focus();
+	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	$("#login").on("click" , function() {
+		var id=$("#userId").val();
+		var pw=$("input:password").val();
+		
+		if(id == null || id.length <1) {
+			alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+			$("#userId").focus();
+			return;
+		}
+		
+		if(pw == null || pw.length <1) {
+			alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
+			$("#password").focus();
+			return;
+		}
+		
+		$.ajax( 
+				{	
+					url : "/user/json/loginUser",
+					method : "POST" ,
+					async : false,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						userId : id,
+						password : pw
+					}),
+					success : function(JSONData , status) {
 
-     		    console.log("UploadImage called");
-     		    if (data.success == true) {
-     		        if ($("#file").val() != "") {
-     		            ajaxFileUpload(data.id);
-     		        }
-     		    }  
+						//Debug...
+						//alert(status);
+						//alert("JSONData : \n"+JSONData);
+						//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+						//alert("JSONData : "+ JSONData );
+						//alert("status : "+ status );
+							//alert(JSONData.role);
+							console.log(JSONData.userId);
+							
+							if( JSONData.role == 'not' ){
+								alert("íƒˆí‡´í•œíšŒì›ì…ë‹ˆë‹¤.");
+							}else if( JSONData !='' ){
+							//$(window.parent.document.location).attr("href","/index.jsp");
+							/* $(self.location).attr("href","/index.jsp"); */ 
+							window.parent.document.location.reload();
+							
+							}else{
+								alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸ í•´ì£¼ì„¸ìš”.");
+							}
+						},
+					error:function(request,status,error){
+						//alert(error);
+						//alert("ì•„ì´ë”” , íŒ¨ìŠ¤ì›Œë“œë¥¼ í™•ì¸í•˜ì‹œê³  ë‹¤ì‹œ ë¡œê·¸ì¸2...");
+				    }
+			}); 
+		
+	});
+});	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	
+ 
+ 
+        $(document).ready(function(){
+         	
+        	
+        	function delButton (cellvalue, options, rowObject) {
+        		   return '<input type="button" onclick="delete('+cellvalue+')" value="DEL"/>'; 
+        	 };
+        	 
+        	 
+        	function UploadImage(response, postdata) {
+        		
 
-     		    return [data.success, data.message, data.id];
+        		    var data = $.parseJSON(response.responseText);
 
-     	}
-     	
-     	
-     	function Result_From_Server(resp, postdata)
+        		    console.log("UploadImage called");
+        		    if (data.success == true) {
+        		        if ($("#file").val() != "") {
+        		            ajaxFileUpload(data.id);
+        		        }
+        		    }  
+
+        		    return [data.success, data.message, data.id];
+
+        	}
+        	
+        	
+        	function Result_From_Server(resp, postdata)
 			{
-     		
-     		alert("Update is succefully");
+        		
+        		alert("Update is succefully");
 				// you should return from server OK in sucess, any other message on error
 				if(resp.responseText == "OK")
 				{
@@ -185,214 +424,244 @@
 				return [true,"",""]
 				}
 			}
-     	
-     	
+        	
+        	
 	   
-     	function ajaxFileUpload(id) 	{
-     	
-     	 console.log("ajaxFileUpload called");
-     	
-     		    $("#loading")
-     		    .ajaxStart(function () {
-     		        $(this).show();
-     		    })
-     		    .ajaxComplete(function () {
-     		        $(this).hide();
-     		    });
+        	function ajaxFileUpload(id) 	{
+        	
+        	 console.log("ajaxFileUpload called");
+        	
+        		    $("#loading")
+        		    .ajaxStart(function () {
+        		        $(this).show();
+        		    })
+        		    .ajaxComplete(function () {
+        		        $(this).hide();
+        		    });
 
-     		    $.ajaxFileUpload
-     		    (
-     		        {
-     		            url: '@Url.Action("UploadImage")',
-     		            secureuri: false,
-     		            fileElementId: 'file',
-     		            dataType: 'json',
-     		            data: { id: id },
-     		            success: function (data, status) {
+        		    $.ajaxFileUpload
+        		    (
+        		        {
+        		            url: '@Url.Action("UploadImage")',
+        		            secureuri: false,
+        		            fileElementId: 'file',
+        		            dataType: 'json',
+        		            data: { id: id },
+        		            success: function (data, status) {
 
-     		                if (typeof (data.success) != 'undefined') {
-     		                    if (data.success == true) {
-     		                        return;
-     		                    } else {
-     		                        alert(data.message);
-     		                    }
-     		                }
-     		                else {
-     		                    return alert('Failed to upload logo!');
-     		                }
-     		            },
-     		            error: function (data, status, e) {
-     		                return alert('Failed to upload logo!');
-     		            }
-     		        }
-     		    )          }     
-     	 
-     	
-     	function setClickRowColor(gridNm, rowId){
+        		                if (typeof (data.success) != 'undefined') {
+        		                    if (data.success == true) {
+        		                        return;
+        		                    } else {
+        		                        alert(data.message);
+        		                    }
+        		                }
+        		                else {
+        		                    return alert('Failed to upload logo!');
+        		                }
+        		            },
+        		            error: function (data, status, e) {
+        		                return alert('Failed to upload logo!');
+        		            }
+        		        }
+        		    )          }     
+        	 
+        	
+        	function setClickRowColor(gridNm, rowId){
 	    	    var ids = $('#'+gridNm).getDataIDs();
 
-     	    $.each(ids, function(idx){
-     	        idx+=1;
-     	        if(idx==rowId){
-     	            $('#'+gridNm).setRowData(idx, false, {background:'#DDFFFF'});
-     	        }else{
-     	            $('#'+gridNm).setRowData(idx, false, {background:'#FFFFFF'});
-     	        }
-     	    });
-     	}
-    	 
-     	function formatImage(cellValue, options, rowObject) {
+        	    $.each(ids, function(idx){
+        	        idx+=1;
+        	        if(idx==rowId){
+        	            $('#'+gridNm).setRowData(idx, false, {background:'#DDFFFF'});
+        	        }else{
+        	            $('#'+gridNm).setRowData(idx, false, {background:'#FFFFFF'});
+        	        }
+        	    });
+        	}
+       	 
+        	function formatImage(cellValue, options, rowObject) {
 
-     		
-     		 alert("cellValue" + cellValue)
-              //var imageHtml = "<img src='images/" + cellValue + "' originalValue='" + cellValue + "' />";
-              //var imageHtml = "<img src='cellValue'/>";
-              
-              //var imageHtml = "<img src='../images/movie/tax1.jpg' originalValue='tax1.jpg'/>";
-              
-              var imageHtml = "<img src='cellValue'/>";
-               
-              return imageHtml;
-         }
-
-     
-     	function pickdates(id){
-     		jQuery("#"+id+"_movieEndDate","#movie_list").datepicker({dateFormat:"yy-mm-dd"});
-     	}
-	
-     	var getVaueByName = function (directors, colName) {
-             var i, count = directors.length, item;
-             
-             console.log("directors.length", directors.length);
-             
-             for (i = 0; i < count; i += 1) {
-                 item = directors[i];
+        		
+        		 alert("cellValue" + cellValue)
+                 //var imageHtml = "<img src='images/" + cellValue + "' originalValue='" + cellValue + "' />";
+                 //var imageHtml = "<img src='cellValue'/>";
                  
-             	//console.log("item" + item.peopleNm);
+                 //var imageHtml = "<img src='../images/movie/tax1.jpg' originalValue='tax1.jpg'/>";
                  
-                 
-                 if (item.colname === colName) {
-                 	
-                 	console.log("item" + item.peopleNm);
-                     return item.peopleNm;
-                 }
-                 
-                 return item.peopleNm; 
-             }
-             return '';
-         };
-     
-                
-     
-      $("#movie_list").jqGrid( 
-     		{         			
-     
-         	// ajax ¿äÃ»ÁÖ¼Ò
-             url:"/movie/json/getAPIMoiveList",
-             caption : "¿µÈ­ API µî·Ï",
-             // ¿äÃ»¹æ½Ä
-             mtype:"post",
-             // °á°ú¹° ¹ŞÀ» µ¥ÀÌÅÍ Å¸ÀÔ
-             datatype:"json",   
-       
-             // ±×¸®µå ³ôÀÌ
-             height:"auto",
-            
-             // ÄÃ·³¸í
-             colNames:['¿µÈ­CD','¿µÈ­¸í','Á¦ÀÛ±¹°¡','»ó¿µ¸¶°¨','ÁÙ°Å¸®','Æ®·¹ÀÏ·¯'],
-             // ÄÃ·³ µ¥ÀÌÅÍ(Ãß°¡, »èÁ¦, ¼öÁ¤ÀÌ °¡´ÉÇÏ°Ô ÇÏ·Á¸é autoincrementÄÃ·³À» Á¦¿ÜÇÑ ¸ğµç ÄÃ·³À» editable:true·Î ÁöÁ¤)
-             // edittypedÀº text, password, ... input type¸íÀ» »ç¿ë
+                 var imageHtml = "<img src='cellValue'/>";
                   
-             colModel:[
-                       {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},
-                       {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},                       
-	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},              
-                       {name:'movieEndDate', index:'movieEndDate',align:"left",                         	    
-                     	      editable:true, editoptions:{size:10, 
-                               dataInit:function(el){ 
-                                     $(el).datepicker({dateFormat:'yy-mm-dd'}); 
-                               }, 
-                               defaultValue: function(){ 
-                                 var currentTime = new Date(2017,10,1); 
-                                 var month = parseInt(currentTime.getMonth() + 1); 
-                                 month = month <= 9 ? "0"+month : month; 
-                                 var day = currentTime.getDate(); 
-                                 day = day <= 9 ? "0"+day : day; 
-                                 var year = currentTime.getFullYear(); 
-                                 return year+"-"+month + "-"+day; 
-                               } 
-                             }                	     
-                       },                   
-                       
-                       //{name:'postUrl', index:'postUrl', width:60, align:'center',
-                       // formatter:formatImage},                        	 
-                       
-                       
-                     
-                       {name:'synopsis', index:'synopsis',align:"left", width:90,sortable:true, editable:true, 
-                     	     edittype: "textarea",editoptions: { rows: 3, wrap: "off",style: 'overflow-x: hidden',}},                     
-                       {name:'trailer', index:'trailer',align:"left", width:90,editable:true}
-                       ],
-                       
-                       
+                 return imageHtml;
+            }
+
+        
+        	function pickdates(id){
+        		jQuery("#"+id+"_movieEndDate","#movie_list").datepicker({dateFormat:"yy-mm-dd"});
+        	}
+   	
+        	var getVaueByName = function (directors, colName) {
+                var i, count = directors.length, item;
+                
+                console.log("directors.length", directors.length);
+                
+                for (i = 0; i < count; i += 1) {
+                    item = directors[i];
                     
-      
-      	  // ³×ºñ°ÔÀÌ¼Ç µµ±¸¸¦ º¸¿©ÁÙ div¿ä¼Ò
-             hidegrid : true,                        // grid ÀüÃ¼¸¦ Á¢´Â ¿À¸¥ÂÊ »ó´Ü ¾ÆÀÌÄÜ disable
-         	beforeSelectRow : function(invid) {                // ¼±ÅÃÇÑ ·Î¿ì »ö»ó º¯°æ
-               setClickRowColor('movie_list', invid);
-                 return true;
-            }, 
-            
-       
+                	//console.log("item" + item.peopleNm);
+                    
+                    
+                    if (item.colname === colName) {
+                    	
+                    	console.log("item" + item.peopleNm);
+                        return item.peopleNm;
+                    }
+                    
+                    return item.peopleNm; 
+                }
+                return '';
+            };
+        
+                   
+        
+         $("#movie_list").jqGrid( 
+        		{         			
+        
+            	// ajax ìš”ì²­ì£¼ì†Œ
+                url:"/movie/json/getAPIMoiveList",
+                caption : "ì˜í™” API ë“±ë¡",
+                // ìš”ì²­ë°©ì‹
+                mtype:"post",
+                // ê²°ê³¼ë¬¼ ë°›ì„ ë°ì´í„° íƒ€ì…
+                datatype:"json",   
+          
+                // ê·¸ë¦¬ë“œ ë†’ì´
+                height:"auto",
+               
+                // ì»¬ëŸ¼ëª…
+                colNames:['ì˜í™”CD','ì˜í™”ëª…','ì œì‘êµ­ê°€','ìƒì˜ë§ˆê°','ì¤„ê±°ë¦¬','íŠ¸ë ˆì¼ëŸ¬'],
+                // ì»¬ëŸ¼ ë°ì´í„°(ì¶”ê°€, ì‚­ì œ, ìˆ˜ì •ì´ ê°€ëŠ¥í•˜ê²Œ í•˜ë ¤ë©´ autoincrementì»¬ëŸ¼ì„ ì œì™¸í•œ ëª¨ë“  ì»¬ëŸ¼ì„ editable:trueë¡œ ì§€ì •)
+                // edittypedì€ text, password, ... input typeëª…ì„ ì‚¬ìš©
+                     
+                colModel:[
+                          {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},
+                          {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},                       
+   	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},              
+                          {name:'movieEndDate', index:'movieEndDate',align:"left",                         	    
+                        	      editable:true, editoptions:{size:10, 
+                                  dataInit:function(el){ 
+                                        $(el).datepicker({dateFormat:'yy-mm-dd'}); 
+                                  }, 
+                                  defaultValue: function(){ 
+                                    var currentTime = new Date(2017,10,1); 
+                                    var month = parseInt(currentTime.getMonth() + 1); 
+                                    month = month <= 9 ? "0"+month : month; 
+                                    var day = currentTime.getDate(); 
+                                    day = day <= 9 ? "0"+day : day; 
+                                    var year = currentTime.getFullYear(); 
+                                    return year+"-"+month + "-"+day; 
+                                  } 
+                                }                	     
+                          },                   
+                          
+                          //{name:'postUrl', index:'postUrl', width:60, align:'center',
+                          // formatter:formatImage},                        	 
+                          
+                          
+                        
+                          {name:'synopsis', index:'synopsis',align:"left", width:90,sortable:true, editable:true, 
+                        	     edittype: "textarea",editoptions: { rows: 3, wrap: "off",style: 'overflow-x: hidden',}},                     
+                          {name:'trailer', index:'trailer',align:"left", width:90,editable:true}
+                          ],
+                          
+                          
+                       
+         
+         	  // ë„¤ë¹„ê²Œì´ì…˜ ë„êµ¬ë¥¼ ë³´ì—¬ì¤„ divìš”ì†Œ
+                hidegrid : true,                        // grid ì „ì²´ë¥¼ ì ‘ëŠ” ì˜¤ë¥¸ìª½ ìƒë‹¨ ì•„ì´ì½˜ disable
+            	beforeSelectRow : function(invid) {                // ì„ íƒí•œ ë¡œìš° ìƒ‰ìƒ ë³€ê²½
+                  setClickRowColor('movie_list', invid);
+                    return true;
+               }, 
+               
+          
 
-            	sortable: true,
-             sortname: 'movieCd',
-             pager:"#pager777",
-         	rowNum:10,
-            	//rowList:[10,20,30],             
-             autowidth:true,
-             // ÀüÃ¼ ·¹ÄÚµå¼ö, ÇöÀç·¹ÄÚµå µîÀ» º¸¿©ÁÙÁö À¯¹«
-             multiselect: true,
-             viewrecords:true,
-             
-             // Ãß°¡, ¼öÁ¤, »èÁ¦ url
-             editurl: "/movie/json/addMovie",    
- 
-             mtype:"post",
-             // °á°ú¹° ¹ŞÀ» µ¥ÀÌÅÍ Å¸ÀÔ
-             datatype:"json",
-       
-             //sortable: true 
-             sortorder: "desc",
-             loadonce : true,
-            
-             jSonReader : {
-             	root:"rows",
-             	page:"page",
-             	total:"total",
-             	records:"records",
-             	repeatitems:false,
-             	cell:"cell",
-             	id:"movieCd"
-             },
-              
-            	loadComplete: function(data) {
-       			// alert ("records="+$("#movie_list").getGridParam("records"));
-             },  
-             
-             
-       		loadError: function (jqXHR, textStatus, errorThrown) {
-                 alert('HTTP status code: ' + jqXHR.status + '\n' +
-                       'textStatus: ' + textStatus + '\n' +
-                       'errorThrown: ' + errorThrown);
-                 alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
-             },
+               	sortable: true,
+                sortname: 'movieCd',
+                pager:"#pager777",
+            	rowNum:10,
+               	//rowList:[10,20,30],             
+                autowidth:true,
+                // ì „ì²´ ë ˆì½”ë“œìˆ˜, í˜„ì¬ë ˆì½”ë“œ ë“±ì„ ë³´ì—¬ì¤„ì§€ ìœ ë¬´
+                multiselect: true,
+                viewrecords:true,
+                
+                // ì¶”ê°€, ìˆ˜ì •, ì‚­ì œ url
+                editurl: "/movie/json/addMovie",    
+    
+                mtype:"post",
+                // ê²°ê³¼ë¬¼ ë°›ì„ ë°ì´í„° íƒ€ì…
+                datatype:"json",
+          
+                //sortable: true 
+                sortorder: "desc",
+                loadonce : true,
+               
+                jSonReader : {
+                	root:"rows",
+                	page:"page",
+                	total:"total",
+                	records:"records",
+                	repeatitems:false,
+                	cell:"cell",
+                	id:"movieCd"
+                },
+                 
+               	loadComplete: function(data) {
+          			// alert ("records="+$("#movie_list").getGridParam("records"));
+          			$("type='checkbox'").removeClass().addClass("styled");
+                },  
+                
+                
+          		loadError: function (jqXHR, textStatus, errorThrown) {
+                    alert('HTTP status code: ' + jqXHR.status + '\n' +
+                          'textStatus: ' + textStatus + '\n' +
+                          'errorThrown: ' + errorThrown);
+                    alert('HTTP message body (jqXHR.responseText): ' + '\n' + jqXHR.responseText);
+                },
 
-     		});
-       
-	 
-	      // ³×ºñ°Ô½Ã¼Ç µµ±¸ ¼³Á¤
+        		});
+         
+        
+  
+         
+	  // ë„¤ë¹„ê²Œì‹œì…˜ ë„êµ¬ ì„¤ì •
+	  
+	 /*  $("#movie_list").jqGrid(
+	         		"navGrid",
+	                "#pager777",
+	                
+	                
+	                {search:true, edit:true, add:true, del:true},
+	               	    
+	                
+	                {   //EDIT
+	                	
+	               	    reloadAfterSubmit: true,
+	                	closeAfterAdd: true,
+	                	closeAfterEdit: true, reloadAfterSubmit: true,
+	                    closeOnEscape: true,//Closes the popup on pressing escape key
+	                    closeAfterEdit: true,
+	                    afterSubmit: function (response, postdata) {
+	                    	//alert("ì„±ê³µì ìœ¼ë¡œ ì…ë ¥ë˜ì—ˆìŠµë‹ˆë‹¤.");
+	                    	alert('After Submit \n' +'statusText: '+ response.statusText);
+	                    }
+	                 }
+	              
+			  );
+		  }) 
+		   */
+  	    
+	      // ë„¤ë¹„ê²Œì‹œì…˜ ë„êµ¬ ì„¤ì •
 	  $("#movie_list").jqGrid(
 	         		"navGrid",
 	                "#pager777",
@@ -409,10 +678,10 @@
 	                 	afterSubmit: function (response, postdata) {
 	                 		
 	                 		if (response.statusText = "OK")
-	                    	alert("¼º°øÀûÀ¸·Î ÀÔ·ÂµÇ¾ú½À´Ï´Ù !!!" + response.statusText); 
+	                    	alert("ì„±ê³µì ìœ¼ë¡œ ì…ë ¥ë˜ì—ˆìŠµë‹ˆë‹¤ !!!" + response.statusText); 
 	                 		else 
-	                 		alert("¿À·ù ¹ß»ı " +response.statusText);
-                
+	                 		alert("ì˜¤ë¥˜ ë°œìƒ " +response.statusText);
+                   
 	                    }
 	                 
 	                
@@ -421,40 +690,124 @@
 			  );
 		  }) 
 		  
-			
-			
-	            
-	</script>
-		
-	
-    
-</head>
+		 
+    </script>
 
 <body>
-    
-    
-        <!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        
-      
+
+<div class="navbar  navbar-inverse navbar-fixed-top">
+<!-- Header section -->
+         <div class="container">
+             <!-- Logo link-->
+             <a href='/cinema/index' class="logo">
+                 <!-- <img alt='logo' src="/images/logo.png"> -->
+                 <img src="/images/amc.png">
+             </a>
+             
+             <!-- Main website navigation-->
+             <nav id="navigation-box">
+                 <!-- Toggle for mobile menu mode -->
+                 <a href="#" id="navigation-toggle">
+                     <span class="menu-icon">
+                         <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                           <span class="lines"></span>
+                         </span>
+                     </span>
+                 </a>
+                 
+                 <!-- Link navigation -->
+                 <ul id="navigation">
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">ì˜í™”</a>
+                         <ul>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=movie">í˜„ì¬ ìƒì˜ ì˜í™”</a></li>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=commingsoon">ìƒì˜ ì˜ˆì • ì˜í™”</a></li>
+                             <li class="divider"></li>
+                             <li class="menu__nav-item"><a href="/movie/getMovieList?menu=preview">ì‹œì‚¬íšŒ</a></li>
+
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">ì˜ˆë§¤</a>
+                         <ul>
+                             <li class="menu__nav-item"><a href="/booking/getScreenMovieList">ì˜í™” ì˜ˆë§¤</a></li>
+                             <li class="menu__nav-item"><a href="/booking/getPreviewList">ì‹œì‚¬íšŒ ì˜ˆë§¤</a></li>
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="/cinema/theaterInfo.jsp">ì˜í™”ê´€</a>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="/community/getFreeBoardList">ì»¤ë®¤ë‹ˆí‹°</a>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">ìŠ¤í† ì–´</a>
+                         <ul>
+                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=G">êµ¿ì¦ˆ</a></li>
+                             <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">ìŠ¤ë‚µë°”</a></li>
+                         </ul>
+                     </li>
+                     <li>
+                         <span class="sub-nav-toggle plus"></span>
+                         <a href="#">[ê´€ë¦¬ì ë©”ë‰´]</a>
+						<ul class="mega-menu__list">
+                                 <li class="mega-menu__nav-item"><a href="/user/getUserList">íšŒì› ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/product/getGoodsList?menu=manage&searchKeyword=G">ìƒí’ˆ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/purchase/getSaleList?searchKeyword=saleList">íŒë§¤ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/movie/getMovieList?menu=manage">ì˜í™” ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/screen/getScreenList">ìƒì˜ ê´€ë¦¬</a></li>
+                                 <li class="mega-menu__nav-item"><a href="/booking/getAdminBookingList">ì˜ˆë§¤ ê´€ë¦¬</a></li>
+                             </ul>
+                     </li>
+                 </ul>
+             </nav>
+             
+             <!-- Additional header buttons / Auth and direct link to booking-->
+             <div class="control-panel">
+                 <div class="auth auth--home">
+                   <div class="auth__show">
+                   </div>
+                   <a href="#" class="btn btn--sign btn--singin">
+                       	MyPage
+                   </a>
+                     <ul class="auth__function">
+                         <li><a href="/user/getUser" class="auth__function-item">ë‚´ ì •ë³´ ë³´ê¸°</a></li>
+                         <li><a href="/booking/getBookingList?searchCondition=now" class="auth__function-item">ì˜ˆë§¤ ëª©ë¡</a></li>
+                         <li><a href="/movie/getWishList" class="auth__function-item">ìœ„ì‹œë¦¬ìŠ¤íŠ¸</a></li>
+                         <li><a href="/alarm/getCancelAlarmList?alarmFlag=C" class="auth__function-item">ì·¨ì†Œí‘œ ì•Œë¦¬ë¯¸</a></li>
+                         <li><a href="/alarm/getOpenAlarmList?alarmFlag=O" class="auth__function-item">í‹°ì¼“ì˜¤í”ˆì‹œê°„ ì•Œë¦¬ë¯¸</a></li>
+                         <li><a href="/purchase/getPurchaseList" class="auth__function-item">ìŠ¤í† ì–´ êµ¬ë§¤ ëª©ë¡</a></li>
+                     </ul>
+                 </div>
+                 <!-- <a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> -->
+        	<!-- ìœ ì €ê°€ ë¹„ë¡œê·¸ì¸ ìƒíƒœì¼ ì‹œ -->	
+ 			<c:if test="${empty sessionScope.user}">		
+					<!-- <form class="navbar-form navbar-right"> -->
+					<form class="navbar-form navbar-right">						
+						<a href="#" class="btn btn-md btn--warning btn--book btn-control--home login-window">Book a ticket</a> 
+					</form>
+			</c:if>	
+			
+			<c:if test="${!empty sessionScope.user}">
+				<ul class="nav navbar-nav navbar-right">
+					<a href="#" class="user-info">[${sessionScope.user.userName}] ë‹˜</a>&emsp;
+					<a href="/user/logoutUser">ë¡œê·¸ì•„ì›ƒ</a>
+				</ul>
+			</c:if> 
+        	
+        	
+        	</div>
+        	
+         	
+	 </div>
+</div>
 
 
-
-    <div class="container">
-                 <!-- Search bar -->
- 			<div class="col-sm-12">
- 			
-                <h1 class="page-heading"> ¿µÈ­ µî·Ï  </h1> 
-                               
-				
-			      
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-		
-	</div>
-        
 
 <form id="uploadForm" method="POST">  
 	<br/> <br/>  <br/> <br/> 
@@ -464,45 +817,9 @@
 	<table id="movie_list"></table>    
     <div id="pager777" class="scroll" style="text-align:center"></div>
     <div id="load_time" class="scroll" style="text-align:center"></div>
-    
-    <br/>
-    <br/>
-    <br/> 
-    <br/> 
-    <br/> 
-    <br/> 
-    <br/> 
-    <br/>
-    <br/>
-     
-         
-    <div class="bottom low ">
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-		<!-- ToolBar End /////////////////////////////////////-->
-	</div>
  
-</form>  
 
-
-		<!--  Select Mobile menu  µÑ´ÙÀÖ¾î¾ßÁö search°¡´ÉÇÔ!!! ÇÏ´Ü¿¡ ÀÖ¾î¾ßÁö »ı±è (ÀÌÀ¯¸ğ¸§)-->
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-		
-		
-        <!-- Custom ÀÌ°ÔÀÖ¾î¾ßÁö ½ºÅ©·Ñ³»¸±½Ãtop¹öÆ°ÀÖÀ½!!!!!!!!!!! -->
-        <script src="/js/custom.js"></script>
-		<!-- ------------------------------------  -->
-		
-	
-		
-
+</form>
 </body>
-
-<style>
-    
-</style>	
-
 </html>
+

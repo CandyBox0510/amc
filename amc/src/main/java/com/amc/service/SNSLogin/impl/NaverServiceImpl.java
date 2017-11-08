@@ -24,15 +24,10 @@ import com.amc.service.user.UserDAO;
 @Service("naverServiceImpl")
 public class NaverServiceImpl implements NaverService{
 
-	@Autowired
-	@Qualifier("userDAO")
-	private UserDAO userDAO;
-
-	
-	private static final String Client_ID = "OsZtgCKkqkHXDLoAg7uF";
-	private static final String Client_Secret = "BZCE1MVatO";
-	private static final String SURVICE_URL = "http://127.0.0.1:8080/user/json/start";
-	private static final String Redirect_URL = "http://127.0.0.1:8080/user/json/NaverLogin";
+	private static final String Client_ID = "P9KtaIc7ga6N4h6pDXqu";
+	private static final String Client_Secret = "POsK08vOxm";
+	private static final String SURVICE_URL = "http://127.0.0.1:8080/sns/start";
+	private static final String Redirect_URL = "http://127.0.0.1:8080/sns/NaverLogin";
 			
 		
 	@Override
@@ -67,8 +62,8 @@ public class NaverServiceImpl implements NaverService{
 		return result;
 	}
 	
-/*	//TODO : tokentype 와 accessToken 을 조합한 값을 헤더의 Authorization에 넣어 전송합니다. 결과값은 xml로 출력됩니다.
-	public String getxml(String tokenType, String accessToken){
+	//TODO : tokentype 와 accessToken 을 조합한 값을 헤더의 Authorization에 넣어 전송합니다. 결과값은 xml로 출력됩니다.
+/*	public String getxml(String tokenType, String accessToken){
 		String profileDataXml = getHtml(
 				"https://apis.naver.com/nidlogin/nid/getUserProfile.xml",
 				"https://openapi.naver.com/v1/nid/me",
@@ -76,8 +71,8 @@ public class NaverServiceImpl implements NaverService{
 				);
 		
 		return profileDataXml;
-	}
-*/
+	}*/
+
 	@Override
 	//TODO : 요청한 값 읽어오기!!
 	public String getHtml(String url, String authorization){

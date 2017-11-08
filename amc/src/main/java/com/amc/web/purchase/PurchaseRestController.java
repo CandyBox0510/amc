@@ -27,11 +27,11 @@ public class PurchaseRestController {
 
 	/*Field*/
 	@Autowired
-	@Qualifier("purchaseService")
+	@Qualifier("purchaseServiceImpl")
 	private PurchaseService purchaseService;
 	
 	@Autowired
-	@Qualifier("productService")
+	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
 	@Value("#{commonProperties['pageUnit'] ?: 5}")

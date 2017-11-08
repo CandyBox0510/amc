@@ -56,40 +56,82 @@
   <script type="text/javascript">
   
 	//무한스크롤
-	var page = 2;
+	var count = 2;
 	var all = '';
 	
 	$( window ).scroll(function(){
 		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
-			 $.ajax({
-					url:"/movie/json/getInfiOpenAlarmList/"+'${sessionScope.user.userId}',
-					method:"POST",
-					headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-					},
-					data:JSON.stringify({
-						currentPage : page,
-						alarm : O
-					}),
-					
-					success : function(JSONData, status){
-							
-								
+			 loadList(count);
+			 console.log(count++);
+		 }//end if문
+	 }); 
+	
+	 $(function() {
+		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $( ".label-danger" ).on("click" , function() {
+			 if(confirm("삭제하시겠습니까?")!=0){ 
+				 $.ajax({
+		               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+		               method : "GET" ,
+		               async : true,
+		               success : function(data, status) {
+		                  if(data == 1){
+		                	 $(".gallery-wrapper").empty();
+	 						for(var i = 1; i < count+1; i++ ){
+								loadList(i);
+							} 
+		                  }
+		               }
+		      	});//end of ajax
+			 }
+		});
+
+		//처음 로딩시 처음 있는 목록들에게 타이머 설정	
+		for(var i=0; i<${list.size()}; i++){
+		var temp = $("input[name='"+i+"']").val();
+		dpTime(temp);
+		setInterval("dpTime("+temp+");",1000);
+		}
+		
+	 })
+  
+	function loadList(page){
+		 var O = 'O';
+		 $.ajax({
+				url:"/alarm/json/getInfiOpenAlarmList/"+'${sessionScope.user.userId}',
+				method:"POST",
+				async : true,
+				headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+				},
+				data:JSON.stringify({
+					currentPage : page,
+					alarmFlag : O
+				}),
+				
+				success : function(JSONData, status){
+						
 								var alarm = JSONData.list;
 								
-								for(i in JSONData.listWish){
+								for(i in JSONData.list){
 	
-									all = '<div class="col-sm-4 col-md-3">'
+									all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
-									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
-									all += 		'<div class="alert alert-info" role="alert">'
+									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+									all += 		'<div class="alert alert-danger" role="alert">'
 									all +=			'<strong>티켓 오픈 일자</strong><br/>'
+									all +=			'<p class="'+alarm[i].alarmNo+'">'
 									all +=           alarm[i].screenContent.ticketOpenDate
-									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
+									all +=			'</p>'
+									all +=			'<strong>남은시간</strong><br/>'
+									all +=			'<p class="a'+alarm[i].alarmNo+'"></p>'
+									all += 			'<span class="label label-danger">'
+									all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
+									all += 			'알림취소</span></a>'
 									all +=		'</div>'
-									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
+									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--video-link">'
 									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
 									all += 	   '<p class="gallery-item__name">'
 												if(alarm[i].screenContent.previewFlag == 'Y'){
@@ -101,26 +143,89 @@
 									all +=	'</div>'
 									all +='</div>'
 										
-									console.log($(".gallery-wrapper").html());
 									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
-								}
-								
-/* 						//상품명 클릭시 getProduct
-						  $("tbody tr td:nth-child(2)").on("click", function(){
-							 console.log("히든1 : "+$(this).find('input').val());
-							 console.log("히든2 : "+$($(this).find('input')[1]).val());
-							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
-						 }) 
-						  */
-						  
-						//ajax 목록 링크 및 색 추가 끝
-					}
-			})//end ajax  
-			console.log(page++);
-		 }//end if문
-	 }); 
-  
-
+									
+									$( ".label-danger" ).on("click" , function() {
+										if(confirm("삭제하시겠습니까?")!=0){
+											 $.ajax({
+									               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+									               method : "GET" ,
+									               async : false,
+									               success : function(data, status) {
+									                  if(data == 1){
+									                	  $(".gallery-wrapper").empty();
+														for(var i = 1; i < count+1; i++ ){
+															loadList(i);
+														}
+									                  }
+									               }
+									     	 });//end of ajax
+										}
+									});
+									//alert(alarm[i].alarmNo);
+									dpTime(alarm[i].alarmNo);
+									setInterval("dpTime("+alarm[i].alarmNo+");",1000);
+									
+							}//전체 무한스크롤 데이터 + 추가설정 끝
+					}//ajax success function 끝
+		})//end ajax  
+	}
+	 
+ 	
+ 	
+  	function dpTime(alarmNo){
+  		{
+  		var temp = '.'+alarmNo;
+  		var ticketOpenDate=$(temp).text();
+	  	var now = new Date();
+	  	var screenTime = new Date(ticketOpenDate);
+		   //var screenTime = new Date('17/10/22 12:00:00');
+		  	//console.log("now : "+now);  //mon oct 16 2017 10:51:31 GMT+0900
+		  	//console.log("now.getTime() : "+now.getTime()); //1508118721142
+		 
+		  	var _second = 1000;
+		  	var _minute = _second * 60;
+		  	var _hour = _minute * 60;
+		  	var _day = _hour * 24;
+		  	var timer;
+	
+		   var diff = (screenTime.getTime() - now.getTime());
+		  	
+		  	var days = Math.floor(diff / _day);
+		  	var hours = Math.floor((diff % _day) / _hour);
+		  	var minutes = Math.floor((diff % _hour) / _minute);
+		  	var seconds = Math.floor((diff % _minute) / _second);
+		  	
+		  	
+	      if(diff<1){
+	      	$(".a"+alarmNo).html("티켓 오픈 상태");
+	      } 
+			
+		 	 if (days < 1){
+		         days = "";
+		     }
+	      
+	      if (hours < 10){
+	          hours = "0" + hours;
+	      }
+	      
+	      if (minutes < 10){
+	          minutes = "0" + minutes;
+	      }
+	      
+	      if (seconds < 10){
+	          seconds = "0" + seconds;
+	      }
+	     
+	      if(diff<1){
+	      }else{
+	    	  	$(".a"+alarmNo).text(days+ "일 " + hours + ":" + minutes + ":" + seconds);
+	      }
+	  }
+  	}
+  	
+  	
+  	
    </script> 
 </head>
 
@@ -132,31 +237,36 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
+            		<p/>
+                	<p/>
+                	<p/>
                 <h2 class="page-heading">티켓 오픈 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
-        				<div class="col-sm-4 col-md-3">
+						<input type="hidden" value="${alarm.alarmNo}" name="${i-1}"/>
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
-	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: auto;">
+	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            </a>
 	                            <div class="alert alert-danger" role="alert">
-  									<strong>티켓 오픈 일자</strong><br/>${alarm.screenContent.ticketOpenDate}<a href="http://naver.com"><span class="label label-danger">취소</span></a>
+  									<strong>티켓 오픈 일자</strong><br/><p class="${alarm.alarmNo}">${alarm.screenContent.ticketOpenDate}</p>
+  									<strong>남은시간</strong><br/><p class="a${alarm.alarmNo}"></p>
+  									<span class="label label-danger"><input type="hidden" value="${alarm.alarmNo}">알림취소</span>
 								</div>
-	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
 	                                <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
 	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
@@ -167,7 +277,6 @@
 	                            </a>
  	                         </div>       
 	                    </div>
-	                    <%-- </c:forEach> --%>
 	             		</c:forEach>	
 	                </div>
                 </div>
@@ -175,9 +284,8 @@
         </section>
        
        
-       <!-- bottomToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-	   <!-- bottomToolBar End /////////////////////////////////////-->
+       	<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
      </div>
   
 
@@ -212,11 +320,36 @@
             $(document).ready(function() {
                 init_BookingOne();
             });
+            
+/*     	 	setTimeout(function abcd(){
+    			
+    			alert($("input[type=hidden],input[name='0']").val());
+    			alert($("input[type=hidden],input[name='1']").val());
+    			alert($("input[type=hidden],input[name='2']").val());
+    		
+    		},3000) */
+    		
       </script>
 </body>
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #ffbfbf;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #ff9696; 
       }
  </style>
 </html>

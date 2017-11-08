@@ -14,7 +14,7 @@ import com.amc.service.domain.User;
 import com.amc.service.user.UserDAO;
 
 //==> 회원관리 DAO CRUD 구현
-@Repository("userDAO")
+@Repository("userDAOImpl")
 public class UserDAOImpl implements UserDAO {
 
 	///Field

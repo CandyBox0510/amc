@@ -56,8 +56,75 @@
 		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 		  crossorigin="anonymous"></script>
 		<script src="../semantic/semantic.min.js"></script>
+		
+		<!-- hanna font -->
+		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		
+<script>
+	$(function(){
+		 
+			$.ajax(
+					{
+						url : "/cinema/json/getTransportListAtStation/127.02760560000002/37.4946/300", 
+						method : "GET", 
+						dataType : "json", 
+						headers : {
+							"Accept" : "application/json", 
+							"Content-Type" : "application/json"
+						}, 
+						success : function(JSONData, status){
+							var all = "";
+							var busStationName = "";
+							var busNo = "";
+							var subway ="";
+							
+							for(var i = 0; i < JSONData.stationNameList.length; i ++) {
+								if(i == JSONData.stationNameList.length-1){
+									busStationName += JSONData.stationNameList[i];	
+								}else{
+									busStationName += JSONData.stationNameList[i]+", ";
+								}
+							}
+							if(JSONData.stationNameList.length == 0){
+								busStationName = "근처 버스정류장이 없습니다." 
+							}
+							
+							for(var i = 0; i < JSONData.busNoList.length; i ++) {
+								if(i == JSONData.busNoList.length-1){
+									busNo += JSONData.busNoList[i]
+								}else{
+									busNo += JSONData.busNoList[i]+", ";
+								}
+							}
+							if(JSONData.busNoList.length == 0){
+								busNo = "근처 버스번호가 없습니다." 
+							}
+							
+							for(var i = 0; i < JSONData.subwayList.length; i++) {
+								if(i == JSONData.subwayList.length-1){
+									subway += JSONData.subwayList[i];	
+								}else{
+									subway += JSONData.subwayList[i]+", ";	
+								}
+							}
+							if(JSONData.subwayList.length == 0){
+								subway = "근처 지하철이 없습니다." 
+							}
+							
+							/* str = str.substr(0, str.length-2); */
+							
+							$("#busStationName").text(busStationName);
+							$("#busNo").text(busNo);
+							$("#subway").text(subway);
+						}
+					}		
+			)
+		
+	});
+</script>
 
-    <style>
+
+<style>
 .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
@@ -132,9 +199,22 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
+        
+        <!-- Search bar -->
+        <div class="search-wrapper">
+            <div class="container container--add">
+                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
+                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
+                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
+                </form>
+            </div>
+        </div>
 		
 					
         <section class="container">
+        	<p/>
+        	<p/>
+        	<p/>
             <h1 class="page-heading heading--outcontainer">영화관 사진</h1>
             <div class="contact">
                 <!-- <div class="center-block theaterphoto" style="width:800px; height:300px" align="center" style="margin-left:auto; margin-right:auto;"> -->
@@ -190,6 +270,25 @@
         <h1 class="page-heading heading--outcontainer">AMC 위치</h1>
             <div class="contact">
                 <div id="map" style="width:100%;height:350px;"></div>
+            </div>
+            <div class="ui ignored warning message hanna">
+            		<strong style="font-size:20px"><i class="fa fa-location-arrow">주소</i></strong>
+            		<div>&nbsp;</div>
+            		<div>서울특별시 서초구 서초동 1327-15</div>
+            		<div>서울특별시 서초구 강남대로53길 8 비트아카데미빌딩(AmericodeCinema)</div>
+            		<div><i class="fa fa-phone"></i> : 02-3486-9600</div>
+            </div>
+            <div class="ui ignored info message hanna">
+            		<strong style="font-size:20px"><i class="fa fa-road">교통편</i></strong>
+            			<div>&nbsp;</div>
+            			<div>[버스정류장]</div>
+            			<div id="busStationName">실시간 정류장 검색중...</div>
+            			<br/>
+            			<div>[버스 번호]</div>
+            			<div id="busNo">실시간 버스번호 검색중...</div>
+            			<br/>
+            			<div>[지하철] </div>
+            			<div id="subway">실시간 지하철 검색중...</div>
             </div>
         </section>
 
@@ -266,9 +365,8 @@
 			</script>
 			<!-- 파노라마용 스크립트 end-->
 			
-		<!-- bottomToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-	   	<!-- bottomToolBar End /////////////////////////////////////-->
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
 </div>
 
 		<!-- 슬릭 캐러셀 -->
@@ -285,6 +383,11 @@
           	  prevArrow : '<button type="button" class="slick-prev">Previous</button>'
             });
           });
+         
+         function unifiedSearch(){
+ 	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").attr("accept-charset","EUC-KR").submit();
+ 	   	 }
+         $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
          </script>
 </body>
  <style>http://127.0.0.1:8080/images/theater/theater2.JPG
@@ -297,5 +400,10 @@
 	  margin: 150px 0;
 	  padding: 56px 0 60px;
 	}
+	.hanna{ 
+	  font-family: 'Hanna', sans-serif; 
+	  font-size: 120%;
+	   line-height:4.3em
+	 }
  </style>
 </html>

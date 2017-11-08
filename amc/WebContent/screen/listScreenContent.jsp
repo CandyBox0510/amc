@@ -783,7 +783,9 @@
             screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
             showTm = parseInt($("input[name='showTm']").val());
 
+
             if ($("input[name='screenDate']").val().length == 0) {
+
 
                 screenOpenTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentOpenTime']").val();
 

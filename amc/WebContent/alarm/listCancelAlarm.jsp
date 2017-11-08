@@ -56,70 +56,112 @@
   <script type="text/javascript">
   
 	//무한스크롤
-	var page = 2;
+	var count = 2;
 	var all = '';
 	
 	$( window ).scroll(function(){
 		 if ($(window).scrollTop() == $(document).height() - $(window).height()){
-			 $.ajax({
-					url:"/movie/json/getInfiCancelAlarmList/"+'${sessionScope.user.userId}',
-					method:"POST",
-					headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-					},
-					data:JSON.stringify({
-						currentPage : page,
-						alarm : C
-					}),
-					
-					success : function(JSONData, status){
-							
-								
-								var alarm = JSONData.list;
-								
-								for(i in JSONData.listWish){
-	
-									all = '<div class="col-sm-4 col-md-3">'
-									all += 	'<div class="gallery-item">'
-									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
-									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:auto;"></a>'
-									all += 		'<div class="alert alert-info" role="alert">'
-									all +=			'<strong>취소표 신청 좌석</strong><br/>'
-									all +=           alarm[i].alarmSeatNo
-									all += 			'<a href="http://naver.com"><span class="label label-info">취소</span></a>'
-									all +=		'</div>'
-									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--info-link">'
-									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
-									all += 	   '<p class="gallery-item__name">'
-												if(alarm[i].screenContent.previewFlag == 'Y'){
-													all += alarm[i].screenContent.previewTitle
-												}else{
-													all += alarm[i].movie.movieNm
-												}
-									all += 	   '</p></a>'
-									all +=	'</div>'
-									all +='</div>'
-										
-									console.log($(".gallery-wrapper").html());
-									$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
-								}
-								
-/* 						//상품명 클릭시 getProduct
-						  $("tbody tr td:nth-child(2)").on("click", function(){
-							 console.log("히든1 : "+$(this).find('input').val());
-							 console.log("히든2 : "+$($(this).find('input')[1]).val());
-							 self.location = "/product/getProduct?prodNo="+$(this).find('input').val()+"&menu="+$($(this).find('input')[1]).val();
-						 }) 
-						  */
-						  
-						//ajax 목록 링크 및 색 추가 끝
-					}
-			})//end ajax  
-			console.log(page++);
+			 loadList(count);
+			 console.log(count++);
 		 }//end if문
-	 }); 
-  
+	 });
+	
+	 $(function() {
+		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $( ".label-success" ).on("click" , function() {
+			 if(confirm("삭제하시겠습니까?")!=0){
+				 $.ajax({
+		               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+		               method : "GET" ,
+		               async : false,
+		               success : function(data, status) {
+		                  if(data == 1){
+		                	 $(".gallery-wrapper").empty();
+	 						for(var i = 1; i < count+1; i++ ){
+								loadList(i);
+							} 
+		                  }
+		               }
+		      	});//end of ajax
+			 }
+		});
+	 })
+
+	function loadList(page){
+		 var C = 'C';
+		 $.ajax({
+				url:"/alarm/json/getInfiCancelAlarmList/"+'${sessionScope.user.userId}',
+				method:"POST",
+				async : false,
+				headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+				},
+				data:JSON.stringify({
+					currentPage : page,
+					alarmFlag : C
+				}),
+				
+				success : function(JSONData, status){
+							
+							
+							
+							var alarm = JSONData.list;
+							
+							for(i in JSONData.list){
+
+								all = '<div class="col-xs-6 col-sm-4 col-md-3">'
+								all += 	'<div class="gallery-item">'
+								all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu='
+											if(alarm[i].screenContent.previewFlag == 'Y'){
+												all += "movie"
+											}else{
+												all += "search"
+											}
+								all +=    '">'
+								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 		'<div class="alert alert-success" role="alert">'
+								all +=			'<strong>취소표 신청 좌석</strong><br/>['
+								all +=           alarm[i].alarmSeatNo
+								all += 			' ]<span class="label label-success">'
+								all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
+								all +=			'취소</span></a>'
+								all +=		'</div>'
+								all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--success-link">'
+								all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
+								all += 	   '<p class="gallery-item__name">'
+											if(alarm[i].screenContent.previewFlag == 'Y'){
+												all += alarm[i].screenContent.previewTitle
+											}else{
+												all += alarm[i].movie.movieNm
+											}
+								all += 	   '</p></a>'
+								all +=	'</div>'
+								all +='</div>'
+									
+								console.log($(".gallery-wrapper").html());
+								$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+								$( ".label-success" ).on("click" , function() {
+									if(confirm("삭제하시겠습니까?")!=0){
+									 $.ajax({
+							               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+							               method : "GET" ,
+							               async : false,
+							               success : function(data, status) {
+							                  if(data == 1){
+							                	  $(".gallery-wrapper").empty();
+												for(var i = 1; i < count+1; i++ ){
+													loadList(i);
+												}
+							                  }
+							               }
+							     	  });//end of ajax
+									}
+							});
+						}
+				}
+		})//end ajax  
+	}
 
    </script> 
 </head>
@@ -132,29 +174,37 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
+                    <p/>
+	               	<p/>
+	               	<p/>
                 <h2 class="page-heading">취소표 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-						<%-- <c:forEach var="count" begin="1" end="9" step="1"> --%>
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
-	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: auto;">
-	                            </a>
+						     	<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search"></a>
+	                            </c:if>
+	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview"></a>
+	                            </c:if>
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
+	                            
 	                            <div class="alert alert-success" role="alert">
-  									<strong>취소표 신청 좌석</strong><br/>${alarm.alarmSeatNo}<a href="http://naver.com"><span class="label label-success">취소</span></a>
+  									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]
+  									<span class="label label-success"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
@@ -167,7 +217,6 @@
 	                            </a>
  	                         </div>       
 	                    </div>
-	                    <%-- </c:forEach> --%>
 	             		</c:forEach>	
 	                </div>
                 </div>
@@ -175,16 +224,15 @@
         </section>
        
       
-       <!-- bottomToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-	   <!-- bottomToolBar End /////////////////////////////////////-->
+       	<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
      </div>
   
 
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -217,6 +265,22 @@
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #c1ffbc;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a5ff9e; 
       }
  </style>
 </html>

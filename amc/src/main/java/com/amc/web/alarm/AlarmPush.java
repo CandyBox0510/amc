@@ -42,7 +42,7 @@ public class AlarmPush implements ApplicationContextAware{
 
 		calendar = Calendar.getInstance();
 
-		System.out.println("서브 태스크 요이땅 시간 :: " + dateFormat.format(calendar.getTime()));
+		System.out.println("서브 태스크(티켓오픈알림) 시작시간 :: " + dateFormat.format(calendar.getTime()));
 
 		Search search = new Search();
 		search.setSearchKeyword(dateFormat.format(calendar.getTime()));

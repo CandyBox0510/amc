@@ -1,7 +1,6 @@
 package com.amc.service.booking.impl;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -52,8 +51,11 @@ public class BookingDAOImpl implements BookingDAO {
 	}
 
 	@Override
-	public List<Booking> getBookingList(Search search) {
-		return sqlSession.selectList("BookingMapper.getBookingList", search);
+	public Map<String,Object> getBookingList(Search search) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list" ,sqlSession.selectList("BookingMapper.getBookingList", search));
+		map.put("totalCount" ,sqlSession.selectOne("BookingMapper.getAdminTotalCount", search));
+		return map;
 	}
 	
 	@Override

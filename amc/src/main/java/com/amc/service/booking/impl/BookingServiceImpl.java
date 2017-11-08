@@ -58,10 +58,10 @@ public class BookingServiceImpl implements BookingService {
         String today = simpleDateFormat.format(calendar.getTime());
         System.out.println("Today : " + today);
         Search search = new Search();
-        search.setSearchCondition("3");
+        search.setSearchCondition("3"); //이제 필요없음
         search.setSearchKeyword(today);
         
-	    List<Movie> todayMovieList = movieDAO.uniMovieList(search);
+	    List<Movie> todayMovieList = movieDAO.screenMovieList(search);
 	    System.out.println("todayMovieList : "+todayMovieList);
 
 		return todayMovieList;
@@ -125,7 +125,7 @@ public class BookingServiceImpl implements BookingService {
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
-		String urlStr = "http://localhost:52273/deleteResv";
+		String urlStr = "http://183.98.215.171:52273/deleteResv";
 		String body = "screenNo="+booking.getScreenContentNo()+"&seat="+booking.getBookingNo();
 		try {
 			int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
@@ -193,7 +193,7 @@ public class BookingServiceImpl implements BookingService {
 
 
 	@Override
-	public List<Booking> getBookingList(Search search) {
+	public Map<String,Object> getBookingList(Search search) {
 		return bookingDAO.getBookingList(search);
 	}
 	

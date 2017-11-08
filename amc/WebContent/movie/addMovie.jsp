@@ -41,11 +41,11 @@
 
       <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
+       <!--  <meta content="telephone=no" name="format-detection"> -->
     
     <!-- Fonts -->
         <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+       <!--  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
   <!--       Roboto
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'> -->
         <!-- Open Sans -->
@@ -56,15 +56,15 @@
         <!-- Mobile menu -->
         <link href="/css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+       <!--  <link href="/css/external/jquery.selectbox.css" rel="stylesheet" /> -->
 
         <!-- Slider Revolution CSS Files -->
-        <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+        <!--  <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
         <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
-        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
+        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css"> -->
     
         <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
+        <link href="/css/jqGridStyle.css?v=1" rel="stylesheet" />
 
 
         <!-- Modernizr --> 
@@ -87,12 +87,12 @@
         <!-- Mobile menu -->
         <script src="/js/jquery.mobile.menu.js"></script>
         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- <script src="/js/external/jquery.selectbox-0.2.min.js"></script> -->
         <!-- Stars rate -->
-        <script src="/js/external/jquery.raty.js"></script>
+        <!-- <script src="/js/external/jquery.raty.js"></script> -->
         
         <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
+        <!--  <script src="/js/external/form-element.js"></script> -->
         <!-- Form validation -->
         <!-- <script src="/js/form.js"></script> -->
    		<!--이거주석처리안하면 로그인 안됨 -->
@@ -108,16 +108,6 @@
  </head>
  
 <body>
-
-
-
-
-
-
-
-
-
-
 
 
 <div class="wrapper">
@@ -265,6 +255,8 @@
 			<form id="uploadForm" method="POST">  
 			
 				<table id="movie_list"></table>    
+				<br/>
+		
 			    <div id="pager777" class="scroll" style="text-align:center"></div>
 			    <div id="load_time" class="scroll" style="text-align:center"></div>
 			 
@@ -273,15 +265,11 @@
  
                 
         </div>
+  
         
         <jsp:include page="/layout/bottomToolbar.jsp" />
         
-        
-        
-        
-        
-        
-        
+         
           <div class="overlay overlay-hugeinc">
             
             <section class="container">
@@ -318,25 +306,8 @@
             </section>
         </div>
         
-        
-        
-        
-        
-		
+  		
     </div>
-
-   
-
-
-
-
-
-
-
-
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -346,11 +317,6 @@
        
  <script type="text/javascript">
 
- 
- 
- 
- 
- 
  
 	//============= "로그인"  Event 연결 =============
 	$( function() {
@@ -418,100 +384,8 @@
 	});	
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-        $(document).ready(function(){
+         $(document).ready(function(){
          	
-        	
-        	function delButton (cellvalue, options, rowObject) {
-        		   return '<input type="button" onclick="delete('+cellvalue+')" value="DEL"/>'; 
-        	 };
-        	 
-        	 
-        	function UploadImage(response, postdata) {
-        		
-
-        		    var data = $.parseJSON(response.responseText);
-
-        		    console.log("UploadImage called");
-        		    if (data.success == true) {
-        		        if ($("#file").val() != "") {
-        		            ajaxFileUpload(data.id);
-        		        }
-        		    }  
-
-        		    return [data.success, data.message, data.id];
-
-        	}
-        	
-        	
-        	function Result_From_Server(resp, postdata)
-			{
-        		
-        		alert("Update is succefully");
-				// you should return from server OK in sucess, any other message on error
-				if(resp.responseText == "OK")
-				{
-					console.log("test");
-				alert("Update is succefully")
-				return [true,"",""]
-				}
-				else {
-					console.log("test2");
-				alert("Update failed")
-				return [true,"",""]
-				}
-			}
-        	
-        	
-	   
-        	function ajaxFileUpload(id) 	{
-        	
-        	 console.log("ajaxFileUpload called");
-        	
-        		    $("#loading")
-        		    .ajaxStart(function () {
-        		        $(this).show();
-        		    })
-        		    .ajaxComplete(function () {
-        		        $(this).hide();
-        		    });
-
-        		    $.ajaxFileUpload
-        		    (
-        		        {
-        		            url: '@Url.Action("UploadImage")',
-        		            secureuri: false,
-        		            fileElementId: 'file',
-        		            dataType: 'json',
-        		            data: { id: id },
-        		            success: function (data, status) {
-
-        		                if (typeof (data.success) != 'undefined') {
-        		                    if (data.success == true) {
-        		                        return;
-        		                    } else {
-        		                        alert(data.message);
-        		                    }
-        		                }
-        		                else {
-        		                    return alert('Failed to upload logo!');
-        		                }
-        		            },
-        		            error: function (data, status, e) {
-        		                return alert('Failed to upload logo!');
-        		            }
-        		        }
-        		    )          }     
-        	 
-        	
         	function setClickRowColor(gridNm, rowId){
 	    	    var ids = $('#'+gridNm).getDataIDs();
 
@@ -566,8 +440,7 @@
                 return '';
             };
         
-                   
-        
+      
          $("#movie_list").jqGrid( 
         		{         			
         
@@ -583,15 +456,19 @@
                 height:"auto",
                
                 // 컬럼명
-                colNames:['영화CD','영화명','제작국가','상영마감','줄거리','트레일러'],
+                //  colNames:['영화CD','영화명','제작국가','상영마감','줄거리','트레일러'], 
+                colNames:['영화CD','영화명','제작국가','개봉날짜','줄거리','트레일러'],
                 // 컬럼 데이터(추가, 삭제, 수정이 가능하게 하려면 autoincrement컬럼을 제외한 모든 컬럼을 editable:true로 지정)
                 // edittyped은 text, password, ... input type명을 사용
                      
                 colModel:[
                           {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},
                           {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},                       
-   	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},              
-                          {name:'movieEndDate', index:'movieEndDate',align:"left",                         	    
+   	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},  
+   	                  	  {name:'openDt', index:'openDt',align:"left", width:90,sortable:true, editable:true},  
+	                      
+   	                      
+                          /* {name:'movieEndDate', index:'movieEndDate',align:"left",                         	    
                         	      editable:true, editoptions:{size:10, 
                                   dataInit:function(el){ 
                                         $(el).datepicker({dateFormat:'yy-mm-dd'}); 
@@ -605,8 +482,8 @@
                                     var year = currentTime.getFullYear(); 
                                     return year+"-"+month + "-"+day; 
                                   } 
-                                }                	     
-                          },                   
+                                }                	      
+                          }, */                   
                           
                           //{name:'postUrl', index:'postUrl', width:60, align:'center',
                           // formatter:formatImage},                        	 
@@ -624,7 +501,7 @@
          	  // 네비게이션 도구를 보여줄 div요소
                 hidegrid : true,                        // grid 전체를 접는 오른쪽 상단 아이콘 disable
             	beforeSelectRow : function(invid) {                // 선택한 로우 색상 변경
-                  setClickRowColor('movie_list', invid);
+                setClickRowColor('movie_list', invid);
                     return true;
                }, 
                
@@ -675,41 +552,12 @@
 
         		});
          
-        
-  
-         
-	  // 네비게시션 도구 설정
-	  
-	 /*  $("#movie_list").jqGrid(
-	         		"navGrid",
-	                "#pager777",
-	                
-	                
-	                {search:true, edit:true, add:true, del:true},
-	               	    
-	                
-	                {   //EDIT
-	                	
-	               	    reloadAfterSubmit: true,
-	                	closeAfterAdd: true,
-	                	closeAfterEdit: true, reloadAfterSubmit: true,
-	                    closeOnEscape: true,//Closes the popup on pressing escape key
-	                    closeAfterEdit: true,
-	                    afterSubmit: function (response, postdata) {
-	                    	//alert("성공적으로 입력되었습니다.");
-	                    	alert('After Submit \n' +'statusText: '+ response.statusText);
-	                    }
-	                 }
-	              
-			  );
-		  }) 
-		   */
-  	    
+    	    
 	      // 네비게시션 도구 설정
 	  $("#movie_list").jqGrid(
 	         		"navGrid",
 	                "#pager777",
-	                 
+
 	                {search:true, edit:true, add:true, del:true},
 	                
 	                {   //EDIT
@@ -730,36 +578,13 @@
 	                 
 	                
 	                 }
-	              
+	                
+            
 			  );
 		  }) 
-		  
-		 
+		
+
     </script>
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

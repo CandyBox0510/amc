@@ -59,23 +59,8 @@
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
         
-        <!-- Search bar -->
-        <div class="search-wrapper">
-            <div class="container container--add">
-                <form id='search-form' method='get' class="search">
-                    <input type="text" class="search__field" placeholder="Search">
-                    <select name="sorting_item" id="search-sort" class="search__sort" tabindex="0">
-                        <option value="1" selected='selected'>By title</option>
-                        <option value="2">By year</option>
-                        <option value="3">By producer</option>
-                        <option value="4">By title</option>
-                        <option value="5">By year</option>
-                    </select>
-                    <button type='submit' class="btn btn-md btn--danger search__button">search a movie</button>
-                </form>
-            </div>
-        </div>
-        
+
+        <br><br>
         <!-- Main content -->
         <div class="place-form-area">
         <section class="container">
@@ -115,7 +100,7 @@
                             <div class="ticket-primery">
                                 <span class="ticket__item ticket__item--primery ticket__film">Film<br><strong class="ticket__movie">${booking.movie.movieNm} ${booking.screenContent.previewTitle}</strong></span>
                                 <span class="ticket__item ticket__item--primery" style="vertical-align:middle">
-                                	Sits: <span  align='center left'  class="ticket__place">${displaySeat} AA</span>
+                                	Sits: <span  align='center left'  class="ticket__place">${displaySeat}</span>
                                 	<iframe style='width:50%; height:100%'  frameborder='0' align='right' 
                                 	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=abc"></iframe>
 								</span>
@@ -518,6 +503,9 @@
                 } 
             });
     		</script>
+    		
+    		<!-- Custom -->
+        	<script src="/js/custom.js"></script>
 		    
 
     		

@@ -17,7 +17,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 		
     
-        <title>Feature detection test for the Speech Recognition JavaScript API</title>
+        <title>영화음성검색</title>
         <style>
             .no-js .content,
             .feature .no,
@@ -60,10 +60,6 @@
         function fncWebSpeech() {
     		// document.addPurchase.submit();
     		$("form").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
-    		
-    		
-    		search.searchCondition=1 
-    		search.searchKeyword=$("#voidSearchOk").val(speechTranscript.value);
     	}
     	
     	$(function() {
@@ -120,7 +116,6 @@
     <div class="content" >
         <h3 class="yes">영화 음성 검색 중....</h3>
         <h3 class="no">인터넷 익스플로우는 지원되지 않는 Browser 입니다.</h3>
-    
     </div>  
       
 <form id="webspeech"  method="POST">  
@@ -160,8 +155,9 @@
     
    </div>
     
- </div>
+  </div>
  </form>
+
 <script>
     
     var speech_text ="";   

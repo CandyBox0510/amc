@@ -13,7 +13,7 @@ import com.amc.common.Search;
 import com.amc.service.domain.Product;
 import com.amc.service.product.ProductDAO;
 
-@Repository("productDAO")
+@Repository("productDAOImpl")
 public class ProductDAOImpl implements ProductDAO{
 
 	@Autowired

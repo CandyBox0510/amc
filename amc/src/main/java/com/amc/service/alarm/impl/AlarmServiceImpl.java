@@ -19,12 +19,16 @@ import com.amc.common.Search;
 import com.amc.common.util.RestApiUtil;
 import com.amc.service.alarm.AlarmDAO;
 import com.amc.service.alarm.AlarmService;
+import com.amc.service.booking.BookingDAO;
+import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Alarm;
+import com.amc.service.domain.Booking;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.movie.MovieDAO;
 import com.amc.service.screen.ScreenDAO;
+import com.amc.service.user.UserDAO;
 
 @Service("alarmServiceImpl")
 public class AlarmServiceImpl implements AlarmService {
@@ -40,6 +44,14 @@ public class AlarmServiceImpl implements AlarmService {
 	@Autowired
 	@Qualifier("movieDAOImpl")
 	MovieDAO movieDAO;
+	
+	@Autowired
+	@Qualifier("bookingDAOImpl")
+	BookingDAO bookingDAO;
+	
+	@Autowired
+	@Qualifier("userDAOImpl")
+	UserDAO userDAO;
 
 	@Autowired
 	@Qualifier("cinemaServiceImpl")
@@ -68,19 +80,6 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public String addCancelAlarm(Alarm alarm) {
 
-		/*alarm.setAlarmSeatNo("1,2,3,4,10,20");
-		test용
-		///////test User와 screenContentNo//////
-		User user = new User();
-		ScreenContent sc = new ScreenContent();
-		user.setUserId("b@b.b");
-		sc.setScreenContentNo(10260);
-		alarm.setUser(user);
-		alarm.setScreenContent(sc);
-		alarm.setAlarmFlag("C");
-		////////////////////////////////////////
-		*/
-		
 		//요청한 좌석 리스트
 		List<String> requestSeatList = new ArrayList<String>();
 		//중복된 좌석 리스트
@@ -170,9 +169,16 @@ public class AlarmServiceImpl implements AlarmService {
 
 	}
 
+	@Override
+	public int deleteAlarm(Alarm alarm) {
+		return alarmDAO.deleteAlarm(alarm);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public String smsPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception {
+		
+		System.out.println("SMSPUSH 준비작업 // ■type="+type+" ■serialNo="+serialNo+" ■userId="+userId+" ■alarmSeatNo="+alarmSeatNo);
 
 		RestApiUtil restApiUtil = new RestApiUtil(
 				"https://api-sens.ncloud.com/v1/sms/services/" + naverServiceId + "/messages", "POST");
@@ -196,7 +202,8 @@ public class AlarmServiceImpl implements AlarmService {
 		// userId가 있다 = 한사람에게 보낸다 <-----> userId가 없다 한사람or여러사람에게 보낸다
 		if (!userId.equals("")) {
 			System.out.println("AlarmServiceImpl :: userId 는 Not Null");
-			body.put("to", userId);
+			User user = userDAO.getUser(userId);
+			body.put("to", user.getPhone1()+user.getPhone2()+user.getPhone3());
 		} else {
 			System.out.println("AlarmServiceImpl :: userId 는 Null");
 			List<String> list = new ArrayList<>(); 
@@ -254,11 +261,16 @@ public class AlarmServiceImpl implements AlarmService {
 	@Override
 	public String appPush(String type, String serialNo, String userId, String alarmSeatNo) throws Exception {
 		
+		System.out.println("APPPUSH 준비작업 // ■type="+type+" ■serialNo="+serialNo+" ■userId="+userId+" ■alarmSeatNo="+alarmSeatNo);
+		
 		RestApiUtil restApiUtil = new RestApiUtil("https://kapi.kakao.com/v1/push/send", "POST");
 		
 		//kakao push 헤더 설정
 		if(header != null){
 			header.clear();
+		}
+		if(body != null){
+			body.clear();
 		}
 		header.put("Host", "kapi.kakao.com");
 		header.put("Authorization", kakaoAK);
@@ -266,7 +278,8 @@ public class AlarmServiceImpl implements AlarmService {
 		// userId가 있다 = 한사람에게 보낸다 <-----> userId가 없다 한사람or여러사람에게 보낸다
 		if (!userId.equals("")) {
 			System.out.println("AlarmServiceImpl :: userId 는 Not Null");
-			body.put("to", userId);
+			User user = userDAO.getUser(userId);
+			body.put("to", user.getUuId());
 		} else {
 			System.out.println("AlarmServiceImpl :: userId 는 Null");
 			List<String> list = new ArrayList<>(); 
@@ -281,13 +294,16 @@ public class AlarmServiceImpl implements AlarmService {
 			body.put("uuids", list);
 		}
 		
-		String message = this.pushValue(type, serialNo, alarmSeatNo).get("content");
+		String message = this.pushValue(type, serialNo, alarmSeatNo).get("appContent");
+		String subject = this.pushValue(type, serialNo, alarmSeatNo).get("subject");
 		
-		String messageForm = "{\"for_gcm\":{\"custom_field\":{\"message\":\""+message+"\"}}}";
+		String messageForm = "{\"for_gcm\":{\"custom_field\":{\"message\":\""+message+"\",\"subject\":\""+subject+"\"}}}";
 		
-		System.out.println("appPush messageForm"+messageForm);
+		System.out.println("appPush messageForm<<<<<<<<"+messageForm+">>>>>>>");
 		
 		body.put("push_message", messageForm);
+		
+		System.out.println(body);
 		
 		String response = restApiUtil.restApiResponse(header, body);
 		
@@ -328,6 +344,10 @@ public class AlarmServiceImpl implements AlarmService {
 			userList.put("phone", phone);
 			userList.put("uuid", uuid);
 			break;
+			
+		case "userCertification":
+			userList.put("phone", alarmSeatNo);
+			break;
 
 		default:
 			break;
@@ -340,31 +360,55 @@ public class AlarmServiceImpl implements AlarmService {
 		Map<String, String> pushValue = new HashMap<String, String>();
 		Search search = new Search();
 		search.setSearchKeyword(serialNo);
-		ScreenContent sc;
+		ScreenContent screenContent;
+		Booking booking;
 		
 		switch (type) {
 		case "booking":
-
+				booking = bookingDAO.getBooking(serialNo);
+				pushValue.put("subject", "예매 완료!");
+				if(booking.getScreenContent().getPreviewFlag().equals("Y")){
+					pushValue.put("content", "[예매 확인]\n"+
+							"예매번호 : "+booking.getBookingNo()+
+							"\n시사회명 : "+booking.getScreenContent().getPreviewTitle()+
+							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
+							"\n좌석 : "+booking.getBookingSeatNo()+ 
+							"\n예매가 완료되었습니다.");
+				}else{
+					pushValue.put("content", "[예매 확인]\n"+
+							"예매번호 : "+booking.getBookingNo()+
+							"\n영화명 : "+booking.getScreenContent().getPreviewTitle()+
+							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
+							"\n좌석 : "+booking.getBookingSeatNo()+ 
+							"\n예매가 완료되었습니다.");
+				}
 			break;
-		case "purchase":
-
-			break;
+			
 		case "openAlarm":
-			sc = screenDAO.getScreenContent(Integer.parseInt(serialNo));
+			screenContent = screenDAO.getScreenContent(Integer.parseInt(serialNo));
 			pushValue.put("subject", "티켓 오픈 알림!");
-			pushValue.put("content", "[티켓 오픈 알림]\n"+sc.getPreviewTitle()+"\n 30분 후 티켓 오픈!");
+			pushValue.put("content", "[티켓 오픈 알림]\n"+screenContent.getPreviewTitle()+"\n 30분 후 티켓 오픈!");
+			pushValue.put("appContent", "[티켓 오픈 알림]"+screenContent.getPreviewTitle()+" , 30분 후 티켓 오픈!");
 			break;
+			
 		case "cancelAlarm":
 			String title = "";
-			sc = screenDAO.getScreenContent(Integer.parseInt(serialNo));
-			if(sc.getPreviewFlag().equals("Y")){
-				title = sc.getPreviewTitle();
+			screenContent = screenDAO.getScreenContent(Integer.parseInt(serialNo));
+			if(screenContent.getPreviewFlag().equals("Y")){
+				title = screenContent.getPreviewTitle();
 			}else{
-				title = movieDAO.getMovie(sc.getMovie().getMovieNo()).getMovieNm();
+				title = movieDAO.getMovie(screenContent.getMovie().getMovieNo()).getMovieNm();
 			}
 			pushValue.put("subject", "티켓 취소 알림!");
-			pushValue.put("content", "[티켓 취소 알림]\n영화 : "+title+"\n좌석 :"+alarmSeatNo+" 취소되었습니다!");
+			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+alarmSeatNo+" 취소되었습니다!");
+			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+alarmSeatNo+" 취소되었습니다!");
 			break;
+			
+		case "userCertification":
+			pushValue.put("subject", "회원 인증 번호!");
+			pushValue.put("content", "[회원 가입 인증]\n번호 : "+serialNo+" 를 입력해주세요!");
+			break;
+			
 
 		default:
 			break;

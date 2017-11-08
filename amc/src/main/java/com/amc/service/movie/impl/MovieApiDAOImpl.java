@@ -188,12 +188,6 @@ public class MovieApiDAOImpl implements MovieDAO {
 	}
 
 	@Override
-	public int deleteWish(int moiveNo, String userId) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public List<Movie> getChart(int movieNo) {
 		// TODO Auto-generated method stub
 		return null;
@@ -265,6 +259,12 @@ public class MovieApiDAOImpl implements MovieDAO {
 		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
 		tempMap.put("list", sqlSession.selectList("WishListMapper.getWishList",map));
 		return tempMap;
+	}
+
+	@Override
+	public List<Movie> screenMovieList(Search search) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

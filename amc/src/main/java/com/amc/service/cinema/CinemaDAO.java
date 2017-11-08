@@ -10,5 +10,5 @@ public interface CinemaDAO {
 	public Map<String, Object> unifiedSearch(String searchKeyword);
 	
 	public Map<String, Object> index();
-	
+		
 }

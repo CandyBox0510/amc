@@ -43,6 +43,8 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
+   		<!-- hanna font -->
+      <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
     
   
   <script type="text/javascript">
@@ -88,6 +90,10 @@
             <!-- 영화 통합검색  시작-->
             <div class="order-step-area">
                 <div class="order-step second--step">영화</div>
+                <div class="row">
+                	<p/>
+                	<p/>
+                </div>
             </div>
             <div class="col-sm-12">
                 <div class="row">
@@ -95,7 +101,7 @@
 	                <c:set var="i" value="0" />
 					  <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3">
+						<div class="col-sm-4 col-md-3 mm">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search">
 	                                <img alt='' src="${movie.postUrl}" align="middle" width="230px" height="230px">
@@ -117,18 +123,24 @@
             <div class="order-step-area">
                 <div class="order-step second--step">시사회</div>
             </div>
+                <div class="row">
+                	<p/>
+                	<p/>
+                </div>
             <div class="col-sm-12">
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                <c:set var="i" value="0" />
 					  <c:forEach var="screenContent" items="${unifiedSearch.uniPreviewList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3">
+						<div class="col-sm-4 col-md-3 pp">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
 	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="230px" height="230px">
 	                            </a>
-	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }</div>
+	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }
+	                            	<span class="label label-danger"></span>
+	                            </div>
 	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
 	                                <p class="gallery-item__name">${screenContent.previewTitle }</p>
@@ -146,13 +158,17 @@
             <div class="order-step-area">
                 <div class="order-step third--step">굿즈</div>
             </div>
+	            <div class="row">
+	              	<p/>
+	              	<p/>
+	            </div>
             <div class="col-sm-12">
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                <c:set var="i" value="0" />
 					  <c:forEach var="goods" items="${unifiedSearch.uniGoodsList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3">
+						<div class="col-sm-4 col-md-3 gg">
 	                        <div class="gallery-item">
 	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}">
 	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="230px" height="230px">
@@ -174,13 +190,17 @@
             <div class="order-step-area">
                 <div class="order-step first--step">스낵바</div>
             </div>
+           		<div class="row">
+	              	<p/>
+	              	<p/>
+	            </div>
             <div class="col-sm-12">
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                <c:set var="i" value="0" />
 					  <c:forEach var="snack" items="${unifiedSearch.uniSnackList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3">
+						<div class="col-sm-4 col-md-3 ss">
 	                        <div class="gallery-item">
 	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}">
 	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="230px" height="230px">
@@ -215,58 +235,16 @@
       </form>
                 
        </div>
-               <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Cities</a></li>
-                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
-                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
-                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
-                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
-                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
-                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
-                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
-                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
-                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
-
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                            <a href='#' class="social__variant fa fa-twitter"></a>
-                            <a href='#' class="social__variant fa fa-vk"></a>
-                            <a href='#' class="social__variant fa fa-instagram"></a>
-                            <a href='#' class="social__variant fa fa-tumblr"></a>
-                            <a href='#' class="social__variant fa fa-pinterest"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
-                    </div>
-                </div>
-            </section>
-        </footer>           
+        
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />        
      </div>
   
 
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -305,5 +283,78 @@
       html{
  	     height: auto;
       }
+      .gallery-item .gallery-item--goods-link:before {
+		  background-color: #4c4145;
+	  }
+	  .mm{
+      	/* background-color: #EDEDED; */
+      	background-color: #ffbfbf;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #ff9696; 
+      }
+      .pp {
+      	/* background-color: #EDEDED; */
+      	background-color: #ffbfbf;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #ff9696; 
+      }
+      .gg{
+      	/* background-color: #EDEDED; */
+      	background-color: #b7b7b7;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #606060; 
+      }
+      .ss{
+      	/* background-color: #EDEDED; */
+      	background-color: #f9ed98;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #fce86a; 
+      }
+      
+            .hanna{ 
+	  font-family: 'Hanna', sans-serif; 
+	  font-size: 120%;
+	   line-height:4.3em
+	 }
  </style>
 </html>

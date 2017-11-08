@@ -36,12 +36,12 @@ import com.amc.service.user.UserService;
 import com.amc.service.user.UserDAO;
 
 //==> 회원관리 서비스 구현
-@Service("userService")
+@Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 	
 	///Field
 	@Autowired
-	@Qualifier("userDAO")
+	@Qualifier("userDAOImpl")
 	private UserDAO userDAO;
 	
 	// org.springframework.mail.javamail.JavaMailSender

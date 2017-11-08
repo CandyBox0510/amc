@@ -32,7 +32,7 @@ import com.amc.service.domain.User;
 public class ProductController {
 
 	@Autowired
-	@Qualifier("productService")
+	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
