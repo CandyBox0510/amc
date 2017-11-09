@@ -14,12 +14,18 @@
     
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  		
+  		<!--   Sweetalert2 CDN  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+  		
+  		<!--   semantic UI  -->
+		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="../semantic/semantic.min.js"></script>
 	
-		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-  
-      
+		    
       <!-- hanna font -->
       <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   

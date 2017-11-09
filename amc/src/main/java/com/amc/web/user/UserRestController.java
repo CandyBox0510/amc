@@ -164,7 +164,11 @@ public class UserRestController {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
-		return objectMapper.writeValueAsString(dbUser);
+		String temp = objectMapper.writeValueAsString(dbUser);
+		
+		jsonString = URLEncoder.encode(temp,"UTF-8");
+		
+		return jsonString;
 
 	}
 	
