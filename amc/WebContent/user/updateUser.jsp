@@ -299,7 +299,7 @@
 	  -moz-border-radius: 3px;
 	  border-radius: 3px;
 	  font-size: 13px;
-	  color: #b4b1b2;
+	  color: #000000;
 	  padding: 9px 18px 10px !important;
 	  position: relative;
 	}
@@ -315,7 +315,7 @@
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	font-size: 13px;
-	color: #b4b1b2;
+	color: #000000;
 	padding: 9px 18px 10px !important;
 	}
 

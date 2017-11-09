@@ -227,12 +227,10 @@
 			
 			$("#userId").focus();
 			
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#login").on("click" , function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)	
+			$("#login").on("click" , function() { 
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
-				
-				alert(id);
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
@@ -245,52 +243,92 @@
 					$("#password").focus();
 					return;
 				}
-				
-				$.ajax( 
-						{	
-							url : "/user/json/loginUser",
-							method : "POST" ,
-							async : false,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							data : JSON.stringify({
-								userId : id,
-								password : pw
-							}),
-							success : function(JSONData , status) {
-
-								//Debug...
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert("JSONData : "+ JSONData );
-								//alert("status : "+ status );
-									//alert(JSONData.role);
-									console.log(JSONData.userId);
-									
-									if( JSONData.role == 'not' ){
-										alert("탈퇴한회원입니다.");
-									}else if( JSONData !='' ){
-									//$(window.parent.document.location).attr("href","/index.jsp");
-									/* $(self.location).attr("href","/index.jsp"); */ 
-									window.parent.document.location.reload();
-									
-									}else{
-										alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요.");
-									}
-								},
-							error:function(request,status,error){
-								//alert(error);
-								//alert("아이디 , 패스워드를 확인하시고 다시 로그인2...");
-						    }
-					}); 
-				
+				$.ajax({	
+					url : "/user/json/loginUser",
+					method : "POST" ,
+					async : false,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						userId : id,
+						password : pw
+					}),
+					success : function(JSONData , status) {
+						console.log(JSONData.userId);
+						if( JSONData.role == 'not' ){
+							alert("탈퇴한회원입니다.");
+						}else if( JSONData.userId ==null || JSONData=='' ){
+							alert(JSONData+"아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+						}else{
+							window.parent.document.location.reload();
+						}
+					},
+					error:function(request,status,error){
+						//alert(error);
+				    }
+				}); 
 			});
-		});	
-
-    	
+		 });	 
+		 
+		
+		function loginUser() { 	
+			alert($("#userId").val());
+			console.log($("#userId").val());
+			var id=$("#userId").val();
+			var pw=$("input:password").val();
+			
+			if(id == null || id.length <1) {
+				alert("자바스크립트 제목으로 만든 이벤트");
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("#userId").focus();
+				return;
+			}
+			
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#password").focus();
+				return;
+			}
+			
+			$.ajax({	
+				url : "/user/json/loginUser",
+				method : "POST" ,
+				async : false,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					userId : id,
+					password : pw
+				}),
+				success : function(JSONData , status) {
+					//Debug...
+					//alert(status);
+					//alert("JSONData : \n"+JSONData);
+					//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+					//alert("JSONData : "+ JSONData );
+					//alert("status : "+ status );
+						//alert(JSONData.role);
+						console.log(JSONData.userId);
+						
+						if( JSONData.role == 'not' ){
+							alert("탈퇴한회원입니다.");
+						}else if( JSONData.userId ==null || JSONData=='' ){
+						//$(window.parent.document.location).attr("href","/index.jsp");
+						//$(self.location).attr("href","/index.jsp");  
+							alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+						}else{
+							window.parent.document.location.reload();
+						}
+					},
+				error:function(request,status,error){
+					//alert(error);
+			    }
+			}); 
+		 } 
 		//============= 카카오 로그인 =============
 		function loginWithKakao() {
 			alert("일로는 들어와?");

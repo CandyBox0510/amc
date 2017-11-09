@@ -122,10 +122,10 @@
 								<dd>${product.prodSetInfo}</dd>
 							</dl>
 							<div class="btn-group" role="group">
+								<a href="#" class="btn btn-success" role="button">구매하러가기</a> 
+							<%--  <c:if test="${param.menu=='search' && !empty user}">
 								<a href="#" class="btn btn-success" role="button">구매하러가기</a>
-							<%-- <c:if test="${param.menu=='search' && !empty user}">
-								<a href="#" class="btn btn-success" role="button">구매하러가기</a>
-							</c:if> --%>
+							</c:if> --%> 
 								<a href="#" class="btn btn-default" role="button">목록으로</a>
 							</div>
 						</div>
@@ -166,47 +166,6 @@
 	<script type="text/javascript">
 	
 		$(function(){
-			
-/* 			$('a.add:contains("확인")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=manage';
-			});
-			
-			$('a.add:contains("추가등록")').bind('click',function(){
-				self.location.href = 'addProduct';
-			}); */
-			
-			$('a.btn-default:contains("목록으로")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=${param.menu}'+'&searchKeyword=G';
-			});
-
- 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
- 				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
- 				
-				/* if("${param.menu=='search' && !empty user}"){
-					
-					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-										
-				}else{
-					alert("여기들어옴2");
-						
-				} */
-				
-			});
- 
-		});
-
-	</script>
-
-</head>
-
-
-
-	<script type="text/javascript">
-	
-		$(function(){
-			
-			
-			
 /* 			$('a.add:contains("확인")').bind('click',function(){
 				self.location.href = 'getGoodsList?menu=manage';
 			});
@@ -220,20 +179,12 @@
 			});
 
 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
-				
-				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-				
-				/* if("${param.menu=='search' && !empty user}"){
-					
-					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-										
+				if( ${empty sessionScope.user.userId} ){
+				    $('.overlay').removeClass('close').addClass('open');
 				}else{
-					alert("여기들어옴2");
-					 $('#login').onclick 
-				} */
-				
+					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+				} 
 			});
-
 		});
 
 	</script>
@@ -260,7 +211,10 @@
 		  display: block;
 		  margin-bottom: 5px;
 		  margin-top: 5px;
-	} 
+	}
+		html{
+	        height: auto;
+	  	}  
 </style>
 
 </html>

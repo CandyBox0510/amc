@@ -72,10 +72,8 @@
    		</header>
 
 		<div class="container" id="body">
-			<div class="page-header col-sm-offset-2 col-sm-10">
-				<h1>상품 구매</h1>
-			</div>
-			<form class="add-product form-horizontal">
+			 <h2 class="page-heading"> 상품 구매</h2>
+			<form class="form row" id="purchase">
 				<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo }" />
 				<input type="hidden" name="purchaseProd.prodName" value="${product.prodName }"/>
 				<input type="hidden" name="buyer.userId" value="${user.userId }"/>
@@ -139,9 +137,8 @@
 										<option value="1">카카오페이</option>								
 									</select>
 								</div>
-								<span class="col-sm-6"></span>
 							</div>
-							<br/>
+							
 							
 							<div class="row">
 								<label for="inputPurchaseCount" class="col-sm-3 control-label">구매수량</label>
@@ -152,75 +149,72 @@
 										</c:forEach>
 									</select>							
 								</div>
-								<span class="col-sm-6"></span>
 							</div>
-							<br/>
+							
 							
 							<div class="row">
 								<label for="inputReceiverName" class="col-sm-3 control-label">받는사람</label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control" id="inputReceiverName" name="receiverName" value="${user.userName}">
+									<input type="text" class="form__name" id="inputReceiverName" name="receiverName" value="${user.userName}">
 								</div>
-								<span class="col-sm-6"></span>
 							</div>
-							<br/>
 							
-							<div class="form-group">
-								<label for="phone" class=" col-sm-3 control-label">받는 분 연락처</label>
-							    <div class="col-sm-2">
-							    	<select class="form-control" name="receiverPhone1" id="receiverPhone1" value="${user.phone1}">
-										<option value="010" >010</option>
-										<option value="011" >011</option>
-										<option value="016" >016</option>
-										<option value="018" >018</option>
-										<option value="019" >019</option>
-									</select>
-							     </div>
-						   
-							     <div class="col-sm-2">
-							     	<input type="text" class="form-control" id="receiverPhone2" name="receiverPhone2" placeholder="번호" value="${user.phone2}">
-							     </div>
-							    
-							     <div class="col-sm-2">
-							     	<input type="text" class="form-control" id="receiverPhone3" name="receiverPhone3" placeholder="번호" value="${user.phone3}">
-							     </div>	
-						    	 <span class="col-sm-6"></span>			    	
-						 	 </div>
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">배송지</label>
 							 	<div class="col-sm-3">
-									<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvy" value="${user.addr}" >
+									<input type="text" class="form__name" id="inputDlvyAddr" name="addrDlvy" value="${user.addr}" >
 								</div>
-								<span class="col-sm-6"></span>
 							 </div>
-							 <br/>
+							
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">상세주소</label>
 							 	<div class="col-sm-3">
-							 		<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvyDetail" value="${user.addrDetail}" >
+							 		<input type="text" class="form__name" id="inputDlvyAddr" name="addrDlvyDetail" value="${user.addrDetail}" >
 							 	</div>
 							 	<span class="col-sm-6"></span>
 							 </div>
-							 <br/>
+							
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">총 구매 가격</label>
 							 	<div class="col-sm-3">
-							 		<input type="text" class="form-control" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
+							 		<input type="text" class="form__name" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
 							 		<input type=hidden name="prodPrice" value="${product.prodPrice}"> 
 							 	</div>
 							 	<span class="col-sm-6"></span>
 							 </div>
-							 <br/>
+							
+							<div class="row">
+								<div class="col-sm-12">
+								<label for="phone" class="col-sm-3 control-label">받는 분 연락처</label>
+							    <div class="col-sm-2">
+							    	<select class="search-sort" name="receiverPhone1" id="receiverPhone1" value="${user.phone1}">
+									  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
+										<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
+										<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
+										<option value="018" ${ ! empty user.phone1 && user.phone1 == "018" ? "selected" : ""  } >018</option>
+										<option value="019" ${ ! empty user.phone1 && user.phone1 == "019" ? "selected" : ""  } >019</option>
+									</select>
+							     </div>
+						   
+							     <div class="col-sm-2">
+							     	<input type="text" class="form__name" id="receiverPhone2" name="receiverPhone2" placeholder="번호" value="${user.phone2}">
+							     </div>
+							    
+							     <div class="col-sm-2">
+							     	<input type="text" class="form__name" id="receiverPhone3" name="receiverPhone3" placeholder="번호" value="${user.phone3}">
+							     </div>	
+							     </div>
+						 	 </div>
 							 
 							 <div class="row">
 							 	<div class="add-purchase col-sm-offset-3 col-sm-9">
-									<button type="button" class="btn btn-success">
+									<button type="button" class="btn btn-md btn--purchase">
 										구매
 									</button>
-									<button type="button" class="btn btn-info">
+									<button type="button" class="btn btn-md btn--info">
 										취소
 									</button>
 								</div>
@@ -364,24 +358,18 @@
 	}
 
 	function addPurchase(){
-		
-		$('form').attr('method','post').attr('action','addPurchase').submit();
-		
+		$('#purchase').attr('method','post').attr('action','addPurchase').submit();
 	}
 
 	
 		$(function(){
 			
-/* 			$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
-				kakaoPay();
-			}); */
-			
-		 	$('.add-purchase .btn-success:contains("구매")').bind('click',function(){
-				/* $('form').attr('method','post').attr('action','addPurchase').submit(); */
-				kakaoPay();
+		 	$('.row .btn--purchase:contains("구매")').bind('click',function(){
+				$('#purchase').attr('method','post').attr('action','addPurchase').submit(); 
+				//kakaoPay();
 			}); 
 			
-			$('.add-purchase .btn-info:contains("취소")').bind('click',function(){
+			$('.row .btn--info:contains("취소")').bind('click',function(){
 				history.go(-1);
 			});
 			
@@ -410,6 +398,68 @@
 	        height: auto;
 	  	} 
 		 
+		 	input, select {
+	margin-bottom: 10px;
+	margin-right: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 10px 10px !important;
+	}
+	
+		.form .form__name {
+	  margin-bottom: 10px;
+	  width: 100%;
+	  border: none;
+	  box-shadow: none;
+	  border: 1px solid #dbdee1;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  font-size: 13px;
+	  color: #000000;
+	  padding: 9px 10px 10px;
+	  position: relative;
+	}
+	
+		.btn {
+	  display: inline-block;
+	  margin-bottom: 0;
+	  font-weight: normal;
+	  text-align: center;
+	  vertical-align: middle;
+	  touch-action: manipulation;
+	  cursor: pointer;
+	  background-image: none;
+	  border: 1px solid transparent;
+	  white-space: nowrap;
+	  padding: 6px 12px;
+	  font-size: 14px;
+	  line-height: 1.42857143;
+	  border-radius: 4px;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}	
+	.btn-info {
+	  color: #ffffff;
+	  background-color: #1B516E;
+	  border-color: #3A199C;
+	}
+	
+		.btn--purchase {
+	  color: #ffffff;
+	  background-color: #1B516E;
+	  border-color: #3A199C;
+	}
 	</style>
 	
 </html>

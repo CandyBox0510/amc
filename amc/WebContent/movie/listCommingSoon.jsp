@@ -21,7 +21,7 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
 		  </header>  
-    <div class="container">
+    <div class="container" id="body">
         
         <!-- Main content -->
         <!--  <section class="container"> -->
@@ -345,15 +345,15 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-	 body {
-           padding-top: 70px;
+ 	 #body {
+           padding-top: 100px;
            }
            .thumbnail {
            width: 300px;
            height: 250px;
            overflow: auto;
      }	
-     
+      
      #searchIcon
       {     color: #fff;       		
    			text-shadow: 1px 1px 1px #ccc;

@@ -11,54 +11,6 @@
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>회원탈퇴</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
-
-        <!-- Modernizr --> 
-        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
-    
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-   
-        <!--   Sweetalert2 CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>	
-		
-		<!-- sweetalert -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
-    
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -71,49 +23,50 @@
    		</header>
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="container" id="body">
-	
-		<div class="page-header col-sm-offset-2 col-sm-10">	
-		<h1>회 원 탈 퇴</h1>
-		</div>
+			 <div class="clearfix"></div>
+				<h2 class="page-heading"> 회 원 탈 퇴</h2>
+				
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-		  <div class="form-group">
-		    <label for="userId" class="col-sm-3 control-label">아 이 디</label>
+		<form id="deleteUser" method='post' novalidate="" class="form contact-info" name="deleteUser">
+		  <fieldset>
+		  <legend class="screen_out">회원 탈퇴</legend>
+		  <div class="row">
+		    <label for="userId" class="col-sm-offset-1 col-sm-4 control-label"><strong>아 이 디</strong></label>
 		    <div class="col-sm-3">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="이메일ID입력" aria-describedby="helpBlock" >		       	      	
+		      <input type="text" class="form__name" id="userId" name="userId" placeholder="이메일ID입력" aria-describedby="helpBlock" >		       	      	
 		    </div>	
 		    <span id="helpBlock" class="help-block col-sm-6"></span>		    
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="password" class=" col-sm-3 control-label">비밀번호</label>
+		  <div class="row">
+		 	 <label for="password" class="col-sm-offset-1 col-sm-4 control-label"><strong>비밀번호</strong></label>
+		  
 		    <div class="col-sm-3">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+		      <input type="password" class="form__name" id="password" name="password" placeholder="비밀번호">
 		    </div>
 		    <span id="helpBlock2" class="help-block2 col-sm-6"></span>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="userName" class=" col-sm-3 control-label">이름</label>
+		  <div class="row">
+		  	<label for="userName" class="col-sm-offset-1 col-sm-4 control-label"><strong>이  름</strong></label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
+		      <input type="text" class="form__name" id="userName" name="userName" placeholder="회원이름">
 		    </div>
 		    <span id="helpBlock3" class="help-block3 col-sm-6"></span>
 		  </div>
 		 
 			<!-- <h1>참조 : http://postcode.map.daum.net/guide</h1> -->
-		  <div class="form-group">
+		  <div class="row">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >회 원 탈 퇴 </button>
+		      <button type="button" class="btn btn-md btn--info"  >회 원 탈 퇴 </button>
 		    </div>
 		  </div>
+		  </fieldset>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
-		
+		</div>
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
-	
-	</div>
 	
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
@@ -143,6 +96,9 @@
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
+       	<!-- sweetalert -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
+        
 	
 </body>
 	<script type="text/javascript">
@@ -150,7 +106,8 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "button.btn.btn--info" ).on("click" , function() {
+				alert();
 				fncDeleteUser();
 			});
 		});	
@@ -175,7 +132,7 @@
 				return;
 			}
 			
-			/* alert("여기는 ajax");
+		/*  alert("여기는 ajax");
 				$.ajax({
 					url : "/user/json/deleteCheck/" ,
 					method : "POST" ,							
@@ -195,7 +152,7 @@
 						
 						
 					}
-				}); */
+				});  */
 			
 			
 				swal({
@@ -228,7 +185,7 @@
 		
 		function delay(){
 			setTimeout(function move(){
-				$("form").attr("method" , "POST").attr("action" , "/user/deleteUser").submit();
+				$("#deleteUser").attr("method" , "POST").attr("action" , "/user/deleteUser").submit();
 			},1500) 
 		}
 		

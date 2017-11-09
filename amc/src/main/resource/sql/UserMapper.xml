@@ -29,7 +29,7 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users	( user_no, user_id, user_name, password, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
+		INTO users	( user_id, user_name, password, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
 		VALUES	 	( #{userId}, #{userName}, #{password}, 'user', #{birth}, 
 						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
 	 </insert>
