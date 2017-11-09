@@ -46,7 +46,157 @@
  
                 <!-- BEGIN SLIDES LIST -->
                 <ul>
-                    <!-- SLIDE 1 -->
+                
+					<!-- SLIDE 1 -->
+                    <li data-transition="fade" class="slide" data-title='Comming Cinema. Travel MovieWorld.'>
+ 
+                        <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
+                        <img class="rev-slidebg" alt='' src="../images/bg-video.jpg">
+                        <div class="rs-background-video-layer" 
+                             data-forcerewind="on" 
+                             data-volume="mute" 
+                             data-videowidth="100%" 
+                             data-videoheight="100%" 
+                             data-videomp4="../video/thor.mp4" 
+                             data-videopreload="auto" 
+                             data-videoloop="loop" 
+                             data-forceCover="1" 
+                             data-aspectratio="16:9" 
+                             data-autoplay="true" 
+                             data-autoplayonlyfirsttime="false" 
+                        ></div>
+                        <div class="tp-caption slide__name slide__name--smaller" 
+                             data-x="center" 
+                             data-y="160" 
+
+                             data-splitin="chars"
+                             data-elementdelay="0.1"
+
+                             data-speed="700" 
+                             data-start="1400" 
+                             data-easing="easeOutBack"
+
+                             data-frames='[{
+                               "delay":1400,
+                               "speed":700,
+                               "split":"chars",
+                               "splitdelay":0.1,
+                               "frame":"0",
+                               "from":"opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                            Movie, Watch, Touched.
+                        </div>
+                        <div class="tp-caption slide__time" 
+                             data-x="center"
+                             data-hoffset='-130' 
+                             data-y="242" 
+                             data-frames='[{
+                               "delay":1800,
+                               "speed":300,
+                               "frame":"0",
+                               "from":"x:[50%];opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                             From
+                        </div>
+                        <div class="tp-caption slide__date position-center postion-place--two lfb ltb" 
+                             data-x="center"                              
+                             data-hoffset='-65'                                       
+                             data-y="242" 
+                             data-frames='[{
+                               "delay":2200,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                             May 31 
+                        </div>
+                        <div class="tp-caption slide__time" 
+                             data-x="center" 
+                             data-hoffset='-10' 
+                             data-y="242" 
+                             data-frames='[{
+                               "delay":1800,
+                               "speed":300,
+                               "frame":"0",
+                               "from":"x:[50%];opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                             - till
+                        </div>
+                        <div class="tp-caption slide__date" 
+                             data-x="center"                              
+                             data-hoffset='60'
+                             data-y="242" 
+                             data-frames='[{
+                               "delay":2200,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                             November 24
+                        </div>
+
+                        <div class="tp-caption slider-wrap-btn" 
+                             data-x="center"
+                             data-y="310" 
+                             data-frames='[{
+                               "delay":2800,
+                               "speed":400,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+                             <a href="/movie/getMovieList?menu=movie" class="btn btn-md btn--danger btn--wide slider--btn">Browse Now Playing</a>
+                        </div>
+                    </li>
+                                    
+                    <!-- SLIDE 2 -->
                     <li data-transition="fade" class="slide" data-title='JAVA 95.'>
  
                         <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
@@ -197,154 +347,6 @@
  
                     </li>
  
-                    <!-- SLIDE 2 -->
-                    <li data-transition="fade" class="slide" data-title='Comming Cinema. Travel MovieWorld.'>
- 
-                        <!-- SLIDE'S MAIN BACKGROUND IMAGE -->
-                        <img class="rev-slidebg" alt='' src="../images/bg-video.jpg">
-                        <div class="rs-background-video-layer" 
-                             data-forcerewind="on" 
-                             data-volume="mute" 
-                             data-videowidth="100%" 
-                             data-videoheight="100%" 
-                             data-videomp4="../video/zutopia.mp4" 
-                             data-videopreload="auto" 
-                             data-videoloop="loop" 
-                             data-forceCover="1" 
-                             data-aspectratio="16:9" 
-                             data-autoplay="true" 
-                             data-autoplayonlyfirsttime="false" 
-                        ></div>
-                        <div class="tp-caption slide__name slide__name--smaller" 
-                             data-x="center" 
-                             data-y="160" 
-
-                             data-splitin="chars"
-                             data-elementdelay="0.1"
-
-                             data-speed="700" 
-                             data-start="1400" 
-                             data-easing="easeOutBack"
-
-                             data-frames='[{
-                               "delay":1400,
-                               "speed":700,
-                               "split":"chars",
-                               "splitdelay":0.1,
-                               "frame":"0",
-                               "from":"opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                            Movie, Watch, Touched.
-                        </div>
-                        <div class="tp-caption slide__time" 
-                             data-x="center"
-                             data-hoffset='-130' 
-                             data-y="242" 
-                             data-frames='[{
-                               "delay":1800,
-                               "speed":300,
-                               "frame":"0",
-                               "from":"x:[50%];opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                             From
-                        </div>
-                        <div class="tp-caption slide__date position-center postion-place--two lfb ltb" 
-                             data-x="center"                              
-                             data-hoffset='-65'                                       
-                             data-y="242" 
-                             data-frames='[{
-                               "delay":2200,
-                               "speed":500,
-                               "frame":"0",
-                               "from":"y:100px;opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                             May 31 
-                        </div>
-                        <div class="tp-caption slide__time" 
-                             data-x="center" 
-                             data-hoffset='-10' 
-                             data-y="242" 
-                             data-frames='[{
-                               "delay":1800,
-                               "speed":300,
-                               "frame":"0",
-                               "from":"x:[50%];opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                             - till
-                        </div>
-                        <div class="tp-caption slide__date" 
-                             data-x="center"                              
-                             data-hoffset='60'
-                             data-y="242" 
-                             data-frames='[{
-                               "delay":2200,
-                               "speed":500,
-                               "frame":"0",
-                               "from":"y:100px;opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                             November 24
-                        </div>
-
-                        <div class="tp-caption slider-wrap-btn" 
-                             data-x="center"
-                             data-y="310" 
-                             data-frames='[{
-                               "delay":2800,
-                               "speed":400,
-                               "frame":"0",
-                               "from":"y:100px;opacity:0;",
-                               "to":"o:1;",
-                               "ease":"Power3.easeInOut"
-                               },{
-                               "delay":"wait",
-                               "speed":300,
-                               "frame":"999",
-                               "to":"opacity:0;",
-                               "ease":"Power3.easeInOut"
-                             }]'>
-                             <a href="/movie/getMovieList?menu=movie" class="btn btn-md btn--danger btn--wide slider--btn">Browse Now Playing</a>
-                        </div>
-                    </li>
 
                     <!-- SLIDE 3 -->
                     <li data-transition="fade" class="slide" data-title='Sanck and, Goods sales.'>

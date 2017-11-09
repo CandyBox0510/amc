@@ -44,6 +44,7 @@ import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.movie.MovieService;
+import com.amc.service.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -60,7 +61,9 @@ public class MovieRestController {
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
 	
-
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	private String dbFileNames;
 
@@ -695,6 +698,188 @@ public class MovieRestController {
 		wishList.setWishFlag("");
 		wishList.setWishNo(Integer.parseInt(wishNo));
 		return movieService.deleteWishList(wishList);
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////안드로이드용///////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/json/androidGetMovieList")
+	public String getMovieList(@ModelAttribute("search") Search search,								
+								  Model model , HttpSession session,
+								  HttpServletRequest request) 
+								  throws Exception{
+		
+		System.out.println("/getMovieList  GET ");
+				
+		if(search.getCurrentPage() ==0 ){			
+			search.setCurrentPage(1);
+		}
+		
+		pageSize = 1000000;
+		
+		search.setPageSize(pageSize);
+		
+		User user =  userService.getUser(request.getParameter("userId"));
+		
+		System.out.println("pagesize " + search.getPageSize());
+		
+		System.out.println("search " + search);
+		
+		System.out.println("menu :" + request.getParameter("menu"));
+		
+		
+		if(request.getParameter("menu").equals("manage")) {
+			
+			search.setSearchKeyword2("manage");
+			search.setSearchKeyword3("manage");
+			
+		
+			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
+		} else {
+			// 현재 상영 영화인 경우 로직
+			if((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search")))  {
+				
+				System.out.println("현재 상영 영화 콜 !!!!");
+				
+				search.setSearchKeyword2("4");				
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");					
+				}
+			}
+			
+			// 현재 상영 예정 영화인  경우 로직
+			if(request.getParameter("menu").equals("commingsoon")) {
+				search.setSearchKeyword2("5");
+				
+				System.out.println("상영 예정 영화 콜 !!!!");
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");	
+				}
+			}	
+		}
+		
+			
+		if (user != null) {
+			System.out.println("User not null ....");
+			
+			Map<String,Object> tempMap = new HashMap<String,Object>();		
+			
+			tempMap.put("search", search);
+			tempMap.put("user", user);
+			
+			List<WishList> listWish = ((List<WishList>)movieService.getWishList(tempMap).get("listWish"));
+			
+			System.out.println("listWish  length::" + listWish.size()  + "listWish  :: " + listWish);
+		
+			Map<String , Object> map= movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");	
+			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
+			
+			for (int i = 0 ; i < movieList.size(); i++) {			
+				for (int j = 0; j < listWish.size() ; j++) {				
+						if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
+							movieList.get(i).setWishList(listWish.get(j));
+							System.out.println("movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
+						}
+				  }
+			}
+		
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);		
+			
+			System.out.println("search condition :: " + search.getSearchCondition());
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			System.out.println("list show ::"  + map.get("list"));
+			
+			JSONObject data = null;
+			JSONArray jsonArray = new JSONArray();
+			JSONObject response = new JSONObject();
+			
+			for(int i = 0; i< movieList.size(); i++){
+				 data = new JSONObject();
+				 data.put("movieNm", movieList.get(i).getMovieNm());
+				 data.put("openDt", movieList.get(i).getOpenDt());
+				 data.put("movieNo", movieList.get(i).getMovieNo());
+				 data.put("trailer", movieList.get(i).getTrailer());
+				 data.put("genres", movieList.get(i).getGenres());
+				 data.put("watchGradeNm", movieList.get(i).getWatchGradeNm());
+				 data.put("postUrl", movieList.get(i).getPostUrl());
+				 jsonArray.add(data);
+			}
+			response.put("list", jsonArray);
+			return response.toJSONString();
+			
+		} else {
+			Map<String , Object> map= movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");	
+			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
+			
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);	
+			
+			System.out.println("search condition :: " + search.getSearchCondition());
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			System.out.println("list show ::"  + map.get("list"));
+		}
+		
+		
+		// Business logic 수행
+		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
+		// "searchCondtion=7" 은 일반인 검색에  해당됨 		
+		
+		if(request.getParameter("menu").equals("movie")) {
+			System.out.println("listMovie.jsp called");
+			//modelAndView.setViewName("/movie/listMovie.jsp"); 
+			return "forward:/movie/listMovie.jsp";
+			// return modelAndView;
+		}
+		else  if(request.getParameter("menu").equals("manage")) {
+			System.out.println("listMovieManage.jsp called");
+			//modelAndView.setViewName("/movie/listMovieManage.jsp");
+			return "forward:/movie/listMovieManage.jsp";
+		}
+		else  if(request.getParameter("menu").equals("calendar")) {
+			System.out.println("calendar.jsp called");
+			//modelAndView.setViewName("/movie/calendar.jsp");
+			return "forward:/movie/calendar.jsp";
+		}
+		else if (request.getParameter("menu").equals("commingsoon")) {
+			//modelAndView.setViewName("/movie/listCommingSoon.jsp");
+			return "forward:/movie/listCommingSoon.jsp";
+		}
+		else if (request.getParameter("menu").equals("preview")) {
+			System.out.println("????????");
+			//modelAndView.setViewName("/movie/listMoviePreview.jsp");
+			return "forward:/movie/getPreviewList";
+		}
+		else if (request.getParameter("menu").equals("search")) {
+			//modelAndView.setViewName("/movie/listMovie.jsp");
+			return "forward:/movie/listMovie.jsp";
+		}
+		else if (request.getParameter("menu").equals("voiceRegniiton")) {
+			//modelAndView.setViewName("/movie/listMovie.jsp");
+			return "forward:/movie/speechMovie.jsp";
+		}
+	
+		return "forward:/movie/listMovie.jsp";
 	}
 
 }
