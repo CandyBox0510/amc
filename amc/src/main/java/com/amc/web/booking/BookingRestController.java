@@ -1,6 +1,8 @@
 package com.amc.web.booking;
 
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -9,6 +11,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +73,18 @@ public class BookingRestController {
 		// @Value("#{commonProperties['pageSize'] ?: 2}")
 		int pageSize;
 		
+		ObjectMapper objMapper = new ObjectMapper();
+		
 		public BookingRestController() {
 			System.out.println(this.getClass());
+		}
+		
+		//안드로이드에 보낼 JSONData로 만들어주는 method
+		public String toJSONString(Object obj) throws Exception{
+									
+			String jsonList = objMapper.writeValueAsString(obj);			
+			
+			return new String(jsonList.getBytes("UTF-8"), "ISO-8859-1");
 		}
 		
 		//안드로이드 테스트용
@@ -85,18 +101,43 @@ public class BookingRestController {
 			return sendJson;
 		}
 		
-		//예매1단계 테스트용
+		//[Android] 예매1단계 : 영화선택
 		@RequestMapping( value="json/getScreenMovieList", method=RequestMethod.POST)
-		public Movie getScreenMovieList(Model model) throws Exception{
+		public String getScreenMovieList(Model model) throws Exception{
 			
 			System.out.println("json/booking/getScreenMovieList : GET");
 			
-			List<Movie> movieList = bookingService.getScreenMovieList();
+			List<Movie> movieList = bookingService.getScreenMovieList();			
 			
-			return movieList.get(0);
+			return this.toJSONString(movieList);
 		}
 		
+		//[Android] 예매1단계 : 날짜선택
+		@RequestMapping(value="json/getScreenDateJSON/{movieNo}/{flag}", method=RequestMethod.GET)
+		public String getScreenDateJSON(@PathVariable("movieNo") int movieNo, 
+											@PathVariable("flag") String flag, 
+													Model model) throws Exception{
 
+	        Calendar calendar = Calendar.getInstance();
+	        String today =  new SimpleDateFormat("yy/MM/dd").format(calendar.getTime());
+	  
+	        Search search = new Search();
+	        search.setSearchCondition(flag);
+	        search.setSearchKeyword(today);
+	        System.out.println(":::::::movieNo : "+movieNo);
+	        List<ScreenContent> list = screenService.getScreenContentList2(search, movieNo);
+			
+	        return this.toJSONString(bookingService.getScreenDateList(list));
+		}
+		
+		//[Android] 예매1단계 : 시간 선택
+		@RequestMapping(value="json/getScreenTimeJSON/{screenDate}", method=RequestMethod.GET)
+		public String getScreenTimeJSON(@PathVariable("screenDate") String screenDate, 
+													Model model) throws Exception{			
+			return this.toJSONString(bookingService.getScreenTimeList(screenDate));
+		}
+		
+		//예매1단계 날짜선택
 		@RequestMapping(value="json/getScreenDate/{movieNo}/{flag}", method=RequestMethod.GET)
 		public List<String> getScreenDate(@PathVariable("movieNo") int movieNo, 
 											@PathVariable("flag") String flag, 
@@ -114,11 +155,10 @@ public class BookingRestController {
 			return bookingService.getScreenDateList(list);
 		}
 		
-		
+		//예매1단계 시간선택
 		@RequestMapping(value="json/getScreenTime/{screenDate}", method=RequestMethod.GET)
 		public List<ScreenContent> getScreenTime(@PathVariable("screenDate") String screenDate, 
-													Model model) throws Exception{
-			
+													Model model) throws Exception{			
 			return bookingService.getScreenTimeList(screenDate);
 		}
 		
@@ -198,7 +238,8 @@ public class BookingRestController {
 			
 			Booking booking = bookingService.getBooking(bookingNo);
 			String status = cinemaService.cancelPay(booking.getImpId());
-			if(status.equals("canceled")){			
+
+			if(status.equals("cancelled")){			
 				System.out.println("1. 환불 완료");
 				return "refunded";
 			}else{

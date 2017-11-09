@@ -60,13 +60,8 @@
 						{
 							url : "/booking/json/refundBooking/"+bookingNo,					
 							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
 							success : function(JSONData, status) {				
-								
+							
 		                        if(JSONData == "refunded"){
 		                        	alert("정상적으로 환불처리되었습니다.");
 		                        	self.location = "/booking/deleteBooking?bookingNo="+bookingNo;
@@ -137,9 +132,7 @@
 	  font-family: 'Hanna', sans-serif; 
 	 
 	}
-	.abc{
-	  font-family: 'Hanna', sans-serif; 
-	 }
+	
 	 
 	 .contact-info {
 	  text-align: left;
@@ -148,14 +141,14 @@
 	  position: relative;
 	  width: 100%;
 	  display: inline-block;
-	  margin-right: 28px;
+	  margin-right: 3px;
 	}
 	.contact-info .contact-info__field .form__mail {
 	  padding-left: 60px;
 	}
 	.contact-info .contact-info__field:before {
 	  content: '';
-	  width: 39px;
+	  width:70px; /* 39px; */ 
 	  height: 39px;
 	  -webkit-border-radius: 3px 0 0 3px;
 	  -moz-border-radius: 3px 0 0 3px;
@@ -168,7 +161,7 @@
 	.contact-info .contact-info__field:after {
 	  content: '';
 	  color: #b4b1b2;
-	  font: 13px "FontAwesome";
+	  font: 13px;
 	  position: absolute;
 	  top: 10px;
 	  left: 15px;
@@ -185,6 +178,7 @@
 	  margin-right: -5px;
 	}
 	.watchlist list--download {
+		margin-left : -10px;
 		color:white;
 	}
 	
@@ -234,20 +228,32 @@
                           	예매 가격 : ${booking.totalTicketPrice}&nbsp;&nbsp;&nbsp;&nbsp;
                           	좌석 번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
                           	<br>
-                          	좌석 번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
                           </p>
-                          <a href="#" id="deleteBooking" class="btn btn-md btn--warning btn-wider btn--follow"><span class="abc">예매 취소하기</span></a>                  
+                                            
                       </div>
                       
-                      
+                     
+                     
 						<form id='contact-info' method='post' novalidate="" class="form contact-info">
-			                   <div class="contact-info__field contact-info__field-mail" >
-			                   	<div class="in-line box">
+			                   <div class="contact-info__field row"  style="width:100%">
+			                   	<div class="col-sm-7" >
 			                        <input type='text' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
-			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >		                     
-			                         <button class="watchlist list--download abc" id="sendQR">QR CODE 전송  </button>
-			                     </div>
-			                    </div> 			                                                              
+			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
+			                    </div><div class="col-sm-5">		                     
+			                        <a href="#" id="email" class="btn btn-md btn--warning btn-wider btn--shine abc">이메일 QR전송</a>
+							   </div>
+			                    </div> 	
+			                     <div class="contact-info__field row"  style="width:100%">
+			                   	<div class="col-sm-7" >
+			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='QR코드를 받을  핸드폰번호' 
+			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
+			                    </div><div class="col-sm-5">		                     
+			                         <a href="#" id="SMS" class="btn btn-md btn--warning btn-wider btn--shine abc">문자&nbsp;&nbsp;&nbsp;&nbsp;QR전송</a>						   
+							   </div>
+			                    </div>
+			                   <div class="row" style="margin-left:2.3px; margin-top:5px; algin:right;">	
+			                    <a href="#" id="deleteBooking" class="btn btn-md btn--warning btn-wider btn--follow abc">예매 취소하기</a>	                                                              
+		                	  </div>
 		                </form>
                 	
                 	
@@ -361,6 +367,9 @@
  html{
   height: auto;
 } 
+.abc{
+	  font-family: 'Hanna', sans-serif; 
+	 }
 </style>
 </html>
 

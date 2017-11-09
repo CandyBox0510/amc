@@ -70,10 +70,10 @@
                 		 
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
-	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon' class="cinema__images">
+	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon" class="movieNm">${movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
 	                                    <p ><strong>∞≥∫¿¿œ :${movie.openDt } </strong> </p>
 	                                    

@@ -84,7 +84,7 @@ public class AlarmRestController {
 			
 			System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
 			
-			//String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+			String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
 			
 			if(!type.equals("userCertification") || !type.equals("booking")){
 				String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
