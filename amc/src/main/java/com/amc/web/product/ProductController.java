@@ -1,9 +1,7 @@
 package com.amc.web.product;
 
-import java.io.File;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.amc.service.product.ProductService;
 import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.domain.Product;
-import com.amc.service.domain.User;
 
 @Controller
-
-
 @RequestMapping("/product/*")
 public class ProductController {
 
@@ -84,11 +77,17 @@ public class ProductController {
 	public String getGoodsProduct( @RequestParam("prodNo") int prodNo,
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
-		System.out.println("※※※※※※※※※※※※※※※※※※※"+product);
-		System.out.println(menu);
+		
+		double totalStock	= product.getTotalStock();
+		double Stock		= product.getStock();
+		double sale 		= Stock/totalStock*100;
+		int result = (int)sale;
+		
+		product.setSalesStock(result);
+		
+		System.out.println( "판매 현황 좀 보고싶은데 :"+product.getSalesStock());
 		
 		if(menu!=""){
 			if(menu.equals("manage")){
@@ -155,16 +154,29 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(pageSize);
+		search.setPageSize(12);
 		search.setPageUnit(pageUnit);		
 		// Business logic 수행
 		Map<String , Object> map=productService.getGoodsList(search);
 		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$############# MAP :"+map);
 		
+//		Product product = new Product();
+//		
+//		double totalStock	= ((Product)map.get("product")).getTotalStock();
+//		double Stock		= ((Product)map.get("product")).getStock();
+//		double sale 		= Stock/totalStock*100;
+//		int result = (int)sale;
+//		
+//		product.setSalesStock(result);
+		
+		System.out.println(map.get("list"));
+		System.out.println((Product)map.get("product"));
+		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		/*model.addAttribute(arg0, arg1);*/
 		/*model.addAttribute("search", map.get(search));*/
 		
 		System.out.println("session 이거뭐야 :"+session.getAttribute("user"));
