@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FreeBoardMapper">
+ 	
+ 	<!-- Purpose of resultMap is mapping resultSet of SQL -->
+
+  	 <resultMap id ="freeBoardMap" type="freeBoard">
+  	
+  		<result property="freeBoardNo" 		column="freeboard_no" 		jdbcType="NUMERIC"/>
+  		<result property="freeBoardTitle" 	column="freeboard_title" 	jdbcType="VARCHAR"/>
+  		<result property="user.userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+  		<result property="freeBoardRegDate" column="freeboard_regdate"	jdbcType="DATE"/>
+  		<result property="freeBoardViews" 	column="freeboard_views" 	jdbcType="NUMERIC"/>
+  		<result property="freeBoardImage" 	column="freeboard_image" 	jdbcType="VARCHAR"/>
+  		<result property="freeBoardContent" column="freeboard_content" 	jdbcType="VARCHAR"/>
+	 
+  	</resultMap>	
+  	
+  	<insert id="addFreeBoard" parameterType="freeBoard">
+	INSERT INTO freeboard(freeboard_no, freeboard_title, user_id, freeboard_regdate, freeboard_content, freeboard_views, freeboard_image)
+	VALUES(seq_freeboard_freeboard_no.nextval, #{freeBoardTitle}, #{user.userId}, SYSDATE, 
+	#{freeBoardContent},0, 
+	<if test="freeBoardImage == '' ">null</if>
+	<if test="freeBoardImage != '' ">#{freeBoardImage}</if>)
+	</insert>
+	
+	<select id="getFreeBoard" parameterType="int" resultMap="freeBoardMap"> 
+		SELECT freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD HH24:MI:SS') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
+		FROM freeboard
+		WHERE freeboard_no = #{freeBoardNo} 
+	</select>
+	
+	<update id="updateFreeBoardViews" parameterType="FreeBoard">
+	UPDATE freeboard
+		<set>
+			freeboard_views = #{freeBoardViews}+1
+		</set>
+	WHERE freeboard_no = #{freeBoardNo} 
+	</update>
+	
+	
+	<update id="updateFreeBoard" parameterType="FreeBoard">
+	UPDATE freeboard
+		<set>
+			freeboard_title = #{freeBoardTitle},
+			freeboard_content = #{freeBoardContent}
+			<if test="freeBoardImage != null">
+			 , freeboard_image = #{freeBoardImage}
+			 </if>
+		</set>
+		WHERE freeboard_no = #{freeBoardNo}
+	</update>
+	
+	
+	
+	<delete id="deleteFreeBoard" parameterType="int">
+		DELETE FROM freeboard
+		WHERE freeboard_no = #{freeBoardNo}
+	</delete>
+	
+	
+	<select id="getFreeBoardList" parameterType="search" resultMap="freeBoardMap">
+		SELECT *
+		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
+						FROM freeboard	  			    
+		<if test="searchCondition != null">
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE freeboard_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE freeboard_content LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 3 and searchKeyword != '' ">
+					WHERE user_id LIKE '%${searchKeyword}%'
+				</if>
+				
+		</if>
+		ORDER BY freeboard_no DESC) inner_table
+		WHERE ROWNUM &lt;= #{endRowNum})
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+
+	</select>
+	
+	<select id="getTotalCount" parameterType="search" resultType="int">
+	SELECT count(*)
+		FROM (SELECT  freeboard_no, freeboard_title, user_id, 
+						TO_CHAR(freeboard_regdate,'YYYY/MM/DD') freeboard_regdate,  freeboard_content, freeboard_views, freeboard_image
+						FROM freeboard	  			    
+		<if test="searchCondition != null">
+				<if test="searchCondition == 1 and searchKeyword != '' ">
+					WHERE freeboard_title LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 2 and searchKeyword != '' ">
+					WHERE freeboard_content LIKE '%${searchKeyword}%'
+				</if>
+				<if test="searchCondition == 3 and searchKeyword != '' ">
+					WHERE user_id LIKE '%${searchKeyword}%'
+				</if>
+				
+		</if>)countTable
+	
+	</select>
+	
+
+</mapper>

@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html>
-            <html class="no-js" lang="ko">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html class="no-js" lang="ko">
 
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
@@ -158,19 +158,13 @@
 		<script src="/js/custom.js"></script>
 		<%-- <jsp:include page="/movie/speechMovie.jsp" />  --%>
 		
-		
 	
 		
 		
 		<!--  Semantic UI modal windows pop-up 용  -->
-		
-
-
-<!-- <div class="center"> -->
-	
-		
-		<div class="ui modal">
-		<div style="border: 1px dashed #BDBDBD; background-color: #FBFCFC;  width: 950px; height: 400px; margin-left: auto;
+		<div class="ui mini modal" >
+		<!-- <div class="center"> -->	
+		<div style="border: 1px dashed #BDBDBD; background-color: #FBFCFC;   margin-left: auto;
  		 margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
 		 <div class="header">영화 음성 검색 중....</div>
 		  <div class="content" >
@@ -213,46 +207,6 @@
 		  </div>
 	</div>
 </div>
-
-	
-		
-		
-		<!--  Semantic UI modal windows pop-up 용  -->
-		
-		
-<!-- <div class="center"> -->
-	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 100px; margin-left: auto;
- 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
-		
-		<div class="ui basic modal">
-		  <div class="content" >
-		   	<p>영화 음성 검색 중....
-		   		<form id="webspeech"  method="POST">  
-		   				<div class="image content">
-						       <img src="../images/movie/speechListening2.gif">    
-						         <div class="example">
-						               영화 검색 :
-						            <input type="search" name="abc" id="speech-transcript">    
-						            <input type="button" value="클릭후 말해주세요 " id="speech-btn" class="positive ui button">  
-						            
-						            <br/>
-						        
-							        <i class='fa fa-check fa-5x' id="voidSearchOk" style="color:green"></i>  &nbsp;	
-    
-						             
-						         	<div class="form-group">    
-							    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
-							        <input type="hidden" class="form-control" id="voiceSearchKeyword" name="searchKeyword" value="" > 
-    			
-   									 </div>   
-      							 </div>
-						 </div>
-		   		</form>
-		  </div>
-	</div>
-</div>
-	
-
 	
 </body>
        
@@ -318,7 +272,7 @@
 				//============= "음성 검색 실행 함수 " 처리 =============	
 			   function fncWebSpeech() {
 		    		// document.addPurchase.submit();
-		    		alert("speech post call...")
+		    		// alert("speech post call...")
 		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
 		    	}
 		    	
@@ -395,11 +349,11 @@
 	                      
 	                       console.log("speechTranscript :: " + speechTranscript.value);
 	                       $("#voidSearchOk").val(speechTranscript.value);
-	                       alert("speeach2 : "+$("#voidSearchOk").val()); 
+	                       // alert("speeach2 : "+$("#voidSearchOk").val()); 
 	                       
 	                       var voiceSearch = $("#voidSearchOk").val();
 	                       $("#voiceSearchKeyword").val(voiceSearch);
-	                       alert("speeach2"  + voiceSearch);                  
+	                       //alert("speeach2"  + voiceSearch);                  
 	                       
 	                   };
 	               }
@@ -427,8 +381,8 @@
 				  $(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "#voidSearchIcon").on("click" , function() {
-						alert("modal start...")
-						$('.ui.basic.modal')  
+						//alert("modal start...")
+						$('.ui.modal')  
 						  .modal('show')
 						;
 						/* self.location = "/movie/getMovieList?menu=voiceRegniiton"; */
