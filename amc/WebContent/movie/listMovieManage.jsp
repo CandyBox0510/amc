@@ -113,45 +113,7 @@
 	            
 		</script>
 		
-		<style type="text/css">
 
-		
-	
-		.countPage {
-		  font-size: 13px;
-		   margin-top: 10px;
-		}
-		
-		.search{
-			margin-right : 30px;
-		}
-		
-
-		.movieNm {
-			  font-size: 16px;
-			  font-weight: bold;
-			  display: block;
-			  margin-bottom: 5px;
-			  margin-top: 5px;
-
-			}
-			
-		#poster{
-			height : calc(50vh - 100px);	
-			width : auto;	
-			height:260px; 
-			margin-left: auto;
-			margin-right: auto; 
-			display: table;
-		
-		}
-		
-		body {
-			padding-top: 80px;
-		}
-
-		
-		</style>
     
 </head>
 
@@ -222,9 +184,10 @@
 	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=manage' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=manage" class="movieNm">${movie.movieNm }</a>
-	                                    <p><strong>개봉일</strong>&nbsp;${movie.openDt }<br><strong>장르 </strong>${movie.genres }<br><strong>감독 </strong> ${movie.director }
-	                                    <br><strong>등록일 </strong>${movie.movieRegDate } 
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=manage" class="movieNm">&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${movie.movieNm }</a>
+	                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>개봉일</strong>&nbsp;${movie.openDt }<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>장르 </strong>${movie.genres }<br>
+	                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>감독 </strong> ${movie.director }
+	                                    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>등록일 </strong>${movie.movieRegDate } 
 	                                    </p>	     
 	                                </div>
 	                            </div>                      
@@ -307,7 +270,58 @@
 
 </body>
 
-<style>
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+
+		<style type="text/css">
+	
+		.countPage {
+		  font-size: 13px;
+		   margin-top: 10px;
+		}
+		
+		.search{
+			margin-right : 30px;
+		}
+		
+
+		.movieNm {
+			  font-size: 16px;
+			  font-weight: bold;
+			  display: block;
+			  margin-bottom: 5px;
+			  margin-top: 5px;
+
+			}
+			
+		#poster{
+			height : calc(50vh - 100px);	
+			width : auto;	
+			height:260px; 
+			margin-left: auto;
+			margin-right: auto; 
+			display: table;
+		
+		}
+		
+		body {
+			padding-top: 80px;
+		}
+		
+		.cinema .cinema__images:before {
+	    content: '';
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(76, 65, 69, 0);
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 1;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	   }
+
+	
       html{
  	     height: auto;
       }
