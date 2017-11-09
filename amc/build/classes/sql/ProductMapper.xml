@@ -11,7 +11,7 @@
   			<result property="prodNo" 			column="prod_no" 		jdbcType="NUMERIC"/>
   			<result property="prodPrice" 		column="prod_price" 	jdbcType="NUMERIC"/>
   			<result property="totalStock" 		column="total_stock" 	jdbcType="NUMERIC"/>
-  			<!-- <result property="salesStock" 		column="sales_stock" 	jdbcType="NUMERIC"/> -->
+  			<result property="salesStock" 		column="sales_stock" 	jdbcType="NUMERIC"/> 
   			<result property="stock" 			column="stock" 			jdbcType="NUMERIC"/>
   			<result property="expiryDate" 		column="expiry_date" 	jdbcType="NUMERIC"/>
   			<result property="prodImage" 		column="prod_image" 	jdbcType="VARCHAR"/>
@@ -77,7 +77,7 @@
 	
 	<sql id="productList">
 		SELECT
-			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate
+			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, 100-(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock
 		FROM product p, transaction t
 		<where>
 			p.prod_no=t.prod_no(+)
@@ -88,7 +88,7 @@
 				AND p.prod_type='S'
 			</if>
 		</where>		
-		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image, p.sales_opendate, p.sales_enddate
+		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, p.sales_stock
 		<trim prefix="HAVING" prefixOverrides="AND | OR">
 			<if test="!stockView">
 				p.stock-NVL(COUNT(t.IMP_ID),0) > 0

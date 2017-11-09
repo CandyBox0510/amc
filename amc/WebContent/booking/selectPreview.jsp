@@ -211,18 +211,6 @@
 	});
 		
 	
-/* 	//3. 시간클릭시
-	$(document).on("click", ".screenTime",  function(){
-		
-		var contNo = $($(this).find("input[name='contNo']")).val();
-		ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
-		alert("선택한 상영번호는 : "+contNo+", 티켓오픈타임은 :"+ticketOpenDate);
-		
-		$("#display").text(contNo);	
-		
-		setInterval("dpTime();",1000);
-		
-	}); */
 	
 	
 	$(document).on("click", "#gotoSeat",  function(e){
@@ -293,11 +281,11 @@
         <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
         </div>
-        <header class="header-wrapper header-wrapper--home">
+       <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+		</header>
    <!--  <div class="wrapper"> -->
 	
     <input type="hidden" name="flag" value="2"> 
@@ -305,7 +293,7 @@
 
 
 
-	<p>
+	<br><br><br>
         
         <!-- Main content -->
 
@@ -435,49 +423,11 @@
  
     <!-- </div> -->
 
-    <!-- open/close -->
-         <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
 
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
-
-                        <div class="social social--colored">
-                                <a href='#' class="social__variant fa fa-facebook"></a>
-                                <a href='#' class="social__variant fa fa-twitter"></a>
-                                <a href='#' class="social__variant fa fa-tumblr"></a>
-                        </div>
-
-                        <p class="login__tracker">or</p>
-                        
-                        <div class="field-wrap">
-                         <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">
-                        <input type='password' placeholder='Password' id='password' name='password' class="login__input">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>remember me</label>
-                         </div>
-                        
-                        <div class="login__control">
-                            <!-- <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button> -->
-                            <button type='button' id ='login' class="btn btn-md btn--warning btn--wider">sign in</button>
-                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-            </div>
         <div class="clearfix"></div>        
         
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
          
 
 		<!-- JavaScript-->

@@ -1,8 +1,6 @@
 package com.amc.web.booking;
 
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -11,10 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,13 +77,12 @@ public class BookingRestController {
 		//안드로이드에 보낼 JSONData로 만들어주는 method
 		public String toJSONString(Object obj) throws Exception{
 									
-			String jsonList = objMapper.writeValueAsString(obj);			
-			
-			return new String(jsonList.getBytes("UTF-8"), "ISO-8859-1");
+			String jsonList = objMapper.writeValueAsString(obj);						
+			return new String(jsonList.getBytes("UTF-8"), "UTF-8");
 		}
 		
 		//안드로이드 테스트용
-		@RequestMapping( value="json/testAndroid",  method=RequestMethod.POST)
+		@RequestMapping( value="json/testAndroid",  method=RequestMethod.GET)
 		public String testAndroid() throws Exception{
 			
 			System.out.println("json/booking/testAndroid : GET");
@@ -102,7 +96,7 @@ public class BookingRestController {
 		}
 		
 		//[Android] 예매1단계 : 영화선택
-		@RequestMapping( value="json/getScreenMovieList", method=RequestMethod.POST)
+		@RequestMapping( value="json/getScreenMovieList", method=RequestMethod.GET)
 		public String getScreenMovieList(Model model) throws Exception{
 			
 			System.out.println("json/booking/getScreenMovieList : GET");

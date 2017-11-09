@@ -1,6 +1,7 @@
 package com.amc.service.alarm.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.amc.common.Search;
 import com.amc.common.util.RestApiUtil;
@@ -29,6 +31,7 @@ import com.amc.service.domain.User;
 import com.amc.service.movie.MovieDAO;
 import com.amc.service.screen.ScreenDAO;
 import com.amc.service.user.UserDAO;
+import com.amc.web.booking.BookingRestController;
 
 @Service("alarmServiceImpl")
 public class AlarmServiceImpl implements AlarmService {
@@ -362,24 +365,28 @@ public class AlarmServiceImpl implements AlarmService {
 		search.setSearchKeyword(serialNo);
 		ScreenContent screenContent;
 		Booking booking;
+		BookingRestController brc = new BookingRestController();
+		JSONObject jsonObject = new JSONObject();
 		
 		switch (type) {
 		case "booking":
 				booking = bookingDAO.getBooking(serialNo);
+				jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(booking.getBookingSeatNo(), 1000, null));
+				
 				pushValue.put("subject", "예매 완료!");
 				if(booking.getScreenContent().getPreviewFlag().equals("Y")){
 					pushValue.put("content", "[예매 확인]\n"+
 							"예매번호 : "+booking.getBookingNo()+
 							"\n시사회명 : "+booking.getScreenContent().getPreviewTitle()+
 							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
-							"\n좌석 : "+booking.getBookingSeatNo()+ 
+							"\n좌석 : "+(String)jsonObject.get("seatNo")+ 
 							"\n예매가 완료되었습니다.");
 				}else{
 					pushValue.put("content", "[예매 확인]\n"+
 							"예매번호 : "+booking.getBookingNo()+
 							"\n영화명 : "+booking.getScreenContent().getPreviewTitle()+
 							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
-							"\n좌석 : "+booking.getBookingSeatNo()+ 
+							"\n좌석 : "+(String)jsonObject.get("seatNo")+ 
 							"\n예매가 완료되었습니다.");
 				}
 			break;
@@ -399,9 +406,12 @@ public class AlarmServiceImpl implements AlarmService {
 			}else{
 				title = movieDAO.getMovie(screenContent.getMovie().getMovieNo()).getMovieNm();
 			}
+			
+			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(alarmSeatNo, 1000, null));
+			
 			pushValue.put("subject", "티켓 취소 알림!");
-			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+alarmSeatNo+" 취소되었습니다!");
-			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+alarmSeatNo+" 취소되었습니다!");
+			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
+			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
 			break;
 			
 		case "userCertification":

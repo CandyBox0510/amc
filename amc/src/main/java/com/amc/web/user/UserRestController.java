@@ -132,23 +132,33 @@ public class UserRestController {
 
 	@RequestMapping(value="/androidGetUser")
 	public String androidGetUser(@RequestParam("email")String userId, 
-									@RequestParam("password")String password) throws Exception{
+									@RequestParam(value="password", defaultValue="")String password,
+									@RequestParam(value="kakaoLogin", defaultValue="false")String kakaoLogin) throws Exception{
+		
+		if(kakaoLogin.equals("true")){
+			System.out.println("안드로이드 카카오로그인 : userId : "+userId);
+		}else{
+			System.out.println("안드로이드 : userId : "+userId+" password :"+password);
+		}
 		
 		String jsonString = "";
 		
-		System.out.println("안드로이드 : userId : "+userId+" password :"+password);
-		
 		User dbUser=userService.getUser(userId);
 		
-		if(dbUser==null){
+		if(dbUser==null){ //맞는 유저가 없음
 			return jsonString;
-		}else{
-			if(dbUser.getPassword().equals(password)){
-				System.out.println("안드로이드 유저 id,pw 맞음");
+		}else{ //맞는 유저가 있음(카카오 로그인이면 그냥통과, 아니라면 패스워드도 확인)
+			if(kakaoLogin.equals("false")){
+				if(dbUser.getPassword().equals(password)){
+					System.out.println("안드로이드 유저 id,pw 맞음");
+				}else{
+					return jsonString;
+				}
 			}else{
-				return jsonString;
+				System.out.println("안드로이드 유저 id 맞음(카카오로그인)");
 			}
 		}
+		
 		System.out.println("dbUser : " + dbUser);
 		
 		ObjectMapper objectMapper = new ObjectMapper();

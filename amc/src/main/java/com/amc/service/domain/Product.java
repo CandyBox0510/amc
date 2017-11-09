@@ -7,7 +7,7 @@ public class Product {
 	private int prodNo;
 	private int prodPrice;
 	private int totalStock;
-/*	private int salesStock;*/
+	private int salesStock;
 	private int stock;
 	private int expiryDate;
 	private String prodImage;
@@ -49,13 +49,13 @@ public class Product {
 	public void setTotalStock(int totalStock) {
 		this.totalStock = totalStock;
 	}
-/*	public int getSalesStock() {
+	public int getSalesStock() {
 		return salesStock;
 	}
 	public void setSalesStock(int salesStock) {
 		this.salesStock = salesStock;
 	}
-*/	public int getStock() {
+	public int getStock() {
 		return stock;
 	}
 	public void setStock(int stock) {
@@ -118,11 +118,12 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [prodNo=" + prodNo + ", prodPrice=" + prodPrice + ", totalStock=" + totalStock + ", stock="
-				+ stock + ", expiryDate=" + expiryDate + ", prodImage=" + prodImage + ", prodName=" + prodName
-				+ ", prodDetail=" + prodDetail + ", prodSetInfo=" + prodSetInfo + ", proTranCode=" + proTranCode
-				+ ", prodType=" + prodType + ", salesOpenDate=" + salesOpenDate + ", salesEndDate=" + salesEndDate
-				+ ", prodRegDate=" + prodRegDate + "]";
+		return "Product [prodNo=" + prodNo + ", prodPrice=" + prodPrice + ", totalStock=" + totalStock + ", salesStock="
+				+ salesStock + ", stock=" + stock + ", expiryDate=" + expiryDate + ", prodImage=" + prodImage
+				+ ", prodName=" + prodName + ", prodDetail=" + prodDetail + ", prodSetInfo=" + prodSetInfo
+				+ ", proTranCode=" + proTranCode + ", prodType=" + prodType + ", salesOpenDate=" + salesOpenDate
+				+ ", salesEndDate=" + salesEndDate + ", prodRegDate=" + prodRegDate + "]";
 	}
 
+	
 }

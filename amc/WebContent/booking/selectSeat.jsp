@@ -235,11 +235,10 @@
 			//alert('카카오페이관련 event 발생입니다.');
 			  
 		  } else if(event.data.indexOf("id")==0){
-			  alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
 			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
 		  }else if(event.data.indexOf("duplicated")==0){
-			  alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
+			  //내가 고른좌석을 다른사람이 예매한경우
 			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');
 			  
 			  $("input[name='bookingSeatNo']").val("");
@@ -253,8 +252,7 @@
 			 
 			 
 		  } 
-		  else{
-			  alert("좌석번호  :"+event.data);		  	
+		  else{	  	
 			  $("input[name='bookingSeatNo']").val(event.data);
 			  var no = ${screenContent.ticketPrice};
 			  $.ajax(
@@ -313,6 +311,8 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
+   		
+   		<br><br><br>
         
         <!-- Main content -->
         <div class="place-form-area">
@@ -375,14 +375,10 @@
 
 			</div>
         </section>  
-          <div class="clearfix"></div>
+          <div class="clearfix"></div>        
         
-        
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
        
          <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">
