@@ -112,20 +112,11 @@
                     </div>
                 </div>
                 
-                 <p>
+                 <p></p>
                 
 
 
-               <div id="row1" style="float:center;" >
-					<form id='contact-info' method='post' novalidate="" class="form contact-info">
-		                   <div class="contact-info__field contact-info__field-mail"  >
-		                        <input type='email' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
-		                        class="form__mail" style="width:50%" autofocus autocomplete="off" required >		                     
-		                        <a href = "javascript:fncSendMail()" class="watchlist list--download">QR코드 전송하기</a>                      
-		                    </div>                                         
-	                 </form>
-                </div>
-
+              <center><a href="/booking/getBooking?bookingNo=${booking.bookingNo}" class="btn btn-md btn--warning">예매 확인 및 QR코드 보내기</a></center>
 
                </div> 
    
@@ -489,7 +480,7 @@
 		  display: block;
 		  margin-bottom: 2.5px;
 		  font-family: 'PT Mono';
-		  font-size: 18px;
+		  font-size: 15px;
 		  text-transform: uppercase;
 		  text-align: left;
 		  vertical-align:middle
