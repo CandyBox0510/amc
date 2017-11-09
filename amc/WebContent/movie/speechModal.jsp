@@ -13,8 +13,8 @@
 		<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+		<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
 		
     
         <title>영화음성검색</title>
@@ -59,7 +59,8 @@
    
         function fncWebSpeech() {
     		// document.addPurchase.submit();
-    		$("form").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+    		alert("aaaa")
+    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
     	}
     	
     	$(function() {
@@ -101,62 +102,70 @@
 </head>
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/topToolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
+ <!-- open/close -->
+    <div style="background-color:#FBEEE6" class="speech-overlay speech-overlay-hugeinc" id="speechCall" >
+    
+         <section style="background-color:#1C2833" class="container">
+         
+            <div style="background-color:#AF7AC5" class="col-sm-4 col-sm-offset-4">
+                <button type="button" class="speech-overlay-close">Close</button>
+	
+					<form id="webspeech"  class="speech" method="POST" novalidate=''>  
+						<!-- <div class="center"> -->
+						<div style="border: 1px dashed #BDBDBD; background-color: #CB4335;  width: 350px; height: 100px; margin-left: auto;
+					 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+					  	
+					  	<div class="field-wrap">
+					  	
+					    <noscript>Please <a href="http://www.enable-javascript.com/" target="_blank">enable JavaScript</a>. Thank You! :D</noscript>
+					    <div style="background-color:#5D6D7E"  class="content"   >
+					        <h3 class="yes">영화 음성 검색 중....</h3>
+					        <h3 class="no">인터넷 익스플로우는 지원되지 않는 Browser 입니다.</h3>
+					    </div>  
+								<br/> <br/>
+								
+								   <img src="../images/movie/speechListening2.gif">    
+							
+								<div class="widget" >
+								
+								
+								    
+							        <div class="example">
+							             <!--   영화 검색 : -->
+							            <input type="search" name="abc" id="speech-transcript">          
+							                     
+							            <input type="button" value="클릭후 말해주세요 " id="speech-btn">   
+							            
+							            <hr/>          
+							               
+							        </div>
+							</div>	        
+							    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							    <i class='glyphicon glyphicon-ok' id="voidSearchOk" style="color:green"></i>  &nbsp;&nbsp;&nbsp;&nbsp;	
+							    
+							  
+							    
+							   <!--  <i class='glyphicon glyphicon-remove' id="voidSearchNo" style="color:red"></i>	 -->
+							    
+								
+							  	
+							  	<div class="form-group">    
+							    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
+							        <input type="hidden" class="form-control" id="searchKeyword" name="searchKeyword"      value="" > 
+							    			
+							    </div>
+							    
+							     
+							   </div>
+							
+			    
+					  	</div>
+			  </form>
+		</div>
 
-	<br/> <br/> <br/> <br/> <br/> <br/>
-	
-	
-	<!-- <div class="center"> -->
-	<div style="border: 1px dashed #BDBDBD; background-color: #F4D03F;  width: 1000px; height: 100px; margin-left: auto;
- 	margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
-  	
-    <noscript>Please <a href="http://www.enable-javascript.com/" target="_blank">enable JavaScript</a>. Thank You! :D</noscript>
-    <div class="content" >
-        <h3 class="yes">영화 음성 검색 중....</h3>
-        <h3 class="no">인터넷 익스플로우는 지원되지 않는 Browser 입니다.</h3>
-    </div>  
-      
-<form id="webspeech"  method="POST">  
-	<br/> <br/>
-	
-	   <img src="../images/movie/speechListening2.gif">    
-
-	<div class="widget" >
-	
-	
-	    
-        <div class="example">
-             <!--   영화 검색 : -->
-            <input type="search" name="abc" id="speech-transcript">          
-                     
-            <input type="button" value="클릭후 말해주세요 " id="speech-btn">   
-            
-            <hr/>          
-               
-        </div>
-        
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <i class='glyphicon glyphicon-ok' id="voidSearchOk" style="color:green"></i>  &nbsp;&nbsp;&nbsp;&nbsp;	
-    
-  
-    
-   <!--  <i class='glyphicon glyphicon-remove' id="voidSearchNo" style="color:red"></i>	 -->
-    
-	
-  	
-  	<div class="form-group">    
-    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
-        <input type="hidden" class="form-control" id="searchKeyword" name="searchKeyword"      value="" > 
-    			
-    </div>
-    
-    
-   </div>
-    
-  </div>
- </form>
+	 </section>
+ 
+ </div>
 
 <script>
     
@@ -207,39 +216,12 @@
                     
                 };
             }
-            
-            
            
         })(window);
           
     </script>
     
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-     
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    
-    
-         
-    <div class="bottom low ">
-		<!-- ToolBar Start /////////////////////////////////////-->
-		<%-- <jsp:include page="/layout/bottomToolbar.jsp" /> --%>
-		<!-- ToolBar End /////////////////////////////////////-->
-	</div>
+ 
     
 </body>
 </html>

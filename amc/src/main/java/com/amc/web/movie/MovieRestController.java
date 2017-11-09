@@ -191,7 +191,7 @@ public class MovieRestController {
 
 		Movie movie = new Movie();
 		movie.setMovieCd(movieCd);
-		// movie.setEndDt(movieEndDate);
+		//movie.setEndDt(movieEndDate);
 		movie.setSynopsis(syonpsis);
 		movie.setTrailer(trailer);
 
@@ -313,18 +313,25 @@ public class MovieRestController {
 		}
 		search.setPageSize(pageSize);
 
+		search.setSearchKeyword2("5");
+		
+		System.out.println("상영 예정 영화 콜 !!!!");
+		
+		if (search.getSearchKeyword() != null) {				
+			search.setSearchCondition("1");	
+		}
+		
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
 
 		// Business logic 수행
-		Map<String, Object> map = movieService.getMovieList(search);
-
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-		System.out.println(resultPage);
-
-		System.out.println("list show ::" + map.get("list"));
-
+		Map<String , Object> map= movieService.getMovieList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);	
+		
+		System.out.println("list show ::"  + map.get("list"));
+		
 		String str = "";
 
 		List<Movie> list = (List<Movie>) map.get("list");
@@ -365,17 +372,76 @@ public class MovieRestController {
 				break;
 			case 7:
 				movieObject.put("color", "darkred");
-				break;
+				break;			
 			default:
 				movieObject.put("color", "ivory");
 				break;
-			}
-
-			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovieNo() + "&menu=commingsoon");
-
-			movieArray.add(i, movieObject);
-			movieObject = new JSONObject();
+			} 
+	
+        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovieNo()+"&menu=commingsoon");
+		
+        	movieArray.add(i, movieObject);		    
+        	movieObject = new JSONObject();	   	    
 		}
+            
+       
+		//*
+		//* Domain 객체에서 받아서 Json으로 넣는 방법 
+		//*
+		/*List <MovieOnScheule> movieOnSchedule = movieService.getScreenCalendar(search);	
+		
+        //Movie JsonObject 선언(개별)
+        JSONObject movieObject = new JSONObject();
+        //movie event의 JSON정보를 담을 Array 선언        
+        JSONArray movieArray = new JSONArray();       
+        //monthly 정보가 들어갈 JSONObject 선언
+        JSONObject monthlynfo = new JSONObject();        
+      
+			
+		for (int i = 0; i < movieOnSchedule.size(); i++) {
+		
+			movieObject.put("id", movieOnSchedule.get(i).getId());	
+			movieObject.put("name", movieOnSchedule.get(i).getName());			
+			movieObject.put("startdate", movieOnSchedule.get(i).getStartdate());
+			
+			switch (i) {
+			case 0:
+				movieObject.put("color", "red");
+				break;
+			case 1:
+				movieObject.put("color", "orange");
+				break;
+			case 2:
+				movieObject.put("color", "green");
+				break;
+			case 3:
+				movieObject.put("color", "blue");
+				break;
+			case 4:
+				movieObject.put("color", "purple");
+				break;
+			case 5:
+				movieObject.put("color", "skyblue");
+				break;
+			case 6:
+				movieObject.put("color", "brown");
+				break;
+			case 7:
+				movieObject.put("color", "darkred");
+				break;			
+			default:
+				movieObject.put("color", "ivory");
+				break;
+			} 
+	
+			movieObject.put("url", "getMovie?movieNo="+movieOnSchedule.get(i).getId()+"&menu=commingsoon");
+				
+		    movieArray.add(i, movieObject);
+		    
+		    movieObject = new JSONObject();	
+		}*/
+		
+		System.out.println("movieArray values : " + movieArray.toString() );
 
 		// *
 		// * Domain 객체에서 받아서 Json으로 넣는 방법
@@ -651,7 +717,7 @@ public class MovieRestController {
 		}
 
 		pageSize = 12;
-
+		
 		System.out.println("무한스크롤용 위시리스트 유저아이디 : " + userId);
 
 		search.setPageSize(pageSize);

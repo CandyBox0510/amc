@@ -1,61 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html>
-            <html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html class="no-js" lang="ko">
 
 <head>
-      <!-- Basic Page Needs -->
-        <meta charset="utf-8">
-        <title>회원 정보수정</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
-
-        <!-- Modernizr --> 
-        <!-- <script src="/js/external/modernizr.custom.js"></script> --> 
-    
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
    
-        <!--   Sweetalert2 CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>
 </head>
 
 <body>
+
+
+    
    <div class="wrapper">
         <!-- Banner -->
          <div class="banner-top">
@@ -66,15 +24,15 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
 		  </header>  
-    <div class="container">
+    <div class="container" id="body">
         
         <!-- Main content -->
         <!--  <section class="container"> -->
         
                 <!-- Search bar -->
- 			<!-- <div class="col-sm-12"> -->
+ 			<div class="col-sm-12">
  			
-                <h1 class="page-header"> 현재 상영 영화 </h1>                
+                <h1 class="page-heading"> 현재 상영 영화 </h1>                
 				
 			    	<div class="col-md-2 text-right">          
 	                      <form class="form-search" name="detailForm">
@@ -86,22 +44,26 @@
 				   </div>
 				   		
 				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
-				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	  
-             		  
+				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"> </i>	
+				
+	         		  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <!-- Login Common PlugIn -->
+				
 				  <jsp:include page="/layout/loginModal.jsp" />   
+				
+				  
 				  
 				  <hr/>   
 				  
-              
+             
              
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <!-- Login Common PlugIn -->
-				 <%--  <jsp:include page="/layout/loginModal.jsp" /> --%>     
-              
+				
+               
              
                 <div class="cinema-wrap">
 	            	<div class="row">
@@ -182,49 +144,70 @@
     </div>
     	 <div class="clearfix"></div>	
 	
-	<!-- </div>	 -->
+	</div>	
 
-	
-	   
-        
 	 
 		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<!-- SpeechModal PlugIn -->
+		
 		
 		
         <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
        
 		<!-- ------------------------------------  -->
 		<script src="/js/custom.js"></script>
+		<%-- <jsp:include page="/movie/speechMovie.jsp" />  --%>
 		
-				<jsp:include page="/layout/bottomToolbar.jsp" />
-		<jsp:include page="/layout/loginModal.jsp" />
-			
-   <!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
-
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
+	
 		
+		
+		<!--  Semantic UI modal windows pop-up 용  -->
+		<div class="ui mini modal" >
+		<!-- <div class="center"> -->	
+		<div style="border: 1px dashed #BDBDBD; background-color: #FBFCFC;   margin-left: auto;
+ 		 margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+		 <div class="header">영화 음성 검색 중....</div>
+		  <div class="content" >
+		   	<p>
+		   		<form id="webspeech"  method="POST">  
+		   		   <div class="image content">
+		   				 <img class="image">
+						       <img src="../images/movie/speechListening2.gif"> 
+						         <div class="description">
+						            
+						            <div class="ui loading search">
+									  <div class="ui icon input">
+									     <input type="text" class="prompt" name="abc" id="speech-transcript" placeholder="Search...">
+									     <i class="search icon"></i>
+									  </div>
+									  <div class="results"></div>
+									</div>
+						            
+						             
+						            <input type="button" value="클릭후 말해주세요 " id="speech-btn" class="positive ui button">  
+						            
+						            <br/><br/>
+						        
+						        	<div class="actions">
+						        		   <i class='fa fa-check fa-3x' id="voidSearchOk" style="color:#3498DB"></i>  &nbsp;	
+     								 
+						        	  <div class="ui red deny button">
+									              나가기 
+							     	 </div>
+						           </div>
+						             
+						         	<div class="form-group">    
+							    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
+							        <input type="hidden" class="form-control" id="voiceSearchKeyword" name="searchKeyword" value="" > 
+    			
+      							 </div>
+      							 </div>
+						 </div>
+		   		</form>
+		  </div>
+	</div>
+</div>
+	
 </body>
        
     
@@ -286,21 +269,130 @@
 					
 				 });
 				
+				//============= "음성 검색 실행 함수 " 처리 =============	
+			   function fncWebSpeech() {
+		    		// document.addPurchase.submit();
+		    		// alert("speech post call...")
+		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+		    	}
+		    	
+		    	$(function() {
+		    			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		    			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		    			 $( "#voidSearchOk" ).on("click" , function() {
+		    					//Debug..
+		    					// <!-- <a href="javascript:history.go(-1)"></a> -->
+		    					//console.log("value : "+$("#voidSearchOk" ).val());
+		    					fncWebSpeech()
+		    			});
+		    	});	
 				
+			
+	    	   (function (window, undefined) {
+	                "use strict";
+	                
+	                var document = window.document,
+	                    docElement = document.documentElement,
+	                    SpeechRecognition = window.webkitSpeechRecognition ||
+	                                        window.mozSpeechRecognition ||
+	                                        window.msSpeechRecognition ||
+	                                        window.oSpeechRecognition ||
+	                                        window.SpeechRecognition;
+	                function addClass(className) {
+	                    docElement.className = docElement.className + ' ' + className;
+	                }
+	                docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
+	                if ( SpeechRecognition !== undefined ) {
+	                    addClass('feature');
+	                } else {
+	                    addClass('no-feature');
+	                }
+	            })(window);
+	    	   
+	    	   
+	    	   var speech_text ="";   
+	    	    
+	           (function speechFunction(window, undefined) {
+	               "use strict";
+	               var speechBtn = document.getElementById('speech-btn'),
+	                   SpeechRecognition = window.webkitSpeechRecognition ||
+	                                       window.mozSpeechRecognition ||
+	                                       window.msSpeechRecognition ||
+	                                       window.oSpeechRecognition ||
+	                                       window.SpeechRecognition,
+	                   speechTranscript = document.getElementById('speech-transcript'),
+	                   
+	                  
+	                   sr;
+	               if ( SpeechRecognition !== undefined ) {
+	                   sr = new SpeechRecognition();
+	                   speechBtn.addEventListener('click', function () {
+	                       sr.start();
+	                   });
+	                   sr.onaudiostart = function () {
+	                       speechBtn.setAttribute('disabled', 'disabled');
+	                       speechBtn.value = "말해주세요!";                             
+	                       
+	                   };
+	                   sr.onspeechstart = function () {
+	                       speechBtn.value = "듣고 있습니다....";
+	                   };
+	                   sr.onspeechend = function () {
+	                       speechBtn.value = '...그리고 끝내주세요...';
+	                   };
+	                   sr.onend = function () {
+	                       speechBtn.value = '계속 하려면 여기를 클릭해주세요!';
+	                       speechBtn.removeAttribute('disabled');
+	                   };
+	                   sr.onresult = function (event) {
+	                       speechTranscript.value = event.results[0][0].transcript;
+	                      
+	                       console.log("speechTranscript :: " + speechTranscript.value);
+	                       $("#voidSearchOk").val(speechTranscript.value);
+	                       // alert("speeach2 : "+$("#voidSearchOk").val()); 
+	                       
+	                       var voiceSearch = $("#voidSearchOk").val();
+	                       $("#voiceSearchKeyword").val(voiceSearch);
+	                       //alert("speeach2"  + voiceSearch);                  
+	                       
+	                   };
+	               }
+	          })(window);
+		    	
 
+				
+				// 음성 Pop-up 재 구성 
+			    /* $('#voidSearchIcon').click(function (e){
+			    	alert("aaaa")
+			        e.preventDefault();
+			        $('#speechCall').removeClass('close').addClass('open');
+			    });
+			
+			    $('.speech-overlay-close').click(function (e) {
+			        e.preventDefault;
+			        $('.speech-overlay').removeClass('open').addClass('close');
+
+			        setTimeout(function(){
+			            $('.speech-overlay').removeClass('close');}, 500);
+			    });
+ 				*/
 			    
 					//============= "음성 검색 Icon"  Event  처리 =============	
-				 $(function() {
+				  $(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "#voidSearchIcon").on("click" , function() {
-						self.location = "/movie/getMovieList?menu=voiceRegniiton";
+						//alert("modal start...")
+						$('.ui.modal')  
+						  .modal('show')
+						;
+						/* self.location = "/movie/getMovieList?menu=voiceRegniiton"; */
 					});
 					
-				 });
+				 }); 
 				
 				
 					//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
-					$(function() {
+				$(function() {
 						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 						 
 						  $(document).on("click", ".fa-heart-o", function () {
@@ -312,8 +404,8 @@
 								var movieNo = $(this).find('#scMovieNo').val();		
 								var userId = $(this).find('#userId').val();			
 								
-								alert("movieNo: " + movieNo); 					
-								alert("userId: " + userId); 
+								// alert("movieNo: " + movieNo); 					
+								// alert("userId: " + userId); 
 								
 						 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
 							    
@@ -350,8 +442,8 @@
 							var movieNo = $(this).find('#scMovieNo').val();		
 							var userId = $(this).find('#userId').val();			
 							
-							alert("movieNo: " + movieNo); 					
-							alert("userId: " + userId); 
+							// alert("movieNo: " + movieNo); 					
+							// alert("userId: " + userId); 
 							
 							
 							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
@@ -415,14 +507,16 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-/* 	 body {
-           /* padding-top: 70px; */
+
+	
+	 #body {
+           padding-top: 70px;
            }
            .thumbnail {
            width: 300px;
            height: 250px;
            overflow: auto;
-     } */	
+     }	
      
      #searchIcon
       {     color: #fff;       		
@@ -494,11 +588,164 @@
 	  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
 	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
 	}
+	
+	/* Overlay style */
+	.speech-overlay {
+	  position: fixed;
+	  width: 100%;
+	  height: 100%;
+	  top: 0;
+	  left: 0;
+	  background: rgba(0,255,0,0.3);
+	  /* background: rgba(76, 65, 69, 0.6); */
+	  z-index: 300;
+	}
+	/* Overlay closing cross */
+	.speech-overlay .speech-overlay-close {
+	  width: 60px;
+	  height: 60px;
+	  position: absolute;
+	  right: 15px;
+	  top: 0px;
+	  overflow: hidden;
+	  border: none;
+	  background-color: transparent;
+	  color: transparent;
+	  outline: none;
+	  z-index: 310;
+	}
+	.speech-overlay .speech-close:before {
+	  content: "\f00d";
+	  font-size: 13px;
+	  font-family: "FontAwesome";
+	  color: #4c4145;
+	  position: absolute;
+	  top: 4px;
+	  left: 0;
+	  width: 100%;
+	  text-align: center;
+	}
+	.speech-overlay-hugeinc {
+	  opacity: 0;
+	  visibility: hidden;
+	  -webkit-transition: opacity 0.5s, visibility 0s 0.5s;
+	  transition: opacity 0.5s, visibility 0s 0.5s;
+	}
+	.speech-overlay-hugeinc.open {
+	  opacity: 1;
+	  visibility: visible;
+	  -webkit-transition: opacity 0.5s;
+	  transition: opacity 0.5s;
+	}
+	.speech-overlay-hugeinc .speech {
+	  -webkit-perspective: 1200px;
+	  perspective: 1200px;
+	  opacity: 0.4;
+	  -webkit-transform: translateY(-25%) rotateX(35deg);
+	  transform: translateY(-25%) rotateX(35deg);
+	  -webkit-transition: -webkit-transform 0.5s, opacity 0.5s;
+	  transition: transform 0.5s, opacity 0.5s;
+	}
+	.speech-overlay-hugeinc.open .speech {
+	  opacity: 1;
+	  -webkit-transform: rotateX(0deg);
+	  transform: rotateX(10deg);
+	}
+	.speech-overlay-hugeinc.close .speech {
+	  -webkit-transform: translateY(25%) rotateX(-35deg);
+	  transform: translateY(25%) rotateX(-35deg);
+	}	
+	
+	.speech .success {
+	  background-color: #ffd564;
+	  font: 18px 'aleobold', sans-serif;
+	  text-transform: uppercase;
+	  color: #4c4145;
+	  text-align: center;
+	  padding-bottom: 28px;
+	  padding-top: 39px;
+	  margin-top: 50px;
+	  margin-bottom: 58px;
+	}
 
+	.speech {
+  	 background-color: #ffffff;
+  	 padding-top: 58px;
+     padding-bottom: 22px;
+	}
+	.speech .speech__title {
+	  font-size: 22px;
+	  font-family: 'aleobold', sans-serif;
+	  line-height: 20px;
+	  color: #4c4145;
+	  text-transform: uppercase;
+	  text-align: center;
+	  margin: 0;
+	  margin-bottom: 28px;
+	}
+	.speech .speech__title .speech-edition {
+	  font-size: 16px;
+	  font-weight: normal;
+	  font-family: 'aleoitalic', sans-serif;
+	  text-transform: none;
+	}
+	.speech .speech__tracker {
+	  text-align: center;
+	  font: 16px 'aleoitalic', sans-serif;
+	  color: #4c4145;
+	  margin: 33px 0 35px;
+	}
+	.speech .form__tracker {
+	  font-size: 13px;
+	  display: block;
+	  margin-top: 39px;
+	}
+	.speech .form__tracker:hover {
+	  color: #fe505a;
+	}
+	.speech .speech__input {
+	  font-size: 13px;
+	  color: #b4b1b2;
+	  width: 100%;
+	  -webkit-box-shadow: none;
+	  box-shadow: none;
+	  -webkit-appearance: none;
+	  border: 1px solid #dbdee1;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  margin: 5px 0;
+	  padding: 9px 20px 8px;
+	}
+	.speech .speech__check-info {
+	  font-family: 'Roboto', sans-serif;
+	  font-size: 13px;
+	  color: #b4b1b2;
+	  display: block;
+	  margin-top: 3px;
+	  margin-bottom: 27px;
+	}
+	.speech .speech__control {
+	  text-align: center;
+	}
+	
+   .no-js .content,
+   .feature .no,
+   .no-feature .yes,
+   .no-feature .example {
+   
+    display: none;
+    }
+   
+   
     html{
      height: auto;
     }
       
 </style>	
+
+ <!-- Semantic  UI Applied -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
 
 </html>

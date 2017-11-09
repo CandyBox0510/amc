@@ -86,7 +86,7 @@
 
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>°³ºÀ³¯Â¥ </strong></div>
-			<input 	type="date" value="${movie.openDt}" name="openDt" class="ct_input_g" 
+	  		<input 	type="date" value="${movie.openDt}" name="openDt" class="ct_input_g" 
 							style="width: 160px; height: 20px" maxLength="30"/>					
 		</div>
 
