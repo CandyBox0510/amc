@@ -12,33 +12,6 @@
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
-
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-    
     	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
@@ -255,33 +228,41 @@
 		  else{	  	
 			  $("input[name='bookingSeatNo']").val(event.data);
 			  var no = ${screenContent.ticketPrice};
-			  $.ajax(
-				{
-				    url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,						
-					method : "GET" ,
-					dataType : "json" ,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					
-					success : function(JSONData, status) {
-						console.log('SeatNo 받아옴 : '+JSONData.seatNo);								
-                      if(JSONData != ""){
-                      	$("#seatNo").text(JSONData.seatNo);
-                      	$("#headCount").text(JSONData.headCount);
-                      	$("#totalPrice").text(JSONData.totalPrice);
-                      	
-                      	$("input[name='displaySeat']").val(JSONData.seatNo);
-                      	$("input[name='headCount']").val(JSONData.headCount);
-                    	$("input[name='totalTicketPrice']").val(JSONData.totalPrice);
-                      }//end of if문
-					}
-			});//end of ajax
-			
-			  	  
+			  
+			  if(event.data==null || event.data==""){
+				$("#seatNo").text("");
+               	$("#headCount").text("");
+               	$("#totalPrice").text("");
+               	
+               	$("input[name='displaySeat']").val("");
+               	$("input[name='headCount']").val("");
+              	$("input[name='totalTicketPrice']").val("");
+			  }else{
+				  $.ajax(
+							{
+							    url : "/booking/json/getDisplaySeatNo/"+event.data+"/"+no,						
+								method : "GET" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								
+								success : function(JSONData, status) {
+									console.log('SeatNo 받아옴 : '+JSONData.seatNo);								
+			                      if(JSONData != ""){
+			                      	$("#seatNo").text(JSONData.seatNo);
+			                      	$("#headCount").text(JSONData.headCount);
+			                      	$("#totalPrice").text(JSONData.totalPrice);
+			                      	
+			                      	$("input[name='displaySeat']").val(JSONData.seatNo);
+			                      	$("input[name='headCount']").val(JSONData.headCount);
+			                    	$("input[name='totalTicketPrice']").val(JSONData.totalPrice);
+			                      }//end of if문
+								}
+						});//end of ajax 
+			  }				  	  
 		  }
-
 	}
 	
 	
@@ -322,8 +303,8 @@
                     <img class="order__images" alt='' src="/images/tickets.png">
                     <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
                     <div class="order__control">
-                        <a href="#" class="order__control-btn active">Purchase</a>
-                        <a href="#" class="order__control-btn">Reserve</a>
+                        <a href="#" class="order__control-btn active">Booking</a>
+                        <!-- <a href="#" class="order__control-btn">Reserve</a> -->
                     </div>
                 </div>
             </div>
@@ -352,7 +333,7 @@
 
 			<div class="col-sm-8 col-md-9">	
 
-				<iframe id="child" src= "http://192.168.0.32:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}"
+				<iframe id="child" src= "http://183.98.215.171:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
 				style='width:100%; height:400px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
@@ -398,14 +379,11 @@
           	
      </div>
   
+        <!-- JavaScript-->
+		<script src="/js/external/modernizr.custom.js"></script>
+	
+		<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
 
-
-	<!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
         <!-- jQuery UI -->
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <!-- Bootstrap 3--> 
@@ -415,13 +393,6 @@
         <script src="/js/jquery.mobile.menu.js"></script>
          <!-- Select -->
         <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
-
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>

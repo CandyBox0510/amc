@@ -215,7 +215,7 @@ public class MovieRestController {
 
 		System.out.println("movieService.addMovie(movie) return code  :: " + rtn);
 
-		if ((rtn == 1 || rtn == 0)) {
+		if (rtn == 1) {
 			System.out.println("New record added successfully! ");
 			response.setContentType("text/xml");
 			response.setCharacterEncoding("UTF-8");

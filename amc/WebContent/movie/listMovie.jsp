@@ -76,9 +76,9 @@
 	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
+	                                    <p >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>개봉일 :${movie.openDt } </strong> </p>
 	                                    
 	                    	    <div style="text-align: left;">
     						    
@@ -92,14 +92,14 @@
 								<%-- bootstrap icon이 작동이 되질 않음      --%>
 								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
 										text-align : center; margin:0 auto;">   --%>	
-								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
 											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -517,6 +517,21 @@
            height: 250px;
            overflow: auto;
      }	
+     
+     .cinema .cinema__images:before {
+	    content: '';
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(76, 65, 69, 0);
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 1;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	   }
+     
      
      #searchIcon
       {     color: #fff;       		
