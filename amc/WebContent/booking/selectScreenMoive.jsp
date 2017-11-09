@@ -46,9 +46,7 @@
 		
 		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		
-  <script type="text/javascript">
-  ﾟωﾟﾉ= /｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_']; o=(ﾟｰﾟ)  =_=3; c=(ﾟΘﾟ) =(ﾟｰﾟ)-(ﾟｰﾟ); (ﾟДﾟ) =(ﾟΘﾟ)= (o^_^o)/ (o^_^o);(ﾟДﾟ)={ﾟΘﾟ: '_' ,ﾟωﾟﾉ : ((ﾟωﾟﾉ==3) +'_') [ﾟΘﾟ] ,ﾟｰﾟﾉ :(ﾟωﾟﾉ+ '_')[o^_^o -(ﾟΘﾟ)] ,ﾟДﾟﾉ:((ﾟｰﾟ==3) +'_')[ﾟｰﾟ] }; (ﾟДﾟ) [ﾟΘﾟ] =((ﾟωﾟﾉ==3) +'_') [c^_^o];(ﾟДﾟ) ['c'] = ((ﾟДﾟ)+'_') [ (ﾟｰﾟ)+(ﾟｰﾟ)-(ﾟΘﾟ) ];(ﾟДﾟ) ['o'] = ((ﾟДﾟ)+'_') [ﾟΘﾟ];(ﾟoﾟ)=(ﾟДﾟ) ['c']+(ﾟДﾟ) ['o']+(ﾟωﾟﾉ +'_')[ﾟΘﾟ]+ ((ﾟωﾟﾉ==3) +'_') [ﾟｰﾟ] + ((ﾟДﾟ) +'_') [(ﾟｰﾟ)+(ﾟｰﾟ)]+ ((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+((ﾟｰﾟ==3) +'_') [(ﾟｰﾟ) - (ﾟΘﾟ)]+(ﾟДﾟ) ['c']+((ﾟДﾟ)+'_') [(ﾟｰﾟ)+(ﾟｰﾟ)]+ (ﾟДﾟ) ['o']+((ﾟｰﾟ==3) +'_') [ﾟΘﾟ];(ﾟДﾟ) ['_'] =(o^_^o) [ﾟoﾟ] [ﾟoﾟ];(ﾟεﾟ)=((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+ (ﾟДﾟ) .ﾟДﾟﾉ+((ﾟДﾟ)+'_') [(ﾟｰﾟ) + (ﾟｰﾟ)]+((ﾟｰﾟ==3) +'_') [o^_^o -ﾟΘﾟ]+((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+ (ﾟωﾟﾉ +'_') [ﾟΘﾟ]; (ﾟｰﾟ)+=(ﾟΘﾟ); (ﾟДﾟ)[ﾟεﾟ]='\\'; (ﾟДﾟ).ﾟΘﾟﾉ=(ﾟДﾟ+ ﾟｰﾟ)[o^_^o -(ﾟΘﾟ)];(oﾟｰﾟo)=(ﾟωﾟﾉ +'_')[c^_^o];(ﾟДﾟ) [ﾟoﾟ]='\"';(ﾟДﾟ) ['_'] ( (ﾟДﾟ) ['_'] (ﾟεﾟ+(ﾟДﾟ)[ﾟoﾟ]+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟoﾟ]) (ﾟΘﾟ)) ('_');
-   </script>
+
    <script type="text/javascript">
 		  $( function() {
 		
@@ -56,6 +54,7 @@
 			
 			var movieNo =  $($(this).find("input[name='movieNo']")).val();
 			var movieName =  $($(this).find("input[name='movieName']")).val();
+			$(".item").eq(3).text("");
 			$(".item").eq(2).html("");
 			$(".item").eq(1).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
@@ -101,6 +100,8 @@
 		var date =  $($(this).find("input[name='day']")).val();
 		$(".item").eq(2).html("");
 		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"일");
+		$(".item").eq(3).text("");
+		
 		$.ajax(
 				{
 					url : "/booking/json/getScreenTime/"+date,						
@@ -148,22 +149,30 @@
 
 	});
 		
-	$(document).on("click", "#gotoSeat",  function(){
+	 $(document).on("click", "#gotoSeat",  function(e){
+		 
 		
-		//로그인 여부 체크
+		 //로그인 여부 체크
 		if( ${sessionScope.user==null} ){
 			
-			//alert('로그인 후 이용해 주세요');
 			e.preventDefault();
 	        $('.overlay').removeClass('close').addClass('open');
 			
 		}else{
 			
-			var screenContentNo = $(".item").eq(3).text();	
-			self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;
+			var screenContentNo = $(".item").eq(3).text();
+			if(screenContentNo.length<1){
+				alert('영화정보를 먼저 선택해주세요');
+			}else{
+				self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;	
+			}
+			
 		}
+		
+		
+		
 	
-	});
+	}); 
    </script> 
     <script type="text/javascript">
     
@@ -175,18 +184,18 @@
 
    <!--  <div class="wrapper"> -->
  	<!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+	<div class="banner-top">
+		<img alt='top banner' src="../images/banners/space.jpg">
+	</div>
+	<header class="header-wrapper header-wrapper--home">
+		<!-- ToolBar Start /////////////////////////////////////-->
+		<jsp:include page="/layout/topToolbar.jsp" />
+		<!-- ToolBar End /////////////////////////////////////-->
+	</header>
    		
     <input type="hidden" name="flag" value="1"> 
         <!-- Main content -->
-	<br><br>
+	<br><br><br>
         <!-- <section class="container" id="body"> -->
         <section class="container">
             <div class="order-container">
@@ -295,48 +304,10 @@
 
     <!-- </div> -->
 
-    <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
-
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
-
-                        <div class="social social--colored">
-                                <a href='#' class="social__variant fa fa-facebook"></a>
-                                <a href='#' class="social__variant fa fa-twitter"></a>
-                                <a href='#' class="social__variant fa fa-tumblr"></a>
-                        </div>
-
-                        <p class="login__tracker">or</p>
-                        
-                        <div class="field-wrap">
-                        <input type='email' placeholder='Email' name='user-email' class="login__input">
-                        <input type='password' placeholder='Password' name='user-password' class="login__input">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>remember me</label>
-                         </div>
-                        
-                        <div class="login__control">
-                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
-                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-            </div>
         <div class="clearfix"></div>        
         
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
         
 
 		<!-- JavaScript-->

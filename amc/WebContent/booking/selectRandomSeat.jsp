@@ -281,7 +281,7 @@ function kakaoPay(){
    		</header>
 
    
-        <br><br>
+        <br><br><br>
         <!-- Main content -->
         <div class="place-form-area">
         <section class="container">
@@ -349,11 +349,9 @@ function kakaoPay(){
         </section>  
      	<div class="clearfix"></div>        
         
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+		
        
          <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">
