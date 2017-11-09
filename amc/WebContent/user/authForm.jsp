@@ -74,50 +74,92 @@
    		</header>
 	
 		<div class="container" id="body">
-			<form id="findForm">
-		    	<fieldset>
-		        	<legend class="screen_in">이메일 인증 방법</legend>
-			 			<div class="row">
-			        		<div class="box email">
-			            		<label for="email">이메일</label>
-			            			<input value="" type="text" id="email" name="email" autofocus autocomplete="off" required />		            
-			        		</div>
-			        		<span id="helpBlock" class="help-block col-sm-6"></span>
-			        	</div>
-			 
-			        	<div class="box btn">
-			            	<button type="button" class="btn join">
-			                	<i class="fa fa-envelope"></i>
-			               	 		인증코드발송
-			            	</button>
-			        	</div>        
-		    	</fieldset><br/><br/><br/>
- 		   		
+			<form id="contact-info" method='post' novalidate="" class="form contact-info">
  		   		<fieldset>
 		        	<legend class="screen_out">SNS 계정 인증 방법</legend>
-						<div>		
-							<span class="col-md-4">
-								<a id="custom-login-btn" href="javascript:loginWithKakao()">
-									<img src="../images/user/kakao_account.png" class="img-rounded" width="70%">
-								</a><br/><br/>
-								<a href="/user/json/start" >
-									<img src="../images/user/naver.account.PNG" class="img-rounded" width="70%"> 
-								</a><br/><br/>
-								<a href="/user/kakaoGetCode" >
-									<img src="../images/user/google_account.png" class="img-rounded" width="70%"> 
-								</a>
-							</span>
+						<div align="center">		
+							<div class="row col-md-12" >
+								<div class="col-md-6">	
+									<a href="javascript:loginWithKakao()" ><img src="../images/user/kakao_account.png" class="img-rounded" width="40%"></a>
+								</div>
+								<div class="col-md-6" >
+									<a href="/user/json/start"><img src="../images/user/naver.account.PNG" class="img-rounded" width="50%"></a>
+								</div>
+								<!-- <div class="col-md-4">
+									<a href="/user/kakaoGetCode" ><img src="../images/user/google_account.png" class="img-rounded" width="70%"></a>
+								</div> -->
+							</div>
+							
 					    </div>
 		    	</fieldset>
+		    	<br/><br/><br/>
+		    	<fieldset>
+		        	<legend class="screen_out">이메일 인증 방법</legend>
+			 			<div class="center">
+			        		<div class="contact-info__field contact-info__field-mail" align="center">
+			            			<input class="form__mail" value="" type="text" id="email" name="email" autofocus autocomplete="off" placeholder='Your email' required />		            
+			        				<span id="helpBlock" class="help-block col-sm-8"></span>
+			        		</div>
+				        	<div class="box btn">
+				            	<button type="button" class="btn join">
+				                	<i class="fa fa-envelope"></i>
+				               	 		인증메일발송
+				            	</button>
+				        	</div> 
+						</div>  
+		    	</fieldset>
+		    	<br/><br/><br/>
+		    	      		
+ 				<fieldset>
+		        	<legend class="screen_out">휴대폰 인증 방법</legend>
+			 			<div class="center">
+			 		
+						
+               		<div class="contact-info__fieldrow col-sm-2">
+				      	<select class="search-sort" name="phone1" id="phone1">
+						  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
+							<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
+							<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
+							<option value="018" ${ ! empty user.phone1 && user.phone1 == "018" ? "selected" : ""  } >018</option>
+							<option value="019" ${ ! empty user.phone1 && user.phone1 == "019" ? "selected" : ""  } >019</option>
+						</select>
+		    		</div>
+		    		<div class="col-sm-2">
+		      			<input type="text" class="form__name" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="Phone number First">
+		    		</div>
+		    		<div class="col-sm-2">
+		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="Phone number last">
+		    		</div>
+				        	<div class="box btn">
+				            	<button type="button" class="btn join">
+				                	<i class="fa fa-envelope"></i>
+				               	 		인증코드발송
+				            	</button>
+				        	</div> 
+				        	
+  			 		
+						</div>  
+						<div class="col-sm-2">
+		      			<input type="text" class="form__name" id="AUTH" name="AUTH">
+		    		</div>
+				        	<div class="box btn">
+				            	<button type="button" class="btn join">
+				                	<i class="fa fa-envelope"></i>
+				               	 		인증 확인
+				            	</button>
+				        	</div> 
+		    	</fieldset>
+		    	<br/><br/><br/>
+		    	
 			</form> 
 		</div>	    
-		
+	</div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -144,7 +186,7 @@
 </body>
 </body>
 	<script type="text/javascript">
- 	var check = false;
+ 		var check = false;
 		function fncCheckUser() {
 			// Form 유효성 검증
 			var id=$('#email').val();
@@ -175,7 +217,7 @@
 		    	return;
 		     }
 			alert("메일을 성공적으로 보냈습니다.");
-			$("form").attr("method" , "POST").attr("action" , "/user/auth").submit();
+			$("#contact-info").attr("method" , "POST").attr("action" , "/user/auth").submit();
 		}
  		
 		//==>""이메일" 유효성Check / ID중복확인" Event 처리 및 연결
@@ -272,5 +314,36 @@
 	
 <style type="text/css">
  	#body{ padding-top: 100px; }
+ 	
+ .form .form__name {
+	  margin-bottom: 10px;
+	  width: 100%;
+	  border: none;
+	  box-shadow: none;
+	  border: 1px solid #dbdee1;
+	  -webkit-border-radius: 3px;
+	  -moz-border-radius: 3px;
+	  border-radius: 3px;
+	  font-size: 13px;
+	  color: #000000;
+	  padding: 9px 18px 10px !important;
+	  position: relative;
+	}
+input, select {
+		margin-bottom: 0px;
+		height: 100%;
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		border: 1px solid #dbdee1;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		font-size: 13px;
+		color: #000000;
+		padding: 9px 18px 10px;
+	} 
+
+
 </style>
 </html>
