@@ -199,7 +199,7 @@ public class BookingController {
 			}
 		}
 		
-		return "redirect:/booking/getAdminBookingList";			
+		return "redirect:/booking/getBookingList";			
 	}
 	
 	//관리자 예매목록조회

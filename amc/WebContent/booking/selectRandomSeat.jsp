@@ -8,40 +8,21 @@
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>Americode Cinema-booking2</title>
+
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
-
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-    
     	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
+		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+  
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
@@ -290,8 +271,7 @@ function kakaoPay(){
                     <img class="order__images" alt='' src="/images/tickets.png">
                     <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
                     <div class="order__control">
-                        <a href="#" class="order__control-btn active">Purchase</a>
-                        <a href="#" class="order__control-btn">Reserve</a>
+                        <a href="#" class="order__control-btn active">Booking</a>
                     </div>
                 </div>
             </div>
@@ -320,7 +300,7 @@ function kakaoPay(){
 			<div  class="col-sm-8 com-md-9">
 
 
-				<iframe id="child" src="http://127.0.0.1:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+				<iframe id="child" src="http://183.98.215.171:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
 
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
@@ -369,6 +349,23 @@ function kakaoPay(){
                 
        </div>        	
      </div>
+       <!-- JavaScript-->
+		<script src="/js/external/modernizr.custom.js"></script>
+	
+		<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
   
 		<script type="text/javascript">
             $(document).ready(function() {

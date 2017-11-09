@@ -7,7 +7,20 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="EUC-KR">
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Americode Cinema-booking2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	
+		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+  
 
 
 	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />

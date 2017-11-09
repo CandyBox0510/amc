@@ -135,7 +135,7 @@
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
-							                    </div>
+							                    </div><br/><br/><br/>
 							                <!-- </div> -->
 		                                </div>
 		                            </div>

@@ -122,6 +122,8 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public int deleteBooking(String bookingNo) throws IOException, JSONException {
 		
+		System.out.println("▶deleteBooking Service");
+		
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
