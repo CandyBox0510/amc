@@ -91,7 +91,7 @@
 				    			msg += '\n결제 금액 : ' + rsp.paid_amount;
 				    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
 
-				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
+				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://127.0.0.1:8080/booking/getBooking?bookingNo="+impUid);
 				    			$("input[name='impId']").val(impUid);
 				    			
 				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
@@ -235,11 +235,24 @@
 			//alert('카카오페이관련 event 발생입니다.');
 			  
 		  } else if(event.data.indexOf("id")==0){
-			  alert('클라이언트 ID를 받습니다. '+event.data.split(",")[1]);
 			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
-		  } else{
-			  alert("좌석번호  :"+event.data);		  	
+		  }else if(event.data.indexOf("duplicated")==0){
+			  //내가 고른좌석을 다른사람이 예매한경우
+			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');
+			  
+			  $("input[name='bookingSeatNo']").val("");
+			  $("#seatNo").text("");
+	          $("#headCount").text("");
+	          $("#totalPrice").text("");
+	           	
+	          $("input[name='displaySeat']").val("");
+	          $("input[name='headCount']").val("");
+	          $("input[name='totalTicketPrice']").val("");
+			 
+			 
+		  } 
+		  else{	  	
 			  $("input[name='bookingSeatNo']").val(event.data);
 			  var no = ${screenContent.ticketPrice};
 			  $.ajax(
@@ -298,6 +311,8 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
+   		
+   		<br><br><br>
         
         <!-- Main content -->
         <div class="place-form-area">
@@ -336,6 +351,7 @@
 	
 
 			<div class="col-sm-8 col-md-9">	
+
 				<iframe id="child" src= "http://192.168.0.32:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}"
 				style='width:100%; height:400px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
@@ -359,14 +375,10 @@
 
 			</div>
         </section>  
-          <div class="clearfix"></div>
+          <div class="clearfix"></div>        
         
-        
-        <div class="bottom low ">
-			<!-- ToolBar Start /////////////////////////////////////-->
-			<jsp:include page="/layout/bottomToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-  		</div>
+        <jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
        
          <input type="hidden" name="clientId" value=""/>
          <form id="addBooking">

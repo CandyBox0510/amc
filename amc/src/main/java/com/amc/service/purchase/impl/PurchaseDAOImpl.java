@@ -30,6 +30,7 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 
 	@Override
 	public void addPurchase(Purchase purchase) throws Exception {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2"+purchase);
 		sqlSession.insert("PurchaseMapper.addPurchase", purchase);
 		for(int i=1;i<purchase.getOrderStock();i++){
 			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+purchase);

@@ -3,7 +3,6 @@ package com.amc.web.movie;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
-import org.junit.internal.matchers.SubstringMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,8 +34,6 @@ import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
-
-import sun.print.resources.serviceui;
 
 //==> 영화관리  Controller
 @Controller
@@ -241,9 +236,7 @@ public class MovieController {
 		// System.out.println("Date format before :: openDate :: " +
 		// movie.getOpenDt());
 
-		// SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
-		// Date opendate = dt.parse(movie.getOpenDt().toString());
-		// Date enddate = dt.parse(movie.getEndDt().toString());
+	
 
 		String steelCuts = movie.getSteelCut();
 		System.out.println("steelCut" + steelCuts);
@@ -295,6 +288,23 @@ public class MovieController {
 		model.addAttribute("search", search);
 
 		if (menu.equals("manage")) {
+			
+			SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd");
+			
+			System.out.println( "openDate" + movie.getOpenDt().toString());
+			System.out.println( "endDate" + movie.getEndDt().toString());
+						
+					
+			String openD = movie.getOpenDt().toString();
+			String endD = movie.getEndDt().toString();
+			
+			String convertOpenDate = openD.replace("/", "-");
+			String convertEndDate = endD.replace("/", "-");
+			
+		
+			movie.setOpenDt(convertOpenDate);
+			movie.setEndDt(convertEndDate);
+			
 			System.out.println("updateMovie.jsp called");
 			System.out.println(movie + "겟무비액션");
 			return "forward:/movie/updateMovie.jsp";
@@ -409,6 +419,7 @@ public class MovieController {
         System.out.println("genre    : "  + movie.getGenres());
         System.out.println("rating   : "  + movie.getWatchGradeNm());
         System.out.println("openDate : "  + movie.getOpenDt());
+        
         System.out.println("RunningTime :"  + movie.getShowTm());
         System.out.println("EndDate : "  + movie.getEndDt());
         System.out.println("PostUrl : "  + movie.getPostUrl());
@@ -540,25 +551,6 @@ public class MovieController {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	//프리뷰 리스트 10/30 추가
 	
@@ -592,9 +584,6 @@ public class MovieController {
 		
 		return "forward:/movie/listMoviePreview.jsp";
 	};
-	
-	
-	
 	
 	
 }

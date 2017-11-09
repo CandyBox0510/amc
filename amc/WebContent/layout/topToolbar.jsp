@@ -1,85 +1,92 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
 <!doctype html>
 <html>
 <head>
-	<!-- Basic Page Needs -->
-        <meta charset="utf-8">
-        <title>AMovie</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
-        <!-- Open Sans -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
+<!-- Basic Page Needs -->
+<meta charset="utf-8">
+<title>AMovie</title>
+<meta name="description" content="A Template by Gozha.net">
+<meta name="keywords" content="HTML, CSS, JavaScript">
+<meta name="author" content="Gozha.net">
 
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+<!-- Mobile Specific Metas-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="telephone=no" name="format-detection">
 
-        <!-- Slider Revolution CSS Files -->
-        <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
-        <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
-        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
+<!-- Fonts -->
+<!-- Font awesome - icon font -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- Roboto -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'>
+<!-- Open Sans -->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
+
+<!-- Stylesheets -->
+
+<!-- Mobile menu -->
+<link href="/css/gozha-nav.css" rel="stylesheet" />
+<!-- Select -->
+<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+
+<!-- Slider Revolution CSS Files -->
+<link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
+<link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
+<link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css">
+
+<!-- Custom -->
+<link href="/css/style.css?v=1" rel="stylesheet" />
 
 
-        <!-- Modernizr --> 
-         <script src="/js/external/modernizr.custom.js"></script> 
-        
-        <!-- JavaScript-->
-		<!-- jQuery 3.1.1 --> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate  -->
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- Bootstrap 3 --> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<!-- Modernizr -->
+<script src="/js/external/modernizr.custom.js"></script>
 
-        <!-- Slider Revolution core JavaScript files -->
-        <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<!-- JavaScript-->
+<!-- jQuery 3.1.1 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')
+</script>
+<!-- Migrate  -->
+<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+<!-- Bootstrap 3 -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
-        <!-- Slider Revolution extension scripts. --> 
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<!-- Slider Revolution core JavaScript files -->
+<script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
 
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-        <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Stars rate -->
-        <script src="/js/external/jquery.raty.js"></script>
-        
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <!-- <script src="/js/form.js"></script> -->
-   		<!--이거주석처리안하면 로그인 안됨 -->
+<!-- Slider Revolution extension scripts. -->
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="/revolution/js/extensions/revolution.extension.video.min.js"></script>
 
+<!-- Mobile menu -->
+<script src="/js/jquery.mobile.menu.js"></script>
+<!-- Select -->
+<script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+<!-- Stars rate -->
+<script src="/js/external/jquery.raty.js"></script>
+
+<!-- Form element -->
+<script src="/js/external/form-element.js"></script>
+<!-- Form validation -->
+<!-- <script src="/js/form.js"></script> -->
+<!--이거주석처리안하면 로그인 안됨 -->
+
+<!-- Twitter feed -->
+<!-- <script src="/js/external/twitterfeed.js"></script> -->
+
+
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
         <!-- Twitter feed -->
         <!-- <script src="/js/external/twitterfeed.js"></script> -->
 	   
@@ -94,16 +101,16 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 </head>
 
-  <!--       <script type="text/javascript">
+<!--       <script type="text/javascript">
         <!-- <script src="/js/custom.js"></script> -->
-		
-         <script type="text/javascript">
-             $(document).ready(function() {
-               init_Home();
-             });
-	    </script>  
 
-		<script type="text/javascript">
+<script type="text/javascript">
+    $(document).ready(function() {
+        init_Home();
+    });
+</script>
+
+	<script type="text/javascript">
     	//============= "로그인"  Event 연결 =============
 		$( function() {
 			$(".userManage").on("click",function(){
@@ -226,11 +233,12 @@
 			
 			$("#userId").focus();
 			
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#login").on("click" , function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)	
+			$("#login").on("click" , function() { 
 				var id=$("#userId").val();
 				var pw=$("input:password").val();
 				
+
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
@@ -243,52 +251,92 @@
 					$("#password").focus();
 					return;
 				}
-				
-				$.ajax( 
-						{	
-							url : "/user/json/loginUser",
-							method : "POST" ,
-							async : false,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							data : JSON.stringify({
-								userId : id,
-								password : pw
-							}),
-							success : function(JSONData , status) {
-
-								//Debug...
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert("JSONData : "+ JSONData );
-								//alert("status : "+ status );
-									//alert(JSONData.role);
-									console.log(JSONData.userId);
-									
-									if( JSONData.role == 'not' ){
-										alert("탈퇴한회원입니다.");
-									}else if( JSONData !='' ){
-									//$(window.parent.document.location).attr("href","/index.jsp");
-									/* $(self.location).attr("href","/index.jsp"); */ 
-									window.parent.document.location.reload();
-									
-									}else{
-										alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요.");
-									}
-								},
-							error:function(request,status,error){
-								//alert(error);
-								//alert("아이디 , 패스워드를 확인하시고 다시 로그인2...");
-						    }
-					}); 
-				
+				$.ajax({	
+					url : "/user/json/loginUser",
+					method : "POST" ,
+					async : false,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						userId : id,
+						password : pw
+					}),
+					success : function(JSONData , status) {
+						console.log(JSONData.userId);
+						if( JSONData.role == 'not' ){
+							alert("탈퇴한회원입니다.");
+						}else if( JSONData.userId ==null || JSONData=='' ){
+							alert(JSONData+"아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+						}else{
+							window.parent.document.location.reload();
+						}
+					},
+					error:function(request,status,error){
+						//alert(error);
+				    }
+				}); 
 			});
-		});	
-
-    	
+		 });	 
+		 
+		
+		function loginUser() { 	
+			alert($("#userId").val());
+			console.log($("#userId").val());
+			var id=$("#userId").val();
+			var pw=$("input:password").val();
+			
+			if(id == null || id.length <1) {
+				alert("자바스크립트 제목으로 만든 이벤트");
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("#userId").focus();
+				return;
+			}
+			
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#password").focus();
+				return;
+			}
+			
+			$.ajax({	
+				url : "/user/json/loginUser",
+				method : "POST" ,
+				async : false,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data : JSON.stringify({
+					userId : id,
+					password : pw
+				}),
+				success : function(JSONData , status) {
+					//Debug...
+					//alert(status);
+					//alert("JSONData : \n"+JSONData);
+					//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+					//alert("JSONData : "+ JSONData );
+					//alert("status : "+ status );
+						//alert(JSONData.role);
+						console.log(JSONData.userId);
+						
+						if( JSONData.role == 'not' ){
+							alert("탈퇴한회원입니다.");
+						}else if( JSONData.userId ==null || JSONData=='' ){
+						//$(window.parent.document.location).attr("href","/index.jsp");
+						//$(self.location).attr("href","/index.jsp");  
+							alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+						}else{
+							window.parent.document.location.reload();
+						}
+					},
+				error:function(request,status,error){
+					//alert(error);
+			    }
+			}); 
+		 } 
 		//============= 카카오 로그인 =============
 		function loginWithKakao() {
 			alert("일로는 들어와?");
@@ -423,7 +471,7 @@
 
 
 </head>
-	
+
 
 <div class="navbar  navbar-inverse navbar-fixed-top">
 <!-- Header section -->
@@ -545,6 +593,11 @@
         	</div>
 	 </div>
 </div>
+
+<style type="text/css">
+
+
+</style>
 <style>
 a.no-uline { text-decoration:none }
 

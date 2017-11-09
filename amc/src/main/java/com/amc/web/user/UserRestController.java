@@ -67,23 +67,20 @@ public class UserRestController {
 	public User loginUser(	@RequestBody User user, Model model,
 									HttpSession session ) throws Exception{
 	
-		System.out.println("/user/json/login : POST");
+		System.out.println("/user/json/loginUser : POST");
 		//Business Logic
 		System.out.println("::"+user);
 		User dbUser=userService.getUser(user.getUserId());
-		
-		System.out.println("*******************************************************");
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		/*System.out.println("dbUser.roll :" + dbUser.getRole());*/
-
-		
 		/*if(dbUser==null || dbUser.getRole() == "not"){*/
 		if(dbUser==null || dbUser.getRole().equals("not")){
 			System.out.println("널 값이다");
 			System.out.println(dbUser);
 			model.addAttribute("user", dbUser);
-		      
 			return dbUser;
+		}else if(!user.getPassword().equals(dbUser.getPassword())){
+			System.out.println("?????????????????????????????????????");
+			return null;
 		}else{
 			if(user.getPassword().equals(dbUser.getPassword())){
 				session.setAttribute("user", dbUser);

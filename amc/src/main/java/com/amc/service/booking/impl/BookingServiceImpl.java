@@ -154,11 +154,12 @@ public class BookingServiceImpl implements BookingService {
         for(int k = 0; k<screenContentList.size(); k++){
         	
         	String screenDate = screenContentList.get(k).getScreenDate();
-        	String screenDay = screenDate.substring(5,10);
+        	String screenDay = screenDate.substring(8,10);
         	//필요시 substring조정해서 월 일까지 나오도록 할 수 있다.
         	dayList.add(screenDay);
         }
         
+        //LinkedHashSet을 사용하여 순서는 그대로유지하고 중복되는 값은 제거한다.
         dayList = new ArrayList<String>(new LinkedHashSet<String>(dayList));
         
         return dayList;

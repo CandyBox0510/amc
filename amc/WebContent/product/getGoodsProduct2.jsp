@@ -9,15 +9,15 @@
 
 <html>
 <head>
-	<!-- Basic Page Needs -->
+   <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMovie-Page elements</title>
+        <title>굿즈 상품정보</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
     <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
     
     <!-- Fonts -->
@@ -27,19 +27,37 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Stylesheets -->
-        <!-- jQuery UI -->
+    <!-- jQuery UI --> 
         <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
         <!-- Mobile menu -->
-        <link href="../css/gozha-nav.css" rel="stylesheet" />
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
-        <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+	        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
+        <!--   Sweetalert2 CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+        <!--   semantic UI  -->
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../semantic/semantic.min.js"></script>
     
+   		<!-- Stylesheets -->
+        <!-- jQuery UI -->
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
         <!-- Custom -->
-        <link href="../css/style.css?v=1" rel="stylesheet" />
-
+        <link href="css/style.css?v=1" rel="stylesheet" />
         <!-- Modernizr --> 
-        <script src="../js/external/modernizr.custom.js"></script>
+        <script src="js/external/modernizr.custom.js"></script>
+	
 	
 	
 	
@@ -126,18 +144,22 @@
 					</div><!-- 굿즈 상품정보 -->
 		
 					
-				<!-- Progress bar -->
-	            
+					  <!-- Progress bar -->
+	            <div class="content-wrapper">
+	              <h2 class="heading heading--outcontainer">판매 현황</h2>
 	
 	                <div class="col-sm-4">
 	                    <div class="progress">
 	                      <p class="progress__info">현재 판매량</p>
-	                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
+	                      <div class="progress__bar" role="progressbar" data-level="75">
 	                          <div class="progress__current" style="width: 0%;"></div>
 	                      </div>
 	                    </div>
 	                </div>
-	       
+	            </div>
+	            <div class="devider-wrapper">
+	                <div class="devider"></div>
+	            </div>
 	            
 	            
 	            
@@ -160,28 +182,28 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
-        <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
+        <script src="js/external/jquery-migrate-1.2.1.min.js"></script>
         <!-- jQuery UI -->
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <!-- Bootstrap 3--> 
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> 
         <!-- Inview -->
         <!-- <script src="js/external/jquery.inview.js"></script> -->
-        <script src="../js/external/jquery.waypoints.min.js"></script>
-        <script src="../js/external/inview.min.js"></script>
+        <script src="js/external/jquery.waypoints.min.js"></script>
+        <script src="js/external/inview.min.js"></script>
 
         <!-- Mobile menu -->
-        <script src="../js/jquery.mobile.menu.js"></script>
+        <script src="js/jquery.mobile.menu.js"></script>
         <!-- Select -->
-        <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
+        <script src="js/external/jquery.selectbox-0.2.min.js"></script>
 
         <!-- Form element -->
-        <script src="../js/external/form-element.js"></script>
+        <script src="js/external/form-element.js"></script>
         <!-- Form validation -->
-        <script src="../js/form.js"></script>
+        <script src="js/form.js"></script>
 
         <!-- Custom -->
-        <script src="../js/custom.js"></script>
+        <script src="js/custom.js"></script>
 		
 		<script type="text/javascript">
             $(document).ready(function() { 

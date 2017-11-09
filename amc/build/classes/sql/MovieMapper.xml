@@ -229,21 +229,21 @@
 					 	<if test="searchKeyword != '' and searchKeyword2 == 4">
 							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
 							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_enddate		
 						</if>	
 					 	<if test="searchKeyword != '' and searchKeyword2 == 5">
 							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate		
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_opendate		
 						</if>	
 				</if>
 				
 				<if test="searchCondition != 1">
 						<if test="searchKeyword2 == 4">
 							WHERE movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_enddate
 						</if>
 						<if test="searchKeyword2 == 5">
-							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate	
+							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_opendate	
 						</if>
 				</if>	
 			</if>
@@ -267,11 +267,11 @@
 					 	<if test="searchKeyword != '' and searchKeyword2 == 4">
 							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
 							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_enddate		
 						</if>	
 					 	<if test="searchKeyword != '' and searchKeyword2 == 5">
 							WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate		
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_opendate		
 						</if>	
 				</if>
 				
@@ -280,10 +280,10 @@
 						<if test="searchKeyword2 == 4">
 							WHERE movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
 							AND movie_opendate  <![CDATA[<=]]> to_char(sysdate,'yy/mm/dd') 
-							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_enddate		
+							AND to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_enddate		
 						</if>
 						<if test="searchKeyword2 == 5">
-							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<=]]> movie_opendate	
+							WHERE to_char(sysdate,'yy/mm/dd') <![CDATA[<]]> movie_opendate	
 						</if>
 				</if>	
 		

@@ -211,35 +211,28 @@ public class MovieRestController {
 		} else
 
 			rtn = movieService.addMovie(movie);
-		
-		
-			System.out.println("movieService.addMovie(movie) return code  :: " + rtn );
-			
-			
-	        if((rtn == 1 || rtn == 0))
-	        {
-	            System.out.println("New record added successfully! ");
-	            response.setContentType("text/xml");
-	            response.setCharacterEncoding("UTF-8");
-	
-	            //response.sendError(200, "success");
-	            response.setStatus(200, "OK");
-	
-	        }
-	        else
-	        {
-	            System.out.println("Failed to add Record! : ");
-	            response.setContentType("text/xml");
-	            response.setCharacterEncoding("UTF-8");
-	
-	            //response.sendError(399, "not Inserted successfully");   
-	            response.setStatus(404, "Error while inserting");   
-	        }           
-	
-		
-		return rtn ;
-			
-		
+
+		System.out.println("movieService.addMovie(movie) return code  :: " + rtn);
+
+		if ((rtn == 1 || rtn == 0)) {
+			System.out.println("New record added successfully! ");
+			response.setContentType("text/xml");
+			response.setCharacterEncoding("UTF-8");
+
+			// response.sendError(200, "success");
+			response.setStatus(200, "OK");
+
+		} else {
+			System.out.println("Failed to add Record! : ");
+			response.setContentType("text/xml");
+			response.setCharacterEncoding("UTF-8");
+
+			// response.sendError(399, "not Inserted successfully");
+			response.setStatus(404, "Error while inserting");
+		}
+
+		return rtn;
+
 	}
 
 	private final String PATH = "C:/amcPoster/";
@@ -314,25 +307,28 @@ public class MovieRestController {
 		}
 	}
 
-	@RequestMapping(value="json/movieOnSchedule", method=RequestMethod.POST)	
-	public void		 movieOnSchedule
-							   (HttpServletRequest request, 
-								HttpServletResponse response,
-								Model model,
-								@ModelAttribute("search") Search search
-								) throws Exception {
-		
-		System.out.println("json/movieOnSchedule called RestControl ");			
-		
-		
-		if(search.getCurrentPage() ==0 ){			
+	@RequestMapping(value = "json/movieOnSchedule", method = RequestMethod.POST)
+	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model,
+			@ModelAttribute("search") Search search) throws Exception {
+
+		System.out.println("json/movieOnSchedule called RestControl ");
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+
+		search.setSearchKeyword2("5");
+		
+		System.out.println("상영 예정 영화 콜 !!!!");
+		
+		if (search.getSearchKeyword() != null) {				
+			search.setSearchCondition("1");	
+		}
 		
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
-		
+
 		// Business logic 수행
 		Map<String , Object> map= movieService.getMovieList(search);
 		
@@ -342,23 +338,22 @@ public class MovieRestController {
 		System.out.println("list show ::"  + map.get("list"));
 		
 		String str = "";
-		
+
 		List<Movie> list = (List<Movie>) map.get("list");
-		
-		
-		//Movie JsonObject 선언(개별)
-		JSONObject movieObject = new JSONObject();	
-        //movie event의 JSON정보를 담을 Array 선언        
-        JSONArray movieArray = new JSONArray();       
-        //monthly 정보가 들어갈 JSONObject 선언
-        JSONObject monthlynfo = new JSONObject();        
- 		
-		for (int i = 0; i < list.size(); i++) {			
-			movieObject.put("id", list.get(i).getMovieNo());			
-			movieObject.put("name", list.get(i).getMovieNm());				
-			movieObject.put("startdate",list.get(i).getOpenDt());			
-			 
-        	switch (i) {
+
+		// Movie JsonObject 선언(개별)
+		JSONObject movieObject = new JSONObject();
+		// movie event의 JSON정보를 담을 Array 선언
+		JSONArray movieArray = new JSONArray();
+		// monthly 정보가 들어갈 JSONObject 선언
+		JSONObject monthlynfo = new JSONObject();
+
+		for (int i = 0; i < list.size(); i++) {
+			movieObject.put("id", list.get(i).getMovieNo());
+			movieObject.put("name", list.get(i).getMovieNm());
+			movieObject.put("startdate", list.get(i).getOpenDt());
+
+			switch (i) {
 			case 0:
 				movieObject.put("color", "red");
 				break;
@@ -453,26 +448,65 @@ public class MovieRestController {
 		
 		System.out.println("movieArray values : " + movieArray.toString() );
 
+		// *
+		// * Domain 객체에서 받아서 Json으로 넣는 방법
+		// *
+		/*
+		 * List <MovieOnScheule> movieOnSchedule =
+		 * movieService.getScreenCalendar(search);
+		 * 
+		 * //Movie JsonObject 선언(개별) JSONObject movieObject = new JSONObject();
+		 * //movie event의 JSON정보를 담을 Array 선언 JSONArray movieArray = new
+		 * JSONArray(); //monthly 정보가 들어갈 JSONObject 선언 JSONObject monthlynfo =
+		 * new JSONObject();
+		 * 
+		 * 
+		 * for (int i = 0; i < movieOnSchedule.size(); i++) {
+		 * 
+		 * movieObject.put("id", movieOnSchedule.get(i).getId());
+		 * movieObject.put("name", movieOnSchedule.get(i).getName());
+		 * movieObject.put("startdate", movieOnSchedule.get(i).getStartdate());
+		 * 
+		 * switch (i) { case 0: movieObject.put("color", "red"); break; case 1:
+		 * movieObject.put("color", "orange"); break; case 2:
+		 * movieObject.put("color", "green"); break; case 3:
+		 * movieObject.put("color", "blue"); break; case 4:
+		 * movieObject.put("color", "purple"); break; case 5:
+		 * movieObject.put("color", "skyblue"); break; case 6:
+		 * movieObject.put("color", "brown"); break; case 7:
+		 * movieObject.put("color", "darkred"); break; default:
+		 * movieObject.put("color", "ivory"); break; }
+		 * 
+		 * movieObject.put("url",
+		 * "getMovie?movieNo="+movieOnSchedule.get(i).getId()+
+		 * "&menu=commingsoon");
+		 * 
+		 * movieArray.add(i, movieObject);
+		 * 
+		 * movieObject = new JSONObject(); }
+		 */
+
+		System.out.println("movieArray values : " + movieArray.toString());
+
 		monthlynfo.put("monthly", movieArray);
-		
+
 		System.out.println("monthlynfo values " + monthlynfo.toString());
 		String jsonData = monthlynfo.toJSONString();
 
 		System.out.println("json ====>>>>>  " + jsonData);
-		
+
 		response.setContentType("application/json");
-	    response.setCharacterEncoding("utf-8");
-	    
-	    try {
-	    	PrintWriter out = response.getWriter();
-	  	    out.write(jsonData);
-	  	    out.flush();
-	  	    out.close();		
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }   
+		response.setCharacterEncoding("utf-8");
+
+		try {
+			PrintWriter out = response.getWriter();
+			out.write(jsonData);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
- 
 
 	// 해림 추가
 	@RequestMapping(value = "json/addMovieComment", method = RequestMethod.POST)
@@ -548,10 +582,11 @@ public class MovieRestController {
 		return movieService.blindMoiveComment(movieComment);
 
 	};
-	
+
 	// 해림 추가
-@RequestMapping(value = "json/getMovieCommentList/{movieNo}",  method = RequestMethod.GET)
-	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
+	@RequestMapping(value = "json/getMovieCommentList/{movieNo}")
+	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo)
+			throws Exception {
 		System.out.println("movieRestController의 getMovieCommentList시작 ");
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -559,136 +594,163 @@ public class MovieRestController {
 
 		search.setPageSize(pageSize);
 
-		System.out.println("1. search ==> "+ search);
-		System.out.println("2. movieNo ==> "+ movieNo);
+		System.out.println("1. search ==> " + search);
+		System.out.println("2. movieNo ==> " + movieNo);
 		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
 		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
 		System.out.println("3. map ==> "+ map); 
 		
 		List<MovieComment> list = (List<MovieComment>)map.get("list");
 
-		
-		
 		System.out.println("4. list ==> ?" + list);
 		return list;
 	}
-	
-	@RequestMapping(value = "json/getMovieCommentList",  method = RequestMethod.POST)
-	public  List<MovieComment> getMovieCommentList( @RequestBody MovieComment movieComment) throws Exception {
-		System.out.println("movieRestController의 getMovieCommentList시작 ");
-		Search search = movieComment.getSearch();
-	
-		System.out.println("1. search ==> "+search);
-		
+	/*
+	 * @RequestMapping(value = "json/getMovieCommentList", method =
+	 * RequestMethod.POST) public List<MovieComment>
+	 * getMovieCommentList(@RequestBody MovieComment movieComment) throws
+	 * Exception {
+	 * System.out.println("movieRestController의 getMovieCommentList시작 "); Search
+	 * search = movieComment.getSearch();
+	 * 
+	 * System.out.println("1. search ==> " + search);
+	 * 
+	 * if (search.getCurrentPage() == 0) { search.setCurrentPage(1); }
+	 * 
+	 * int movieNo = movieComment.getMovie().getMovieNo();
+	 * 
+	 * search.setPageSize(pageSize);
+	 * 
+	 * System.out.println("1-1. search ==> " + search); //
+	 * System.out.println("2. movieNo ==> "+ movieNo); System.out.
+	 * println("movieRestController의 getMovieCommentList :: POST 끝.....");
+	 * Map<String, Object> map = movieService.getMovieCommentList(search,
+	 * movieNo);
+	 * 
+	 * System.out.println("3. map ==> " + map);
+	 * 
+	 * List<MovieComment> list = (List<MovieComment>) map.get("list");
+	 * 
+	 * System.out.println("4. list ==> " + list); return list; }
+	 */
+	// 해림추가
+
+	@RequestMapping(value = "json/getTotalCount/{movieNo}")
+	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, @PathVariable int movieNo)
+			throws Exception {
+
+		System.out.println("communityRestController의 getFreeBoardTotalCount 시작...");
+		System.out.println("1. search값 ==> " + search);
+		System.out.println("2. movieNo ==> " + movieNo);
+		int totalCount = movieService.getTotalCount(movieNo);
+		System.out.println("3. totalCount의 값 ==> " + totalCount);
+
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
-		int movieNo = movieComment.getMovie().getMovieNo();
 
 		search.setPageSize(pageSize);
 
-		System.out.println("1-1. search ==> "+ search);
-		//System.out.println("2. movieNo ==> "+ movieNo);
-		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
-		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
-		
-		System.out.println("3. map ==> "+ map); 
-		
-		List<MovieComment> list = (List<MovieComment>)map.get("list");
-		
-		System.out.println("4. list ==> " + list);
-		return list;
+		System.out.println("4. search ==> " + search);
+
+		System.out.println("5. getFreeBoardTotalCount ==> " + totalCount);
+
+		Page resultPage = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
+		System.out.println("6. resultPage ==> " + resultPage);
+
+		System.out.println("communityRestController의 freeBoardCommentList메소드 끝");
+
+		return resultPage;
+
 	}
-	
+
 	@RequestMapping(value = "/json/switchWishList")
-	public String switchWishList(@ModelAttribute("wishList")WishList wishList){
+	public String switchWishList(@ModelAttribute("wishList") WishList wishList) {
 		return movieService.switchWishList(wishList);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/wishList/{userId:.+}")
-	public String wishList(@PathVariable String userId){
-		Map<String,Object> tempMap = new HashMap<String,Object>();
+	public String wishList(@PathVariable String userId) {
+		Map<String, Object> tempMap = new HashMap<String, Object>();
 		List<WishList> list = new ArrayList<WishList>();
 		User user = new User();
 		user.setUserId(userId);
 		tempMap.put("user", user);
-		
-		list = ((List<WishList>)movieService.getWishList(tempMap).get("list"));
-		
+
+		list = ((List<WishList>) movieService.getWishList(tempMap).get("list"));
+
 		System.out.println("list : " + list);
-		
+
 		JSONObject jsonObject = new JSONObject();
 		JSONObject response = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
 
-		for(int i = 0; i<list.size(); i++){
+		for (int i = 0; i < list.size(); i++) {
 			jsonObject.put("movie_title", list.get(i).getMovie().getMovieNm());
 			jsonObject.put("wishNo", list.get(i).getWishNo());
 			jsonObject.put("wishRegDate", list.get(i).getWishRegDate());
 			jsonObject.put("poster", list.get(i).getMovie().getPostUrl());
 			jsonObject.put("movieNo", list.get(i).getMovie().getMovieNo());
-			
 
-			
 			jsonArray.add(jsonObject);
-			
+
 			jsonObject = new JSONObject();
 
-			jsonArray.add(i,jsonObject);
+			jsonArray.add(i, jsonObject);
 
 		}
 		response.put("wishList", jsonArray);
-		
 
 		System.out.println("response content" + response);
 
 		return response.toString();
 	}
-	
-	@RequestMapping( value="/json/getInfiWishList/{userId:.+}")
-	public Map<String,Object> getInfiWishList(@ModelAttribute("Search")Search search, 
-										HttpSession session,Model model,
-										@PathVariable("userId") String userId,
-										@RequestBody String jsonString) throws Exception {
-		
-		Map<String,Object> tempMap = new HashMap<String,Object>();
-		
-		JSONObject jo = (JSONObject)JSONValue.parse(jsonString);
-		System.out.println("현재페이지 : " +(Long)(jo.get("currentPage")));
-		search.setCurrentPage(Math.toIntExact((Long)jo.get("currentPage")));
-		
-		if(search.getCurrentPage()==0){
+
+	@RequestMapping(value = "/json/getInfiWishList/{userId:.+}")
+	public Map<String, Object> getInfiWishList(@ModelAttribute("Search") Search search, HttpSession session,
+			Model model, @PathVariable("userId") String userId, @RequestBody String jsonString) throws Exception {
+
+		Map<String, Object> tempMap = new HashMap<String, Object>();
+
+		JSONObject jo = (JSONObject) JSONValue.parse(jsonString);
+		System.out.println("현재페이지 : " + (Long) (jo.get("currentPage")));
+		search.setCurrentPage(Math.toIntExact((Long) jo.get("currentPage")));
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
+
 		pageSize = 12;
 		
 		System.out.println("무한스크롤용 위시리스트 유저아이디 : " + userId);
-		
+
 		search.setPageSize(pageSize);
-		User user = (User)session.getAttribute("user");
-		
+		User user = (User) session.getAttribute("user");
+
 		tempMap.put("search", search);
 		tempMap.put("user", user);
-		
+
 		Map<String, Object> map = movieService.getWishList(tempMap);
-		
-		Page resultPage	= 
-				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
-						pageUnit, pageSize);
-		
-		System.out.println("■■■위시리스트 확인■■■ : "+map.get("listWish"));
-		
-	    return map;
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+
+		System.out.println("■■■위시리스트 확인■■■ : " + map.get("listWish"));
+
+		return map;
 	}
-	
-	
-	@RequestMapping( value="/json/deleteWishList/{wishNo}")
-	public int deleteWishList(HttpSession session,Model model,
-											@PathVariable("wishNo")String wishNo
-											) throws Exception {
+
+	/// checkWishList 해림용
+	@RequestMapping(value = "/json/checkWishList")
+	public String checkWishList(@ModelAttribute("wishList") WishList wishList) {
+		return movieService.checkWishList(wishList);
+
+	}
+
+	@RequestMapping(value = "/json/deleteWishList/{wishNo}")
+	public int deleteWishList(HttpSession session, Model model, @PathVariable("wishNo") String wishNo)
+			throws Exception {
 		WishList wishList = new WishList();
 		Movie movie = new Movie();
 		User user = new User();

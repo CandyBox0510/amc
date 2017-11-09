@@ -120,12 +120,7 @@
 	
 	
 
-	<!-- 대관되어있는 영화시간 -->
-	<select id="notEmptyScreenContent" parameterType="screenContent" resultMap='screenContentSelectMap'>
-		SELECT  TO_CHAR(screen_opentime,'YYYY/MM/DD HH24:MI') screen_opentime, TO_CHAR(screen_endtime,'YYYY/MM/DD HH24:MI') screen_endtime 
-		FROM	screencontent WHERE screen_theater = #{screenTheater} AND screen_date = #{screenDate}
-		ORDER BY screen_opentime
-	</select>
+
 	
 	<!-- 시간이 중복되어있는지 -->
 	<select id="checkScreenDupTime" parameterType="screenContent" resultType="int">

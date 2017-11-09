@@ -59,10 +59,7 @@ public interface MovieService {
 	
 	// 감상평 보기
 	public Map<String, Object> getMovieCommentList(Search search, int movieNo) throws Exception;
-	
-	// 차트목록 가져오기
-	public List<Movie> getChart(int movieNo);
-	
+
 
 
 	public MovieComment getMovieComment(int movieCommentNo);
@@ -76,6 +73,11 @@ public interface MovieService {
 	public int deleteWishList(WishList wishList);
 
 	public Map<String,Object> getWishList(Map<String,Object> map);
+
+	String checkWishList(WishList wishList);
+
+	int getTotalCount(int movieNo) throws Exception;
+
 	
 	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
 	// public List<WishList> getWishListMovie(Search search, User user);
