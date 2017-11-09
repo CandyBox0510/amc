@@ -10,7 +10,7 @@
 
                 <div class="col-sm-4 col-sm-offset-4">
                     <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
+                    <form id="login-form" name="login" class="login" method='POST' novalidate='' action='Javascript:fncloginUser'>
                         <p class="login__title">로그인<br><span class="login-edition">welcome to Americode Cinema!</span></p>
 
                         <div class="social social--colored">
@@ -25,8 +25,8 @@
                         <p class="login__tracker">환영합니다<br/> 좋은시간보내세요!</p>
                         
                         <div class="field-wrap">
-                        <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input">                       
-                        <input type='password' placeholder='Password' id='password' name='password' class="login__input">
+                        <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input" onkeypress="if(event.keyCode==13) {loginUser(); return false;}">
+                        <input type='password' placeholder='Password' id='password' name='password' class="login__input" onkeypress="if(event.keyCode==13) {loginUser(); return false;}">
 
                         <input type='checkbox' id='#informed' class='login__check styled'>
                         <label for='#informed' class='login__check-info'>아이디 저장</label>

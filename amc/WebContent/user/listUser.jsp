@@ -7,60 +7,28 @@
 
 <!DOCTYPE html>
 
-<html lang="ko">
+<html>
 	
 <head>
    <!-- Basic Page Needs -->
-        <meta charset="utf-8">
+        <meta charset="EUC-KR">
         <title>회원 목록조회</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
         <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
-
-        <!-- Modernizr --> 
-        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
-    
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-   
-        <!--   Sweetalert2 CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>
 </head>
 
 <body>
 	<div class="wrapper">
+    	<c:set var="who" value=""/>
+    	<c:if test="${sessionScope.user.role ne 'admin'}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user eq null || sessionScope.user eq ''}">
+    		<c:set var="who" value="search"/>	
+    	</c:if>
+    	<c:if test="${sessionScope.user.role eq 'admin'}">
+    		<c:set var="who" value="admin"/>	
+    	</c:if>
 		<!-- Banner -->
 		<div class="banner-top">
     		<img alt='top banner' src="../images/banners/space.jpg">
@@ -68,38 +36,37 @@
 		<header class="header-wrapper header-wrapper--home">
 			<jsp:include page="/layout/topToolbar.jsp" />
 		</header>
-		<div class="container"  id="body">
-			<div class="page-header text-info">
-	       		<h3>회원목록조회</h3>
-		    </div>
-		    <div class="row">
-	    		<div class="col-md-6 text-left">
-			    	<p class="text-primary">
-			    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-			    	</p>
-			    </div>
-			    <div class="col-md-6 text-right">
-		    		<form class="form-inline" name="detailForm">
-				  		<div class="form-group">
-					    	<select class="form-control" name="searchCondition" >
-								<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
-								<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
-							</select>
-					  	</div>
-					  	<div class="form-group">
-					    	<label class="sr-only" for="searchKeyword">검색어</label>
-					    	<input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-					    			value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-						</div>
-					  	<button type="button" class="btn btn-default">검색</button>
-					  	<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-					  	<input type="hidden" id="currentPage" name="currentPage" value=""/>
-					</form>
-		    	</div>
-			</div>
-	      	<table class="table table-hover table-striped" >
-	        	<thead>
-	          		<tr>
+		<div class="container" >
+            <div class="clearfix"></div>
+ 			<section class="container">
+            <div class="col-md-12">
+                <h2 class="page-heading"> 회원 목록 조회</h2>
+                	<div class="col-md-12 tags-area tags-area--thin">
+			             <div class="col-md-12 container container--add">
+			                <div class="col-sm-6 text-left">
+			    				<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
+			    			</div>
+							<div class="search-wrapper">   						
+				            	<div class="col-sm-6 text-right">
+					                <form id='search-form' class="search ">
+					                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"
+					                		    value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+						                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
+						                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>제목</option>
+						                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>내용</option>
+						                        <option value="3" ${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>작성자</option>	                     
+						                    </select>
+						                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
+						                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+					                </form>
+					             </div>				            
+							</div>		
+			             </div>
+			        </div>
+						
+	      	<table class="table table-hover table-striped " >
+	        	<thead class="listTitle">
+	          		<tr class="listTitle">
 		            	<th align="center">No</th>
 		            	<th align="left" >회원 ID</th>
 			            <th align="left">회원명</th>
@@ -108,6 +75,10 @@
 		            <!-- <th align="left">간략정보</th> -->
 		          	</tr>
         		</thead>
+        		
+
+        		
+        		
 				<tbody>
 			  		<c:set var="i" value="0" />
 				  	<c:forEach var="user" items="${list}">
@@ -127,17 +98,16 @@
 	        	</tbody>
 	      	</table>
 	 	</div>
-	 	<!-- PageNavigation Start... -->
-		<jsp:include page="../common/pageNavigator.jsp"/>
-		<!-- PageNavigation End... -->
+	</section>
 	</div>
-	
+        <div class="clearfix"></div>
+        
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
-
+</div>
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -146,17 +116,13 @@
         <!-- Bootstrap 3--> 
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
+		<script src="/js/external/modernizr.custom.js"></script> 
+
         <!-- Mobile menu -->
         <script src="/js/jquery.mobile.menu.js"></script>
          <!-- Select -->
         <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
 
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
@@ -242,6 +208,182 @@
 	</script>
 	<style type="text/css">
 	 	#body{ padding-top: 100px; }
+	 	
+	 	.listTitle {
+			font-size: 10px;
+			font-weight: bold;
+			height: 40px;
+			vertical-align: middle;
+			padding-top: 5px;
+			color: #FFFFFF;
+			background-color: #4C4145;
+		}
+		
+html{
+  height: auto;
+}
+			
+    
+section{
+	margin-bottom : 30px
+}
+.page-heading{
+	margin-top : 100px
+}
+
+.search .search__field {
+  display: inline-block;
+  width: 400px;
+  padding: 9px 30px 9px 19px;
+  margin-top: 14px;
+  line-height: 18px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: solid 1px #dbdee1;
+  background-color: #fff;
+  color: #4c4145;
+  font-size: 13px;
+}
+.search .search__sort {
+  opacity: 0;
+}
+.search .search__button {
+  position: absolute;
+  top: 14px;
+  right: 0;
+  z-index: 3;
+}
+.search .sbHolder {
+  display: inline-block;
+  position: absolute;
+  top: 15px;
+  right: 100px;
+  width: 100px;
+  height: 35px;
+  border: none;
+  border-left: 1px solid #dbdee1;
+  background-color: #fff;
+}
+
+.search .sbHolder .sbSelector {
+	display: block;
+	height: 30px;
+	left: 0;
+	line-height: 30px;
+	outline: none;
+	overflow: hidden;
+	position: absolute;
+	text-indent: 10px;
+	top: 0;
+	width: 100px;
+	
+  margin-top: 4px;
+  margin-right: 150px;
+  color: #4c4145;
+  font-size: 13px;
+}
+.search .sbHolder .sbOptions {
+  width: 140px;
+  top: 37px !important;
+  border: none;
+  padding: 14px 7px;
+  z-index: 23;
+  background-color: #4c4145;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+}
+
+.search .sbHolder .sbToggle {
+  top: 10px;
+  right: 50px;
+}
+.search .sbHolder .sbToggle:before {
+  content: "\f078";
+  color: #4c4145;
+  font-family: "FontAwesome";
+  font-size: 12px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.search .sbHolder .sbToggleOpen:before {
+  content: "\f077";
+}
+.sbHolder {
+  outline: none;
+}
+
+
+.search-wrapper {
+  background-color: #ffffff;
+  height: 50px;
+}
+    	  #writeButton {
+			font-size: 13px;
+			 text-align : center;
+  			margin-top: 10px;
+  			margin-bottom: 10px;
+  		margin-right: 20px;
+  			color : #4C4145;
+  			padding : 10px 10px 10px 10px;
+			}
+    .countPage {
+		  font-size: 13px;
+		   margin-top: 10px;
+		}
+		.search{
+			margin-right : 30px;
+		}
+		
+		.freeBoardField{
+
+			font-size : 15px;
+			font-weight: bold;
+			height:40px;	
+			vertical-align : middle;
+			padding-top : 10px;
+			color:#FFFFFF;
+			background-color : #4C4145;
+		}
+		.freeBoardRecord{
+			font-size : 13px;
+			height:50px;
+		
+			vertical-align : middle;
+			padding-top : 5px;
+			color:#4C4145;
+		}
+
+
+	.freeBoardRecord>td{
+   	border-bottom : 1px solid #969b9f;
+   	padding : 15px;
+	}
+ 
+.title {
+  font-size: 13px;
+  font-weight: bold;
+}
+.title:hover {
+  color: #fe505a;
+}
+/* 	input, select {
+		margin-bottom: 10px;
+		height: 100%;
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		border: 1px solid #dbdee1;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		font-size: 13px;
+		color: #000000;
+		padding: 9px 18px 10px !important;
+	} */
+		
 	</style>
 	
 
