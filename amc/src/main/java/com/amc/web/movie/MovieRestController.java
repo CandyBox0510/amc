@@ -3,6 +3,7 @@ package com.amc.web.movie;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -872,16 +873,17 @@ public class MovieRestController {
 			
 			for(int i = 0; i< movieList.size(); i++){
 				 data = new JSONObject();
-				 data.put("movieNm", movieList.get(i).getMovieNm());
-				 data.put("openDt", movieList.get(i).getOpenDt());
+				 data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(),"UTF-8"));
+				 data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(),"UTF-8"));
 				 data.put("movieNo", movieList.get(i).getMovieNo());
-				 data.put("trailer", movieList.get(i).getTrailer());
-				 data.put("genres", movieList.get(i).getGenres());
-				 data.put("watchGradeNm", movieList.get(i).getWatchGradeNm());
-				 data.put("postUrl", movieList.get(i).getPostUrl());
+				 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
+				 data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(),"UTF-8"));
+				 data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(),"UTF-8"));
+				 data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(),"UTF-8"));
 				 jsonArray.add(data);
 			}
 			response.put("list", jsonArray);
+			
 			return response.toJSONString();
 			
 		} else {

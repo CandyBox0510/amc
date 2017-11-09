@@ -1,5 +1,6 @@
 package com.amc.web.user;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;

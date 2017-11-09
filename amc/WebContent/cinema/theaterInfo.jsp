@@ -8,16 +8,9 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- 
-	  jQuery , Bootstrap CDN 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
-
 	<!-- 파노라마 -->
 	<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.0/normalize.min.css" media="all" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400italic" rel="stylesheet" type="text/css">
+	<!-- <link href="https://fonts.googleapis.com/css?family=PT+Serif:400italic" rel="stylesheet" type="text/css"> -->
 	<link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css" media="all" rel="stylesheet" />
 	<!-- <link rel="stylesheet" href="../demo/dist/css/style.min.css" /> -->
 	<link rel="stylesheet" href="../dist/css/paver.min.css" />
@@ -51,17 +44,16 @@
     
     	<!--   semantic UI  -->
 		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-		<script
-		  src="https://code.jquery.com/jquery-3.1.1.min.js"
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"
 		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 		  crossorigin="anonymous"></script>
-		<script src="../semantic/semantic.min.js"></script>
+		<!-- <script src="../semantic/semantic.min.js"></script> -->
 		
 		<!-- hanna font -->
 		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		
 <script>
-	$(function(){
+/* 	$(function(){
 		 
 			$.ajax(
 					{
@@ -111,8 +103,6 @@
 								subway = "근처 지하철이 없습니다." 
 							}
 							
-							/* str = str.substr(0, str.length-2); */
-							
 							$("#busStationName").text(busStationName);
 							$("#busNo").text(busNo);
 							$("#subway").text(subway);
@@ -120,7 +110,7 @@
 					}		
 			)
 		
-	});
+	});  */
 </script>
 
 
@@ -190,7 +180,7 @@
 <div class="wrapper">
 		<!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->
@@ -388,9 +378,28 @@
  	   		$("form").attr("method" , "POST").attr("action" , "/cinema/unifiedSearch").attr("accept-charset","EUC-KR").submit();
  	   	 }
          $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
+         
+         $('.btn--singin').click(function (e){
+	         e.preventDefault();
+	         $('.auth__function').toggleClass('open-function')
+	     });
+         $('.login-window').click(function (e){
+             e.preventDefault();
+             $('.overlay').removeClass('close').addClass('open');
+         });
+
+         $('.overlay-close').click(function (e) {
+             e.preventDefault;
+             $('.overlay').removeClass('open').addClass('close');
+
+             setTimeout(function(){
+                 $('.overlay').removeClass('close');}, 500);
+         });
          </script>
+         
+
 </body>
- <style>http://127.0.0.1:8080/images/theater/theater2.JPG
+ <style>
       html{
  	     height: auto;
       }
@@ -405,5 +414,12 @@
 	  font-size: 120%;
 	   line-height:4.3em
 	 }
+	 .header-wrapper {
+	  background: rgba(46, 41, 46, 0.8);;
+	  position: relative;
+	  z-index: 120;
+	  height: 55px;
+	}
  </style>
+
 </html>
