@@ -58,8 +58,6 @@ public class CommunityController {
 		
 		System.out.println("0.0 imageFile ==> " + imageFile);
 		
-		freeBoard.setFreeBoardImage("");
-		
 		if(!(imageFile.isEmpty())){
 			FileOutputStream fos = new FileOutputStream(new File(fsr.getPath(), imageFile.getOriginalFilename()));
 			fos.write(imageFile.getBytes());
@@ -67,6 +65,8 @@ public class CommunityController {
 			fos.close();
 
 			freeBoard.setFreeBoardImage(imageFile.getOriginalFilename());
+		}else{
+			freeBoard.setFreeBoardImage("");
 		}
 		
 		
@@ -159,12 +159,6 @@ System.out.println("0. userId ==> " + userId);
 	public String getFreeBoardList(@ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("CommunityControllerÀÇ getFreeBoardList  ½ÃÀÛ");
-		if(search.getSearchKeyword() != null){
-			System.out.println("search.getSearchKeyword() ==> " + search.getSearchKeyword());
-			String searchKeyword = URLDecoder.decode(search.getSearchKeyword(), "EUC-KR");
-			System.out.println("searchKeyword ==> " + searchKeyword);
-			search.setSearchKeyword(searchKeyword);
-		}
 		
 
 		System.out.println("1. search ==> " + search);

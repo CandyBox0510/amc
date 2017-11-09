@@ -72,12 +72,16 @@
 		$("#now").on("click",function(){
 			condition = 'now';
 			count = 2;
+			alert("11");
+			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
 		
 		$("#past").on("click",function(){
 			condition = 'past';
 			count = 2;
+			alert("22");
+			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
 	})
@@ -102,7 +106,7 @@
 								
 								for(i in JSONData.list){
 	
-									all = '<div class="col-sm-4 col-md-3">'
+									all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+booking[i].movie.movieNo+'&menu='
 											   if(booking[i].screenContent.previewFlag == 'Y'){
@@ -152,15 +156,18 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
+            	<p/>
+            	<p/>
+            	<p/>
                 <h2 class="page-heading">나의 예매 리스트</h2>
                 <p class="btn btn-md btn--danger" id="now">현재 예매 내역</p>
                 <p class="btn btn-md btn--danger" id="past">지난 예매 내역</p>
@@ -169,7 +176,7 @@
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="booking" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 						     	<c:set var="what" value=""/>
 						     	<c:if test="${booking.screenContent.previewFlag eq 'Y'}">
@@ -251,6 +258,22 @@
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #c1ffbc;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a5ff9e; 
       }
  </style>
 </html>

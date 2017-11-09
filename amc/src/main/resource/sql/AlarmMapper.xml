@@ -131,7 +131,7 @@
  	<select  id="getAlarmList"  parameterType="map"	 resultMap="alarmSelectMap">
  	SELECT *							
 	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
-		 	 FROM 		(SELECT m.movie_title, s.preview_title, s.screen_opentime, s.ticket_opendate, 
+		 	 FROM 		(SELECT m.movie_title, s.preview_title, s.screen_opentime, to_char(s.ticket_opendate, 'YYYY-MM-DD HH24:MI:SS') ticket_opendate, 
 		 	 					s.screen_theater, s.invite_actor, s.preview_flag, a.alarmseat_no, 
 		 	 					a.alarm_regdate, a.alarm_no, m.poster 
 						FROM alarm a, screencontent s, movie m 
@@ -155,7 +155,7 @@
 		  <if test='alarmFlag == "C"'>
 		  AND alarm_flag = 'C' 
 		  </if>
-		  <if test='alamrFlag == "O"'>
+		  <if test='alarmFlag == "O"'>
 		  AND alarm_flag = 'O'
 		  </if> 
 	</select>

@@ -35,27 +35,28 @@ public class ScreenRestController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
-		
+
 	@RequestMapping(value = "json/getScreenContentList/{movieNo}", method = RequestMethod.GET)
-	public List<ScreenContent> getScreenContentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception{
+	public List<ScreenContent> getScreenContentList(@ModelAttribute("search") Search search, @PathVariable int movieNo)
+			throws Exception {
 		System.out.println("json/screen/getScreenContentList :: GET");
 
-//		System.out.println("movieNo ===>" + movieNo);
-//		if (search.getCurrentPage() == 0) {
-//			search.setCurrentPage(1);
-//		}
-//
-//		search.setPageSize(pageSize);
-//		System.out.println("search값 확인" + search);
-//
-//		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-//				pageSize);
+		// System.out.println("movieNo ===>" + movieNo);
+		// if (search.getCurrentPage() == 0) {
+		// search.setCurrentPage(1);
+		// }
+		//
+		// search.setPageSize(pageSize);
+		// System.out.println("search값 확인" + search);
+		//
+		// Page resultPage = new Page(search.getCurrentPage(), ((Integer)
+		// map.get("totalCount")).intValue(), pageUnit,
+		// pageSize);
 
 		Map<String, Object> map = screenService.getScreenContentList(search, movieNo);
-		
-		List<ScreenContent> list = (List<ScreenContent>)map.get("list");
-		
-		
+
+		List<ScreenContent> list = (List<ScreenContent>) map.get("list");
+
 		System.out.println("List값이 뭘까" + list);
 		// Page resultPage = new Page(search.getCurrentPage(),
 		// ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -69,47 +70,45 @@ public class ScreenRestController {
 		return list;
 	}
 
-	@RequestMapping(value = "json/addScreenContent/{movieNo}", method = RequestMethod.POST)
-	public int addScreenContent(@RequestBody ScreenContent screenContent, @PathVariable int movieNo) {
+	@RequestMapping(value = "json/addScreenContent", method = RequestMethod.POST)
+	public int addScreenContent(@RequestBody ScreenContent screenContent) {
 
 		System.out.println("screen/json/addScreenContent :: POST");
-		// System.out.println("movieNo값있니"+movieNo);
-		screenContent.setMovie(new Movie());
-		screenContent.getMovie().setMovieNo(movieNo);
+
 		System.out.println("screenContent값 확인해볼까" + screenContent);
-		
+
 		int addResult = screenService.addScreenContent(screenContent);
-		
-		System.out.println("addResult --> "+addResult);
+
+		System.out.println("addResult --> " + addResult);
 		System.out.println("screen/json/addScreenContent :: POST 끝.....");
-		
-		if(addResult == -1 || addResult == -2){
+
+		if (addResult == -1 || addResult == -2) {
 			return addResult;
-		}else{ // 상영등록이 성공되었을때 
+		} else { // 상영등록이 성공되었을때
 			System.out.println(screenService.getScreenNo(screenContent));
 			String screenTheater = screenContent.getScreenTheater();
 			int screenContentNo = screenService.getScreenNo(screenContent);
-			
-			//mongodb에 좌석현황 추가 부분
+
+			// mongodb에 좌석현황 추가 부분
 			String urlStr = "http://192.168.0.32:52273/addSeats";
-			String body = "screenNo="+screenContentNo+"&theater="+screenTheater;
+			String body = "screenNo=" + screenContentNo + "&theater=" + screenTheater;
 			try {
 				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
-				if(responseCode ==200){
+				if (responseCode == 200) {
 					System.out.println("몽고DB에 좌석현황 추가하기를 성공하였습니다.");
 					return addResult;
-				}else{
+				} else {
 					System.out.println("몽고DB에 좌석현황 넣기에 실패하였습니다.");
 					screenService.deleteScreenContent(screenContentNo);
 					return -3;
-				}				
+				}
 			} catch (Exception e) {
 				System.out.println("몽고DB가 꺼져있나봅니다!");
 				screenService.deleteScreenContent(screenContentNo);
 				e.printStackTrace();
 				return -3;
-			}	
-			
+			}
+
 		}
 	};
 
@@ -125,16 +124,13 @@ public class ScreenRestController {
 		return screenContent;
 	};
 
-	@RequestMapping(value = "json/updateScreenContent/{movieNo}", method = RequestMethod.POST)
-	public int updateScreenContent(@RequestBody ScreenContent screenContent, @PathVariable int movieNo) {
+	@RequestMapping(value = "json/updateScreenContent/", method = RequestMethod.POST)
+	public int updateScreenContent(@RequestBody ScreenContent screenContent ){
 		System.out.println("screen/json/updateScreenContent :: POST");
 
-		
-		screenContent.setMovie(new Movie());
-		screenContent.getMovie().setMovieNo(movieNo);
+	
 		System.out.println("sCreenContent 잘들어오는지 확인 ......... --> " + screenContent);
-		
-		
+
 		return screenService.updateScreenContent(screenContent);
 	};
 
@@ -146,14 +142,28 @@ public class ScreenRestController {
 		return screenService.deleteScreenContent(screenContentNo);
 	};
 
-	// 등록되어있는 시간가져오기
-	@RequestMapping(value = "json/notEmptyScreenContent", method = RequestMethod.POST)
-	public List<ScreenContent> notEmptyScreenContent(@RequestBody ScreenContent screenContent) {
-		System.out.println("screen/json/notEmptyScreenContent :: POST");
-		List<ScreenContent> list = screenService.notEmptyScreenContent(screenContent);
-		System.out.println("여기List는?" + list);
 
-		return list;
+	@RequestMapping(value = "json/checkScreenDupTime", method = RequestMethod.POST)
+	public boolean checkScreenDupTime(@RequestBody ScreenContent screenContent) {
+		System.out.println("screen/json/checkScreenDupTime :: POST");
+		boolean checkScreenDupTime = screenService.checkScreenDupTime(screenContent);
+		System.out.println("checkScreenDupTime++++"+checkScreenDupTime);
+		return checkScreenDupTime;
 	};
+	
+	
+	
+	@RequestMapping(value = "json/checkScreenDupPreview", method = RequestMethod.POST)
+	public int checkScreenDupPreview(@RequestBody ScreenContent screenContent) {
+		System.out.println("screen/json/checkScreenDupPreview :: GET");
+		System.out.println("screenContent+++" + screenContent);
+		int checkScreenDupPreview = screenService.checkScreenDupPreview(screenContent);
+		System.out.println("checkScreenDupTime++++"+checkScreenDupPreview);
+		return checkScreenDupPreview;
+	};
+	
+	
+	
+	
 
 }

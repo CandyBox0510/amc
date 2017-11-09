@@ -1,9 +1,7 @@
 package com.amc.web.movie;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
-import org.junit.internal.matchers.SubstringMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,8 +33,6 @@ import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
-
-import sun.print.resources.serviceui;
 
 //==> 康拳包府  Controller
 @Controller
@@ -234,6 +228,8 @@ public class MovieController {
 		System.out.println("/getMovie : GET");
 		// Business Logic
 		System.out.println("movieNo ::" + movieNo);
+		System.out.println("menu ++++++++++++" + menu);
+		
 
 		Movie movie = movieService.getMovie(movieNo);
 		//System.out.println(search+"searchhhhh");
@@ -301,6 +297,8 @@ public class MovieController {
 			
 			
 		} else {
+				model.addAttribute("menu", menu);	
+				
 			System.out.println(movie + "百公厚咀记");
 			// modelAndView.setViewName("/movie/getMovie.jsp");
 

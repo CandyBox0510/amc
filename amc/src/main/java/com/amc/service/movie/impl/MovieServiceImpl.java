@@ -539,6 +539,18 @@ public class MovieServiceImpl implements MovieService {
 		
 		return movieDAO.deleteMovieComment(movieCommentNo);
 	}
+	
+	//감상평 개수 
+	@Override
+	public int getTotalCount(int movieNo) throws Exception {
+		
+		System.out.println("MovieServieceImpl의 deleteMovieComment 시작");
+		System.out.println("1. movieCommentNo ==> "+ movieNo);
+		System.out.println("MovieServieceImpl의 deleteMovieComment 끝");
+		int totalCount = movieDAO.getTotalCount(movieNo);
+		return totalCount;
+	}
+	
 
 	@Override
 	public Map<String, Object> getMovieCommentList(Search search, int movieNo) throws Exception {
@@ -560,11 +572,6 @@ public class MovieServiceImpl implements MovieService {
 		return map;
 	}
 
-	@Override
-	public List<Movie> getChart(int movieNo) {
-		
-		return null;
-	}
 
 
 
@@ -586,6 +593,7 @@ public class MovieServiceImpl implements MovieService {
 
 	}
 	
+	@Override
 	public String checkWishList(WishList wishList){
 		return movieDAO.checkWishList(wishList);
 	}

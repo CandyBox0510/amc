@@ -9,13 +9,13 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
+        <title>굿즈 상품목록</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
     <!-- Mobile Specific Metas-->
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
     
     <!-- Fonts -->
@@ -54,21 +54,6 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
         <script src="../semantic/semantic.min.js"></script>
-  
-		
-		<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<!-- 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	   
-	    jQuery UI toolTip 사용 CSS
-	    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	    jQuery UI toolTip 사용 JS
-	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- -->	
-  
-  
 
 </head>
 
@@ -129,7 +114,7 @@
 			        </div>
 		
 		              <div class="tags-area tags-area--thin" style="height : 50px">
-		                 <p>안녕하세영</p>
+		                 <p>Welcome to Goods shop!</p>
 		
 		                    <div class="tags tags--unmarked tags--aside">
 		                        <span class="tags__label">Sorted by:</span>
@@ -150,7 +135,6 @@
 		                            <div class="col-xs-6 col-sm-3 cinema-item">
 		                                <div class="cinema">
 		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images">
-		                                    <!-- <a href="javascript:fncGetProduct()" class="cinema__images"> -->
 		                                        <img id="poster"alt='' src="../images/uploadFiles/${product.prodImage }" >
 		                                        <input type="hidden" id="prodNo" value="${product.prodNo}"/>
 		                                    </a>
@@ -181,18 +165,8 @@
 		<div class="clearfix"></div>
  
  </div>
-		
+		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
-
-	
-	
-	
-	
-	
-	
-	
-		 
-
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
@@ -224,40 +198,40 @@
 
 <script type="text/javascript">
 			   
-function fncGetPageList(currentPage) {
-    $("#currentPage").val(currentPage)		  
-  	alert($("#currentPage").val(currentPage));
-    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
-    $("input[name='searchKeyword']").val(searchKeyword);
-}
-
-
-
-$(document).ready(function() {
-   
-    $("button[name='search']").on("click", function() {
-    	
-    	fncGetPageList(1);
-    });
-    
-    $(".pagination__next").on("click", function() {		
-    	alert("여기들어오니?");
-    	/* searchKeyword = $("input[name='searchKeyword']").val(); */
-   
-        var currentPage = $("#currentPage").val()
-        alert($("#currentPage").val());
-        currentPage = parseInt(currentPage)+1
-        alert(currentPage);
-        fncGetPageList(currentPage);
-    });
-    
-    $(".pagination__prev").on("click", function() {
-    	 var currentPage = $("#currentPage").val()
-         currentPage = parseInt(currentPage)-1
-	   	 
-        fncGetPageList(currentPage);
-    });
-});
+	function fncGetPageList(currentPage) {
+	    $("#currentPage").val(currentPage)		  
+	  	alert($("#currentPage").val(currentPage));
+	    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
+	    $("input[name='searchKeyword']").val(searchKeyword);
+	}
+	
+	
+	
+	$(document).ready(function() {
+	   
+	    $("button[name='search']").on("click", function() {
+	    	
+	    	fncGetPageList(1);
+	    });
+	    
+	    $(".pagination__next").on("click", function() {		
+	    	alert("여기들어오니?");
+	    	/* searchKeyword = $("input[name='searchKeyword']").val(); */
+	   
+	        var currentPage = $("#currentPage").val()
+	        alert($("#currentPage").val());
+	        currentPage = parseInt(currentPage)+1
+	        alert(currentPage);
+	        fncGetPageList(currentPage);
+	    });
+	    
+	    $(".pagination__prev").on("click", function() {
+	    	 var currentPage = $("#currentPage").val()
+	         currentPage = parseInt(currentPage)-1
+		   	 
+	        fncGetPageList(currentPage);
+	    });
+	});
 
 </script>
 
@@ -286,14 +260,10 @@ $(document).ready(function() {
 		  margin-top: 5px;
 		  
 	} 
-/* 	
- 	body {
-		padding-top: 80px;
-	}  */
 	
 	html{
-        		height: auto;
-  		}
+        height: auto;
+  	}
 	 
 </style>
 

@@ -9,30 +9,260 @@
 
 <html>
 <head>
-	<title>Model2 MVC Shop</title>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+   <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMC 결제화면</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
-<!-- 	아임포트 CDN -->
-	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
+
+        <!-- Modernizr --> 
+        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
+    
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
+        <!--   Sweetalert2 CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+   
+        <!--   semantic UI  -->
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="../semantic/semantic.min.js"></script>
 	
-	<style>
-		body{
-			padding-top : 70px;
-		}
-	</style>
-	
+		<!--아임포트 CDN -->
+		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</head>
+
+<body>
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+
+		<div class="container" id="body">
+			<div class="page-header col-sm-offset-2 col-sm-10">
+				<h1>상품 구매</h1>
+			</div>
+			<form class="add-product form-horizontal">
+				<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo }" />
+				<input type="hidden" name="purchaseProd.prodName" value="${product.prodName }"/>
+				<input type="hidden" name="buyer.userId" value="${user.userId }"/>
+				<input type="hidden" name="tranCode" value="1"/>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<input type="hidden" name="prodType" value="${product.prodType}"/>
+							<div class="col-xs-4">
+								<c:if test="${!empty product.prodImage}">
+									<img src="../images/uploadFiles/${product.prodImage}" class="img-responsive"/>
+								</c:if>
+								<c:if test="${empty product.prodImage}">
+									<img src="../images/uploadFiles/empty<%=index%>.GIF" class="img-responsive"/>
+								</c:if>
+							</div>
+							
+							<div class="col-xs-8">
+								<dl class="dl-horizontal">
+									<dt>상품명</dt>
+									<dd>${product.prodName}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>총 수량</dt>
+									<dd>${product.totalStock} 개</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>현재 재고수량</dt>
+									<dd>${product.stock} 개</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>판매시작일</dt>
+									<dd>${product.salesOpenDate}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>판매종료일</dt>
+									<dd>${product.salesEndDate}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>가격</dt>
+									<dd>${product.prodPrice} 원</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>상세정보</dt>
+									<dd>${product.prodDetail}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>상품구성정보</dt>
+									<dd>${product.prodSetInfo}</dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+		
+					<div class="col-md-6">
+						<div class="form-group">
+							<div class="row">
+								<label for="inputPaymentOption" class="col-sm-3 control-label">결제방법</label>
+								<div class="col-sm-3">
+									<select class="form-control" id="inputPaymentOption" name="paymentOption">
+										<option value="1">카카오페이</option>								
+									</select>
+								</div>
+								<span class="col-sm-6"></span>
+							</div>
+							<br/>
+							
+							<div class="row">
+								<label for="inputPurchaseCount" class="col-sm-3 control-label">구매수량</label>
+								<div class="col-sm-3">
+									<select class="form-control" id="inputPurchaseCount" name="orderStock" onchange="calc(this.form.prodPrice, this.form.orderStock, this.form.totalProdPrice)">
+										<c:forEach var="i" begin="1" end="${product.stock>10? 10 : product.stock}">
+											<option value="${i}">${i}</option>
+										</c:forEach>
+									</select>							
+								</div>
+								<span class="col-sm-6"></span>
+							</div>
+							<br/>
+							
+							<div class="row">
+								<label for="inputReceiverName" class="col-sm-3 control-label">받는사람</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="inputReceiverName" name="receiverName" value="${user.userName}">
+								</div>
+								<span class="col-sm-6"></span>
+							</div>
+							<br/>
+							
+							<div class="form-group">
+								<label for="phone" class=" col-sm-3 control-label">받는 분 연락처</label>
+							    <div class="col-sm-2">
+							    	<select class="form-control" name="receiverPhone1" id="receiverPhone1" value="${user.phone1}">
+										<option value="010" >010</option>
+										<option value="011" >011</option>
+										<option value="016" >016</option>
+										<option value="018" >018</option>
+										<option value="019" >019</option>
+									</select>
+							     </div>
+						   
+							     <div class="col-sm-2">
+							     	<input type="text" class="form-control" id="receiverPhone2" name="receiverPhone2" placeholder="번호" value="${user.phone2}">
+							     </div>
+							    
+							     <div class="col-sm-2">
+							     	<input type="text" class="form-control" id="receiverPhone3" name="receiverPhone3" placeholder="번호" value="${user.phone3}">
+							     </div>	
+						    	 <span class="col-sm-6"></span>			    	
+						 	 </div>
+							
+							 <div class="row">
+							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">배송지</label>
+							 	<div class="col-sm-3">
+									<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvy" value="${user.addr}" >
+								</div>
+								<span class="col-sm-6"></span>
+							 </div>
+							 <br/>
+							
+							 <div class="row">
+							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">상세주소</label>
+							 	<div class="col-sm-3">
+							 		<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvyDetail" value="${user.addrDetail}" >
+							 	</div>
+							 	<span class="col-sm-6"></span>
+							 </div>
+							 <br/>
+							
+							 <div class="row">
+							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">총 구매 가격</label>
+							 	<div class="col-sm-3">
+							 		<input type="text" class="form-control" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
+							 		<input type=hidden name="prodPrice" value="${product.prodPrice}"> 
+							 	</div>
+							 	<span class="col-sm-6"></span>
+							 </div>
+							 <br/>
+							 
+							 <div class="row">
+							 	<div class="add-purchase col-sm-offset-3 col-sm-9">
+									<button type="button" class="btn btn-success">
+										구매
+									</button>
+									<button type="button" class="btn btn-info">
+										취소
+									</button>
+								</div>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+			 </form>
+		 </div>
+	 </div>
+	 
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+
+   <!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+
+</body>
+
 	<script type="text/javascript">
 	//imp초기화는 페이지 첫단에 해주는게 좋음
  	IMP.init('imp41659269');
@@ -173,178 +403,13 @@
 		  } 
 
 	</script>
-</head>
+	<style type="text/css">
+	 	#body{ padding-top: 100px; }
 
-<body>
-
-	<jsp:include page="../layout/topToolbar.jsp">
-		<jsp:param name="uri" value="../"/>
-	</jsp:include>
+ 		html{
+	        height: auto;
+	  	} 
+		 
+	</style>
 	
-<div class="container">
-
-	<div class="page-header col-sm-offset-2 col-sm-10">
-		<h1>상품 구매</h1>
-	</div>
-	<form class="add-product form-horizontal">
-		<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo }" />
-		<input type="hidden" name="purchaseProd.prodName" value="${product.prodName }"/>
-		<input type="hidden" name="buyer.userId" value="${user.userId }"/>
-		<input type="hidden" name="tranCode" value="1"/>
-		
-		<div class="row">
-			<div class="col-md-6">
-				<div class="row">
-					<input type="hidden" name="prodType" value="${product.prodType}"/>
-					<div class="col-xs-4">
-						<c:if test="${!empty product.prodImage}">
-							<img src="../images/uploadFiles/${product.prodImage}" class="img-responsive"/>
-						</c:if>
-						<c:if test="${empty product.prodImage}">
-							<img src="../images/uploadFiles/empty<%=index%>.GIF" class="img-responsive"/>
-						</c:if>
-					</div>
-					<div class="col-xs-8">
-						<dl class="dl-horizontal">
-							<dt>상품명</dt>
-							<dd>${product.prodName}</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>총 수량</dt>
-							<dd>${product.totalStock} 개</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>현재 재고수량</dt>
-							<dd>${product.stock} 개</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>판매시작일</dt>
-							<dd>${product.salesOpenDate}</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>판매종료일</dt>
-							<dd>${product.salesEndDate}</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>가격</dt>
-							<dd>${product.prodPrice} 원</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>상세정보</dt>
-							<dd>${product.prodDetail}</dd>
-						</dl>
-						<dl class="dl-horizontal">
-							<dt>상품구성정보</dt>
-							<dd>${product.prodSetInfo}</dd>
-						</dl>
-					</div>
-				</div>
-			</div>
-
-			<div class="col-md-6">
-				<div class="form-group">
-					<div class="row">
-						<label for="inputPaymentOption" class="col-sm-3 control-label">결제방법</label>
-						<div class="col-sm-3">
-							<select class="form-control" id="inputPaymentOption" name="paymentOption">
-								<option value="1">카카오페이</option>								
-							</select>
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					<div class="row">
-						<label for="inputPurchaseCount" class="col-sm-3 control-label">구매수량</label>
-						<div class="col-sm-3">
-							<select class="form-control" id="inputPurchaseCount" name="orderStock" onchange="calc(this.form.prodPrice, this.form.orderStock, this.form.totalProdPrice)">
-								<c:forEach var="i" begin="1" end="${product.stock>10? 10 : product.stock}">
-									<option value="${i}">${i}</option>
-								</c:forEach>
-							</select>							
-						</div>
-					 
-						
-						
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					<div class="row">
-						<label for="inputReceiverName" class="col-sm-3 control-label">받는사람</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputReceiverName" name="receiverName" value="${user.userName}">
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					
-				  <div class="form-group">
-				    <label for="phone" class=" col-sm-3 control-label">받는 분 연락처</label>
-				     <div class="col-sm-2">
-				      	<select class="form-control" name="receiverPhone1" id="receiverPhone1" value="${user.phone1}">
-						  	<option value="010" >010</option>
-							<option value="011" >011</option>
-							<option value="016" >016</option>
-							<option value="018" >018</option>
-							<option value="019" >019</option>
-						</select>
-				     </div>
-				   
-				    <div class="col-sm-2">
-				      <input type="text" class="form-control" id="receiverPhone2" name="receiverPhone2" placeholder="번호" value="${user.phone2}">
-				    </div>
-					    
-				    <div class="col-sm-2">
-				      <input type="text" class="form-control" id="receiverPhone3" name="receiverPhone3" placeholder="번호" value="${user.phone3}">
-				    </div>	
-				    <span class="col-sm-6"></span>			    	
-				 </div>
-					
-					<div class="row">
-						<label for="inputDlvyAddr" class="col-sm-3 control-label">배송지</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvy" value="${user.addr}" >
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					
-					<div class="row">
-						<label for="inputDlvyAddr" class="col-sm-3 control-label">상세주소</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputDlvyAddr" name="addrDlvyDetail" value="${user.addrDetail}" >
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					
-					<div class="row">
-						<label for="inputDlvyAddr" class="col-sm-3 control-label">총 구매 가격</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
-							<input type=hidden name="prodPrice" value="${product.prodPrice}"> 
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					<div class="row">
-						<div class="add-purchase col-sm-offset-3 col-sm-9">
-							<button type="button" class="btn btn-success">
-								구매
-							</button>
-							<button type="button" class="btn btn-info">
-								취소
-							</button>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-		
-	</form>
-	
-</div>
-
-
-</body>
 </html>

@@ -12,16 +12,16 @@ import com.amc.service.product.ProductDAO;
 import com.amc.service.purchase.PurchaseDAO;
 import com.amc.service.purchase.PurchaseService;
 
-@Service("purchaseService")
+@Service("purchaseServiceImpl")
 public class PurchaseServiceImpl implements PurchaseService{
 	
 	/*Field*/
 	@Autowired
-	@Qualifier("purchaseDAO")
+	@Qualifier("purchaseDAOImpl")
 	private PurchaseDAO purchaseDAO;
 
 	@Autowired
-	@Qualifier("productDAO")
+	@Qualifier("productDAOImpl")
 	private ProductDAO productDAO;
 
 	

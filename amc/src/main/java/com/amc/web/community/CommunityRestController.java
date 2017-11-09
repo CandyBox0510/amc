@@ -34,20 +34,6 @@ public class CommunityRestController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	// 해림 추가
 	@RequestMapping(value = "json/addComment", method = RequestMethod.POST)
 	public void addComment(@RequestBody Comment comment) {
@@ -136,60 +122,6 @@ public class CommunityRestController {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	@RequestMapping(value = "json/getReplyList",  method = RequestMethod.POST)
-	public  List<Comment> getReplyList( @ModelAttribute("search") Search search, @RequestBody Comment comment) throws Exception {
-		System.out.println("communityRestController의 getReplyList시작 ");
-	
-	
-		System.out.println("1. search ==> "+search);
-		
-		if (search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		
-		System.out.println("1. comment ==> "+comment);
-		
-		search.setPageSize(pageSize);
-
-		System.out.println("1-1. search ==> "+ search);
-		//System.out.println("2. movieNo ==> "+ movieNo);
-		int freeBoardNo = comment.getFreeBoard().getFreeBoardNo();
-		int parentCommentNo = comment.getParentCommentNo();
-		
-		System.out.println("2. freeBoardNo ==> " + freeBoardNo);
-		System.out.println("3. parentCommentNo ==> " + parentCommentNo);
-		List<Comment> list = communityService.getReplyList(search, parentCommentNo);
-		
-		
-		System.out.println("4. list ==> " + list);
-		System.out.println("communityRestController의 getReplyList :: POST 끝.....");
-		
-		return list;
-	}
-	
-	
-	
 
 	@RequestMapping(value = "json/getFreeBoardTotalCount/{freeBoardNo}")
 	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, 

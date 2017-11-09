@@ -60,7 +60,6 @@
 
   function listener(event){      
       document.getElementById('child').contentWindow.postMessage(event.data,"*");
-      alert(event.data);
       $("input[name='seats']").val(event.data);
       
         $.ajax({
@@ -75,7 +74,6 @@
                   console.log('SeatNo 받아옴 : '+JSONData.seatNo);
                        if(JSONData != ""){
                           $("#seatNo").html(JSONData.seatNo);
-                          alert($("#seatNo").html());
                        }//end of if문
                }
       });//end of ajax
@@ -133,7 +131,7 @@
                })
             return;
          }
-         alert($("input[name='seats']").val());
+
          $.ajax({
                    url: "/alarm/json/addCancelAlarm?"+
                 		 "user.userId="+userId+
@@ -155,7 +153,7 @@
                    } else if( result == 'exceed'){
                       swal(
                               '취소표알림 자리 수 초과!',
-                              '신청 가능한 취소표알림 수 초과 (최대 4 좌석)',
+                              '신청 가능한 취소표알림 수 초과 (1인당 최대4 좌석)',
                               'error'
                             )
                    } else {
@@ -187,11 +185,11 @@
     <div class="wrapper place-wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
          <!-- ToolBar Start /////////////////////////////////////-->
          <jsp:include page="/layout/topToolbar.jsp" />
          <!-- ToolBar End /////////////////////////////////////-->
@@ -201,7 +199,12 @@
         <div class="place-form-area">
         <section class="container">
             <div class="order-container">
-                <div class="order">
+            	<div class="row">
+            		<p/>
+            		<p/>
+            		<p/>
+            	</div>
+                <div class="order" style="padding-top:10px">
                     <img class="order__images" alt='' src="../images/cinema/Cancel.jpg">
                     <p class="order__title">Cancel Alarm <br><span class="order__descript">request Cancelalarm</span></p>
                     <div class="order__control">
@@ -231,9 +234,9 @@
           <!--  only UI -->
    
          <div class="col-sm-8 com-md-9">   
-            <%-- <iframe id="child" src="http://192.168.0.20:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
-            
-            <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
+            <%-- <iframe id="child" src="http://192.168.0.32:52273/yenakoh/3?screenNo=${screenContent.screenContentNo}" --%>
+            <iframe id="child" src="http://192.168.0.32:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}"
+            <%-- <iframe id="child" src="http://127.0.0.1:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" --%> 
 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
                     <p>Your browser does not support iframes.</p>
@@ -307,7 +310,11 @@
             $(document).ready(function() {
                 init_BookingOne();
             });
+    		
       </script>
+      
+      <!-- Custom -->
+      <script src="/js/custom.js"></script>
 </body>
  <style>
       html{

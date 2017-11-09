@@ -39,11 +39,11 @@ public class ScreenController {
 	@RequestMapping(value = "getScreenList")
 	public String getScreenList(@ModelAttribute("search") Search search, Model model) throws Exception {
 		System.out.println("/screen/getScreenList :: POST");
-
+		System.out.println("search값 확인" + search);
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-
+		pageSize = 8;
 		search.setPageSize(pageSize);
 
 		System.out.println("search값 확인" + search);

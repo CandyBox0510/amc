@@ -79,13 +79,16 @@ public class AlarmRestController {
 						@RequestParam(value="userId",defaultValue="")String userId,
 						@RequestParam(value="alarmSeatNo",defaultValue="")String alarmSeatNo
 						) throws Exception{
-		
-		System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
-		
-		//String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
-		
-		if(!type.equals("userCertification")){
-			String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+
+		if(!type.equals("") || type !=null){
+			
+			System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
+			
+			String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+			
+			if(!type.equals("userCertification") || !type.equals("booking")){
+				String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+			}
 		}
 		
 		return null;
