@@ -1,5 +1,6 @@
 package com.amc.service.movie.impl;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,6 +208,13 @@ public class MovieDAOImpl implements MovieDAO {
 	    System.out.println("movieNm      ::" + movie.getMovieNm());
 	    System.out.println("postUrl      ::" + movie.getPostUrl());
 	    System.out.println("watchGradeNm ::" + movie.getWatchGradeNm());
+	    
+	    if(movie.getWatchGradeNm() != null) {
+	    	
+	    } else {
+	    	movie.setWatchGradeNm("청소년 관람가");
+	    }
+	 
 	    System.out.println("showTm       ::" + movie.getShowTm());
 	    System.out.println("openDt       ::" + movie.getOpenDt());
 	    /*  System.out.println("movieEndDate ::" + movie.getEndDt());*/
@@ -214,9 +222,23 @@ public class MovieDAOImpl implements MovieDAO {
 	    System.out.println("trailer      ::" + movie.getTrailer());
 	    
 	    System.out.println("movie context call : " + movie);
+	    int sql_return_code = 0;
+	    
+	    
+	    try {
+	       sql_return_code = sqlSession.insert("MovieMapper.addMovie",movie);
     	
+	    }
+	    catch (Exception e) {
+	    	sql_return_code = 8;
+	    	return sql_return_code;
+			//System.out.println("Oracle Error Occurred...");
+						
+		}
+	    
+	    System.out.println("sql return code ::" + sql_return_code);
 		
-		return sqlSession.insert("MovieMapper.addMovie",movie);
+		return sql_return_code;
 		
 }
 
