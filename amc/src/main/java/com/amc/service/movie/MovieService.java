@@ -78,6 +78,8 @@ public interface MovieService {
 
 	int getTotalCount(int movieNo) throws Exception;
 
+	String searchTrailer(String searchTrailer) throws Exception;
+
 	
 	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
 	// public List<WishList> getWishListMovie(Search search, User user);
