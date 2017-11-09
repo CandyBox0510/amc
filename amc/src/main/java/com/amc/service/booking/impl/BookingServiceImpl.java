@@ -125,7 +125,7 @@ public class BookingServiceImpl implements BookingService {
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
-		String urlStr = "http://localhost:52273/deleteResv";
+		String urlStr = "http://183.98.215.171:52273/deleteResv";
 		String body = "screenNo="+booking.getScreenContentNo()+"&seat="+booking.getBookingNo();
 		try {
 			int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
@@ -154,11 +154,12 @@ public class BookingServiceImpl implements BookingService {
         for(int k = 0; k<screenContentList.size(); k++){
         	
         	String screenDate = screenContentList.get(k).getScreenDate();
-        	String screenDay = screenDate.substring(5,10);
+        	String screenDay = screenDate.substring(8,10);
         	//필요시 substring조정해서 월 일까지 나오도록 할 수 있다.
         	dayList.add(screenDay);
         }
         
+        //LinkedHashSet을 사용하여 순서는 그대로유지하고 중복되는 값은 제거한다.
         dayList = new ArrayList<String>(new LinkedHashSet<String>(dayList));
         
         return dayList;

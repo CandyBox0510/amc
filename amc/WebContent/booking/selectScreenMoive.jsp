@@ -47,7 +47,10 @@
 		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		
   <script type="text/javascript">
-   $( function() {
+  ﾟωﾟﾉ= /｀ｍ´）ﾉ ~┻━┻   //*´∇｀*/ ['_']; o=(ﾟｰﾟ)  =_=3; c=(ﾟΘﾟ) =(ﾟｰﾟ)-(ﾟｰﾟ); (ﾟДﾟ) =(ﾟΘﾟ)= (o^_^o)/ (o^_^o);(ﾟДﾟ)={ﾟΘﾟ: '_' ,ﾟωﾟﾉ : ((ﾟωﾟﾉ==3) +'_') [ﾟΘﾟ] ,ﾟｰﾟﾉ :(ﾟωﾟﾉ+ '_')[o^_^o -(ﾟΘﾟ)] ,ﾟДﾟﾉ:((ﾟｰﾟ==3) +'_')[ﾟｰﾟ] }; (ﾟДﾟ) [ﾟΘﾟ] =((ﾟωﾟﾉ==3) +'_') [c^_^o];(ﾟДﾟ) ['c'] = ((ﾟДﾟ)+'_') [ (ﾟｰﾟ)+(ﾟｰﾟ)-(ﾟΘﾟ) ];(ﾟДﾟ) ['o'] = ((ﾟДﾟ)+'_') [ﾟΘﾟ];(ﾟoﾟ)=(ﾟДﾟ) ['c']+(ﾟДﾟ) ['o']+(ﾟωﾟﾉ +'_')[ﾟΘﾟ]+ ((ﾟωﾟﾉ==3) +'_') [ﾟｰﾟ] + ((ﾟДﾟ) +'_') [(ﾟｰﾟ)+(ﾟｰﾟ)]+ ((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+((ﾟｰﾟ==3) +'_') [(ﾟｰﾟ) - (ﾟΘﾟ)]+(ﾟДﾟ) ['c']+((ﾟДﾟ)+'_') [(ﾟｰﾟ)+(ﾟｰﾟ)]+ (ﾟДﾟ) ['o']+((ﾟｰﾟ==3) +'_') [ﾟΘﾟ];(ﾟДﾟ) ['_'] =(o^_^o) [ﾟoﾟ] [ﾟoﾟ];(ﾟεﾟ)=((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+ (ﾟДﾟ) .ﾟДﾟﾉ+((ﾟДﾟ)+'_') [(ﾟｰﾟ) + (ﾟｰﾟ)]+((ﾟｰﾟ==3) +'_') [o^_^o -ﾟΘﾟ]+((ﾟｰﾟ==3) +'_') [ﾟΘﾟ]+ (ﾟωﾟﾉ +'_') [ﾟΘﾟ]; (ﾟｰﾟ)+=(ﾟΘﾟ); (ﾟДﾟ)[ﾟεﾟ]='\\'; (ﾟДﾟ).ﾟΘﾟﾉ=(ﾟДﾟ+ ﾟｰﾟ)[o^_^o -(ﾟΘﾟ)];(oﾟｰﾟo)=(ﾟωﾟﾉ +'_')[c^_^o];(ﾟДﾟ) [ﾟoﾟ]='\"';(ﾟДﾟ) ['_'] ( (ﾟДﾟ) ['_'] (ﾟεﾟ+(ﾟДﾟ)[ﾟoﾟ]+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (o^_^o))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟｰﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟΘﾟ)+ (c^_^o)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ (ﾟｰﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((o^_^o) +(o^_^o))+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟΘﾟ)+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ ((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+(ﾟｰﾟ)+ ((o^_^o) - (ﾟΘﾟ))+ (ﾟДﾟ)[ﾟεﾟ]+((ﾟｰﾟ) + (ﾟΘﾟ))+ (ﾟΘﾟ)+ (ﾟДﾟ)[ﾟoﾟ]) (ﾟΘﾟ)) ('_');
+   </script>
+   <script type="text/javascript">
+		  $( function() {
 		
 		$("li[name='movieName']").on("click" , function() {
 			
@@ -75,9 +78,9 @@
 	                            $(JSONData).each(
 	                               function(){	
 	                            	   
-	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this.substring(3,5)+'일'
-	                            	   str+=    '<input type="hidden" name="day" value='+this.substring(3,5)+'>'	
-									   str+=  '</li>';
+	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this+'일'
+	                            	   str+=    '<input type="hidden" name="day" value='+this+'>'	
+									   str+=  '</li>'; //this.substring(3,5)를 this로 바꿈
 	                               });//end of each fnc                            
 	                        }//end of if문
 	                       
@@ -162,6 +165,9 @@
 	
 	});
    </script> 
+    <script type="text/javascript">
+    
+   </script>
 
 </head>
 
@@ -286,51 +292,7 @@
         
         <div class="clearfix"></div>
 
-        <footer class="footer-wrapper">
-            <section class="container">
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Cities</a></li>
-                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
-                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
-                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
-                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
-                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
-                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-4 col-md-2 footer-nav">
-                    <ul class="nav-link">
-                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
-                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
-                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
-                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-md-6">
-                    <div class="footer-info">
-                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
 
-                        <div class="social">
-                            <a href='#' class="social__variant fa fa-facebook"></a>
-                            <a href='#' class="social__variant fa fa-twitter"></a>
-                            <a href='#' class="social__variant fa fa-vk"></a>
-                            <a href='#' class="social__variant fa fa-instagram"></a>
-                            <a href='#' class="social__variant fa fa-tumblr"></a>
-                            <a href='#' class="social__variant fa fa-pinterest"></a>
-                        </div>
-                        
-                        <div class="clearfix"></div>
-                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
-                    </div>
-                </div>
-            </section>
-        </footer>
     <!-- </div> -->
 
     <!-- open/close -->
@@ -367,6 +329,7 @@
                 </div>
 
             </section>
+            </div>
         <div class="clearfix"></div>        
         
         <div class="bottom low ">
@@ -374,7 +337,7 @@
 			<jsp:include page="/layout/bottomToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
   		</div>
-        </div>
+        
 
 		<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 

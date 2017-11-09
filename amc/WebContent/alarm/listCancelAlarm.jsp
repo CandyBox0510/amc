@@ -69,19 +69,21 @@
 	 $(function() {
 		 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 $( ".label-success" ).on("click" , function() {
-			 $.ajax({
-	               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
-	               method : "GET" ,
-	               async : false,
-	               success : function(data, status) {
-	                  if(data == 1){
-	                	 $(".gallery-wrapper").empty();
- 						for(var i = 1; i < count+1; i++ ){
-							loadList(i);
-						} 
-	                  }
-	               }
-	      });//end of ajax
+			 if(confirm("삭제하시겠습니까?")!=0){
+				 $.ajax({
+		               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
+		               method : "GET" ,
+		               async : false,
+		               success : function(data, status) {
+		                  if(data == 1){
+		                	 $(".gallery-wrapper").empty();
+	 						for(var i = 1; i < count+1; i++ ){
+								loadList(i);
+							} 
+		                  }
+		               }
+		      	});//end of ajax
+			 }
 		});
 	 })
 
@@ -108,7 +110,7 @@
 							
 							for(i in JSONData.list){
 
-								all = '<div class="col-sm-4 col-md-3">'
+								all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 								all += 	'<div class="gallery-item">'
 								all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu='
 											if(alarm[i].screenContent.previewFlag == 'Y'){
@@ -117,11 +119,11 @@
 												all += "search"
 											}
 								all +=    '">'
-								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365;"></a>'
-								all += 		'<div class="alert alert-info" role="alert">'
-								all +=			'<strong>취소표 신청 좌석</strong><br/>'
+								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 		'<div class="alert alert-success" role="alert">'
+								all +=			'<strong>취소표 신청 좌석</strong><br/>['
 								all +=           alarm[i].alarmSeatNo
-								all += 			'<span class="label label-success">'
+								all += 			' ]<span class="label label-success">'
 								all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
 								all +=			'취소</span></a>'
 								all +=		'</div>'
@@ -140,6 +142,7 @@
 								console.log($(".gallery-wrapper").html());
 								$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
 								$( ".label-success" ).on("click" , function() {
+									if(confirm("삭제하시겠습니까?")!=0){
 									 $.ajax({
 							               url : "/alarm/json/deleteAlarm/"+$(this).find('input').val(),                  
 							               method : "GET" ,
@@ -152,7 +155,8 @@
 												}
 							                  }
 							               }
-							      });//end of ajax
+							     	  });//end of ajax
+									}
 							});
 						}
 				}
@@ -170,22 +174,25 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
         <!-- Main content -->
-        <section class="container">
+        <section class="container" style="margin-top:10%">
             <div class="col-sm-12">
+                    <p/>
+	               	<p/>
+	               	<p/>
                 <h2 class="page-heading">취소표 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="alarm" items="${list}">
 						<c:set var="i" value="${ i+1 }" />
-        				<div class="col-sm-4 col-md-3">
+        				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 						     	<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
 	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search"></a>
@@ -193,10 +200,10 @@
 	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
 	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview"></a>
 	                            </c:if>
-	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365;">
+	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            
 	                            <div class="alert alert-success" role="alert">
-  									<strong>취소표 신청 좌석</strong><br/>${alarm.alarmSeatNo}
+  									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]
   									<span class="label label-success"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
 	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
@@ -258,6 +265,22 @@
  <style>
       html{
  	     height: auto;
+      }
+      .col-sm-4{
+      	/* background-color: #EDEDED; */
+      	background-color: #c1ffbc;
+      	margin-top:5px;
+      	margin-bottom:5px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a5ff9e; 
       }
  </style>
 </html>

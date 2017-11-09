@@ -3527,7 +3527,7 @@ ul#navigation a:hover {
   font: 13px 'Roboto', sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  color: #ffd564;
+  color: #CFD2D4;
   position: relative;
   margin-right: 3px;
   -webkit-transition: 0.3s;
@@ -9304,6 +9304,18 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .gallery-item .gallery-item--video:before,
 .gallery-item .gallery-item--video-link:before {
   background-color: #fe505a;
+}
+.gallery-item .gallery-item--blue-link:before {
+  background-color: #0080FF;
+}
+.gallery-item .gallery-item--success-link:before {
+  background-color: #5cb85c;
+}
+.gallery-item .gallery-item--goods-link:before {
+  background-color: #4c4145;
+}
+.gallery-item .gallery-item--info-link:before {
+  background-color: #5bc0de;
 }
 .choose-sits__info--first {
   border-right: 1px solid #4c4145;

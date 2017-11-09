@@ -181,20 +181,7 @@ public class ScreenDAOImpl implements ScreenDAO {
 		return sqlSession.delete("ScreenContentMapper.deleteScreenContent", screenContentNo);
 	}
 
-	@Override
-	// 선택한 상영날짜, 상영관에 등록되어있는 시간 목록 가져오기
-	public List<ScreenContent> notEmptyScreenContent(ScreenContent screenContent) {
-		
-		System.out.println("ScreenDAOImpl의 notEmptyScreenContent 메소드 시작...");
 
-		List<ScreenContent> list = sqlSession.selectList("ScreenContentMapper.notEmptyScreenContent", screenContent);
-
-		System.out.println("list값 받아왔니===========>"+list);
-		System.out.println("ScreenDAOImpl의 notEmptyScreenContent 메소드 끝...");
-		
-		
-		return list;
-	};
 	
 	@Override
 	public int getTotalCount(Search search) throws Exception {		

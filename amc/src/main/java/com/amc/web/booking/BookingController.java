@@ -23,7 +23,6 @@ import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
-import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Booking;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
@@ -31,6 +30,7 @@ import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 import com.amc.service.user.UserService;
+import com.amc.web.alarm.AlarmRestController;
 import com.amc.web.cinema.HttpRequestToNode;
 
 @Controller
@@ -191,11 +191,13 @@ public class BookingController {
 		}
 		
 		//4. 취소표 알리미 발송하기	
-		int length = (alarmSeats.split(",").length)/2;
-		for(int i=0;i<length;i+=2){						
-			String seat = alarmSeats.substring(i, i+2);
-			alarmService.smsPush("cancelAlarm", screenContentNo+"", user.getUserId(),seat);
-		}		
+		String[] temp = alarmSeats.split(",");
+		for(int i = 1; i<temp.length+1; i++){
+			if(i%2 == 0){
+				alarmService.smsPush("cancelAlarm", screenContentNo+"", "",temp[i-2]+","+temp[i-1]);
+				alarmService.appPush("cancelAlarm", screenContentNo+"", "",temp[i-2]+","+temp[i-1]);
+			}
+		}
 		
 		return "redirect:/booking/getAdminBookingList";			
 	}
