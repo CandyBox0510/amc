@@ -29,6 +29,7 @@ import com.amc.service.domain.User;
 import com.amc.service.movie.MovieDAO;
 import com.amc.service.screen.ScreenDAO;
 import com.amc.service.user.UserDAO;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @Service("alarmServiceImpl")
 public class AlarmServiceImpl implements AlarmService {
@@ -346,7 +347,8 @@ public class AlarmServiceImpl implements AlarmService {
 			break;
 			
 		case "userCertification":
-			userList.put("phone", alarmSeatNo);
+			phone.add(alarmSeatNo);
+			userList.put("phone", phone);
 			break;
 
 		default:

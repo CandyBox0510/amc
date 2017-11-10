@@ -137,17 +137,6 @@
 	                      </div>
 	                    </div>
 	                </div>
-	       
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
 			</div>
 		</div>
 	</div>
@@ -206,8 +195,8 @@
 			});
 
 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
-				if('${sessionScope.user.userId}'== null){
-				    $('.overlay').removeClass('close').addClass('open');
+				if('${sessionScope.user.userId}'== ''){
+					$('.overlay').removeClass('close').addClass('open');
 				}else{
 					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
 				} 

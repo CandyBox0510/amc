@@ -87,25 +87,27 @@
 		       					</button>	
 		      				</c:if> 
 				            	
-			            	<div class="col-sm-6 text-right">
+<%-- 			            	<div class="col-sm-6 text-right">
 				                <form id='search-form' method='get' class="search">
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
-					                        <%-- <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option> --%>
+					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
 					                    </select>
 				                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
-				                    <%-- <input type="text" id="currentPage" name="currentPage" value="${resultPage.currentPage}" /> --%>
+				                    <input type="text" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				                </form>
 				             </div>
+ --%>				             
+				             
 			             </div>
 			        </div>
 		
 		              <div class="tags-area tags-area--thin" style="height : 50px">
 		                 <p>Welcome to Goods shop!</p>
 		
-		                    <div class="tags tags--unmarked tags--aside">
+<!-- 		                    <div class="tags tags--unmarked tags--aside">
 		                        <span class="tags__label">Sorted by:</span>
 		                            <ul>
 		                                <li class="item-wrap"><a href="#" class="tags__item item-active" data-filter='all'>all</a></li>
@@ -113,7 +115,7 @@
 		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='popularity'>popularity</a></li>
 		                            </ul>
 		                    </div>
-		              </div>
+ -->		              </div>
 		
 					 <div class="cinema-wrap">
 		            	<div class="row">
@@ -135,7 +137,7 @@
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
-							                    </div>
+							                    </div><br/><br/><br/>
 							                <!-- </div> -->
 		                                </div>
 		                            </div>
@@ -238,9 +240,8 @@
 
 </script>
 
-
-
 <style type="text/css">
+ 	
  	#body{ padding-top: 100px; }
  	.countPage {
 	  	font-size: 13px;
@@ -281,6 +282,28 @@
     -webkit-transition: 0.5s;
     -o-transition: 0.5s;
     transition: 0.5s;
+}
+progress {
+	margin-top:0px;
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+.progress__bar {
+  margin-bottm:30px;
+  /* height: 15px; */
+  padding: 1px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #4c4145;
+}
+
+.progress .progress__info {
+  font-weight: bold;
+  margin-bottom: 6px;
+    margin-top: 0px;
 }
 </style>
 

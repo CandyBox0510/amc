@@ -92,23 +92,25 @@
 			    	</div>	
 			    	<span id="helpBlock" class="help-block col-sm-6"></span>		    
 			  	</div>
-			  	
-			  	<div class="row">
-			    	<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
-			    	<div class="col-sm-3" style="display:inline">
-			      		<input type="password" class="inputtype" id="password" name="password" placeholder="비밀번호">
-			    	</div>
-			  	</div>
-			  
-				<div class="row">
-					<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
-					<div class="col-sm-3" style="display:inline">
-						<input type="password" class="inputtype" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
-					</div>
-					<div class="col-sm-3" style="display:inline">
-						<span id="helpBlock2" class="help-block2 col-sm-6"></span>
-					</div>
-				</div>
+			  	<%-- <c:if test="${sessionScope.user.role == 'admin'}"> --%>
+			  	<c:if test="${empty snslogin}">
+					  	<div class="row">
+					    	<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
+					    	<div class="col-sm-3" style="display:inline">
+					      		<input type="password" class="inputtype" id="password" name="password" placeholder="비밀번호">
+					    	</div>
+					  	</div>
+					  
+						<div class="row">
+							<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
+							<div class="col-sm-3" style="display:inline">
+								<input type="password" class="inputtype" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
+							</div>
+							<div class="col-sm-3" style="display:inline">
+								<span id="helpBlock2" class="help-block2 col-sm-6"></span>
+							</div>
+						</div>
+				  	</c:if>
 			  
 				<div class="row">
 					<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"><strong>이름</strong></label>
@@ -228,6 +230,11 @@
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
+  
+        <!-- Form element -->
+        <script src="/js/bootstrap-datepicker.js"></script>
+        <!-- Form element -->
+        <script src="/js/bootstrap-datepicker.min.js"></script>
 	
 </body>
 	<script type="text/javascript">
@@ -256,7 +263,7 @@
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();
 			var name=$("input[name='userName']").val();
-			var birth=$("input[name='birth']").val();
+			var name=$("input[name='birth']").val();
 			var check=true
 			
 			if(id == null || id.length <1){
@@ -268,27 +275,31 @@
 				alert("이메일형식이아닙니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
-				/* return check=false; */
-				return; 
+			
+			if(	'${snslogin}' == null){
+				if(pw == null || pw.length <1){
+					alert("패스워드는  반드시 입력하셔야 합니다.");
+					/* return check=false; */
+					return; 
+				}
+				if(pw_confirm == null || pw_confirm.length <1){
+					alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+					/* return check=false; */
+					return;
+				}
+				if(name == null || name.length <1){
+					alert("이름은  반드시 입력하셔야 합니다.");
+					/* return check=false; */
+					return;
+				}
+				if( pw != pw_confirm ) {				
+					alert("비밀번호 확인이 일치하지 않습니다.");
+					$("input:text[name='password2']").focus();
+					/* return check=false; */
+					return;
+				}			
 			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				/* return check=false; */
-				return;
-			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				/* return check=false; */
-				return;
-			}
-			if( pw != pw_confirm ) {				
-				alert("비밀번호 확인이 일치하지 않습니다.");
-				$("input:text[name='password2']").focus();
-				/* return check=false; */
-				return;
-			}			
+			
 			if( birth == null || birth.length <1 ) {				
 				alert("생년월일은 반드시 입력해야합니다..");				
 				/* return check=false; */
@@ -437,9 +448,50 @@
 		        }).open();
 		    }
 
+			 $(".datepicker").datepicker({
+				  showOn: "both", // 버튼과 텍스트 필드 모두 캘린더를 보여준다.
+				  buttonImage: "/application/db/jquery/images/calendar.gif", // 버튼 이미지
+				  buttonImageOnly: true, // 버튼에 있는 이미지만 표시한다.
+				  changeMonth: true, // 월을 바꿀수 있는 셀렉트 박스를 표시한다.
+				  changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스를 표시한다.
+				  minDate: '-100y', // 현재날짜로부터 100년이전까지 년을 표시한다.
+				  nextText: '다음 달', // next 아이콘의 툴팁.
+				  prevText: '이전 달', // prev 아이콘의 툴팁.
+				  numberOfMonths: [1,1], // 한번에 얼마나 많은 월을 표시할것인가. [2,3] 일 경우, 2(행) x 3(열) = 6개의 월을 표시한다.
+				  //stepMonths: 3, // next, prev 버튼을 클릭했을때 얼마나 많은 월을 이동하여 표시하는가. 
+				  yearRange: 'c-100:c+10', // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+				  showButtonPanel: true, // 캘린더 하단에 버튼 패널을 표시한다. 
+				  currentText: '오늘 날짜' , // 오늘 날짜로 이동하는 버튼 패널
+				  closeText: '닫기',  // 닫기 버튼 패널
+				  dateFormat: "yy-mm-dd", // 텍스트 필드에 입력되는 날짜 형식.
+				  showAnim: "slide", //애니메이션을 적용한다.
+				  showMonthAfterYear: true , // 월, 년순의 셀렉트 박스를 년,월 순으로 바꿔준다. 
+				  dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], // 요일의 한글 형식.
+				  monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] // 월의 한글 형식.
+				                    
+				 });
+		
+		
 	</script>	
 	<style type="text/css">
-	 	#body{ padding-top: 100px; }
+	 	#body{  
+	 	/* background-color: #EDEDED; */
+      	background-color: #e0e0e0;
+      	margin-top:100px;
+      	margin-bottom:5px;
+      	padding-top: -50px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    padding-bottom: 10px;
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a0a0a0; 
+	 	}
 
 		
 		html{
@@ -475,7 +527,19 @@
 		color: #000000;
 		padding: 9px 18px 10px !important;
 	}
-	
+	.ui-datepicker {
+	  border: none;
+	  -webkit-border-radius: 2px;
+	  -moz-border-radius: 2px;
+	  border-radius: 2px;
+	  padding: 0;
+	  margin-left: -170px;
+	  margin-top: 15px;
+	  background-color: #4c4145;
+	  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	}
 	</style>
 	
 		
