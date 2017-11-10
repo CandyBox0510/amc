@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!doctype html>
 <html>
 <head>
@@ -127,13 +129,18 @@
 					</div>
 
 					<div>
-						<h2 class="page-heading  col-md-12">트레일러 ${movie.trailer }</h2>
-						<c:if test="${movie.trailer.trim() !=  null}">
+						<h2 class="page-heading  col-md-12">트레일러</h2>
 
+
+
+
+						<c:if test="${fn:length(movie.trailer) > 10}">
 							<div align="middle" class="trailer">
 								<iframe src="${movie.trailer }" frameborder="0" allowfullscreen class="video"></iframe>
 							</div>
 						</c:if>
+
+
 					</div>
 					<div class='row'>
 						<div class='col-md-3'>
@@ -180,9 +187,7 @@
 
 						</div>
 
-						<div class="comment-sets">
-
-						</div>
+						<div class="comment-sets"></div>
 					</div>
 				</div>
 			</div>
@@ -191,25 +196,9 @@
 
 		<div class="clearfix">
 			<div id="hidden">
-				<input type="hidden" name='movieNm' value="${movie.movieNm }"> 
-				<input type="hidden" name='movieNo' value="${movie.movieNo }"> 
-				<input type="hidden" name='userId' value="${user.userId }"> 
-				<input type="hidden" name='userRole' value="${user.role }"> 
-				<input type="hidden" name='menu' value="${menu}"> 
-				<input type="hidden" name='movieComment2' value=""> 
-				<input type="hidden" name='movieCommentNo2'> 
-				<input type="hidden" name='screenContentNo' value="${screenContent.screenContentNo }"> 
-				<input type="hidden" name='openDt' value="${movie.openDt }"> 
-				<input type="hidden" name='femaleCnt' value="${movie.femaleCnt}"> 
-				<input type="hidden" name="maleCnt" value="${movie.maleCnt}" /> 
-				<input type="hidden" name="age10s" value="${movie.age10s}" /> 
-				<input type="hidden" name="age20s" value="${movie.age20s}" /> 
-				<input type="hidden" name="age30s" value="${movie.age30s}" /> 
-				<input type="hidden" name="age40s" value="${movie.age40s}"/>
-				<input type="hidden" name="age50s" value="${movie.age50s}" />
-				<input type="hidden" name="age60s" value="${movie.age60s}" /> 
-				<input type="hidden" name="age60sMore" value="${movie.age60sMore}" /> 
-				<input type="hidden" name="buttonFlag" id="buttonFlag" value="">
+				<input type="hidden" name='movieNm' value="${movie.movieNm }"> <input type="hidden" name='movieNo' value="${movie.movieNo }"> <input type="hidden" name='userId' value="${user.userId }"> <input type="hidden" name='userRole' value="${user.role }"> <input type="hidden" name='menu' value="${menu}"> <input type="hidden" name='movieComment2' value=""> <input type="hidden" name='movieCommentNo2'> <input type="hidden" name='screenContentNo' value="${screenContent.screenContentNo }"> <input type="hidden" name='openDt' value="${movie.openDt }"> <input type="hidden" name='femaleCnt' value="${movie.femaleCnt}"> <input type="hidden" name="maleCnt" value="${movie.maleCnt}" /> <input type="hidden" name="age10s" value="${movie.age10s}" /> <input type="hidden" name="age20s" value="${movie.age20s}" /> <input type="hidden" name="age30s" value="${movie.age30s}" /> <input type="hidden" name="age40s"
+					value="${movie.age40s}"
+				/> <input type="hidden" name="age50s" value="${movie.age50s}" /> <input type="hidden" name="age60s" value="${movie.age60s}" /> <input type="hidden" name="age60sMore" value="${movie.age60sMore}" /> <input type="hidden" name="buttonFlag" id="buttonFlag" value="">
 
 				<form class="search">
 					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
@@ -382,7 +371,8 @@
         function addWishList() {
             if (userId == null || userId == '') {
                 alert("로그인 후 이용 가능합니다.");
-                return;
+                $('.overlay').removeClass('close').addClass('open');
+
             }
             $.ajax({
                 /* url : "/movie/json/switchWishList?screenContent.screenContentNo="+screenContentNo+"&user.userId="
@@ -393,13 +383,11 @@
             }).done(function(data) {
                 //정상 통신인 경우
                 if (data == 'add') {
-                    var msg = '찜하기 신청';
 
                     $("#heartempty").removeClass().addClass("fa fa-heart fa-2x");
 
-                    alert(msg);
                 } else {
-                    alert("찜하기 취소");
+
                     $("#heartempty").removeClass().addClass("fa fa-heart-o fa-2x");
                 }
 
@@ -447,7 +435,6 @@
             });
         } //end of addOpenAlarm function
 
-
         function fncGetPageList(currentPage) {
 
             $('#watchlist').remove();
@@ -455,22 +442,17 @@
             queryString = $(".search").serialize();
 
             $.ajax({
-                url : "/movie/json/getMovieCommentList/"+movieNo,
+                url : "/movie/json/getMovieCommentList/" + movieNo,
                 type : 'POST',
                 data : queryString,
                 dataType : 'json',
                 success : function(JSONData, status) {
 
-                    
                     var result = JSONData;
 
                     userId = $("input[name='userId']").val();
                     userRole = $("input[name='userRole']").val();
 
-                  
-                    
-   
-                    
                     displayValue = '<div class="comment">'
 
                     $.each(result, function(idx, val) {
@@ -508,7 +490,6 @@
 
                     displayValue += ' </div>'
 
-
                     $.ajax({
                         url : "/movie/json/getTotalCount/" + movieNo,
                         method : "post",
@@ -528,12 +509,12 @@
                             displayValue += '</div>'
 
                             buttonFlag = $("input[name='buttonFlag']").val();
-                         
+
                             if (buttonFlag != "more") {
-                                
+
                                 $(".comment-sets").html("");
                                 JSONData.currentPage = 1;
-                               
+
                             } else {
 
                                 $("input[name='buttonFlag']").val("");
@@ -604,8 +585,8 @@
                 success : function(JSONData, status) {
                     console.log("fncAddMovieComment()");
                     $("#addMovieCommentText").val(null);
-                 //   fncMovieCommentList()
-                    fncGetPageList(currentPage) 
+                    //   fncMovieCommentList()
+                    fncGetPageList(currentPage)
                 }
             })
         }
@@ -635,8 +616,8 @@
 
                     $("#movieComment2").val(movieComment);
 
-                  //  fncMovieCommentList()
-                    fncGetPageList(currentPage) 
+                    //  fncMovieCommentList()
+                    fncGetPageList(currentPage)
                 }
             })
 
@@ -658,8 +639,8 @@
 
                     success : function(JSONData, status) {
                         console.log("fncDeleteMovieComment() JSONData " + JSONData);
-                       // fncMovieCommentList()
-                        fncGetPageList(currentPage) 
+                        // fncMovieCommentList()
+                        fncGetPageList(currentPage)
                     }
                 })
             } else {
@@ -698,8 +679,8 @@
 
                     success : function(JSONData, status) {
                         console.log("fncAddMovieComment()");
-                       // fncMovieCommentList()
-                        fncGetPageList(currentPage) 
+                        // fncMovieCommentList()
+                        fncGetPageList(currentPage)
                     }
                 })
 
@@ -716,26 +697,23 @@
             screenContentNo = $("input[name='screenContentNo']").val();
             movieNm = $("input[name='movieNm']").val();
             currentPage = $("#currentPage").val();
-            buttonFlag = $("input[name='buttonFlag']").val();	
-            
+            buttonFlag = $("input[name='buttonFlag']").val();
+
             getWishList();
-            fncGetPageList(currentPage) ;
-            
-            
-            $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
-          
-            
-            
+            fncGetPageList(currentPage);
+
+            $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
+
             $(document).on("click", "#addButton", function() {
                 fncAddMovieComment();
-              //  fncMovieCommentList();
-              
+                //  fncMovieCommentList();
+
             })
 
             $(document).on("click", ".comment__delete", function() {
                 movieCommentNo = $("#movieCommentNo", $(this)).val();
                 fncDeleteMovieComment();
-              
+
                 //fncMovieCommentList();
             })
 
@@ -743,8 +721,8 @@
                 movieCommentNo = $("#movieCommentNo", $(this)).val();
                 blindCommentFlag = $("#blindCommentFlag", $(this)).val();
                 fncBlindCommentFlag();
-                $("#buttonFlag").val('blind');	
-            //    fncMovieCommentList();
+                $("#buttonFlag").val('blind');
+                //    fncMovieCommentList();
             })
 
             $(document).on("click", ".comment__update", function() {
@@ -755,49 +733,46 @@
                 fncGetMovieComment();
 
             })
-            
-            $(document).on("click", "#watchlist", function () {
-				
-				currentPage = $("#currentPage").val();
-				
-				
-				$("#buttonFlag").val('more');	
-				buttonFlag  = $("input[name='buttonFlag']").val();
-				
-				currentPage = parseInt(currentPage)+1
 
-				fncGetPageList(currentPage);
-				
- 
-			})
+            $(document).on("click", "#watchlist", function() {
 
+                currentPage = $("#currentPage").val();
+
+                $("#buttonFlag").val('more');
+                buttonFlag = $("input[name='buttonFlag']").val();
+
+                currentPage = parseInt(currentPage) + 1
+
+                fncGetPageList(currentPage);
+
+            })
 
             $(document).on("click", "#updateButton", function() {
 
                 movieCommentNo = $(this).parent().find("#movieCommentNo").val();
                 movieComment = $(this).parent().find("#updateMovieCommentText").val();
-                $("#buttonFlag").val('update');	
+                $("#buttonFlag").val('update');
                 fncUpdateMovieComment();
 
             })
 
-            
             $("button[name='booking']").on("click", function() {
 
                 $(self.location).attr("href", "/booking/getScreenMovieList");
             })
 
-
-            
             $("button[name='ticketOpen']").on("click", function() {
                 if (userId == "") {
                     alert('로그인 후 이용가능합니다')
+                    $('.overlay').removeClass('close').addClass('open');
                 } else {
                     addOpenAlarm()
                 }
             })
-  
+
         });
+        
+
     </script>
 
 
@@ -805,6 +780,18 @@
 </body>
 
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 html {
 	height: auto;
 }
@@ -919,7 +906,6 @@ section {
 	padding: 5px, 5px, 5px, 5px;
 	color: #fe505a;
 }
-
 
 #wish {
 	margin-top: 50px;

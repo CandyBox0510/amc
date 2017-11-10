@@ -92,7 +92,15 @@
 	   	return;
 	    }
 		alert("메일을 보냅니다. \n이메일주소 : "+email+"\n예매번호 : "+bookingNo);
-		self.location="/booking/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email;
+		
+		$.ajax(
+				{
+					url : "/booking/json/sendEmailQR?bookingNo="+bookingNo+"&userEmailAddr="+email+"",		
+					method : "GET" ,
+					success : function(JSONData, status) {								
+                       alert('이메일로  QR코드를 전송했습니다.');             
+					}
+			});//end of ajax
 	
 	}
 
@@ -187,14 +195,15 @@
 		
 <body>
  <!-- Banner -->
-        <div class="banner-top">
-        	<img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        <header class="header-wrapper header-wrapper--home">
+         	<!-- Banner -->
+		<div class="banner-top">
+			<img alt='top banner' src="../images/banners/space.jpg">
+		</div>
+		<header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+		</header>
    		<br><br><br>
 	<div class="container">
 	            <!-- Promo boxes -->
@@ -224,9 +233,13 @@
                   <div class="promo promo--info">
                       <div class="promo__head"><!-- Join <br> --><span class="abc">${booking.movie.movieNm}</span></div>
                       <div class="promo__content">
-                          <p class="content__text">예매번호 : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
-                          	예매 가격 : ${booking.totalTicketPrice}&nbsp;&nbsp;&nbsp;&nbsp;
-                          	좌석 번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
+                          <p class="content__text">
+                          	${booking.screenContent.previewTitle}&nbsp;영화제목 : ${booking.movie.movieNm}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	&nbsp;&nbsp;상영일자 : ${booking.screenContent.screenOpenTime}&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                          	예매번호 : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	예매일시 : ${booking.bookingRegDate}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	예매가격 : ${booking.totalTicketPrice}원&nbsp;&nbsp;&nbsp;&nbsp;
+                          	좌석번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
                           	<br>
                           </p>
                                             
@@ -240,7 +253,7 @@
 			                        <input type='text' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
 			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
 			                    </div><div class="col-sm-5">		                     
-			                        <a href="#" id="email" class="btn btn-md btn--warning btn-wider btn--shine abc">이메일 QR전송</a>
+			                        <a href="#" id="sendQR" class="btn btn-md btn--warning btn-wider btn--shine abc">이메일 QR전송</a>
 							   </div>
 			                    </div> 	
 			                     <div class="contact-info__field row"  style="width:100%">
@@ -248,7 +261,7 @@
 			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='QR코드를 받을  핸드폰번호' 
 			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
 			                    </div><div class="col-sm-5">		                     
-			                         <a href="#" id="SMS" class="btn btn-md btn--warning btn-wider btn--shine abc">문자&nbsp;&nbsp;&nbsp;&nbsp;QR전송</a>						   
+			                         <a href="#"  class="btn btn-md btn--warning btn-wider btn--shine abc">문자&nbsp;&nbsp;&nbsp;&nbsp;QR전송</a>						   
 							   </div>
 			                    </div>
 			                   <div class="row" style="margin-left:2.3px; margin-top:5px; algin:right;">	

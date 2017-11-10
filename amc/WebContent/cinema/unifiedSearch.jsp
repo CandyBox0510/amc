@@ -56,7 +56,7 @@
     <div class="wrapper place-wrapper">
         <!-- Banner -->
         <div class="banner-top">
-            <img alt='top banner' src="/images/banners/bra.jpg">
+            <img alt='top banner' src="/images/banners/space.jpg">
         </div>
 
         <!-- Header section -->
@@ -101,10 +101,10 @@
 	                <c:set var="i" value="0" />
 					  <c:forEach var="movie" items="${unifiedSearch.uniMovieList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3 mm">
+						<div class="col-xs-6 col-sm-4 col-md-3 mm">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search">
-	                                <img alt='' src="${movie.postUrl}" align="middle" width="230px" height="230px">
+	                                <img alt='' src="${movie.postUrl}" align="middle" width="100%" height="230px">
 	                            </a>
 	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
@@ -133,10 +133,10 @@
 	                <c:set var="i" value="0" />
 					  <c:forEach var="screenContent" items="${unifiedSearch.uniPreviewList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3 pp">
+						<div class="col-xs-6 col-sm-4 col-md-3 pp">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
-	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="230px" height="230px">
+	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="100%"  height="230px">
 	                            </a>
 	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }
 	                            	<span class="label label-danger"></span>
@@ -168,10 +168,10 @@
 	                <c:set var="i" value="0" />
 					  <c:forEach var="goods" items="${unifiedSearch.uniGoodsList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3 gg">
+						<div class="col-xs-6 col-sm-4 col-md-3 gg">
 	                        <div class="gallery-item">
 	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}">
-	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="230px" height="230px">
+	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="100%"  height="230px">
 	                            </a>
 	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}" class="gallery-item__descript gallery-item--goods-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
@@ -200,10 +200,10 @@
 	                <c:set var="i" value="0" />
 					  <c:forEach var="snack" items="${unifiedSearch.uniSnackList}">
 						<c:set var="i" value="${ i+1 }" />
-						<div class="col-sm-4 col-md-3 ss">
+						<div class="col-xs-6 col-sm-4 col-md-3 ss">
 	                        <div class="gallery-item">
 	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}">
-	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="230px" height="230px">
+	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="100%"  height="230px">
 	                            </a>
 	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}" class="gallery-item__descript gallery-item--photo-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-glass"></i></span>
@@ -351,10 +351,16 @@
  	    box-shadow:inset 0 0 10px #fce86a; 
       }
       
-            .hanna{ 
+     .hanna{ 
 	  font-family: 'Hanna', sans-serif; 
 	  font-size: 120%;
 	   line-height:4.3em
 	 }
+	 .header-wrapper {
+	  background: rgba(46, 41, 46, 0.8);;
+	  position: relative;
+	  z-index: 120;
+	  height: 55px;
+	}
  </style>
 </html>

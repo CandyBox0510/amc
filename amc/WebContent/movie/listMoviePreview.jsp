@@ -68,12 +68,12 @@
 	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
 	                                        <img id="poster"alt='' src="${preview.movie.postUrl}" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">${preview.movie.movieNm}</a>
+	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm}</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>감독 :${preview.movie.directors} </strong> </p>
-	                                    <p ><strong>티켓오픈날짜 :${preview. ticketOpenDate} </strong> </p>
-	                                    <p ><strong>상영날짜 :${preview.screenOpenTime} </strong> </p>
-	                    	     		<p ><strong>가격  :${preview. ticketPrice} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감독 :${preview.movie.directors} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;오픈날짜 :${preview. ticketOpenDate} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상영날짜 :${preview.screenOpenTime} </strong> </p>
+	                    	     		<p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격  :${preview. ticketPrice} </strong> </p>
 	                    	    <div style="text-align: left;">
     						    
     						    </div>								
@@ -83,14 +83,14 @@
 							    <span style="line-height:0%">
 							    <c:set var="name" value="${movie.wishList.wishNo}"/>
 	 								<c:if test="${name eq '0'}">
-									     <i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
+									      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
 									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -472,6 +472,7 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
+   
 	 #body {
            padding-top: 70px;
            }
@@ -480,6 +481,21 @@
            height: 250px;
            overflow: auto;
      }	
+     
+     .cinema .cinema__images:before {
+	    content: '';
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(76, 65, 69, 0);
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 1;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	   }
+     
      
      #searchIcon
       {     color: #fff;       		

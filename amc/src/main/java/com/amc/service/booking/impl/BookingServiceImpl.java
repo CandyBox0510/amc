@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,7 +49,7 @@ public class BookingServiceImpl implements BookingService {
 	public void setMovieDAO(MovieDAO movieDAO) {
 		this.movieDAO = movieDAO;
 	}
-	private List<ScreenContent> screenContentList;
+
 	
 	@Override
 	public List<Movie> getScreenMovieList() {
@@ -122,6 +124,8 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	public int deleteBooking(String bookingNo) throws IOException, JSONException {
 		
+		System.out.println("▶deleteBooking Service");
+		
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
@@ -147,13 +151,13 @@ public class BookingServiceImpl implements BookingService {
 	}
 
 	@Override
-	public List<String> getScreenDateList(List<ScreenContent> list) {
+	public List<String> getScreenDateList(List<ScreenContent> list, HttpSession session) {
 		
-		screenContentList = list;
+		session.setAttribute("screenContentList", list);
         List<String> dayList = new ArrayList<String>();
-        for(int k = 0; k<screenContentList.size(); k++){
+        for(int k = 0; k<list.size(); k++){
         	
-        	String screenDate = screenContentList.get(k).getScreenDate();
+        	String screenDate = list.get(k).getScreenDate();
         	String screenDay = screenDate.substring(8,10);
         	//필요시 substring조정해서 월 일까지 나오도록 할 수 있다.
         	dayList.add(screenDay);
@@ -166,10 +170,10 @@ public class BookingServiceImpl implements BookingService {
 	}
 	
 	@Override
-	public List<ScreenContent> getScreenTimeList(String screenDate) {
+	public List<ScreenContent> getScreenTimeList(String screenDate, HttpSession session) {
 		
 		List<ScreenContent> timeList = new ArrayList<ScreenContent>();
-		
+		List<ScreenContent> screenContentList = (List<ScreenContent>) session.getAttribute("screenContentList");
 		
 		for(int i = 0; i<screenContentList.size(); i++){
         	 

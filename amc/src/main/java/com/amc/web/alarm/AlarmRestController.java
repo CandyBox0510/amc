@@ -1,5 +1,6 @@
 package com.amc.web.alarm;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.User;
+import com.amc.service.user.UserService;
 import com.amc.web.booking.BookingRestController;
 
 
@@ -39,6 +41,10 @@ public class AlarmRestController {
 	@Autowired
 	@Qualifier("alarmServiceImpl")
 	AlarmService alarmService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	UserService userService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -163,6 +169,7 @@ public class AlarmRestController {
 			search.setCurrentPage(1);
 		}
 		
+		
 		int pageSize = 12;
 		
 		search.setPageSize(pageSize);
@@ -180,6 +187,7 @@ public class AlarmRestController {
 		
 		System.out.println("■■■무스 오픈알람확인■■■ : "+map.get("list"));
 		
+	
 	    return map;
 	}
 	
@@ -193,6 +201,122 @@ public class AlarmRestController {
 		alarm.setUser(user);
 		
 		return alarmService.deleteAlarm(alarm);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/json/getAndroidCancelAlarmList/{userId:.+}")
+	public String getAndroidCancelAlarmList(
+											@PathVariable("userId") String userId,
+											@RequestParam("alarmFlag")String alarmFlag,
+											HttpSession session,Model model) throws Exception{
+		
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		Search search = new Search();
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		int pageSize = 10000000;
+		
+		search.setPageSize(pageSize);
+		User user = userService.getUser(userId);
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		tempMap.put("alarmFlag", alarmFlag);
+		
+		Map<String, Object> map = alarmService.getCancelAlarmList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		BookingRestController brc = new BookingRestController();
+		
+		List<Alarm> seatChangeList = (List<Alarm>)(map.get("list"));
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		for(int i = 0; i < seatChangeList.size(); i++){
+			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seatChangeList.get(i).getAlarmSeatNo(), 10, model));
+			seatChangeList.get(i).setAlarmSeatNo((String)jsonObject.get("seatNo"));
+		}
+		
+		System.out.println("■■■안드 취소알람확인■■■ : "+map.get("list"));
+		
+		org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
+		JSONObject response = new JSONObject();
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		for(int i = 0; i< seatChangeList.size(); i++){
+
+			 objectMapper = new ObjectMapper();
+			 
+			 jsonArray.add(objectMapper.writeValueAsString(seatChangeList.get(i)));
+		}
+		
+		response.put("list", jsonArray);
+		
+		String jsonString = URLEncoder.encode(response.toJSONString(),"UTF-8");
+		
+	    return jsonString;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping( value="/json/getAndroidOpenAlarmList/{userId:.+}")
+	public String getAndroidOpenAlarmList(@ModelAttribute("Search")Search search, 
+										   @PathVariable("userId") String userId,
+										   @RequestParam("alarmFlag")String alarmFlag,
+										   HttpSession session,Model model) throws Exception {
+
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		
+		
+		int pageSize = 1000000;
+		
+		search.setPageSize(pageSize);
+		User user = userService.getUser(userId);
+		
+		tempMap.put("search", search);
+		tempMap.put("user", user);
+		tempMap.put("alarmFlag", alarmFlag);
+		
+		Map<String, Object> map = alarmService.getOpenAlarmList(tempMap);
+		
+		Page resultPage	= 
+				new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(),
+						pageUnit, pageSize);
+		
+		System.out.println("■■■안드 오픈알람확인■■■ : "+map.get("list"));
+		
+		List<Alarm> alarmList = (List<Alarm>)map.get("list");	
+		
+		org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
+		JSONObject response = new JSONObject();
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		for(int i = 0; i< alarmList.size(); i++){
+
+			 objectMapper = new ObjectMapper();
+			 
+			 jsonArray.add(objectMapper.writeValueAsString(alarmList.get(i)));
+		}
+		
+		
+		
+		response.put("list", jsonArray);
+		
+		String jsonString = URLEncoder.encode(response.toJSONString(),"UTF-8");
+		
+		
+		return jsonString;
+		
 	}
 	
 }

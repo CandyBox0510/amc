@@ -3,13 +3,13 @@ package com.amc.service.domain;
 public class Booking {
 	
 	private String bookingNo;
-	private String impId;
 	private String userId;
 	private int screenContentNo;
 	private String bookingRegDate;
 	private int headCount;
 	private int totalTicketPrice;
-	private String bookingSeatNo; 
+	private String bookingSeatNo;
+	private String impId;
 	private String qrUrl;
 	
 	private Movie movie;
