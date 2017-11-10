@@ -18,7 +18,7 @@
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-  
+  <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
   <!--  스크립트에서 rollbackSeat 함수는 더이상 사용하지 않음. 컨트롤러에서도. -->
   <script type="text/javascript">
   
@@ -317,7 +317,7 @@
                 <div class="choose-sits__info choose-sits__info--first">
                     <ul>
                         <li class="sits-price marker--none"><strong>인원수를 먼저 선택한 후 좌석을 지정해주세요</strong></li>
-                    	<li class="sits-price marker--none"><strong><button onclick="selectCancelAlarm()" class="ui purple button">취소표 알리미 신청하기</button></strong></li>
+                    	<li class="sits-price marker--none"><strong><button onclick="selectCancelAlarm()" class="btn--pay def">취소표 알리미 신청하기</button></strong></li>
                     </ul>
                 </div>
 
@@ -334,7 +334,7 @@
 			<div class="col-sm-8 col-md-9">	
 
 				<iframe id="child" src= "http://183.98.215.171:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
-				style='width:100%; height:400px'  frameborder='0'   align='center'>		 
+				style='width:100%; height:450px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 				<!-- style='width:100%' -->
@@ -432,5 +432,27 @@
 	  z-index: 15;
 	  text-indent: 0px;
 	}
+	button.btn--pay{
+        margin-bottom:10px;
+        margin-right:10px;
+        background-color: #90bf34;
+    	border: solid 1px #90bf34;
+    	color: #ffffff;
+		padding: 10px 30px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		font: 18px 'Hanna';
+		text-transform: uppercase;
+		-webkit-transition: 0.3s;
+		-o-transition: 0.3s;
+		transition: 0.3s;       
+   }
+   .def{
+   		font-family: 'Jeju Gothic', sans-serif;
+   }
    </style>
 </html>

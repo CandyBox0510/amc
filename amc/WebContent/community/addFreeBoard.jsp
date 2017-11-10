@@ -57,7 +57,7 @@
 						<div class="col-md-12" id="buttonWrap">
 							<button type='button' class="btn btn-md btn--warning btn--wider" id="addButton">등록하기</button>
 							<button type='button' class="btn btn-md btn--warning btn--wider" id="cancleButton">취소하기</button>
-							${user.userId }
+					
 						</div>
 						<div>
 							<input type="hidden" name="userId" id="userId" value="${user.userId }">
@@ -154,6 +154,19 @@
 
 </body>
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 .page-heading {
 	margin-top: 100px
 }

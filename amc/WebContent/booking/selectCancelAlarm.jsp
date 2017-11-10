@@ -14,12 +14,18 @@
     
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  		
+  		<!--   Sweetalert2 CDN  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+  		
+  		<!--   semantic UI  -->
+		<link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="../semantic/semantic.min.js"></script>
 	
-		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-  
-      
+		    
       <!-- hanna font -->
       <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   
@@ -283,5 +289,27 @@
 	  font-size: 120%;
 	   line-height:4.3em
 	 }
+	 button.btn--pay{
+        margin-bottom:10px;
+        margin-right:10px;
+        background-color: #90bf34;
+        border: solid 1px #90bf34;
+        color: #ffffff;
+		padding: 10px 30px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+		font: 18px 'Hanna';
+		text-transform: uppercase;
+		-webkit-transition: 0.3s;
+		-o-transition: 0.3s;
+		transition: 0.3s;       
+    }
+    .def{
+    	font-family: 'Jeju Gothic', sans-serif;
+    }
  </style>
 </html>

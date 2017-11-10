@@ -1,5 +1,6 @@
 package com.amc.web.user;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -163,7 +164,11 @@ public class UserRestController {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
-		return objectMapper.writeValueAsString(dbUser);
+		String temp = objectMapper.writeValueAsString(dbUser);
+		
+		jsonString = URLEncoder.encode(temp,"UTF-8");
+		
+		return jsonString;
 
 	}
 	
