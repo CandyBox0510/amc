@@ -67,12 +67,12 @@ public class MovieRestController {
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
 	
-	//해림추가
+	/*//해림추가
 	/// Field
 	@Autowired
 	@Qualifier("trailerSearchAPIServiceImpl")
 	private MovieService movieService2;
-	
+	*/
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
@@ -956,7 +956,7 @@ public class MovieRestController {
 		return "forward:/movie/listMovie.jsp";
 	}
 
-	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}")
+	/*@RequestMapping(value = "/json/searchTrailer/{searchTrailer}")
 	public void searchTrailer(@ModelAttribute("search") Search search, @PathVariable String searchTrailer)		throws Exception {
 		System.out.println("1. search => " + search);
 		System.out.println("2. searchTrailer => " + searchTrailer);
@@ -974,21 +974,21 @@ public class MovieRestController {
 			System.out.println("data    " + data);
 
 			
-/*			JSONArray nameArray =(JSONArray)JSONSerializer.toJSON(result);
+			JSONArray nameArray =(JSONArray)JSONSerializer.toJSON(result);
 			System.out.println(nameArray.size());
 			
 			for(Object js : nameArray){
 				JSONObject json = (JSONObject)js;
 				System.out.println(json.get("title"));
 				}
-		*/
+		
 			
-/*				JSONParser parser = new JSONParser();
+				JSONParser parser = new JSONParser();
 			JSONObject json = (JSONObject) parser.parse(result);	
 			String datetime = json.get("datetime").toString();
-			System.out.println(datetime);*/
+			System.out.println(datetime);
 			
 			//	 return result;
 	}
-
+*/
 }
