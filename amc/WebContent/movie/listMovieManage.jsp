@@ -7,129 +7,20 @@
 
 <head> 
 
-    
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
-        
-        <!--  얘네 쓰면 글씨크기 이상해짐(원래 우리가 가지고있던 css) -->
-       <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
-		<!--  -----------------------------------------------------------------------  -->
-		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-		
-		<!-- 우리가 가지고 있던 javaScript (현재 별문제 안됨)-->
-    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-        
-        
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-        
-        <!--  ///////////////////////// CSS ////////////////////////// -->
-		<style>
-		 body {
-	            padding-top: 70px;
-	            }
-	            .thumbnail {
-	            width: 300px;
-	            height: 250px;
-	            overflow: auto;
-	      }	
-	      
-	      #searchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	       
-	     #voidSearchIcon
-	       {    color: #fff;       		
-	    		text-shadow: 1px 1px 1px #ccc;
-	    		font-size: 1.5em;
-	       }
-	      
-	    </style>
-        
-    
-  <!--  ///////////////////////// JavaScript ////////////////////////// -->   
-   
-    <script type="text/javascript">
-			    function fncGetPageList(currentPage) {
-			        $("#currentPage").val(currentPage)
-			        $("form").attr("method", "POST").attr("action", "/movie/getMovieList?menu=manage").submit();
-			    }
-			    
-			    $(function() {
-			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			        $("button[name='search']").on("click", function() {
-			            fncGetPageList(1);
-			        });
-	      
-			    });
-
-	            $(document).ready(function() {
-	                init_CinemaList();
-	                
-	                if($('html').height() < window.outerHeight){
-	                	$('html').css('height', '100%');
-	                }
-	                
-	                $("#movie-search-sort").css("width","200px");
-	            });
-	            
-	            
-	        //============= "영화등록"  Event  처리 =============	
-	   		 $(function() {
-	   			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	   			$( "button.btn.btn-register" ).on("click" , function() {
-	   				 self.location = "/movie/addMovie.jsp";
-	   			});
-	   			
-	   		 });
-	            
-	            
-		</script>
-		
-
-    
 </head>
 
 <body>
 
+	<div class="wrapper">
      <!-- Banner -->
         <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
         </div>
         
-        <header class="header-wrapper header-wrapper--home">
-			<!-- ToolBar Start /////////////////////////////////////-->
+      	<!-- Header section -->
+		<header class="header-wrapper header-wrapper--home">
 			<jsp:include page="/layout/topToolbar.jsp" />
-			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
-
+		</header>
    
     <div class="container">
          
@@ -161,18 +52,7 @@
 			        </div>
 			        
         
-      <!--           <div class="tags-area tags-area--thin" style="height : 50px">
-   
-                    <div class="tags tags--unmarked tags--aside">
-                        <span class="tags__label">Sorted by:</span>
-                            <ul>
-                                <li class="item-wrap"><a href="#" class="tags__item item-active" data-filter='all'>all</a></li>
-                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='name'>name</a></li>
-                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='popularity'>popularity</a></li>
-                            </ul>
-                    </div>
-                </div> -->
-                
+              
                 <div class="cinema-wrap">
 	            	<div class="row">
 				 		<c:set var="i" value="0" />
@@ -197,84 +77,138 @@
 					</div>
 	            </div>     
                               
+				<div class="coloum-wrapper">
+					<div class="pagination paginatioon--full">
+						<c:if test="${resultPage.currentPage != 1 }">
+							<a href='#' class="pagination__prev">prev</a>
+						</c:if>
+						<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
+							<a href='#' class="pagination__next">next</a>
+						</c:if>
+				</div>
+				
+			
+			
+				</div>
 
-                    <div class="pagination paginatioon--full">
-                            <a href='#' class="pagination__prev">prev</a>
-                            <a href='#' class="pagination__next">next</a>
-                    </div>
-              </div>
-          
-            
-        </section>
-
-        <div class="clearfix"></div>
-        
              
+              
+              </div>
+          </section>
+      
+        
+        
+        
+         <div class="clearfix"></div>
+        
+   </div>          
         <div class="bottom low ">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/bottomToolbar.jsp" />
+			<jsp:include page="/layout/loginModal.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
   		</div>
 
     </div>
-    
-
-    <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
-
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
-
-                        <div class="social social--colored">
-                                <a href='#' class="social__variant fa fa-facebook"></a>
-                                <a href='#' class="social__variant fa fa-twitter"></a>
-                                <a href='#' class="social__variant fa fa-tumblr"></a>
-                        </div>
-
-                        <p class="login__tracker">or</p>
-                        
-                        <div class="field-wrap">
-                        <input type='email' placeholder='Email' name='user-email' class="login__input">
-                        <input type='password' placeholder='Password' name='user-password' class="login__input">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>remember me</label>
-                         </div>
-                        
-                        <div class="login__control">
-                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
-                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-        </div>
-
-
-
-		<!--  Select Mobile menu  둘다있어야지 search가능함!!! 하단에 있어야지 생김 (이유모름)-->
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-		
-		
+  
         <!-- Custom 이게있어야지 스크롤내릴시top버튼있음!!!!!!!!!!! -->
         <script src="/js/custom.js"></script>
 		<!-- ------------------------------------  -->
 
+  
+  <!--  ///////////////////////// JavaScript ////////////////////////// -->   
+   
+<script type="text/javascript">
+
+		    function fncGetPageList(currentPage) {
+		        $("#currentPage").val(currentPage)
+		        
+		        $("form").attr("method", "POST").attr("action", "/movie/getMovieList?menu=manage").submit(); 
+		    }
+		    
+		    $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
+		    $(function() {
+		        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		        $("button[name='search']").on("click", function() {
+		            fncGetPageList(1);
+		        });
+      
+		    });
+
+		    $(".pagination__next").on("click", function() {
+		    	
+		    	
+		    	alert("111111111111")
+	            searchKeyword = $("input[name='searchKeyword']").val();
+
+	            var currentPage = $("#currentPage").val()
+	 
+	            currentPage = parseInt(currentPage) + 1
+	          
+	            fncGetPageList(currentPage);
+	        });
+
+	        $(".pagination__prev").on("click", function() {
+	            var currentPage = $("#currentPage").val()
+	      
+	            currentPage = parseInt(currentPage) - 1
+	            
+	            fncGetPageList(currentPage);
+
+	        
+	        });
+
+		    
+            $(document).ready(function() {
+                init_CinemaList();
+              /*   
+                if($('html').height() < window.outerHeight){
+                	$('html').css('height', '100%');
+                } */
+                
+                $("#movie-search-sort").css("width","200px");
+            });
+            
+            
+        //============= "영화등록"  Event  처리 =============	
+   		 $(function() {
+   			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+   			$( "button.btn.btn-register" ).on("click" , function() {
+   				 self.location = "/movie/addMovie.jsp";
+   			});
+   			
+   		 });
+            
+            
+</script>
+	
 </body>
 
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-
-		<style type="text/css">
+      <!--  ///////////////////////// CSS ////////////////////////// -->
+		<style>
+		 body {
+	            padding-top: 70px;
+	            }
+	            .thumbnail {
+	            width: 300px;
+	            height: 250px;
+	            overflow: auto;
+	      }	
+	      
+	      #searchIcon
+	       {    color: #fff;       		
+	    		text-shadow: 1px 1px 1px #ccc;
+	    		font-size: 1.5em;
+	       }
+	       
+	     #voidSearchIcon
+	       {    color: #fff;       		
+	    		text-shadow: 1px 1px 1px #ccc;
+	    		font-size: 1.5em;
+	       }
+	      
 	
-		.countPage {
+  		.countPage {
 		  font-size: 13px;
 		   margin-top: 10px;
 		}
@@ -301,6 +235,10 @@
 			margin-right: auto; 
 			display: table;
 		
+		}
+		
+		.page-heading {
+			margin-top: 100px
 		}
 		
 		body {
