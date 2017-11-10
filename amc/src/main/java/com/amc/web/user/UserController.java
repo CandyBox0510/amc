@@ -45,10 +45,14 @@ public class UserController {
 	}
 
 	@RequestMapping( value="addUser", method=RequestMethod.GET )
-	public String addUser(@RequestParam("email") String email , Model model ) throws Exception{
+	public String addUser(@RequestParam(value="email", required=false) String email , 
+						  @RequestParam(value="snslogin", required=false) String snslogin , Model model ) throws Exception{
 		System.out.println("/user/addUser : GET");
-		System.out.println("@@@@@@@@@@@222"+email);
+		System.out.println("@@@@@@@@@@@222"+email+"snslogin"+snslogin);
+		
 		model.addAttribute("email", email);
+		model.addAttribute("snslogin", snslogin);
+		
 		return "forward:/user/addUser.jsp";
 	}
 	
@@ -212,10 +216,7 @@ public class UserController {
         
         System.out.println(sb);
         
-        
         userService.send(subject, sb.toString(), "bitcampamc@gmail.com", email, null);
-        
-        
         
         System.out.println("메일 보내기 성공");
         

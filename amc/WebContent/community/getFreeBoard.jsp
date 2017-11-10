@@ -576,6 +576,20 @@
 
 </body>
 <style type="text/css">
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 html {
 	height: auto;
 }

@@ -38,6 +38,7 @@
 		    <span id="helpBlock" class="help-block col-sm-6"></span>		    
 		  </div>
 		  
+		  <c:if test='${user.password != null}'>
 		  <div class="row">
 		 	 <label for="password" class="col-sm-offset-1 col-sm-4 control-label"><strong>비밀번호</strong></label>
 		  
@@ -46,7 +47,7 @@
 		    </div>
 		    <span id="helpBlock2" class="help-block2 col-sm-6"></span>
 		  </div>
-		  
+		  </c:if>
 		  <div class="row">
 		  	<label for="userName" class="col-sm-offset-1 col-sm-4 control-label"><strong>이  름</strong></label>
 		    <div class="col-sm-4">

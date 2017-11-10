@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.codehaus.jettison.json.JSONException;
 
 import com.amc.common.Search;
@@ -18,9 +20,9 @@ public interface BookingService {
 	
 	public List<ScreenContent> getPreviewList();   //다시확인하기
 	
-	public List<String> getScreenDateList(List<ScreenContent> list);
+	public List<String> getScreenDateList(List<ScreenContent> list, HttpSession session);
 	
-	public List<ScreenContent> getScreenTimeList(String screenDate);
+	public List<ScreenContent> getScreenTimeList(String screenDate, HttpSession session);
 	
 	public void addBooking(Booking booking);
 	

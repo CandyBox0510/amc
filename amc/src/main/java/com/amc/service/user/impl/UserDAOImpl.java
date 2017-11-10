@@ -41,10 +41,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void addUser(User user) throws Exception {
-		// TODO Auto-generated method stub
-		
 		System.out.println("addUser DAOImpl °ª :" + user);
-		sqlSession.insert("UserMapper.addUser", user);
+		if(user.getPassword() == null ){
+			sqlSession.insert("UserMapper.snsAddUser", user);
+		}else{
+			sqlSession.insert("UserMapper.addUser", user);
+		}
 	}
 
 	@Override

@@ -69,7 +69,7 @@
 		<!--  화면구성 div Start /////////////////////////////////////-->
 		<div class="container" id="body">
 			<div class="page-header text-center">
-	       		<h3 class="text-info">회원정보수정</h3>
+	       		<h2 class="text-info">회원정보수정</h2>
 		       	<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 		    </div><br/><br/>
 			<form id="form" class="form row" method='post' novalidate="">
@@ -84,19 +84,26 @@
 			     				</span>
 				    	</div>
 		  		</div><br/>
-		  		<div class="row">
-		    		<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
-		    		<div class="col-sm-3">
-		      			<input type="password" class="form__name" id="password" name="password" placeholder="변경비밀번호">
-		    		</div>
-		  		</div><br/>
-		  		<div class="row">
-		    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
-		    		<div class="col-sm-3">
-		      			<input type="password" class="form__name" id="password2" name="password2" placeholder="변경비밀번호 확인">
-		    		</div>
-		     			<span id="helpBlock2" class="help-block2 col-sm-2"></span>
-		  		</div><br/>
+		  		
+		  		
+		  		
+		  		<c:if test='${user.password != null}'>
+			  		<div class="row">
+			    		<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
+			    		<div class="col-sm-3">
+			      			<input type="password" class="form__name" id="password" name="password" placeholder="변경비밀번호">
+			    		</div>
+			  		</div><br/>
+			  		<div class="row">
+			    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
+			    		<div class="col-sm-3">
+			      			<input type="password" class="form__name" id="password2" name="password2" placeholder="변경비밀번호 확인">
+			    		</div>
+			     			<span id="helpBlock2" class="help-block2 col-sm-2"></span>
+			  		</div><br/>
+		  		</c:if>
+		  		
+		  		
 		  		<div class="row">
 		    		<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"><strong>이름</strong></label>		
 		    		<div class="col-sm-3">
@@ -259,7 +266,26 @@
 	
 	</script>
 <style type="text/css">
- 	#body{ padding-top: 100px; }
+ 	#body{	 	
+ 	
+ 	/* background-color: #EDEDED; */
+      	background-color: #e0e0e0;
+      	margin-top:100px;
+      	margin-bottom:5px;
+      	padding-top: -50px;
+ 	    /* padding-top: 10px;
+	    padding-bottom: 10px; */
+	    /*padding-left: 20px;
+	    padding-right: 20px; */
+	    /* margin-left: 1px;
+	    margin-right: 1px; */
+	    padding-bottom: 10px;
+	    border-radius: 15px;
+	    border-color:#000000;
+	    border-width: 30px;
+ 	    box-shadow:inset 0 0 10px #a0a0a0; 
+
+ 	}
  	html{
 	        height: auto;
 	  	}

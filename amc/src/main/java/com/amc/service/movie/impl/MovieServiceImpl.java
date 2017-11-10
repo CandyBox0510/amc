@@ -623,6 +623,12 @@ public class MovieServiceImpl implements MovieService {
 	public Map<String,Object> getWishList(Map<String,Object> map) {
 		return movieDAO.getWishList(map);
 	}
+
+	@Override
+	public String searchTrailer(String searchTrailer) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
