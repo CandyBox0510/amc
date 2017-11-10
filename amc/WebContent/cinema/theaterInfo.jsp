@@ -53,7 +53,7 @@
 		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		
 <script>
-/* 	$(function(){
+	$(function(){
 		 
 			$.ajax(
 					{
@@ -110,7 +110,7 @@
 					}		
 			)
 		
-	});  */
+	});
 </script>
 
 

@@ -47,5 +47,4 @@ public class CinemaRestController {
 		return cinemaService.getTransportListAtStation(x, y, radius);
 	}
 	
-	
 }
