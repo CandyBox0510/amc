@@ -21,7 +21,8 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+      	<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
   
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -30,13 +31,7 @@
 <title>selectRandomSeat.jsp</title>
 
 <style>
-	button.ui.inverted.purple.button{
-	font-size: 1.8rem;
-	}
 
-	div.ui.red.horizontal.label {
-	 font-size: 1.52rem;
-	}
 	.abc{
 	  font-family: 'Hanna', sans-serif; 
 	  font-size: 120%;
@@ -284,7 +279,10 @@ function kakaoPay(){
                 <div class="choose-sits__info choose-sits__info--first">
                     <ul>
                         <li class="sits-price marker--none"><strong>랜덤으로 선택되어 홀딩된 좌석입니다.</strong></li>
-                        <li class="sits-price marker--none"><strong>결제 실패 시에는 좌석 홀딩이 종료됩니다.</strong></li>
+                        <li class="sits-price marker--none"><strong>화면을 나가면 좌석 홀딩이 종료됩니다.</strong></li>
+                        <li class="sits-price marker--none">
+                        	<button onclick="kakaoPay()" class="btn--pay def">결제하기</button>
+                        </li>	
                     </ul>
                 </div>
 
@@ -301,13 +299,10 @@ function kakaoPay(){
 
 
 				<iframe id="child" src="http://183.98.215.171:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
-
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 
-				 <button onclick="kakaoPay()" class="ui inverted purple button">결제하기</button>	
-			 	
 			</div>
 			
 			
@@ -366,7 +361,9 @@ function kakaoPay(){
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
-  
+        
+
+		
 		<script type="text/javascript">
             $(document).ready(function() {
                 if($('html').height() < window.outerHeight){
@@ -381,6 +378,28 @@ function kakaoPay(){
     		html{
     		  height: auto;
     		}
+    		button.btn--pay{
+		        margin-bottom:10px;
+		        margin-right:10px;
+		        background-color: #90bf34;
+		        border: solid 1px #90bf34;
+		        color: #ffffff;
+				padding: 10px 30px;
+				-webkit-border-radius: 3px;
+				-moz-border-radius: 3px;
+				border-radius: 3px;
+				-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+				-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
+				font: 18px 'Hanna';
+				text-transform: uppercase;
+				-webkit-transition: 0.3s;
+				-o-transition: 0.3s;
+				transition: 0.3s;       
+		    }
+		    .def{
+		    	font-family: 'Jeju Gothic', sans-serif;
+		    }
     		</style>
 </html>
 

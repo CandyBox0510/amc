@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amc.common.Page;
@@ -108,7 +108,7 @@ public class BookingRestController {
 		
 		//[Android] 예매1단계 : 날짜선택
 		@RequestMapping(value="json/getScreenDateJSON/{movieNo}/{flag}", method=RequestMethod.GET)
-		public String getScreenDateJSON(@PathVariable("movieNo") int movieNo, 
+		public String getScreenDateJSON(@PathVariable("movieNo") int movieNo, HttpSession session,
 											@PathVariable("flag") String flag, 
 													Model model) throws Exception{
 
@@ -121,19 +121,57 @@ public class BookingRestController {
 	        System.out.println(":::::::movieNo : "+movieNo);
 	        List<ScreenContent> list = screenService.getScreenContentList2(search, movieNo);
 			
-	        return this.toJSONString(bookingService.getScreenDateList(list));
+	        return this.toJSONString(bookingService.getScreenDateList(list, session));
 		}
 		
 		//[Android] 예매1단계 : 시간 선택
 		@RequestMapping(value="json/getScreenTimeJSON/{screenDate}", method=RequestMethod.GET)
-		public String getScreenTimeJSON(@PathVariable("screenDate") String screenDate, 
+		public String getScreenTimeJSON(@PathVariable("screenDate") String screenDate, HttpSession session,
 													Model model) throws Exception{			
-			return this.toJSONString(bookingService.getScreenTimeList(screenDate));
+			return this.toJSONString(bookingService.getScreenTimeList(screenDate, session));
+		}
+		
+		//[Android] 예매 2단계 : 결제요청 전 선택내역 확인하기
+		@RequestMapping(value="json/getBookingInfo/{screenContentNo}/{selectedSeats}", method=RequestMethod.GET)
+		public String getBookingInfo(@PathVariable("screenContentNo") int screenContentNo,
+									 @PathVariable("selectedSeats") String selectedSeats,
+													Model model) throws Exception{	
+			Booking booking = new Booking();
+			ScreenContent screenContent = screenService.getScreenContent(screenContentNo);
+			booking.setScreenContentNo(screenContentNo);
+			booking.setScreenContent(screenContent);// ScreeContent class has Movie.
+			
+			String seatsNo = selectedSeats.substring(1);
+			booking.setBookingSeatNo(seatsNo);
+			
+			int headCount = (seatsNo.split(",").length)/2;
+			booking.setHeadCount(headCount);
+			System.out.println("edited seatsNo : "+seatsNo+", headCount : "+headCount);
+			booking.setTotalTicketPrice(screenContent.getTicketPrice()*headCount);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("booking", booking);
+			
+			
+			String[] strArray = seatsNo.split(",");
+			String displaySeat = "";
+			int k=0;
+	        for(int i=0;i<(strArray.length/2);i++){	        	
+	            // 아스키 코드를 문자형으로 변환
+	        	int no = Integer.parseInt(strArray[k])+65;	        	
+	            String displaySeatNo = Character.toString ((char) no);
+	            displaySeat += displaySeatNo + strArray[k+1]+" ";
+	            System.out.println("k : "+k+", displaySeat : "+displaySeat);
+	            k+=2;
+	        }
+			map.put("displaySeat", displaySeat);
+			
+			return this.toJSONString(map);
 		}
 		
 		//예매1단계 날짜선택
 		@RequestMapping(value="json/getScreenDate/{movieNo}/{flag}", method=RequestMethod.GET)
-		public List<String> getScreenDate(@PathVariable("movieNo") int movieNo, 
+		public List<String> getScreenDate(@PathVariable("movieNo") int movieNo,  HttpSession session,
 											@PathVariable("flag") String flag, 
 													Model model) throws Exception{
 
@@ -146,16 +184,17 @@ public class BookingRestController {
 	        System.out.println(":::::::movieNo : "+movieNo);
 	        List<ScreenContent> list = screenService.getScreenContentList2(search, movieNo);
 
-			return bookingService.getScreenDateList(list);
+			return bookingService.getScreenDateList(list, session);
 		}
 		
 		//예매1단계 시간선택
 		@RequestMapping(value="json/getScreenTime/{screenDate}", method=RequestMethod.GET)
-		public List<ScreenContent> getScreenTime(@PathVariable("screenDate") String screenDate, 
+		public List<ScreenContent> getScreenTime(@PathVariable("screenDate") String screenDate,  HttpSession session,
 													Model model) throws Exception{			
-			return bookingService.getScreenTimeList(screenDate);
+			return bookingService.getScreenTimeList(screenDate, session);
 		}
 		
+		//booking content를 가공하여 회원에게 보여줄 문자로 바꾼다.
 		@RequestMapping(value="json/getDisplaySeatNo/{seatNo}/{ticketPrice}", method=RequestMethod.GET)
 		public String getSeatNo(@PathVariable("seatNo") String seatNo, 
 								@PathVariable("ticketPrice") int ticketPrice, Model model) throws Exception{		
@@ -287,6 +326,27 @@ public class BookingRestController {
 			}
 			
 		    return map;
+		}
+		
+		//이메일로 QR코드 보내기
+		@RequestMapping(value="json/sendEmailQR", method=RequestMethod.GET)
+		public void sendEmailQR(@RequestParam("bookingNo") String bookingNo, 
+							@RequestParam("userEmailAddr") String userEmailAddr, Model model) throws Exception{			
+			
+			Booking booking = bookingService.getBooking(bookingNo);
+
+	    	String subject = "AMC에서 예매하신 내역입니다.";	
+	    	StringBuilder sb = new StringBuilder();  
+	    	sb.append("예매번호 : "+booking.getBookingNo()+"<br>");
+	    	sb.append(booking.getScreenContent().getPreviewTitle()+" ["+booking.getMovie().getMovieNm()+"]<br>");
+	    	sb.append("상영일시 : "+booking.getScreenContent().getScreenOpenTime());
+	        sb.append("<br>QR코드를 클릭하시면 예매정보를 확인하실 수 있습니다.<br/>" );
+	        sb.append("<a href=http://127.0.0.1:8080/user/addUser?email="+userEmailAddr+">");
+	        sb.append("<img src='"+booking.getQrUrl()+"'/></a>");        
+	        
+	        userService.send(subject, sb.toString(), "bitcampamc@gmail.com", userEmailAddr, null);
+			
+			return;
 		}
 }
 

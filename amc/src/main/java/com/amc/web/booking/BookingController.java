@@ -161,6 +161,19 @@ public class BookingController {
 		System.out.println("/booking/getBooking : GET");
 		
 		Booking booking = bookingService.getBooking(bookingNo); 
+		String seatNo = booking.getBookingSeatNo();
+		String[] strArray = seatNo.split(",");
+		String displaySeat = "";
+		int k=0;
+        for(int i=0;i<(strArray.length/2);i++){	        	
+            // 아스키 코드를 문자형으로 변환
+        	int no = Integer.parseInt(strArray[k])+65;	        	
+            String displaySeatNo = Character.toString ((char) no);
+            displaySeat += displaySeatNo + strArray[k+1]+" ";
+            System.out.println("k : "+k+", displaySeat : "+displaySeat);
+            k+=2;
+        }
+        booking.setBookingSeatNo(displaySeat);
 		model.addAttribute("booking", booking);
 		
 		return "forward:/booking/getBooking.jsp";
@@ -277,24 +290,6 @@ public class BookingController {
 		HttpRequestToNode.httpRequest(urlStr, body);
 	    
 	    return "redirect:/booking/getPreviewList";
-	}
-	
-	@RequestMapping(value="sendEmailQR", method=RequestMethod.GET)
-	public String sendEmailQR(@RequestParam("bookingNo") String bookingNo, 
-						@RequestParam("userEmailAddr") String userEmailAddr, Model model) throws Exception{			
-
-		
-		Booking booking = bookingService.getBooking(bookingNo);
-
-    	String subject = "AMC에서 예매하신 내역입니다.";	
-    	StringBuilder sb = new StringBuilder();        
-        sb.append("회원님의 예매정보가 있는 QR코드입니다.<br/>" );
-        sb.append("<a href=http://127.0.0.1:8080/user/addUser?email="+userEmailAddr+">");
-        sb.append("<img src='"+booking.getQrUrl()+"'/></a>");        
-        
-        userService.send(subject, sb.toString(), "bitcampamc@gmail.com", userEmailAddr, null);
-		
-		return  "forward:/index.jsp";
 	}
 	
 }
