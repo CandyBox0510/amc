@@ -10,7 +10,7 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>굿즈 상품목록</title>
+        <title>AMC 회원가입 페이지</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -35,6 +35,8 @@
         <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
         <!-- Swiper slider -->
         <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+         <!-- Semantic checkbox -->
+        <link href="/semantic/components/checkbox.css" rel="stylesheet" />
     
         <!-- Custom -->
         <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
@@ -77,97 +79,102 @@
    		</header>
 
 		<!--  화면구성 div Start /////////////////////////////////////-->
-		<div class="container" id="body">
-			<div class="page-header col-sm-offset-2 col-sm-10">	
-				<h1>회 원 가 입</h1>
-			</div>
+	<div class="container" id="body">
+			<div class="page-header text-center" >
+	       		<h3 class="text-info" >회 원 가 입</h3>
+		    </div><br/><br/>
 			<!-- form Start /////////////////////////////////////-->
-			<form class="form-horizontal">
-				<div class="form-group">
-			    	<label for="userId" class="col-sm-3 control-label">아 이 디</label>
-			    	<div class="col-sm-3">
-			   			<input type="text" class="form-control" value="${email}" id="userId" name="userId" placeholder="ID입력" aria-describedby="helpBlock" readonly/>
+			<form id="form" class="form row" method='post' novalidate="">
+				<div class="row">
+			    	<label for="userId" class="col-sm-offset-1 col-sm-3 control-label"><strong>아 이 디</strong></label>
+			    	<div class="col-sm-3" style="display:inline">
+			   			<input type="text" class="inputtype" value="${email}" id="userId" name="userId" placeholder="ID입력" aria-describedby="helpBlock" readonly/>
 			    	</div>	
 			    	<span id="helpBlock" class="help-block col-sm-6"></span>		    
 			  	</div>
 			  	
-			  	<div class="form-group">
-			    	<label for="password" class=" col-sm-3 control-label">비밀번호</label>
-			    	<div class="col-sm-3">
-			      		<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+			  	<div class="row">
+			    	<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
+			    	<div class="col-sm-3" style="display:inline">
+			      		<input type="password" class="inputtype" id="password" name="password" placeholder="비밀번호">
 			    	</div>
 			  	</div>
 			  
-				<div class="form-group">
-					<label for="password2" class=" col-sm-3 control-label">비밀번호 확인</label>
-					<div class="col-sm-3">
-						<input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
+				<div class="row">
+					<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
+					<div class="col-sm-3" style="display:inline">
+						<input type="password" class="inputtype" id="password2" name="password2" placeholder="비밀번호 확인" aria-describedby="helpBlock2" >
 					</div>
-					<span id="helpBlock2" class="help-block2 col-sm-6"></span>
+					<div class="col-sm-3" style="display:inline">
+						<span id="helpBlock2" class="help-block2 col-sm-6"></span>
+					</div>
 				</div>
 			  
-				<div class="form-group">
-					<label for="userName" class=" col-sm-3 control-label">이름</label>
-					<div class="col-sm-4">
-						<input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
+				<div class="row">
+					<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"><strong>이름</strong></label>
+					<div class="col-sm-4" style="display:inline">
+						<input type="text" class="inputtype" id="userName" name="userName" placeholder="회원이름">
 					</div>
 				</div>
 			 
-				<span>		  
-					<div class="form-group">
-						<label for="birth" class="col-sm-3 control-label">생 년 월 일</label>
-							<div class="col-sm-4">
-								<input type="date" class="form-control" name="birth" id="birth" placeholder="생년월일" >
+						  
+					<div class="row">
+						<label for="birth" class="col-sm-offset-1 col-sm-3 control-label"><strong>생 년 월 일</strong></label>
+							<div class="col-sm-4" style="display:inline">
+								<input type="date" class="inputtype" name="birth" id="birth" placeholder="생년월일" >
 							</div>
 					</div>
 					
-					<div class="form-group">
-						<label for="calendarType" class="col-sm-3 control-label">양력음력 구분</label>
-							<div class="col-sm-4">			  		
-								<input type='radio' name='calendarType' value='S' checked="checked">양력
-								<input type='radio' name='calendarType' value='L'>음력
+					<div class="row">
+						<label for="calendarType" class="col-sm-offset-1 col-sm-3 control-label"><strong>양력음력 구분</strong></label>
+							<div class="col-sm-4" style="display:inline">		
+								<select class="search-sort" name="calendarType" id="gender">
+									<option value="S" >양력</option>
+									<option value="L" >음력</option>
+								</select>			  		
 							</div>
 					</div>
 					 
-					<div class="form-group">
-						<label for="gender" class="col-sm-3 control-label">양력음력 구분</label>
-							<div class="col-sm-4">			  		
-								<input type='radio' name='gender' value='M' checked="checked">남자
-								<input type='radio' name='gender' value='F'>여자
-							</div>
+					<div class="row">
+						<label for="gender" class="col-sm-offset-1 col-sm-3 control-label"><strong>성 별</strong></label>
+							<div class="col-sm-4" style="display:inline">			  		
+								<select class="search-sort" name="gender" id="gender">
+									<option value="M" >남자</option>
+									<option value="F" >여자</option>
+								</select>
+							</div> 
 					</div>
-				</span>
+				
 			  
-				<div class="form-group">
-					<label for="ssn" class=" col-sm-3 control-label">우편번호</label>
-						<div class="col-sm-4">		      
-							<input type="text" class="form-control" id="postcode" placeholder="우편번호" readonly>
-							<strong class="text-danger">입력전 중복확인 부터..</strong>			    
+				<div class="row">
+					<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"><strong>우편번호</strong></label>
+						<div class="col-sm-4" style="display:inline">		      
+							<input type="text" class="inputtype" id="postcode" placeholder="우편번호" readonly>
 						</div>
 				
-						<div class="col-sm-3" >
-							<input type="button" class="btn btn-info" onclick="execDaumPostcode()" value="우편번호 찾기" readonly="readonly" >
+						<div class="col-sm-2" >
+							<input type="button" class="btn btn-md btn--info" onclick="execDaumPostcode()" value="우편번호 찾기" readonly="readonly" >
 						</div>
 				</div>	
 							
-				<div class="form-group">
-					<label for="ssn" class=" col-sm-3 control-label">주소</label>
-						<div class="col-sm-4">
-							<input type="text" name='addr' class="form-control" id="address" placeholder="주소">
+				<div class="row">
+					<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"><strong>주소</strong></label>
+						<div class="col-sm-4" style="display:inline">
+							<input type="text" name='addr' class="inputtype" id="address" placeholder="주소">
 						</div>
 				</div>
 					
-				<div class="form-group">
-					<label for="ssn" class=" col-sm-3 control-label">상세주소</label>
-						<div class="col-sm-4">			
-							<input type="text" name='addrDetail' class="form-control" id="address_detail" placeholder="상세주소">
+				<div class="row">
+					<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label"><strong>상세주소</strong></label>
+						<div class="col-sm-4" style="display:inline">			
+							<input type="text" name='addrDetail' class="inputtype" id="address_detail" placeholder="상세주소">
 						</div>
 				</div>	
   		  
-				<div class="form-group">
-					<label for="phone" class=" col-sm-3 control-label">휴대전화번호</label>
-						<div class="col-sm-2">
-							<select class="form-control" name="phone1" id="phone1">
+				<div class="row">
+					<label for="phone" class="col-sm-offset-1 col-sm-3 control-label"><strong>휴대전화번호</strong></label>
+						<div class="col-sm-2" style="display:inline">
+							<select class="search-sort" name="phone1" id="phone1">
 								<option value="010" >010</option>
 								<option value="011" >011</option>
 								<option value="016" >016</option>
@@ -177,17 +184,17 @@
 						</div>
  
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="phone2" name="phone2" placeholder="번호">
+							<input type="text" class="inputtype" id="phone2" name="phone2" placeholder="번호">
 						</div>
 						  
 						<div class="col-sm-2">
-							<input type="text" class="form-control" id="phone3" name="phone3" placeholder="번호">
+							<input type="text" class="inputtype" id="phone3" name="phone3" placeholder="번호">
 						</div>
 				</div>
 		  
-				<div class="form-group">
+				<div class="row">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
-						<button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
+						<button id="addUser" type="button" class="btn btn-md btn--info"  >가 &nbsp;입</button>
 					</div>
 				</div>
 			</form>
@@ -198,7 +205,7 @@
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -228,7 +235,7 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "#addUser" ).on("click" , function() {
 				fncAddUser();
 			});
 		});	
@@ -300,7 +307,7 @@
 			
 			if(check == true){
 				alert('회원가입을 축하합니다.');
-				$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+				$("#form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 			}
 			
 			/* $("form").attr("method" , "POST").attr("action" , "/user/addUser").submit(); */
@@ -439,7 +446,38 @@
 	        height: auto;
 	  	}
 		 
+		.inputtype{
+		  margin-bottom: 10px;
+		  width: 100%;
+		  border: none;
+		  box-shadow: none;
+		  border: 1px solid #dbdee1;
+		  -webkit-border-radius: 3px;
+		  -moz-border-radius: 3px;
+		  border-radius: 3px;
+		  font-size: 13px;
+		  color: #000000;
+		  padding: 9px 18px 10px !important;
+		  position: relative;
+		} 
+	
+	input, select {
+		margin-bottom: 10px;
+		height: 100%;
+		width: 100%;
+		border: none;
+		box-shadow: none;
+		border: 1px solid #dbdee1;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		font-size: 13px;
+		color: #000000;
+		padding: 9px 18px 10px !important;
+	}
+	
 	</style>
+	
 		
 
 </html>

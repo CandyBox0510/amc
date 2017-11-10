@@ -1,5 +1,6 @@
 package com.amc.web.user;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -67,23 +68,20 @@ public class UserRestController {
 	public User loginUser(	@RequestBody User user, Model model,
 									HttpSession session ) throws Exception{
 	
-		System.out.println("/user/json/login : POST");
+		System.out.println("/user/json/loginUser : POST");
 		//Business Logic
 		System.out.println("::"+user);
 		User dbUser=userService.getUser(user.getUserId());
-		
-		System.out.println("*******************************************************");
-		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		/*System.out.println("dbUser.roll :" + dbUser.getRole());*/
-
-		
 		/*if(dbUser==null || dbUser.getRole() == "not"){*/
 		if(dbUser==null || dbUser.getRole().equals("not")){
 			System.out.println("널 값이다");
 			System.out.println(dbUser);
 			model.addAttribute("user", dbUser);
-		      
 			return dbUser;
+		}else if(!user.getPassword().equals(dbUser.getPassword())){
+			System.out.println("?????????????????????????????????????");
+			return null;
 		}else{
 			if(user.getPassword().equals(dbUser.getPassword())){
 				session.setAttribute("user", dbUser);
@@ -135,28 +133,42 @@ public class UserRestController {
 
 	@RequestMapping(value="/androidGetUser")
 	public String androidGetUser(@RequestParam("email")String userId, 
-									@RequestParam("password")String password) throws Exception{
+									@RequestParam(value="password", defaultValue="")String password,
+									@RequestParam(value="kakaoLogin", defaultValue="false")String kakaoLogin) throws Exception{
+		
+		if(kakaoLogin.equals("true")){
+			System.out.println("안드로이드 카카오로그인 : userId : "+userId);
+		}else{
+			System.out.println("안드로이드 : userId : "+userId+" password :"+password);
+		}
 		
 		String jsonString = "";
 		
-		System.out.println("안드로이드 : userId : "+userId+" password :"+password);
-		
 		User dbUser=userService.getUser(userId);
 		
-		if(dbUser==null){
+		if(dbUser==null){ //맞는 유저가 없음
 			return jsonString;
-		}else{
-			if(dbUser.getPassword().equals(password)){
-				System.out.println("안드로이드 유저 id,pw 맞음");
+		}else{ //맞는 유저가 있음(카카오 로그인이면 그냥통과, 아니라면 패스워드도 확인)
+			if(kakaoLogin.equals("false")){
+				if(dbUser.getPassword().equals(password)){
+					System.out.println("안드로이드 유저 id,pw 맞음");
+				}else{
+					return jsonString;
+				}
 			}else{
-				return jsonString;
+				System.out.println("안드로이드 유저 id 맞음(카카오로그인)");
 			}
 		}
+		
 		System.out.println("dbUser : " + dbUser);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
-		return objectMapper.writeValueAsString(dbUser);
+		String temp = objectMapper.writeValueAsString(dbUser);
+		
+		jsonString = URLEncoder.encode(temp,"UTF-8");
+		
+		return jsonString;
 
 	}
 	

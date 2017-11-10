@@ -11,40 +11,13 @@
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
-    <!-- Mobile Specific Metas-->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <link href="/css/style.css?v=1" rel="stylesheet" />
-
-        <!-- Modernizr --> 
-        <script src="/js/external/modernizr.custom.js"></script>
-    
-    <!--  기존 src -->
-    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
- 
+    	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+  
 </head>
 
 <body>
@@ -60,7 +33,7 @@
    		</header>
         
 
-        <br><br>
+        <br><br><br>
         <!-- Main content -->
         <div class="place-form-area">
         <section class="container">
@@ -69,8 +42,7 @@
                     <img class="order__images" alt='' src="/images/tickets.png">
                     <p class="order__title">Thank you<br><span class="order__descript">you have successfully purchase tickets</span></p>
                     <div class="order__control">
-                        <a href="#" class="order__control-btn active">Purchase</a>
-                        <a href="#" class="order__control-btn">Reserve</a>
+                        <a href="#" class="order__control-btn active">Booking</a>
                     </div>
                 </div>
             </div>
@@ -101,8 +73,8 @@
                                 <span class="ticket__item ticket__item--primery ticket__film">Film<br><strong class="ticket__movie">${booking.movie.movieNm} ${booking.screenContent.previewTitle}</strong></span>
                                 <span class="ticket__item ticket__item--primery" style="vertical-align:middle">
                                 	Sits: <span  align='center left'  class="ticket__place">${displaySeat}</span>
-                                	<iframe style='width:50%; height:100%'  frameborder='0' align='right' 
-                                	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=abc"></iframe>
+                                	<iframe style='width:50%; height:90%'  frameborder='0' align='right' 
+                                	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=abc" scrolling="no"></iframe>
 								</span>
                             </div>
 
@@ -112,20 +84,11 @@
                     </div>
                 </div>
                 
-                 <p>
+                 <p></p>
                 
 
 
-               <div id="row1" style="float:center;" >
-					<form id='contact-info' method='post' novalidate="" class="form contact-info">
-		                   <div class="contact-info__field contact-info__field-mail"  >
-		                        <input type='email' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
-		                        class="form__mail" style="width:50%" autofocus autocomplete="off" required >		                     
-		                        <a href = "javascript:fncSendMail()" class="watchlist list--download">QR코드 전송하기</a>                      
-		                    </div>                                         
-	                 </form>
-                </div>
-
+              <center><a href="/booking/getBooking?bookingNo=${booking.bookingNo}" class="btn btn-md btn--warning">예매 확인 및 QR코드 보내기</a></center>
 
                </div> 
    
@@ -205,140 +168,30 @@
         </footer>
     </div>
 
-    <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
-            
-            <section class="container">
-
-                <div class="col-sm-4 col-sm-offset-4">
-                    <button type="button" class="overlay-close">Close</button>
-                    <form id="login-form" class="login" method='get' novalidate=''>
-                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
-
-                        <div class="social social--colored">
-                                <a href='#' class="social__variant fa fa-facebook"></a>
-                                <a href='#' class="social__variant fa fa-twitter"></a>
-                                <a href='#' class="social__variant fa fa-tumblr"></a>
-                        </div>
-
-                        <p class="login__tracker">or</p>
-                        
-                        <div class="field-wrap">
-                        <input type='email' placeholder='Email' name='user-email' class="login__input">
-                        <input type='password' placeholder='Password' name='user-password' class="login__input">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>remember me</label>
-                         </div>
-                        
-                        <div class="login__control">
-                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
-                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
-                        </div>
-                    </form>
-                </div>
-
-            </section>
-        </div>
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<jsp:include page="/layout/loginModal.jsp" />
+		
+		
         </body>
+        <!-- JavaScript-->
+		<script src="/js/external/modernizr.custom.js"></script>
+	
+		<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
  <script type="text/javascript">
-//imp초기화는 페이지 첫단에 해주는게 좋음
-  IMP.init('imp41659269');
-  	var things = "AMC : ";
-  		things += "예매"
-
-  	
-  	function kakaoPay(){
-  			alert("name : "+things);
-  				IMP.request_pay({
-  				    pg : 'kakao',
-  				    pay_method : 'kapy',
-  				    merchant_uid : 'merchant_' + new Date().getTime(),
-  				    name : things,
-  				    amount : "${booking.totalTicketPrice}", /* ticket or product price */
-  				    buyer_email : "${user.userId}",
-  				    buyer_name : "${user.userName}",
-  				    buyer_tel : "${user.phone1}-${user.phone2}-${user.phone3}",
-  				    buyer_addr : "${user.addr}+${user.addrDetail}"
-  				}, function(rsp) {
-  				    if ( rsp.success ){
-  						
-  				    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
-  				    	console.log("impuid : "+rsp.imp_uid);
-  				    	var impUid = rsp.imp_uid; 
-  				    	
-  				    	$.ajax({
-  				    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-  				    		type: 'GET',
-  				    	}).done(function(data) {
-  				    		alert("data : " + data);
-  				    		var payStatusCheck = (data.split(','))[0];
-  				    		var amountCheck = (data.split(','))[1];
-  				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
-  				    		
-  				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-  				    		if (  payStatusCheck == 'paid' && amountCheck == '${booking.totalTicketPrice}') {
-  				    			var msg = '결제가 완료되었습니다.';
-  				    			msg += '\n고유ID : ' + rsp.imp_uid;
-  				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-  				    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-  				    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
-
-  				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
-  				    			$("input[name='impId']").val(impUid);
-  				    			
-  				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
-  				    			
-  				    			addBooking();
-  				    			
-  				    		} else {
-  				    			alert("AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
-  				    			kakaoPayCancel(impUid);
-  				    			//[3] 아직 제대로 결제가 되지 않았습니다.
-  				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-  				    		}
-  				    	});
-  				    	
-  				    } else {
-  				        var msg = '결제에 실패하였습니다.';
-  				        var errorMsg = '실패사유 : ' + rsp.error_msg;
-  				        alert("AJAX 전 실패"+"\n"+msg+"\n"+errorMsg);
-  				    }//end of rsp.success else 
-  				}); //end of Imp.request_pay
-  			}//end of kakaoPay function
   			
-  	function kakaoPayCancel(impUid){
-  		$.ajax({
-  		    		url: "/cinema/json/cancelPay/"+impUid,
-  		    		type: 'GET',
-  		    	}).done(function(data) {
-  		    		alert("data : " + data);
-  		    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-  		    		if ( data == 'cancelled' ) {
-  		    			var msg = '취소가 성공적으로 처리되었습니다.';
-  		    			/* msg += '\n고유ID : ' + rsp.imp_uid;
-  		    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-  		    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-  		    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
-
-  		    			alert("아작스 취소 후 "+"\n"+msg);
-  		    			
-  		    			//location.href="/index.jsp"
-  		    			location.href="/#"
-  		    			
-  		    		} else {
-  		    			alert("취소가 실패하였습니다.");
-  		    			//[3] 아직 제대로 결제가 되지 않았습니다.
-  		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-  		    		}
-  		    	});
-  	}//end of kakaoPayCancel function	
-  	
-  	function addBooking(){
-  						
-  		$("#addBooking").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();	
-  		
-  	}
   	
   	function a(){
   		$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=123");
@@ -489,7 +342,7 @@
 		  display: block;
 		  margin-bottom: 2.5px;
 		  font-family: 'PT Mono';
-		  font-size: 18px;
+		  font-size: 15px;
 		  text-transform: uppercase;
 		  text-align: left;
 		  vertical-align:middle

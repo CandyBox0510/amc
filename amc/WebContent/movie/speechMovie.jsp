@@ -237,7 +237,7 @@
          
     <div class="bottom low ">
 		<!-- ToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<%-- <jsp:include page="/layout/bottomToolbar.jsp" /> --%>
 		<!-- ToolBar End /////////////////////////////////////-->
 	</div>
     

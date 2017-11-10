@@ -9,15 +9,15 @@
 
 <html>
 <head>
-   <!-- Basic Page Needs -->
+	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>굿즈 상품정보</title>
+        <title>AMovie-Page elements</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
     
     <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
     
     <!-- Fonts -->
@@ -27,28 +27,22 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Stylesheets -->
-    <!-- jQuery UI --> 
+        <!-- jQuery UI -->
         <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 
         <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <link href="../css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-	        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-   
-        <!--   Sweetalert2 CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>
+        <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="../css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="../js/external/modernizr.custom.js"></script>
+	
+	
+	
 	
 </head>
 
@@ -122,91 +116,83 @@
 								<dd>${product.prodSetInfo}</dd>
 							</dl>
 							<div class="btn-group" role="group">
+								<a href="#" class="btn btn-success" role="button">구매하러가기</a> 
+							<%--  <c:if test="${param.menu=='search' && !empty user}">
 								<a href="#" class="btn btn-success" role="button">구매하러가기</a>
-							<%-- <c:if test="${param.menu=='search' && !empty user}">
-								<a href="#" class="btn btn-success" role="button">구매하러가기</a>
-							</c:if> --%>
+							</c:if> --%> 
 								<a href="#" class="btn btn-default" role="button">목록으로</a>
 							</div>
 						</div>
-				</div><!-- 굿즈 상품정보 -->
+					</div><!-- 굿즈 상품정보 -->
+		
+					
+				<!-- Progress bar -->
+	            
+	
+	                <div class="col-sm-4">
+	                    <div class="progress">
+	                      <p class="progress__info">현재 판매량</p>
+	                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
+	                          <div class="progress__current" style="width: 0%;"></div>
+	                      </div>
+	                    </div>
+	                </div>
+	       
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 			</div>
 		</div>
 	</div>
 	
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="../layout/loginModal.jsp"/>
-	   <!-- JavaScript-->
+	
+	<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
         <!-- jQuery UI -->
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> 
+        <!-- Inview -->
+        <!-- <script src="js/external/jquery.inview.js"></script> -->
+        <script src="../js/external/jquery.waypoints.min.js"></script>
+        <script src="../js/external/inview.min.js"></script>
 
         <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
+        <script src="../js/jquery.mobile.menu.js"></script>
+        <!-- Select -->
+        <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
 
         <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
+        <script src="../js/external/form-element.js"></script>
         <!-- Form validation -->
-        <script src="/js/form.js"></script>
+        <script src="../js/form.js"></script>
 
         <!-- Custom -->
-        <script src="/js/custom.js"></script>
+        <script src="../js/custom.js"></script>
+		
+		<script type="text/javascript">
+            $(document).ready(function() { 
+                init_Elements();
+            });
+		</script>
 </body>
 
 	<script type="text/javascript">
 	
 		$(function(){
-			
-/* 			$('a.add:contains("확인")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=manage';
-			});
-			
-			$('a.add:contains("추가등록")').bind('click',function(){
-				self.location.href = 'addProduct';
-			}); */
-			
-			$('a.btn-default:contains("목록으로")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=${param.menu}'+'&searchKeyword=G';
-			});
-
- 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
- 				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
- 				
-				/* if("${param.menu=='search' && !empty user}"){
-					
-					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-										
-				}else{
-					alert("여기들어옴2");
-						
-				} */
-				
-			});
- 
-		});
-
-	</script>
-
-</head>
-
-
-
-	<script type="text/javascript">
-	
-		$(function(){
-			
-			
-			
 /* 			$('a.add:contains("확인")').bind('click',function(){
 				self.location.href = 'getGoodsList?menu=manage';
 			});
@@ -220,24 +206,44 @@
 			});
 
 			$('a.btn-success:contains("구매하러가기")').bind('click',function(){
-				
-				self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-				
-				/* if("${param.menu=='search' && !empty user}"){
-					
-					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
-										
+				if('${sessionScope.user.userId}'== null){
+				    $('.overlay').removeClass('close').addClass('open');
 				}else{
-					alert("여기들어옴2");
-					 $('#login').onclick 
-				} */
-				
+					self.location.href = '/purchase/addPurchase?prodNo='+$('input:hidden[name="prodNo"]').val();
+				} 
 			});
-
 		});
 
-	</script>
+    	//6. Progressbar
+  		//Count function for progressbar
+  		function init_progressBar(duration) {
+             $('.progress').each(function() {
+                 var value = $(this).find('.progress__bar').attr('data-level');
+                 var result = value + '%';
+                 if(duration) {
+                     $(this).find('.progress__current').animate({width : value + '%'}, duration);
+                 }
+                 else {
+                     $(this).find('.progress__current').css({'width' : value + '%'});
+                 }
+                 
+             });
+          }
 
+//           inview progress bars
+//            $('.progress').one('inview', function (event, visible) {
+//                if (visible == true) {
+                     
+//                }
+//            });
+
+          var inview = new Waypoint.Inview({
+            element: $('.progress')[0],
+            enter: function(direction) {
+              init_progressBar(2000);
+            }
+          });
+	</script>
 
 <style type="text/css">
  	#body{ padding-top: 100px; }
@@ -260,7 +266,11 @@
 		  display: block;
 		  margin-bottom: 5px;
 		  margin-top: 5px;
-	} 
+	}
+		html{
+	        height: auto;
+	  	}  
 </style>
+
 
 </html>

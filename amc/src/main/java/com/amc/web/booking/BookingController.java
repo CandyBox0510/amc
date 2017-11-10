@@ -23,7 +23,6 @@ import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
-import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Booking;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
@@ -200,7 +199,7 @@ public class BookingController {
 			}
 		}
 		
-		return "redirect:/booking/getAdminBookingList";			
+		return "redirect:/booking/getBookingList";			
 	}
 	
 	//관리자 예매목록조회

@@ -6,8 +6,10 @@
             <html>
 
 <head>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
    
 </head>
+
 
 <body>
     
@@ -21,7 +23,7 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
 		  </header>  
-    <div class="container">
+    <div class="container" id="body">
         
         <!-- Main content -->
         <!--  <section class="container"> -->
@@ -70,12 +72,12 @@
                 		 
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
-	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
+	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
+	                                    <p >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>개봉일 :${movie.openDt } </strong> </p>
 	                                    
 	                    	    <div style="text-align: left;">
     						    
@@ -89,14 +91,14 @@
 								<%-- bootstrap icon이 작동이 되질 않음      --%>
 								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
 										text-align : center; margin:0 auto;">   --%>	
-								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
 											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -108,9 +110,9 @@
 	                            <span style="line-height:0%">
 	                             
 	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
-	                            <i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
+	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">예매 </i>   
 	                            </span>
-	                         
+	                          
 	                           
 	                                    	     
 	                                </div>
@@ -154,6 +156,54 @@
        
 		<!-- ------------------------------------  -->
 		<script src="/js/custom.js"></script>
+		
+		<!--  Semantic UI modal windows pop-up 용  -->
+		<div class="ui mini modal" >
+		<!-- <div class="center"> -->	
+		<div style="border: 1px dashed #BDBDBD; background-color: #FBFCFC;   margin-left: auto;
+ 		 margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
+		 <div class="header">영화 음성 검색 중....</div>
+		  <div class="content" >
+		   	<p>
+		   		<form id="webspeech"  method="POST">  
+		   		   <div class="image content">
+		   				 <img class="image">
+						       <img src="../images/movie/speechListening2.gif"> 
+						         <div class="description">
+						            
+						            <div class="ui loading search">
+									  <div class="ui icon input">
+									     <input type="text" class="prompt" name="abc" id="speech-transcript" placeholder="Search...">
+									     <i class="search icon"></i>
+									  </div>
+									  <div class="results"></div>
+									</div>
+						            
+						             
+						            <input type="button" value="클릭후 말해주세요 " id="speech-btn" class="positive ui button">  
+						            
+						            <br/><br/>
+						        
+						        	<div class="actions">
+						        		   <i class='fa fa-check fa-3x' id="voidSearchOk" style="color:#3498DB"></i>  &nbsp;	
+     								 
+						        	  <div class="ui red deny button">
+									              나가기 
+							     	 </div>
+						           </div>
+						             
+						         	<div class="form-group">    
+							    	<input type="hidden" class="form-control" id="searchCondition" name="searchCondition"  value="1" > 
+							        <input type="hidden" class="form-control" id="voiceSearchKeyword" name="searchKeyword" value="" > 
+    			
+      							 </div>
+      							 </div>
+						 </div>
+		   			</form>
+				  </div>
+			</div>
+		</div>
+	
 </body>
        
     
@@ -171,6 +221,17 @@
 				 $(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "button.btn.btn-default" ).on("click" , function() {
+						fncGetPageList(1);
+					});
+					
+				 });
+			     
+				 //============= "검색 Icon"  Event  처리 =============	
+				 $(function() {
+					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( ".btn.btn-md.btn--danger.search__button").on("click" , function() {
+						
+						//alert("searchbutton called")
 						fncGetPageList(1);
 					});
 					
@@ -200,152 +261,247 @@
 				 });
 				
 				   
-					//============= "캘린더로 보기"  Event  처리 =============	
-					$(function() {
-						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-calendar" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=calendar";	
-						});	
-					});
-					
-					//============= "썸네일로 보기"  Event  처리 =============	
-					$(function() {
-						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-thumnail" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=commingsoon";	
-						});	
-					});
-				
-				
-
-			    
-					//============= "음성 검색 Icon"  Event  처리 =============	
-				 $(function() {
-					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					$( "#voidSearchIcon").on("click" , function() {
-						self.location = "/movie/getMovieList?menu=voiceRegniiton";
-					});
-					
-				 });
-				
-				
-					//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
-					$(function() {
-						 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						 
-						  $(document).on("click", ".fa-heart-o", function () {
-
-								
-								//var movieNo = $(this).next().val();		
-								//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
-				
-								var movieNo = $(this).find('#scMovieNo').val();		
-								var userId = $(this).find('#userId').val();			
-								
-								// alert("movieNo: " + movieNo); 					
-								// alert("userId: " + userId);  
-								
-						 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-							    
-									
-								
-								if(userId == null || userId == ''){
-									alert("로그인 후 이용 가능합니다.");
-									return;
-								}
-								
-											
-								$.ajax( 
-										{
-											url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-											type : "GET" ,							
-										}).done(function(data) {
-									//정상 통신인 경우
-									if (data == 'add') {
-										var msg = '찜하기 신청';
-										alert(msg);
-									} else {
-										alert("찜하기 취소");
-									}
-								});
-							
-						})
-						 
-						 $(document).on("click", ".fa-heart", function () {
-								
-								
-							 //var movieNo = $(this).next().val();		
-							 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
-			
-							var movieNo = $(this).find('#scMovieNo').val();		
-							var userId = $(this).find('#userId').val();			
-							
-							alert("movieNo: " + movieNo); 					
-							alert("userId: " + userId); 
-							
-							
-							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
-						
-							if(userId == null || userId == ''){
-								alert("로그인 후 이용 가능합니다.");
-								return;
-							}
-							
-										
-							$.ajax( 
-									{
-										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-										type : "GET" ,							
-									}).done(function(data) {
-								//정상 통신인 경우
-								if (data == 'add') {
-									var msg = '찜하기 신청';
-									alert(msg);
-								} else {
-									alert("찜하기 취소");
-								}
-							});
-						})
-				
-				});
-					
-					 
-				//============= "예약  Event 처리"  Event  처리 =============	
+				//============= "캘린더로 보기"  Event  처리 =============	
 				$(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					$("span:contains('예매')" ).on("click" , function() {
-						 self.location = "/booking/getScreenMovieList";	
+					$( "button.btn.btn-calendar" ).on("click" , function() {	
+						 self.location = "/movie/getMovieList?menu=calendar";	
 					});	
 				});
-					
-			    $(function() {
-			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			        $("button[name='search']").on("click", function() {
-			        	alert("222")
-			      
-			            fncGetPageList(1);
-			        });
-	      
-			    });
+				
+				//============= "썸네일로 보기"  Event  처리 =============	
+				$(function() {
+					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "button.btn.btn-thumnail" ).on("click" , function() {	
+						 self.location = "/movie/getMovieList?menu=commingsoon";	
+					});	
+				});
+				
+				$(function() {
+	    			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	    			//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	    			 $( "#voidSearchOk" ).on("click" , function() {
+	    					//Debug..
+	    					// <!-- <a href="javascript:history.go(-1)"></a> -->
+	    					//console.log("value : "+$("#voidSearchOk" ).val());
+	    					fncWebSpeech()
+	    			});
+	    	   });	
+			
+			   //============= "음성 검색 실행 함수 " 처리 =============	
+			   function fncWebSpeech() {
+		    		// document.addPurchase.submit();
+		    		// alert("speech post call...")
+		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+		       }
+				
+			//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
+			$(function() {
+				 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 
+				  $(document).on("click", ".fa-heart-o", function () {
 
-	            $(document).ready(function() {
-	                init_CinemaList();
-	                
-	                //alert($('html').height() )
-	                //alert(window.outerHeight)
-	                if($('html').height() < window.outerHeight){
-	                	$('html').css('height', '100%');
-	                }
-	                
-	                $("#movie-search-sort").css("width","200px");
-	            });
+						
+						//var movieNo = $(this).next().val();		
+						//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+		
+						var movieNo = $(this).find('#scMovieNo').val();		
+						var userId = $(this).find('#userId').val();			
+						
+						// alert("movieNo: " + movieNo); 					
+						// alert("userId: " + userId);  
+						
+				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+					    
+							
+						
+						if(userId == null || userId == ''){
+							alert("로그인 후 이용 가능합니다.");
+							return;
+						}
+						
+									
+						$.ajax( 
+								{
+									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+									type : "GET" ,							
+								}).done(function(data) {
+							//정상 통신인 경우
+							if (data == 'add') {
+								var msg = '찜하기 신청';
+								alert(msg);
+							} else {
+								alert("찜하기 취소");
+							}
+						});
+					
+				})
+				 
+				 $(document).on("click", ".fa-heart", function () {
+						
+						
+					 //var movieNo = $(this).next().val();		
+					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+	
+					var movieNo = $(this).find('#scMovieNo').val();		
+					var userId = $(this).find('#userId').val();			
+					
+					// alert("movieNo: " + movieNo); 					
+					// alert("userId: " + userId); 
+					
+					
+					$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
+				
+					if(userId == null || userId == ''){
+						alert("로그인 후 이용 가능합니다.");
+						return;
+					}
+					
+								
+					$.ajax( 
+							{
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								type : "GET" ,							
+							}).done(function(data) {
+						//정상 통신인 경우
+						if (data == 'add') {
+							var msg = '찜하기 신청';
+							alert(msg);
+						} else {
+							alert("찜하기 취소");
+						}
+					});
+				})
+		
+		});
+					
+					 
+		//============= "예약  Event 처리"  Event  처리 =============	
+		$(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("span:contains('예매')" ).on("click" , function() {
+				 self.location = "/booking/getScreenMovieList";	
+			});	
+		});
+			
+	    $(function() {
+	        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	        $("button[name='search']").on("click", function() {
+	        	// alert("222")
+	      
+	            fncGetPageList(1);
+	        });
+     
+	    });
+
+         $(document).ready(function() {
+             init_CinemaList();
+             
+             //alert($('html').height() )
+             //alert(window.outerHeight)
+             if($('html').height() < window.outerHeight){
+             	$('html').css('height', '100%');
+             }
+             
+             $("#movie-search-sort").css("width","200px");
+         });
+         
+
+  	   (function (window, undefined) {
+              "use strict";
+              
+              var document = window.document,
+                  docElement = document.documentElement,
+                  SpeechRecognition = window.webkitSpeechRecognition ||
+                                      window.mozSpeechRecognition ||
+                                      window.msSpeechRecognition ||
+                                      window.oSpeechRecognition ||
+                                      window.SpeechRecognition;
+              function addClass(className) {
+                  docElement.className = docElement.className + ' ' + className;
+              }
+              docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
+              if ( SpeechRecognition !== undefined ) {
+                  addClass('feature');
+              } else {
+                  addClass('no-feature');
+              }
+          })(window);
+  	   
+  	   
+  	   var speech_text ="";   
+  	    
+         (function speechFunction(window, undefined) {
+             "use strict";
+             var speechBtn = document.getElementById('speech-btn'),
+                 SpeechRecognition = window.webkitSpeechRecognition ||
+                                     window.mozSpeechRecognition ||
+                                     window.msSpeechRecognition ||
+                                     window.oSpeechRecognition ||
+                                     window.SpeechRecognition,
+                 speechTranscript = document.getElementById('speech-transcript'),
+                 
+                
+                 sr;
+             if ( SpeechRecognition !== undefined ) {
+                 sr = new SpeechRecognition();
+                 speechBtn.addEventListener('click', function () {
+                     sr.start();
+                 });
+                 sr.onaudiostart = function () {
+                     speechBtn.setAttribute('disabled', 'disabled');
+                     speechBtn.value = "말해주세요!";                             
+                     
+                 };
+                 sr.onspeechstart = function () {
+                     speechBtn.value = "듣고 있습니다....";
+                 };
+                 sr.onspeechend = function () {
+                     speechBtn.value = '...그리고 끝내주세요...';
+                 };
+                 sr.onend = function () {
+                     speechBtn.value = '계속 하려면 여기를 클릭해주세요!';
+                     speechBtn.removeAttribute('disabled');
+                 };
+                 sr.onresult = function (event) {
+                     speechTranscript.value = event.results[0][0].transcript;
+                    
+                     console.log("speechTranscript :: " + speechTranscript.value);
+                     $("#voidSearchOk").val(speechTranscript.value);
+                     // alert("speeach2 : "+$("#voidSearchOk").val()); 
+                     
+                     var voiceSearch = $("#voidSearchOk").val();
+                     $("#voiceSearchKeyword").val(voiceSearch);
+                     //alert("speeach2"  + voiceSearch);                  
+                     
+                 };
+             }
+        })(window);
+         
+         
+     	//============= "음성 검색 Icon"  Event  처리 =============	
+		  $(function() {
+			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "#voidSearchIcon").on("click" , function() {
+				//alert("modal start...")
+				$('.ui.modal')  
+				  .modal('show')
+				;
+				/* self.location = "/movie/getMovieList?menu=voiceRegniiton"; */
+			});
+			
+		 }); 
+	    	
+
+         
+         
 	            
 		</script>
 		
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-	 body {
+	 #body {
            padding-top: 70px;
            }
            .thumbnail {
@@ -353,6 +509,20 @@
            height: 250px;
            overflow: auto;
      }	
+     
+      .cinema .cinema__images:before {
+	    content: '';
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(76, 65, 69, 0);
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 1;
+	    -webkit-transition: 0.5s;
+	    -o-transition: 0.5s;
+	    transition: 0.5s;
+	   }
      
      #searchIcon
       {     color: #fff;       		
@@ -401,5 +571,10 @@
     }
       
 </style>	
+
+
+ <!-- Semantic  UI Applied -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
 
 </html>

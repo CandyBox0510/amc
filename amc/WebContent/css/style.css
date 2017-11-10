@@ -683,7 +683,8 @@ a.text-success:focus {
   color: #2b542c;
 }
 .text-info {
-  color: #31708f;
+  /* color: #31708f; */
+  color: #000000;
 }
 a.text-info:hover,
 a.text-info:focus {
@@ -740,6 +741,7 @@ a.bg-danger:focus {
   background-color: #e4b9b9;
 }
 .page-header {
+  color:#000000;
   padding-bottom: 9px;
   margin: 40px 0 20px;
   border-bottom: 1px solid #eeeeee;
