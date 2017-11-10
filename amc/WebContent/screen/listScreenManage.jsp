@@ -39,15 +39,18 @@
 								<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
 							</div>
 							<div class="col-sm-6 text-right">
-								<form id='search-form' class="search ">
-										<input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-										<select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
-											<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
+							<form id='search-form'>
+									<input type="text" placeholder="검색어입력" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+									<select name="searchCondition" id="movie-search-sort" class="" tabindex="0">
+										<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
 										<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독명</option>
 									</select>
 									<button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 									<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 								</form>
+								
+								
+							
 							</div>
 						</div>
 					</div>
@@ -162,6 +165,19 @@ function fncGetPageList(currentPage) {
 </body>
 
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	margin-top: 100px
+}
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
 .countPage {
 	font-size: 13px;
 	margin-top: 10px;
@@ -190,6 +206,63 @@ function fncGetPageList(currentPage) {
 .page-heading {
 	margin-top: 100px
 }
+
+
+#search-form {
+	display: block;
+	margin-top: 1em;
+}
+
+.search__button {
+	padding: 5px 5px 5px 5px;
+}
+
+
+input, select {
+	height: 30px;
+	width: auto;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+select {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+option {
+	  width: 140px;
+    top: 37px !important;
+    border: none;
+    padding: 14px 7px;
+    z-index: 23;
+    background-color: #4c4145;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+    
+    
+}
+
+.cinema .cinema__images:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250, 250, 250, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+}
+
 
 </style>
 

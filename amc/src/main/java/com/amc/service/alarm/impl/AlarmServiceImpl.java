@@ -1,13 +1,11 @@
 package com.amc.service.alarm.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.codehaus.jettison.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -15,14 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.amc.common.Search;
 import com.amc.common.util.RestApiUtil;
 import com.amc.service.alarm.AlarmDAO;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingDAO;
-import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Booking;

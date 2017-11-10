@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.SqlRowSetResultSetExtractor;
 import org.springframework.stereotype.Service;
 
 import com.amc.common.Search;
@@ -211,6 +213,7 @@ public class MovieServiceImpl implements MovieService {
 				// Return -1 과 Message로 "이미 DB에 등록된 영화" 메시지 전달 
 				
 			    Search search = new Search() ;
+			    int return_code = 0;
 			    
 			    search.setSearchCondition("1");
 			    search.setSearchKeyword(movieNm);
@@ -475,20 +478,29 @@ public class MovieServiceImpl implements MovieService {
 						    //System.out.println("movieEndDate ::" + movie.getEndDt());
 						    System.out.println("syonpsis     ::" + movie.getSynopsis());
 						    System.out.println("trailer      ::" + movie.getTrailer());
+
+				    
+						    return_code = movieDAO.addMovie(movie);
 						    
-						 
-					    
-							return   movieDAO.addMovie(movie);
+						    System.out.println("return_code from movieDAO.addMovie" + return_code);
+							return   return_code;
 							
 				
 					}
+				
 					
-				} catch (Exception e) {	
+				} catch (SQLException e) {
+					System.out.println("Oracle Error Occurred...");
+					e.printStackTrace();
+					return_code = 2;
+					return return_code;					
+				}
+				catch (Exception e) {	
 					e.printStackTrace();
 				}
-				
-				
-		return 0;	    
+				System.out.println("return_code from movieDAO.addMovie" + return_code);		
+		
+				return return_code;	    
 			 
 	}
 
@@ -610,6 +622,12 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public Map<String,Object> getWishList(Map<String,Object> map) {
 		return movieDAO.getWishList(map);
+	}
+
+	@Override
+	public String searchTrailer(String searchTrailer) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

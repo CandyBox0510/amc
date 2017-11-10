@@ -3,6 +3,7 @@ package com.amc.web.movie;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -14,9 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,6 +66,12 @@ public class MovieRestController {
 	@Autowired
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
+	
+	//해림추가
+	/// Field
+	@Autowired
+	@Qualifier("trailerSearchAPIServiceImpl")
+	private MovieService movieService2;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -214,7 +226,7 @@ public class MovieRestController {
 
 		System.out.println("movieService.addMovie(movie) return code  :: " + rtn);
 
-		if ((rtn == 1 || rtn == 0)) {
+		if (rtn == 1) {
 			System.out.println("New record added successfully! ");
 			response.setContentType("text/xml");
 			response.setCharacterEncoding("UTF-8");
@@ -306,7 +318,6 @@ public class MovieRestController {
 
 		}
 	}
-
 	@RequestMapping(value = "json/movieOnSchedule", method = RequestMethod.POST)
 	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model,
 			@ModelAttribute("search") Search search) throws Exception {
@@ -872,16 +883,17 @@ public class MovieRestController {
 			
 			for(int i = 0; i< movieList.size(); i++){
 				 data = new JSONObject();
-				 data.put("movieNm", movieList.get(i).getMovieNm());
-				 data.put("openDt", movieList.get(i).getOpenDt());
+				 data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(),"UTF-8"));
+				 data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(),"UTF-8"));
 				 data.put("movieNo", movieList.get(i).getMovieNo());
-				 data.put("trailer", movieList.get(i).getTrailer());
-				 data.put("genres", movieList.get(i).getGenres());
-				 data.put("watchGradeNm", movieList.get(i).getWatchGradeNm());
-				 data.put("postUrl", movieList.get(i).getPostUrl());
+				 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
+				 data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(),"UTF-8"));
+				 data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(),"UTF-8"));
+				 data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(),"UTF-8"));
 				 jsonArray.add(data);
 			}
 			response.put("list", jsonArray);
+			
 			return response.toJSONString();
 			
 		} else {
@@ -942,6 +954,41 @@ public class MovieRestController {
 		}
 	
 		return "forward:/movie/listMovie.jsp";
+	}
+
+	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}")
+	public void searchTrailer(@ModelAttribute("search") Search search, @PathVariable String searchTrailer)		throws Exception {
+		System.out.println("1. search => " + search);
+		System.out.println("2. searchTrailer => " + searchTrailer);
+		
+		String result = movieService2.searchTrailer(searchTrailer);
+			System.out.println("3. result => " + result);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode node = (ObjectNode)mapper.readTree(result);
+			
+			JsonNode arrayNode = node.get("documents").get("title");
+			
+			ArrayList<String> data = mapper.readValue(arrayNode.traverse(), new TypeReference<ArrayList<String>>(){});
+			
+			System.out.println("data    " + data);
+
+			
+/*			JSONArray nameArray =(JSONArray)JSONSerializer.toJSON(result);
+			System.out.println(nameArray.size());
+			
+			for(Object js : nameArray){
+				JSONObject json = (JSONObject)js;
+				System.out.println(json.get("title"));
+				}
+		*/
+			
+/*				JSONParser parser = new JSONParser();
+			JSONObject json = (JSONObject) parser.parse(result);	
+			String datetime = json.get("datetime").toString();
+			System.out.println(datetime);*/
+			
+			//	 return result;
 	}
 
 }

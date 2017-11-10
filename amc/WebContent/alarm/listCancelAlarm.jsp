@@ -114,9 +114,9 @@
 								all += 	'<div class="gallery-item">'
 								all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu='
 											if(alarm[i].screenContent.previewFlag == 'Y'){
-												all += "movie"
+												all += "preview"
 											}else{
-												all += "search"
+												all += "movie"
 											}
 								all +=    '">'
 								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
@@ -127,7 +127,13 @@
 								all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
 								all +=			'취소</span></a>'
 								all +=		'</div>'
-								all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--success-link">'
+								all += 	   '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu='
+											if(alarm[i].screenContent.previewFlag == 'Y'){
+												all += "preview"
+											}else{
+												all += "movie"
+											}
+								all +=		'" class="gallery-item__descript gallery-item--success-link">'
 								all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
 								all += 	   '<p class="gallery-item__name">'
 											if(alarm[i].screenContent.previewFlag == 'Y'){
@@ -195,18 +201,23 @@
         				<div class="col-xs-6 col-sm-4 col-md-3">
 						     <div class="gallery-item">
 						     	<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
-	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search"></a>
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
 	                            </c:if>
 	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
-	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview"></a>
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
 	                            </c:if>
 	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
-	                            
+	                            </a>
 	                            <div class="alert alert-success" role="alert">
   									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]
   									<span class="label label-success"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
-	                            <a href="http://imgmovie.naver.com/mdi/mit110/1495/149517_P11_135849.jpg" class="gallery-item__descript gallery-item--success-link">
+								<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--success-link">
+	                            </c:if>
+	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--success-link">
+	                            </c:if>
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
                         	        <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
 	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
