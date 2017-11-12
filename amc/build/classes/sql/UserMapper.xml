@@ -34,6 +34,14 @@
 						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
 	 </insert>
 	 
+	<!-- SQL : INSERT -->
+	<insert 	id="snsAddUser"		parameterType="user" >
+	 	INSERT
+		INTO users	( user_id, user_name, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
+		VALUES	 	( #{userId}, #{userName}, 'user', #{birth}, 
+						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
+	 </insert>
+	 
 	 <!-- SQL : UPDATE (DeleteUser)-->
 	 <update	id="deleteUser"	parameterType="user" >
 	   	UPDATE users

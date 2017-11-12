@@ -95,16 +95,16 @@ public class SNSController {
 	
 	@RequestMapping( value="kakaoLogin", method=RequestMethod.POST )
 	public User kakaoJsLogin(	@RequestBody User user,	HttpSession session ) throws Exception{
-		System.out.println("/user/json/kakaoLogin : POST");
+		System.out.println("/sns/json/kakaoLogin : POST");
 		System.out.println("::"+user);
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if(dbUser==null){
-		System.out.println("널 값이다");
+			System.out.println("널 값이다");
 		}else{
-		session.setAttribute("user", dbUser);
+			session.setAttribute("user", dbUser);
 		}
-		System.out.println("dbUser : " + dbUser);
+			System.out.println("dbUser : " + dbUser);
 		return dbUser;
 	}
 	
@@ -151,13 +151,17 @@ public class SNSController {
 	}
 	
 	@RequestMapping( value="naverLogin/{userId:.+}", method=RequestMethod.GET )
-	public String naverLogin( @PathVariable String userId , HttpSession session ) throws Exception{
+	public String naverLogin( @PathVariable String userId , HttpSession session, Model model ) throws Exception{
 		System.out.println("/sns/naverLogin : POST");
 		System.out.println("::"+userId);
 		User dbUser=userService.getUser(userId);
 		
 		if(dbUser==null){
-			System.out.println("널 값이다");
+			System.out.println("naverLogin GET 널 값이다");
+			model.addAttribute("email",userId);
+			model.addAttribute("snslogin","naver");
+			
+			return "forward:/user/addUser.jsp";
 		}else{
 			session.setAttribute("user", dbUser);
 		}

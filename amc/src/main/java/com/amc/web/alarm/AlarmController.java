@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -128,6 +129,30 @@ public class AlarmController {
 		model.addAttribute("list", map.get("list"));
 		
 	    return "forward:/alarm/listOpenAlarm.jsp";
+	}
+	
+	@RequestMapping("/codePush/{type}")
+	public String codePush(@PathVariable("type")String type,
+						@RequestParam(value="serialNo",defaultValue="")String serialNo,
+						@RequestParam(value="userId",defaultValue="")String userId,
+						@RequestParam(value="alarmSeatNo",defaultValue="")String alarmSeatNo,
+						Model model) throws Exception{
+			
+		System.out.println("AlarmRestController.java 의 codePush 메소드"); 
+		if(!type.equals("") || type !=null){
+			
+			System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
+			
+			String smsResult = alarmService.smsPush(type,serialNo,userId,alarmSeatNo);
+			
+			if(!type.equals("userCertification") && !type.equals("booking")){
+				String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
+			}
+		}
+		model.addAttribute("serialNo",serialNo);
+		
+		return  "forward:/user/authForm.jsp";
+		
 	}
 
 }

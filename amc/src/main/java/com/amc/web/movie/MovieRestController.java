@@ -60,6 +60,8 @@ public class MovieRestController {
 	private MovieService movieService;
 
 	// 해림추가
+	
+
 	/// Field
 	@Autowired
 	@Qualifier("trailerSearchAPIServiceImpl")

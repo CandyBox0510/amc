@@ -59,6 +59,8 @@
 	
 		<!--아임포트 CDN -->
 		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
 </head>
 
 <body>
@@ -224,10 +226,20 @@
 				 </div>
 			 </form>
 		 </div>
-	 </div>
-	 
+		 
+		 
+ 	</div>
+		
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
+
+
+
+
+
+
+
+
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
@@ -239,21 +251,20 @@
         <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <!-- Bootstrap 3--> 
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
         <!-- Mobile menu -->
         <script src="/js/jquery.mobile.menu.js"></script>
          <!-- Select -->
         <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
         <!-- Swiper slider -->
         <script src="/js/external/idangerous.swiper.min.js"></script>
-
         <!-- Form element -->
         <script src="/js/external/form-element.js"></script>
         <!-- Form validation -->
         <script src="/js/form.js"></script>
-
         <!-- Custom -->
         <script src="/js/custom.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
 
 </body>
 
