@@ -50,6 +50,16 @@
 			 WHERE ROWNUM &lt;=#{search.endRowNum} )
 	WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
  	</select>
+ 	
+ 	<select  id="getPreviewWishList"  parameterType="map"	 resultMap="wishListSelectMap">
+ 	SELECT *							
+	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
+		 	 FROM 		(SELECT w.wish_no, w.wish_regdate, w.wish_flag,s.movie_no
+						FROM wishlist w, screencontent s 
+						WHERE w.movie_no = s.movie_no  AND user_id = #{user.userId}) inner_table
+			 WHERE ROWNUM &lt;=#{search.endRowNum} )
+	WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+ 	</select>
 	
 	<select id="getTotalCount" parameterType="map" resultType="int">
  		SELECT COUNT(*) 

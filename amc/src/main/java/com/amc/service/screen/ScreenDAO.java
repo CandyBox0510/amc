@@ -35,6 +35,8 @@ public interface ScreenDAO {
 
 	// 상영 내용 삭제
 	public int deleteScreenContent(int screenContentNo);
+	
+	public Map<String, Object> getWishList(Map<String,Object> map);
 
 
 	int getTotalCount(Search search) throws Exception;

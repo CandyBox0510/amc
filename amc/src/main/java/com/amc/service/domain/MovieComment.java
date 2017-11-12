@@ -4,6 +4,7 @@ import com.amc.common.Search;
 
 public class MovieComment {
 	
+	private WishList wishList;	
 	private int movieCommentNo;
 	private User user;
 	private Movie movie;
@@ -11,6 +12,14 @@ public class MovieComment {
 	private String movieComment;
 	private String movieCommentRegDate;
 	private String blindCommentFlag;
+	
+	public WishList getWishList() {
+		return wishList;
+	}
+	public void setWishList(WishList wishList) {
+		this.wishList = wishList;
+	}
+	
 	public int getMovieCommentNo() {
 		return movieCommentNo;
 	}
@@ -55,9 +64,9 @@ public class MovieComment {
 	}
 	@Override
 	public String toString() {
-		return "MovieComment [movieCommentNo=" + movieCommentNo + ", user=" + user + ", movie=" + movie + ", search="
-				+ search + ", movieComment=" + movieComment + ", movieCommentRegDate=" + movieCommentRegDate
-				+ ", blindCommentFlag=" + blindCommentFlag + "]";
+		return "MovieComment [wishList=" + wishList + ", movieCommentNo=" + movieCommentNo + ", user=" + user
+				+ ", movie=" + movie + ", search=" + search + ", movieComment=" + movieComment
+				+ ", movieCommentRegDate=" + movieCommentRegDate + ", blindCommentFlag=" + blindCommentFlag + "]";
 	}
 
 

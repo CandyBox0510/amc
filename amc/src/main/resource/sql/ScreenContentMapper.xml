@@ -22,7 +22,9 @@
       <result property="ticketOpenDate" column="ticket_opendate" jdbcType="DATE" />
       <result property="inviteActor" column="invite_Actor" jdbcType="VARCHAR" />
       <result property="screenContentRegDate" column="screencontent_regdate" jdbcType="DATE" />
-      
+ 
+ 	  <association property="wishList"	resultMap="WishListMapper.wishListSelectMap"/>
+  	     
    </resultMap>
    
    
@@ -183,8 +185,8 @@
 		SELECT *
 		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
 		FROM (SELECT movie.movie_title, movie.director, movie.poster, movie.movie_no,screencontent.screencontent_no, screencontent.invite_actor, screencontent.preview_title,
-					TO_CHAR(screencontent.screen_opentime,'YYYY/MM/DD HH24:MI') screen_opentime , 
-					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY/MM/DD HH24:MI') ticket_opendate 
+					TO_CHAR(screencontent.screen_opentime,'YYYY-MM-DD') screen_opentime , 
+					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY-MM-DD') ticket_opendate 
 					FROM movie, (SELECT * FROM screencontent WHERE screen_opentime> SYSDATE AND preview_flag = 'Y') screencontent  
 					WHERE movie.movie_no = screencontent.movie_no
 		<if test="searchCondition != null" >
