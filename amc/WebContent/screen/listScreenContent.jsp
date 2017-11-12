@@ -37,14 +37,17 @@
 					</div>
 					<div class="col-sm-8 col-md-9">
 						<p class="movie__time">
-							<input type="hidden" name='showTm' value="${movie.showTm }"> ${movie.showTm }분
+							<input type="hidden" name='showTm' value="${movie.showTm }">
+							${movie.showTm }분
 						</p>
 						<p class="movie__option">
 							<strong>제목 : </strong>${movie.movieNm }</p>
 						<p class="movie__option">
-							<strong>개봉일 : </strong> <input type="hidden" name='openDt' value="${movie.openDt }">${movie.openDt }</p>
+							<strong>개봉일 : </strong>
+							<input type="hidden" name='openDt' value="${movie.openDt }">${movie.openDt }</p>
 						<p class="movie__option">
-							<strong>상영마감일 : </strong><input type="hidden" name='endDt' value="${movie.endDt }">${movie.endDt }</p>
+							<strong>상영마감일 : </strong>
+							<input type="hidden" name='endDt' value="${movie.endDt }">${movie.endDt }</p>
 						<p class="movie__option">
 							<strong>감독 : </strong>${movie.directors }</p>
 						<p class="movie__option">
@@ -71,7 +74,7 @@
 						<td class="col-md-1 col-sm-1">상영관</td>
 						<td class="col-md-1 col-sm-1">가격</td>
 						<td class="col-md-1 col-sm-1">시사회</td>
-						<td class="col-md-2 col-sm-2">제목</td>
+						<td class="col-md-2 col-sm-2">시사회제목</td>
 						<td class="col-md-2 col-sm-2">티켓오픈날짜</td>
 						<td class="col-md-1 col-sm-1">초대배우</td>
 					</tr>
@@ -81,7 +84,11 @@
 			</div>
 		</section>
 		<div>
-			<input type="hidden" name="screenOpenTime"> <input type="hidden" name="screenEndTime2"> <input type="hidden" name="previewFlag"> <input type="hidden" name="ticketOpenDate"> <input type="hidden" name='movieNo' value='${movie.movieNo }'>
+			<input type="hidden" name="screenOpenTime">
+			<input type="hidden" name="screenEndTime2">
+			<input type="hidden" name="previewFlag">
+			<input type="hidden" name="ticketOpenDate">
+			<input type="hidden" name='movieNo' value='${movie.movieNo }'>
 		</div>
 
 
@@ -153,7 +160,8 @@
 			<div>
 				<div class="col-md-6 col-sm-6 addScreenContentTitle">티켓오픈날짜</div>
 				<div class="col-md-6 col-sm-6">
-					<input type="text" name='previewOpenDate' readonly="readonly"><input type="time" name='previewOpenTime' readonly="readonly">
+					<input type="text" name='previewOpenDate' readonly="readonly">
+					<input type="time" name='previewOpenTime' readonly="readonly">
 				</div>
 			</div>
 			<div>
@@ -240,7 +248,8 @@
 			<div>
 				<div class="col-md-6 col-sm-6 updateScreenContentTitle">티켓오픈날짜</div>
 				<div class="col-md-6 col-sm-6">
-					<input type="text" name='previewOpenDate' readonly="readonly"><input type="time" name='previewOpenTime' readonly="readonly">
+					<input type="text" name='previewOpenDate' readonly="readonly">
+					<input type="time" name='previewOpenTime' readonly="readonly">
 				</div>
 			</div>
 			<div>
@@ -430,6 +439,51 @@
         ticketOpenDate = $("input[name='previewOpenDate']").val() + " " + $("input[name='previewOpenTime']").val();
         inviteActor = $("input[name='inviteActor']").val();
         previewFlag = ""
+
+        var screenContentOpenTime = $("input[name='screenContentOpenTime']").val();
+        var screenContentEndTime = $("input:hidden[name='screenEndTime2']").val();
+
+        if (screenDate == null || screenDate.length < 1) {
+            alert("상영일자를 입력해주세요");
+            return;
+        }
+        if (screenContentOpenTime == null || screenContentOpenTime.length < 1) {
+            alert("상영시작 시간을 입력해주세요");
+            return;
+        }
+        if (screenContentEndTime == null || screenContentEndTime.length < 1) {
+            alert("상영종료 시간을 입력해주세요");
+            return;
+        }
+        if (ticketPrice == null || ticketPrice.length < 1) {
+            alert("가격을 입력해주세요");
+            return;
+        }
+
+        var previewTitle = $("input[name='previewTitle']").val();
+        var previewOpenDate = $("input[name='previewOpenDate']").val();
+        var previewOpenTime = $("input[name='previewOpenTime']").val();
+
+        if (previewChecked == true) {
+
+            if (previewTitle == null || previewTitle.length < 1) {
+                alert("시사회 제목을 입력해주세요");
+                return;
+            }
+            if (previewOpenDate == null || previewOpenDate.length < 1) {
+                alert("티켓 오픈 날짜를 입력해주세요");
+                return;
+            }
+            if (previewOpenTime == null || previewOpenTime.length < 1) {
+                alert("티켓 오픈 시간을 입력해주세요");
+                return;
+            }
+            if (inviteActor == null || inviteActor.length < 1) {
+                alert("초대배우를 입력해주세요");
+                return;
+            }
+        }
+
         if (previewChecked == true) {
             previewFlag = "Y";
         } else {
@@ -579,6 +633,50 @@
 
         screenEndTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentEndTime']").val();
 
+        var screenContentOpenTime = $(".updateScreenContentModal input[name='screenContentOpenTime']").val()
+        var screenContentEndTime = $(".updateScreenContentModal input[name='screenContentEndTime']").val();
+
+        if (screenDate == null || screenDate.length < 1) {
+            alert("상영일자를 입력해주세요");
+            return;
+        }
+        if (screenContentOpenTime == null || screenContentOpenTime.length < 1) {
+            alert("상영시작 시간을 입력해주세요");
+            return;
+        }
+        if (screenContentEndTime == null || screenContentEndTime.length < 1) {
+            alert("상영종료 시간을 입력해주세요");
+            return;
+        }
+        if (ticketPrice == null || ticketPrice.length < 1) {
+            alert("가격을 입력해 주세요");
+            return;
+        }
+
+        var previewTitle = $(".updateScreenContentModal input[name='previewTitle']").val();
+        var previewOpenDate = $(".updateScreenContentModal input[name='previewOpenDate']").val();
+        var previewOpenTime = $(".updateScreenContentModal input[name='previewOpenTime']").val();
+
+        if (previewChecked == true) {
+
+            if (previewTitle == null || previewTitle.length < 1) {
+                alert("시사회 제목을 입력해 주세요");
+                return;
+            }
+            if (previewOpenDate == null || previewOpenDate.length < 1) {
+                alert("티켓 오픈 날짜를 입력해 주세요");
+                return;
+            }
+            if (previewOpenTime == null || previewOpenTime.length < 1) {
+                alert("티켓 오픈 시간을 입력해 주세요");
+                return;
+            }
+            if (inviteActor == null || inviteActor.length < 1) {
+                alert("초대배우를 입력해 주세요");
+                return;
+            }
+        }
+
         if (previewChecked == true) {
             var previewFlag = "Y";
         } else {
@@ -693,6 +791,7 @@
     }
 
     $(document).ready(function() {
+
         fncGetScreenContentList();
         openDt = $("input[name='openDt']").val();
         endDt = $("input[name='endDt']").val();
@@ -753,7 +852,7 @@
                 screenDate = new Date(screenDate);
                 date = screenDate.getDate() - 1;
                 screenDate.setDate(date);
-  
+
                 if (previewChecked == true) {
                     $("input[name='previewOpenDate']").datepicker({
                         dateFormat : 'yy-mm-dd',
@@ -783,9 +882,7 @@
             screenOpenTime = $("input[name='screenDate']").val() + " " + $("input[name='screenContentOpenTime']").val();
             showTm = parseInt($("input[name='showTm']").val());
 
-
             if ($("input[name='screenDate']").val().length == 0) {
-
 
                 screenOpenTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentOpenTime']").val();
 
@@ -796,12 +893,10 @@
         })
 
         $(document).on("click", ".actionAddButton", function() {
-
             fncAddScreenContent();
         })
 
         $(document).on("click", ".actionUpdateButton", function() {
-
             fncUpdateScreenContent();
         })
 

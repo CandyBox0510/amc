@@ -3,6 +3,7 @@ package com.amc.web.movie;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -15,10 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
-import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -32,7 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -41,10 +37,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
-import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
-import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
@@ -53,8 +47,6 @@ import com.amc.service.movie.MovieService;
 import com.amc.service.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import net.sf.json.JSONSerializer;
 
 //==> MovieAPI RestController
 @RestController
@@ -66,17 +58,17 @@ public class MovieRestController {
 	@Autowired
 	@Qualifier("movieServiceImpl")
 	private MovieService movieService;
-	
-	//해림추가
+
+	// 해림추가
 	/// Field
 	@Autowired
 	@Qualifier("trailerSearchAPIServiceImpl")
 	private MovieService movieService2;
-	
+
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	
+
 	private String dbFileNames;
 
 	// setter Method 구현 않음
@@ -183,7 +175,7 @@ public class MovieRestController {
 		String movieName = "";
 		String genreNms = "";
 		String postUrl = "";
-		//String movieEndDate = "";
+		// String movieEndDate = "";
 		String syonpsis = "";
 		String trailer = "";
 
@@ -192,7 +184,7 @@ public class MovieRestController {
 			movieCd = itemList[0].substring(1, 9);
 			movieName = itemList[1];
 			movieContry = itemList[2];
-			//movieEndDate = itemList[3];
+			// movieEndDate = itemList[3];
 			syonpsis = itemList[3];
 			trailer = itemList[4];
 		}
@@ -200,7 +192,7 @@ public class MovieRestController {
 		System.out.println("movieCd : " + movieCd);
 		System.out.println("movieName : " + movieName);
 		System.out.println("movieContry : " + movieContry);
-		//System.out.println("movieEndDate : " + movieEndDate);
+		// System.out.println("movieEndDate : " + movieEndDate);
 		System.out.println("syonpsis : " + syonpsis);
 		System.out.println("trailer : " + trailer);
 
@@ -208,7 +200,7 @@ public class MovieRestController {
 
 		Movie movie = new Movie();
 		movie.setMovieCd(movieCd);
-		//movie.setEndDt(movieEndDate);
+		// movie.setEndDt(movieEndDate);
 		movie.setSynopsis(syonpsis);
 		movie.setTrailer(trailer);
 
@@ -318,6 +310,7 @@ public class MovieRestController {
 
 		}
 	}
+
 	@RequestMapping(value = "json/movieOnSchedule", method = RequestMethod.POST)
 	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model,
 			@ModelAttribute("search") Search search) throws Exception {
@@ -330,24 +323,25 @@ public class MovieRestController {
 		search.setPageSize(pageSize);
 
 		search.setSearchKeyword2("5");
-		
+
 		System.out.println("상영 예정 영화 콜 !!!!");
-		
-		if (search.getSearchKeyword() != null) {				
-			search.setSearchCondition("1");	
+
+		if (search.getSearchKeyword() != null) {
+			search.setSearchCondition("1");
 		}
-		
+
 		System.out.println("pagesize " + search.getPageSize());
 		System.out.println("search " + search);
 
 		// Business logic 수행
-		Map<String , Object> map= movieService.getMovieList(search);
-		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);	
-		
-		System.out.println("list show ::"  + map.get("list"));
-		
+		Map<String, Object> map = movieService.getMovieList(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		System.out.println(resultPage);
+
+		System.out.println("list show ::" + map.get("list"));
+
 		String str = "";
 
 		List<Movie> list = (List<Movie>) map.get("list");
@@ -388,76 +382,57 @@ public class MovieRestController {
 				break;
 			case 7:
 				movieObject.put("color", "darkred");
-				break;			
+				break;
 			default:
 				movieObject.put("color", "ivory");
 				break;
-			} 
-	
-        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovieNo()+"&menu=commingsoon");
-		
-        	movieArray.add(i, movieObject);		    
-        	movieObject = new JSONObject();	   	    
+			}
+
+			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovieNo() + "&menu=commingsoon");
+
+			movieArray.add(i, movieObject);
+			movieObject = new JSONObject();
 		}
-            
-       
-		//*
-		//* Domain 객체에서 받아서 Json으로 넣는 방법 
-		//*
-		/*List <MovieOnScheule> movieOnSchedule = movieService.getScreenCalendar(search);	
-		
-        //Movie JsonObject 선언(개별)
-        JSONObject movieObject = new JSONObject();
-        //movie event의 JSON정보를 담을 Array 선언        
-        JSONArray movieArray = new JSONArray();       
-        //monthly 정보가 들어갈 JSONObject 선언
-        JSONObject monthlynfo = new JSONObject();        
-      
-			
-		for (int i = 0; i < movieOnSchedule.size(); i++) {
-		
-			movieObject.put("id", movieOnSchedule.get(i).getId());	
-			movieObject.put("name", movieOnSchedule.get(i).getName());			
-			movieObject.put("startdate", movieOnSchedule.get(i).getStartdate());
-			
-			switch (i) {
-			case 0:
-				movieObject.put("color", "red");
-				break;
-			case 1:
-				movieObject.put("color", "orange");
-				break;
-			case 2:
-				movieObject.put("color", "green");
-				break;
-			case 3:
-				movieObject.put("color", "blue");
-				break;
-			case 4:
-				movieObject.put("color", "purple");
-				break;
-			case 5:
-				movieObject.put("color", "skyblue");
-				break;
-			case 6:
-				movieObject.put("color", "brown");
-				break;
-			case 7:
-				movieObject.put("color", "darkred");
-				break;			
-			default:
-				movieObject.put("color", "ivory");
-				break;
-			} 
-	
-			movieObject.put("url", "getMovie?movieNo="+movieOnSchedule.get(i).getId()+"&menu=commingsoon");
-				
-		    movieArray.add(i, movieObject);
-		    
-		    movieObject = new JSONObject();	
-		}*/
-		
-		System.out.println("movieArray values : " + movieArray.toString() );
+
+		// *
+		// * Domain 객체에서 받아서 Json으로 넣는 방법
+		// *
+		/*
+		 * List <MovieOnScheule> movieOnSchedule =
+		 * movieService.getScreenCalendar(search);
+		 * 
+		 * //Movie JsonObject 선언(개별) JSONObject movieObject = new JSONObject();
+		 * //movie event의 JSON정보를 담을 Array 선언 JSONArray movieArray = new
+		 * JSONArray(); //monthly 정보가 들어갈 JSONObject 선언 JSONObject monthlynfo =
+		 * new JSONObject();
+		 * 
+		 * 
+		 * for (int i = 0; i < movieOnSchedule.size(); i++) {
+		 * 
+		 * movieObject.put("id", movieOnSchedule.get(i).getId());
+		 * movieObject.put("name", movieOnSchedule.get(i).getName());
+		 * movieObject.put("startdate", movieOnSchedule.get(i).getStartdate());
+		 * 
+		 * switch (i) { case 0: movieObject.put("color", "red"); break; case 1:
+		 * movieObject.put("color", "orange"); break; case 2:
+		 * movieObject.put("color", "green"); break; case 3:
+		 * movieObject.put("color", "blue"); break; case 4:
+		 * movieObject.put("color", "purple"); break; case 5:
+		 * movieObject.put("color", "skyblue"); break; case 6:
+		 * movieObject.put("color", "brown"); break; case 7:
+		 * movieObject.put("color", "darkred"); break; default:
+		 * movieObject.put("color", "ivory"); break; }
+		 * 
+		 * movieObject.put("url",
+		 * "getMovie?movieNo="+movieOnSchedule.get(i).getId()+
+		 * "&menu=commingsoon");
+		 * 
+		 * movieArray.add(i, movieObject);
+		 * 
+		 * movieObject = new JSONObject(); }
+		 */
+
+		System.out.println("movieArray values : " + movieArray.toString());
 
 		// *
 		// * Domain 객체에서 받아서 Json으로 넣는 방법
@@ -609,9 +584,9 @@ public class MovieRestController {
 		System.out.println("2. movieNo ==> " + movieNo);
 		System.out.println("movieRestController의 getMovieCommentList :: POST 끝.....");
 		Map<String, Object> map = movieService.getMovieCommentList(search, movieNo);
-		System.out.println("3. map ==> "+ map); 
-		
-		List<MovieComment> list = (List<MovieComment>)map.get("list");
+		System.out.println("3. map ==> " + map);
+
+		List<MovieComment> list = (List<MovieComment>) map.get("list");
 
 		System.out.println("4. list ==> ?" + list);
 		return list;
@@ -733,7 +708,7 @@ public class MovieRestController {
 		}
 
 		pageSize = 12;
-		
+
 		System.out.println("무한스크롤용 위시리스트 유저아이디 : " + userId);
 
 		search.setPageSize(pageSize);
@@ -772,223 +747,294 @@ public class MovieRestController {
 		wishList.setWishNo(Integer.parseInt(wishNo));
 		return movieService.deleteWishList(wishList);
 	}
-	
+
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////안드로이드용///////////////////////////////////
+	////////////////////////////// 안드로이드용///////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////
-	
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/json/androidGetMovieList")
-	public String getMovieList(@ModelAttribute("search") Search search,								
-								  Model model , HttpSession session,
-								  HttpServletRequest request) 
-								  throws Exception{
-		
+	@RequestMapping(value = "/json/androidGetMovieList")
+	public String getMovieList(@ModelAttribute("search") Search search, Model model, HttpSession session,
+			HttpServletRequest request) throws Exception {
+
 		System.out.println("/getMovieList  GET ");
-				
-		if(search.getCurrentPage() ==0 ){			
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
+
 		pageSize = 1000000;
-		
+
 		search.setPageSize(pageSize);
-		
-		User user =  userService.getUser(request.getParameter("userId"));
-		
+
+		User user = userService.getUser(request.getParameter("userId"));
+
 		System.out.println("pagesize " + search.getPageSize());
-		
+
 		System.out.println("search " + search);
-		
+
 		System.out.println("menu :" + request.getParameter("menu"));
-		
-		
-		if(request.getParameter("menu").equals("manage")) {
-			
+
+		if (request.getParameter("menu").equals("manage")) {
+
 			search.setSearchKeyword2("manage");
 			search.setSearchKeyword3("manage");
-			
-		
-			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
+
+			// System.out.println("search.setSearchKeyword2 [[manage]]" +
+			// search.getSearchKeyword2());
 		} else {
 			// 현재 상영 영화인 경우 로직
-			if((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search")))  {
-				
+			if ((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search"))) {
+
 				System.out.println("현재 상영 영화 콜 !!!!");
-				
-				search.setSearchKeyword2("4");				
-				
-				if (search.getSearchKeyword() != null) {				
-					search.setSearchCondition("1");					
+
+				search.setSearchKeyword2("4");
+
+				if (search.getSearchKeyword() != null) {
+					search.setSearchCondition("1");
 				}
 			}
-			
-			// 현재 상영 예정 영화인  경우 로직
-			if(request.getParameter("menu").equals("commingsoon")) {
+
+			// 현재 상영 예정 영화인 경우 로직
+			if (request.getParameter("menu").equals("commingsoon")) {
 				search.setSearchKeyword2("5");
-				
+
 				System.out.println("상영 예정 영화 콜 !!!!");
-				
-				if (search.getSearchKeyword() != null) {				
-					search.setSearchCondition("1");	
+
+				if (search.getSearchKeyword() != null) {
+					search.setSearchCondition("1");
 				}
-			}	
+			}
 		}
-		
-			
+
 		if (user != null) {
 			System.out.println("User not null ....");
-			
-			Map<String,Object> tempMap = new HashMap<String,Object>();		
-			
+
+			Map<String, Object> tempMap = new HashMap<String, Object>();
+
 			tempMap.put("search", search);
 			tempMap.put("user", user);
-			
-			List<WishList> listWish = ((List<WishList>)movieService.getWishList(tempMap).get("listWish"));
-			
-			System.out.println("listWish  length::" + listWish.size()  + "listWish  :: " + listWish);
-		
-			Map<String , Object> map= movieService.getMovieList(search);
-			List<Movie> movieList = (List) map.get("list");	
+
+			List<WishList> listWish = ((List<WishList>) movieService.getWishList(tempMap).get("listWish"));
+
+			System.out.println("listWish  length::" + listWish.size() + "listWish  :: " + listWish);
+
+			Map<String, Object> map = movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");
 			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
-			
-			for (int i = 0 ; i < movieList.size(); i++) {			
-				for (int j = 0; j < listWish.size() ; j++) {				
-						if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
-							movieList.get(i).setWishList(listWish.get(j));
-							System.out.println("movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
-						}
-				  }
+
+			for (int i = 0; i < movieList.size(); i++) {
+				for (int j = 0; j < listWish.size(); j++) {
+					if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
+						movieList.get(i).setWishList(listWish.get(j));
+						System.out.println(
+								"movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
+					}
+				}
 			}
-		
-			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-			System.out.println(resultPage);		
-			
+
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+					pageSize);
+			System.out.println(resultPage);
+
 			System.out.println("search condition :: " + search.getSearchCondition());
-			
+
 			// Model 과 View 연결
 			model.addAttribute("list", map.get("list"));
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			
-			System.out.println("list show ::"  + map.get("list"));
-			
+
+			System.out.println("list show ::" + map.get("list"));
+
 			JSONObject data = null;
 			JSONArray jsonArray = new JSONArray();
 			JSONObject response = new JSONObject();
-			
-			for(int i = 0; i< movieList.size(); i++){
-				 data = new JSONObject();
-				 data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(),"UTF-8"));
-				 data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(),"UTF-8"));
-				 data.put("movieNo", movieList.get(i).getMovieNo());
-				 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
-				 data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(),"UTF-8"));
-				 data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(),"UTF-8"));
-				 data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(),"UTF-8"));
-				 jsonArray.add(data);
+
+			for (int i = 0; i < movieList.size(); i++) {
+				data = new JSONObject();
+				data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(), "UTF-8"));
+				data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(), "UTF-8"));
+				data.put("movieNo", movieList.get(i).getMovieNo());
+				data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(), "UTF-8"));
+				data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(), "UTF-8"));
+				data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(), "UTF-8"));
+				data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(), "UTF-8"));
+				jsonArray.add(data);
 			}
 			response.put("list", jsonArray);
-			
+
 			return response.toJSONString();
-			
+
 		} else {
-			Map<String , Object> map= movieService.getMovieList(search);
-			List<Movie> movieList = (List) map.get("list");	
+			Map<String, Object> map = movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");
 			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
-			
-			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-			System.out.println(resultPage);	
-			
+
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+					pageSize);
+			System.out.println(resultPage);
+
 			System.out.println("search condition :: " + search.getSearchCondition());
-			
+
 			// Model 과 View 연결
 			model.addAttribute("list", map.get("list"));
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			
-			System.out.println("list show ::"  + map.get("list"));
+
+			System.out.println("list show ::" + map.get("list"));
 		}
-		
-		
+
 		// Business logic 수행
-		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
-		// "searchCondtion=7" 은 일반인 검색에  해당됨 		
-		
-		if(request.getParameter("menu").equals("movie")) {
+		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건
+		// "searchCondtion=7" 은 일반인 검색에 해당됨
+
+		if (request.getParameter("menu").equals("movie")) {
 			System.out.println("listMovie.jsp called");
-			//modelAndView.setViewName("/movie/listMovie.jsp"); 
+			// modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/listMovie.jsp";
 			// return modelAndView;
-		}
-		else  if(request.getParameter("menu").equals("manage")) {
+		} else if (request.getParameter("menu").equals("manage")) {
 			System.out.println("listMovieManage.jsp called");
-			//modelAndView.setViewName("/movie/listMovieManage.jsp");
+			// modelAndView.setViewName("/movie/listMovieManage.jsp");
 			return "forward:/movie/listMovieManage.jsp";
-		}
-		else  if(request.getParameter("menu").equals("calendar")) {
+		} else if (request.getParameter("menu").equals("calendar")) {
 			System.out.println("calendar.jsp called");
-			//modelAndView.setViewName("/movie/calendar.jsp");
+			// modelAndView.setViewName("/movie/calendar.jsp");
 			return "forward:/movie/calendar.jsp";
-		}
-		else if (request.getParameter("menu").equals("commingsoon")) {
-			//modelAndView.setViewName("/movie/listCommingSoon.jsp");
+		} else if (request.getParameter("menu").equals("commingsoon")) {
+			// modelAndView.setViewName("/movie/listCommingSoon.jsp");
 			return "forward:/movie/listCommingSoon.jsp";
-		}
-		else if (request.getParameter("menu").equals("preview")) {
+		} else if (request.getParameter("menu").equals("preview")) {
 			System.out.println("????????");
-			//modelAndView.setViewName("/movie/listMoviePreview.jsp");
+			// modelAndView.setViewName("/movie/listMoviePreview.jsp");
 			return "forward:/movie/getPreviewList";
-		}
-		else if (request.getParameter("menu").equals("search")) {
-			//modelAndView.setViewName("/movie/listMovie.jsp");
+		} else if (request.getParameter("menu").equals("search")) {
+			// modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/listMovie.jsp";
-		}
-		else if (request.getParameter("menu").equals("voiceRegniiton")) {
-			//modelAndView.setViewName("/movie/listMovie.jsp");
+		} else if (request.getParameter("menu").equals("voiceRegniiton")) {
+			// modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/speechMovie.jsp";
 		}
-	
+
 		return "forward:/movie/listMovie.jsp";
 	}
 
-	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}")
-	public void searchTrailer(@ModelAttribute("search") Search search, @PathVariable String searchTrailer)		throws Exception {
-		System.out.println("1. search => " + search);
-		System.out.println("2. searchTrailer => " + searchTrailer);
-		
-		String result = movieService2.searchTrailer(searchTrailer);
-			System.out.println("3. result => " + result);
-			
-			ObjectMapper mapper = new ObjectMapper();
-			ObjectNode node = (ObjectNode)mapper.readTree(result);
-			
-			JsonNode arrayNode = node.get("documents").get("title");
-			
-			ArrayList<String> data = mapper.readValue(arrayNode.traverse(), new TypeReference<ArrayList<String>>(){});
-			
-			System.out.println("data    " + data);
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}", method = RequestMethod.GET)
+	public String searchTrailer(@PathVariable("searchTrailer") String searchTrailer) throws Exception {
+		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
+		searchTrailer = new String(searchTrailer.getBytes("8859_1"), "UTF-8");
 
-			
-/*			JSONArray nameArray =(JSONArray)JSONSerializer.toJSON(result);
-			System.out.println(nameArray.size());
-			
-			for(Object js : nameArray){
-				JSONObject json = (JSONObject)js;
-				System.out.println(json.get("title"));
-				}
-		*/
-			
-/*				JSONParser parser = new JSONParser();
-			JSONObject json = (JSONObject) parser.parse(result);	
-			String datetime = json.get("datetime").toString();
-			System.out.println(datetime);*/
-			
-			//	 return result;
+		System.out.println("2. searchTrailer => " + searchTrailer);
+
+		String result = movieService2.searchTrailer(searchTrailer);
+		System.out.println("3. result => " + result);
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+		// JSONObject jObject = (JSONObject)jsonParser.parse(jsonObject);
+		System.out.println("4. jsonObject   -> " + jsonObject);
+		// JSONObject json = (JSONObject)jsonObject.get("documents");
+		JSONArray array = (JSONArray) jsonObject.get("documents");
+		/*
+		 * JSONObject data = null; JSONArray jsonArray = new JSONArray();
+		 * JSONObject response = new JSONObject();
+		 */
+
+		JSONObject data = null;
+		JSONArray jsonArray = new JSONArray();
+		JSONObject response = new JSONObject();
+
+		for (int i = 0; i < array.size(); i++) {
+			data = new JSONObject();
+			JSONObject documents = (JSONObject) array.get(i);
+			String title = documents.get("title").toString();
+			String thumbnail = documents.get("thumbnail").toString();
+			String url = documents.get("url").toString();
+			String author = documents.get("author").toString();
+
+			System.out.println("title   => " + title);
+			System.out.println("thumbnail   => " + thumbnail);
+			System.out.println("url   => " + url);
+			System.out.println("author   => " + author);
+
+			System.out.println("test " + url.indexOf("youtube"));
+			if (url.indexOf("youtube") != -1) {
+
+				url = url.replace("watch?v=", "embed/");
+				System.out.println("url값 확인 " + url);
+				data.put("title", title);
+				data.put("thumbnail", thumbnail);
+				data.put("url", url);
+				jsonArray.add(data);
+			}
+
+		}
+
+		response.put("list", jsonArray);
+
+		System.out.println("?????" + response.toString());
+
+		return response.toString();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/searchPoster/{searchPoster}", method = RequestMethod.GET)
+	public String searchPoster(@PathVariable("searchPoster") String searchPoster) throws Exception {
+		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
+		searchPoster = new String(searchPoster.getBytes("8859_1"), "UTF-8");
+
+		System.out.println("2. searchPoster => " + searchPoster);
+
+		String result = movieService2.searchPoster(searchPoster);
+		System.out.println("3. result => " + result);
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+		System.out.println("4. jsonObject   -> " + jsonObject);
+		JSONArray array = (JSONArray) jsonObject.get("documents");
+
+
+		System.out.println("+++++++++++++++++array + " + array);
+
+		JSONObject data = null;
+		JSONArray jsonArray = new JSONArray();
+		JSONObject response = new JSONObject();
+
+		for (int i = 0; i < array.size(); i++) {
+			data = new JSONObject();
+			JSONObject documents = (JSONObject) array.get(i);
+			String thumbnail_url = documents.get("thumbnail_url").toString();
+			String image_url = documents.get("image_url").toString();
+			int width = Integer.parseInt(documents.get("width").toString());
+			int height = Integer.parseInt(documents.get("height").toString());
+
+			System.out.println("thumbnail_url   => " + thumbnail_url);
+			System.out.println("image_url   => " + image_url);
+			System.out.println("height => " + height);
+			System.out.println("width " + width);
+
+			if (width > 700 && width < height) {
+				data.put("thumbnail_url", thumbnail_url);
+				data.put("image_url", image_url);
+				data.put("width", documents.get("width"));
+				data.put("height", documents.get("height"));
+				jsonArray.add(data);
+			}
+
+		}
+
+		response.put("list", jsonArray);
+
+		System.out.println("?????" + response.toString());
+
+		return response.toString();
+
 	}
 
 }

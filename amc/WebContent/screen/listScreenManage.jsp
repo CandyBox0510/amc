@@ -147,8 +147,8 @@ function fncGetPageList(currentPage) {
             var currentPage = $("#currentPage").val()
       
             currentPage = parseInt(currentPage) - 1
-
-        
+            fncGetPageList(currentPage);
+        	
         });
 
         
@@ -171,7 +171,7 @@ function fncGetPageList(currentPage) {
 
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
-	margin-top: 100px
+	margin-top: 50px
 }
 
 body {
