@@ -39,6 +39,7 @@ import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
+import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieJson;
