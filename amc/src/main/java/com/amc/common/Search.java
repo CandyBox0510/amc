@@ -9,7 +9,38 @@ public class Search {
 	private String searchKeyword;
 	private	String searchKeyword2;
 	private String searchKeyword3;
+	private String searchProdType;
 	
+	public String getSearchProdType() {
+		return searchProdType;
+	}
+
+
+	public void setSearchProdType(String searchProdType) {
+		this.searchProdType = searchProdType;
+	}
+
+
+	public String getOrderCondition() {
+		return orderCondition;
+	}
+
+
+	public void setOrderCondition(String orderCondition) {
+		this.orderCondition = orderCondition;
+	}
+
+
+	public String getOrderOption() {
+		return orderOption;
+	}
+
+
+	public void setOrderOption(String orderOption) {
+		this.orderOption = orderOption;
+	}
+
+
 	public String getSearchKeyword3() {
 		return searchKeyword3;
 	}
@@ -109,11 +140,13 @@ public class Search {
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
 				+ searchKeyword + ", searchKeyword2=" + searchKeyword2 + ", searchKeyword3=" + searchKeyword3
-				+ ", orderCondition=" + orderCondition + ", orderOption=" + orderOption + ", pageSize=" + pageSize
-				+ ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
-				+ ", stockView=" + stockView + "]";
+				+ ", searchProdType=" + searchProdType + ", orderCondition=" + orderCondition + ", orderOption="
+				+ orderOption + ", pageSize=" + pageSize + ", pageUnit=" + pageUnit + ", endRowNum=" + endRowNum
+				+ ", startRowNum=" + startRowNum + ", stockView=" + stockView + "]";
 	}
 
+
+	
 
 	
 	

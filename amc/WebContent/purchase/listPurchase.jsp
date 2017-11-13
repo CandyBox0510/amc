@@ -211,11 +211,14 @@
 		});
 		
 	</script>
-	<style>
-		#body{ padding-top: 100px; }
-		label {
-			display: inline-block;
-			width: 10em;
-		}
-	</style>
+<style>
+#body{ padding-top: 100px; }
+label {
+	display: inline-block;
+	width: 10em;
+}
+html{
+	height: auto;
+}
+</style>
 </html>

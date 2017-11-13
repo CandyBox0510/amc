@@ -84,14 +84,14 @@
 		       						 onclick="location.href='/product/addProduct'">상 품 등 록
 		       					</button>&emsp;
 		       					<button type="button" class="btn btn-primary pull-right"  
-		       						 onclick="location.href='/product/getSnackList?menu=manage&searchKeyword=S'">스낵 상 품 관 리
+		       						 onclick="location.href='/product/getSnackList?menu=manage&searchProdType=S'">스낵 상 품 관 리
 		       					</button>&emsp;
 		       					<button type="button" class="btn btn-primary pull-right" 
-		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchKeyword=G'">굿즈 상 품 관 리
+		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchProdType=G'">굿즈 상 품 관 리
 		       					</button>	
 		      				</c:if> 
 				            	
-<%-- 			            	<div class="col-sm-6 text-right">
+ 			            	<div class="col-sm-6 text-right">
 				                <form id='search-form' method='get' class="search">
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
@@ -100,10 +100,9 @@
 					                    </select>
 				                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
-				                    <input type="text" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				                </form>
 				             </div>
- --%>				             
+ 				             
 				             
 			             </div>
 			        </div>
@@ -121,11 +120,7 @@
 		                    </div> -->
 		              </div>
  
-					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
-					  <i class="close icon"></i>
-					    <div class="content" ></div>
-					</div>  
+
 		
 					 <div class="cinema-wrap">
 		            	<div class="row">
@@ -156,6 +151,12 @@
 						</div>
 		            </div>     
  				</div>
+ 				
+					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
+					<div class="ui thin info modal"> 
+					  <i class="close icon"></i>
+					    <div class="content" ></div>
+					</div>  
  			
  					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
@@ -220,37 +221,41 @@
 	    });
 	});			   
 			   
-	$(document).ready(function() {
-	   
-	    $("button[name='search']").on("click", function() {
-	    	fncGetPageList(1);
-	    });
-	    
-	    $(".pagination__next").on("click", function() {		
-	    	alert("여기들어오니?");
-	    	/* searchKeyword = $("input[name='searchKeyword']").val(); */
-	   
-	        var currentPage = $("#currentPage").val()
-	        alert($("#currentPage").val());
-	        currentPage = parseInt(currentPage)+1
-	        alert(currentPage);
-	        fncGetPageList(currentPage);
-	    });
-	    
-	    $(".pagination__prev").on("click", function() {
-	    	 var currentPage = $("#currentPage").val()
-	         currentPage = parseInt(currentPage)-1
-		   	 
-	        fncGetPageList(currentPage);
-	    });
-	});
-
 	function fncGetPageList(currentPage) {
-	    $("#currentPage").val(currentPage)		  
-	  	alert($("#currentPage").val(currentPage));
-	    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
-	    $("input[name='searchKeyword']").val(searchKeyword);
+
+	    $("#currentPage").val(currentPage)
+	      $("#search-form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchProdType=G").submit();
+	     $("input[name='searchKeyword']").val(searchKeyword); 
 	}
+
+
+	    $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
+	    $(function() {
+	        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	        $("button[name='search']").on("click", function() {
+	            fncGetPageList(1);
+	        });
+
+	        $(".pagination__next").on("click", function() {
+	        	
+	            searchKeyword = $("input[name='searchKeyword']").val(); 
+
+	            var currentPage = $("#currentPage").val()
+	            
+	            currentPage = parseInt(currentPage) + 1
+	          
+	            fncGetPageList(currentPage);
+	        });
+
+	        $(".pagination__prev").on("click", function() {
+	            var currentPage = $("#currentPage").val()
+	      
+	            currentPage = parseInt(currentPage) - 1
+	            
+	            fncGetPageList(currentPage);
+	        	
+	        });
+	    });
 
 </script>
 <style type="text/css">

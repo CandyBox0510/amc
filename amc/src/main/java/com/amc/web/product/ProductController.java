@@ -30,10 +30,10 @@ public class ProductController {
 	
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
-	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
-	@Value("#{commonProperties['pageSize'] ?: 3}")
+	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 
 	@Autowired
@@ -153,7 +153,7 @@ public class ProductController {
 			
 	@RequestMapping(value="getGoodsList")
 	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								@RequestParam("menu") String menu, @RequestParam("searchProdType") String searchProdType,
 								HttpSession session) throws Exception{
 		
 		System.out.println("ProductController의 getGoodsList 메소드 시작");
@@ -166,8 +166,9 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(12);
-		search.setPageUnit(pageUnit);		
+		pageSize = 8;
+		search.setPageSize(pageSize);
+		/*search.setPageUnit(pageUnit);*/		
 		// Business logic 수행
 		Map<String , Object> map=productService.getGoodsList(search);
 		
@@ -186,9 +187,10 @@ public class ProductController {
 	
 	@RequestMapping(value="getSnackList")
 	public String getSnackList( @ModelAttribute("search") Search search , Model model ,
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								@RequestParam("menu") String menu, @RequestParam("searchProdType") String searchProdType,
 								HttpSession session) throws Exception{
 		
+		System.out.println("ProductController의 getSnackList 메소드 시작");
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -198,8 +200,9 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(12);
-		search.setPageUnit(pageUnit);
+		pageSize = 8;
+		search.setPageSize(pageSize);
+		/*search.setPageUnit(pageUnit);*/
 		// Business logic 수행
 		Map<String , Object> map=productService.getSnackList(search);
 		
@@ -207,6 +210,7 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		System.out.println("ProductController의 getSnackList 메소드 끝");
 		
 		return "forward:/product/listSnackProduct.jsp?menu="+menu;
 	}
