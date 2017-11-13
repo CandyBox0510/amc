@@ -41,7 +41,7 @@
 						<div class="field">
 							<div class='col-md-1' id="title">제목</div>
 							<div class='col-md-11'>
-								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" value="${freeBoard.freeBoardTitle}">
+								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" value="${freeBoard.freeBoardTitle}" maxlength="25">
 							</div>
 							<div class='field'>
 								<div class='col-md-12' id="context">
@@ -60,6 +60,8 @@
 						</div>
 						<div>
 							<input type="hidden" name="userId" id="userId" value="${freeBoard.user.userId }">
+							<input type="hidden" name="freeBoardNo" id="freeBoardNo" value="${freeBoard.freeBoardNo }">
+							
 						</div>
 					</div>
 				</form>
@@ -112,7 +114,7 @@
                 extension = extension.toLowerCase();
 
                 if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
-                    alert("?");
+                    
                 } else {
                     alert("업로드가능한 확장자가 아닙니다. 다시 확인해주세요");
                     return;
