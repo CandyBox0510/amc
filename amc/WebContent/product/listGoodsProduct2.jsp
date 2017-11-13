@@ -33,27 +33,36 @@
         <link href="../css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
         <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
+    
         <!-- Custom -->
         <link href="../css/style.css?v=1" rel="stylesheet" />
+
         <!-- Modernizr --> 
         <script src="../js/external/modernizr.custom.js"></script>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+   
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-        <!--   semantic UI  / 모달창-->
+   
+        <!--   semantic UI  -->
         <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-       	<script src="../semantic/semantic.min.js"></script>
-       	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
+        <script src="../semantic/semantic.min.js"></script>
+	
 		<!--아임포트 CDN -->
 		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+	
 
 </head>
 
 <body>
+  <%-- <jsp:include page="/layout/topToolbar.jsp" /> --%>
    <div class="wrapper">
         <!-- Banner -->
          <div class="banner-top">
@@ -67,6 +76,8 @@
 		<input type="hidden" name="menu" value="${param.menu}"/>
 		<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
+		<%-- <input type="text" name="userId" value="${sessionScope.user.role}"/> --%>
+		
 		
 	   	<!-- Main content -->
         <section class="container">
@@ -118,14 +129,8 @@
 		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='name'>name</a></li>
 		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='popularity'>popularity</a></li>
 		                            </ul>
-		                    </div> -->
-		              </div>
- 
-					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
-					  <i class="close icon"></i>
-					    <div class="content" ></div>
-					</div>  
+		                    </div>
+ -->		              </div>
 		
 					 <div class="cinema-wrap">
 		            	<div class="row">
@@ -135,19 +140,21 @@
 		                 
 		                            <div class="col-xs-6 col-sm-3 cinema-item">
 		                                <div class="cinema">
-		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images info-modal-link">
-		                                    <!-- //모달 ui를 클래스에 넣어줌 -->
+		                                    <%-- <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images"> --%>
+		                                    <a href="javascript:fncmodal();" class="cinema__images">
 		                                        <img id="poster"alt='' src="../images/uploadFiles/${product.prodImage }" >
 		                                        <input type="hidden" id="prodNo" value="${product.prodNo}"/>
 		                                    </a>
-		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="movieNm info-modal-link">${product.prodName }</a>
+		                                    <%-- <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="movieNm">${product.prodName }</a> --%>
+		                                    <a href="javascript:fncGetProduct();" class="movieNm">${product.prodName }</a>
 		                                    <p><strong>가격</strong>  ${product.prodPrice }<br/><strong>판매시작일   </strong>${product.salesOpenDate}<br/><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
                                 	        <!-- <div class="col-sm-6"> -->
 							                    <div class="progress">
-								                      <p class="progress__info">현재 재고량 ${product.salesStock}%</p>
+								                      <p class="progress__info">현재 판매달성률 ${product.salesStock}%</p>
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
+								                      <input type="text" value="${product.prodNo}">
 							                    </div><br/><br/><br/>
 							                <!-- </div> -->
 		                             	</div>
@@ -156,6 +163,95 @@
 						</div>
 		            </div>     
  				</div>
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+  <div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Profile Picture
+  </div>
+  <div class="image content">
+    <div class="ui medium image">
+      <img src="/images/amc.png">
+    </div>
+    <div class="description">
+      <div class="ui header">We've auto-chosen a profile image for you.</div>
+
+		
+							<div class="col-xs-8">
+								<dl class="dl-horizontal">
+									<dt>상품명</dt>
+									<dd>${product.prodName}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>총 수량</dt>
+									<dd>${product.totalStock} 개</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>현재 재고수량</dt>
+									<dd>${product.stock} 개</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>판매시작일</dt>
+									<dd>${product.salesOpenDate}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>판매종료일</dt>
+									<dd>${product.salesEndDate}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>가격</dt>
+									<dd>${product.prodPrice} 원</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>상세정보</dt>
+									<dd>${product.prodDetail}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>상품구성정보</dt>
+									<dd>${product.prodSetInfo}</dd>
+								</dl>
+							</div>
+
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+</div>
+		                   		                          		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                   		      
+		                 
+ 			
  			
  					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
@@ -171,9 +267,22 @@
 		</div>
 		
 		<div class="clearfix"></div>
-	</div>
+ 
+ </div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<!-- JavaScript-->
@@ -194,35 +303,62 @@
         <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
         <!-- Swiper slider -->
         <script src="/js/external/idangerous.swiper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
         <!-- Mobile menu -->
         <script src="../js/jquery.mobile.menu.js"></script>
         <!-- Select -->
         <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
+
         <!-- Form element -->
         <script src="../js/external/form-element.js"></script>
         <!-- Form validation -->
         <script src="../js/form.js"></script>
+
         <!-- Custom -->
         <script src="../js/custom.js"></script>
-</body>
+		
+		<script type="text/javascript">
+            $(document).ready(function() { 
+                init_Elements();
+            });
+		</script>
+
 <script type="text/javascript">
 			   
-	$(function () {
-	    $('.info-modal-link').each(function () {
-	        $(this).on('click', function (e) {                   
-	            e.preventDefault();
-	            var url = $(this).attr('href'); 
-	            $.get(url, function (data) {
-	                $('.info.modal .content').html(data);
-	                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
-	            });
-	        });              
-	    });
-	});			   
+	
+	$('#modal').bind('click',function(){
+		fncmodal();
+		/* $('.ui.modal')
+			  .modal('show'); */
+		 
+	});		
+	
+	$('#textModal').bind('click',function(){
+		fncGetProduct();
+		/* $('.ui.modal')
+			  .modal('show'); */
+		 
+	});	
 			   
+	function fncmodal(){
+		$('.ui.modal')
+		  .modal('show');
+	}
+	
+	
+	function fncGetPageList(currentPage) {
+	    $("#currentPage").val(currentPage)		  
+	  	alert($("#currentPage").val(currentPage));
+	    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
+	    $("input[name='searchKeyword']").val(searchKeyword);
+	}
+	
+	
+	
 	$(document).ready(function() {
 	   
 	    $("button[name='search']").on("click", function() {
+	    	
 	    	fncGetPageList(1);
 	    });
 	    
@@ -244,15 +380,52 @@
 	        fncGetPageList(currentPage);
 	    });
 	});
+	
+	
+    function fncGetProduct() { //해당 상품 정보를 가져옴
+    	alert("fncGetProduct");
+        var prodNo = $("input[name='product.prodNo']").val();
+        $.ajax({
+            url : "/product/json/getGoodsProduct/" + prodNo,
+            method : "GET",
+            dataType : "json",
+            headers : {
+                "Accept" : "application/json",
+                "Content-Type" : "application/json"
+            },
+            success : function(JSONData, status) {
+                $(".listData").remove();
+                display = '';
+                result = JSONData;
+                $.each(result, function(idx, val) {
 
-	function fncGetPageList(currentPage) {
-	    $("#currentPage").val(currentPage)		  
-	  	alert($("#currentPage").val(currentPage));
-	    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
-	    $("input[name='searchKeyword']").val(searchKeyword);
-	}
+                    display += '<tr class="row col-md-12 col-sm-12 listData text-center">' + '<td class="col-md-2 col-sm-2">' + val.screenContentNo + '<i class="fa fa-eraser"> </i> <i class="fa fa-times"> </i>' + '<input type="hidden" name="screenContentNo" value="'+val.screenContentNo+'">' + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenDate + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenOpenTime + '-' + val.screenEndTime + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenTheater + '</td>' + '<td class="col-md-1 col-sm-1">' + val.ticketPrice + '</td>' + '<td class="col-md-1 col-sm-1">' + val.previewFlag + '</td>' + '<td class="col-md-2 col-sm-2">'
+                    if (val.previewTitle != null) {
+                        display += val.previewTitle
+                    }
+                    display += '</td>' + '<td class="col-md-2 col-sm-2">'
+                    if (val.previewTitle != null) {
+                        display += val.ticketOpenDate
+                    }
+                    display += '</td>' + '<td class="col-md-1 col-sm-1">'
+                    if (val.previewTitle != null) {
+                        display += val.inviteActor
+                    }
+                    display += '</td>' + '</tr>'
+
+                })
+
+                console.log("display + " + display);
+
+                $(".listTitle").after(display);
+
+            }
+        });
+    }
+
 
 </script>
+
 <style type="text/css">
  	
  	#body{ padding-top: 100px; }
@@ -275,7 +448,9 @@
 		  display: block;
 		  margin-bottom: 5px;
 		  margin-top: 5px;
+		  
 	} 
+	
 	html{
         height: auto;
   	}
@@ -313,29 +488,9 @@ progress {
 
 .progress .progress__info {
   font-weight: bold;
-  margin-bottom: 0px;
+  margin-bottom: 6px;
     margin-top: 0px;
 }
-
-.ui.modal {
-  display: fade in;
-  position: fixed;
-  z-index: 1001;
-  top: 0%;
-  left: 50%;
-  text-align: center;
-  vertical-align: top;
-  background: #000000;
-  border: none;
-  box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2);
-  -webkit-transform-origin: 50% 25%;
-  transform-origin: 50% 25%;
-  border-radius: 0.28571429rem;
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-  will-change: top, left, margin, transform, opacity;
-}
 </style>
+
 </html>
