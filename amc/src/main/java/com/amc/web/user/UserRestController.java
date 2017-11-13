@@ -2,6 +2,7 @@ package com.amc.web.user;
 
 import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.amc.service.user.UserService;
 import com.amc.service.SNSLogin.InstaService;
@@ -119,13 +121,13 @@ public class UserRestController {
 	public User kakaoJsLogin(	@RequestBody User user,
 									HttpSession session ) throws Exception{
 		System.out.println("/user/json/kakaoLogin : POST");
-		System.out.println("::"+user);
+			System.out.println("::"+user);
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if(dbUser==null){
 			System.out.println("널 값이다");
 		}else{
-				session.setAttribute("user", dbUser);
+			session.setAttribute("user", dbUser);
 		}
 		System.out.println("dbUser : " + dbUser);
 		return dbUser;
@@ -180,5 +182,4 @@ public class UserRestController {
 		
 		return userService.addUuid(token, userId);
 	}
-	
 }

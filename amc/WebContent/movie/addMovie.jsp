@@ -457,13 +457,13 @@
                
                 // 컬럼명
                 //  colNames:['영화CD','영화명','제작국가','상영마감','줄거리','트레일러'], 
-                colNames:['영화CD','영화명','제작국가','개봉날짜','줄거리','트레일러'],
+                colNames:['영화명','영화CD','제작국가','개봉날짜','줄거리','트레일러'],
                 // 컬럼 데이터(추가, 삭제, 수정이 가능하게 하려면 autoincrement컬럼을 제외한 모든 컬럼을 editable:true로 지정)
                 // edittyped은 text, password, ... input type명을 사용
                      
                 colModel:[
-                          {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},
-                          {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},                       
+                          {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},   
+                          {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},                                            
    	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},  
    	                  	  {name:'openDt', index:'openDt',align:"left", width:90,sortable:true, editable:true},  
 	                      

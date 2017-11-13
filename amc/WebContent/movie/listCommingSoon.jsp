@@ -39,7 +39,8 @@
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  	 </form>
+				    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+				  	</form>
 				   </div>
 				   		
 				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
@@ -47,7 +48,8 @@
 			        
              		  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				 
+				  <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				  <!-- Login Common PlugIn -->
 				  <jsp:include page="/layout/loginModal.jsp" />   
 				  
@@ -212,8 +214,8 @@
     <script type="text/javascript">
 			    function fncGetPageList(currentPage) {
 			    	
-			    	//alert("222")
-			        $("#currentPage").val(currentPage)
+			    	 
+			        $("#currentPage").val(currentPage);			        
 			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=commingsoon").submit();
 			    }
 			    
@@ -311,14 +313,18 @@
 						// alert("movieNo: " + movieNo); 					
 						// alert("userId: " + userId);  
 						
-				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-					    
-							
 						
 						if(userId == null || userId == ''){
 							alert("로그인 후 이용 가능합니다.");
-							return;
+							exit();
 						}
+						
+						
+						
+				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+					    
+							
+				
 						
 									
 						$.ajax( 
@@ -393,6 +399,34 @@
 	        });
      
 	    });
+	    
+ 		$(".pagination__next").on("click", function() {
+        	
+        	//alert("next")
+        	
+            searchKeyword = $("input[name='searchKeyword']").val();
+
+            var currentPage = $("#currentPage").val()
+            
+            //alert("currentPage :: " + currentPage)          
+  
+            currentPage =  parseInt(currentPage) + 1;
+       
+          
+            fncGetPageList(currentPage);
+        });
+
+        $(".pagination__prev").on("click", function() {
+            var currentPage = $("#currentPage").val()
+      
+            //alert("prev")
+            currentPage = parseInt(currentPage) - 1
+            
+            fncGetPageList(currentPage);
+
+          
+        });
+	    
 
          $(document).ready(function() {
              init_CinemaList();

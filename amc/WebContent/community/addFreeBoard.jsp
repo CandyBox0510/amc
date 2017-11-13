@@ -220,7 +220,7 @@ html {
 	background-color: #ffffff;
 	border: solid 2px #dbdee1;
 	font-size: 13px;
-	color: #b4b1b2;
+	color: #4c4145;
 }
 
 #addButton {

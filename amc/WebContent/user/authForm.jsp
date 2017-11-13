@@ -83,7 +83,7 @@
 									<a href="javascript:loginWithKakao()" ><img src="../images/user/kakao_account.png" class="img-rounded" width="40%"></a>
 								</div>
 								<div class="col-md-6" >
-									<a href="/user/json/start"><img src="../images/user/naver.account.PNG" class="img-rounded" width="50%"></a>
+									<a href="/sns/naver"><img src="../images/user/naver.account.PNG" class="img-rounded" width="200px"></a>
 								</div>
 								<!-- <div class="col-md-4">
 									<a href="/user/kakaoGetCode" ><img src="../images/user/google_account.png" class="img-rounded" width="70%"></a>
@@ -131,7 +131,7 @@
 		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="Phone number last">
 		    		</div>
 				        	<div class="box btn">
-				            	<button type="button" class="btn join">
+				            	<button type="button" class="btn join" id="sendCode">
 				                	<i class="fa fa-envelope"></i>
 				               	 		인증코드발송
 				            	</button>
@@ -143,11 +143,12 @@
 		      			<input type="text" class="form__name" id="AUTH" name="AUTH">
 		    		</div>
 				        	<div class="box btn">
-				            	<button type="button" class="btn join">
+				            	<button type="button" class="btn join" id="codeCheck">
 				                	<i class="fa fa-envelope"></i>
 				               	 		인증 확인
 				            	</button>
 				        	</div> 
+				        	<input type="hidden" value="${serialNo}" name="code" id="CODE">
 		    	</fieldset>
 		    	<br/><br/><br/>
 		    	
@@ -187,6 +188,7 @@
 </body>
 	<script type="text/javascript">
  		var check = false;
+ 		
 		function fncCheckUser() {
 			// Form 유효성 검증
 			var id=$('#email').val();
@@ -203,7 +205,6 @@
 	
 		//============= "인증메일발송"  Event 연결 =============
  		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.join" ).on("click" , function() {
 				fncCheckUser();
 			});
@@ -219,6 +220,48 @@
 			alert("메일을 성공적으로 보냈습니다.");
 			$("#contact-info").attr("method" , "POST").attr("action" , "/user/auth").submit();
 		}
+	
+		//============= "인증Code발송"  Event 연결 =============
+		 $(function() {
+			$( "#sendCode" ).on("click" , function() {
+				alert("여긴 왜안들어와 갑자기");
+				fncSendCode();
+			});
+		});	
+		
+		function fncSendCode() {
+			alert("Code를 성공적으로 보냈습니다.");
+			var ran= Math.floor(Math.random() * 100000) + 1;
+			var phone=$('#phone1').val()+$('#phone2').val()+$('#phone3').val();
+			console.log(ran);
+			console.log(phone);
+			
+			$(self.location).attr("href","/alarm/codePush/userCertification?serialNo="+ran+"&alarmSeatNo="+phone); 
+		}
+		
+		//============= "인증Code발송"  Event 연결 =============
+		 $(function() {
+			$( "#codeCheck" ).on("click" , function() {
+				fnccodeCheck();
+			});
+		});	
+		
+		function fnccodeCheck() {
+			alert(".");
+			
+			var code=$('#AUTH').val();
+			var codeCheck=$('#CODE').val();
+			
+			console.log(code);
+			alert(codeCheck);
+
+			if(code == codeCheck){
+				$(self.location).attr("href","/user/addUser.jsp");
+			}else{
+				alert("인증번호를 잘못 입력하셨습니다.");
+			}
+		}
+		
  		
 		//==>""이메일" 유효성Check / ID중복확인" Event 처리 및 연결
 		$(function(){					
@@ -287,10 +330,9 @@
 										/* password : pw */
 									}),
 			                      	success : function(JSONData, status) {
-			                      		alert("성공");
 			                       		if(JSONData.user == null ) {
 			                       			alert("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
-			                       			$(self.location).attr("href","/user/addUser?email="+userId);                 
+			                       			$(self.location).attr("href","/user/addUser?email="+userId+"&snslogin=kakao");                 
 			                         	}else if(JSONData.user != ''){
 			                         		alert("반갑습니다.");  
 			                       			$(self.location).attr("href","/user/loginUser");
@@ -309,12 +351,13 @@
 			   	}
 		  	});
 		}
-
 	</script>	
 	
 <style type="text/css">
  	#body{ padding-top: 100px; }
- 	
+	html{
+       height: auto;
+ 	}
  .form .form__name {
 	  margin-bottom: 10px;
 	  width: 100%;

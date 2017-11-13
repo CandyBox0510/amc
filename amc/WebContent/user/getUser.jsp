@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 
@@ -69,60 +70,66 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
    		</header>
 		<div class="container" id="body">
-			<div class="page-header">
-	       		<h3 class=" text-info">회원정보조회</h3>
+			<div class="col-sm-12">
+	       		<h2 class="page-heading">회원정보조회</h2>
 	       		<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-		    </div>
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
-				<div class="col-xs-8 col-md-4">${user.userId}</div>
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-				<div class="col-xs-8 col-md-4">${user.userName}</div>
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>성별</strong></div>
-				<div class="col-xs-8 col-md-4">${user.gender}</div> 
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
-				<div class="col-xs-8 col-md-4">${user.addr}</div>
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>상세주소</strong></div>
-				<div class="col-xs-8 col-md-4">${user.addrDetail}</div>
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-				<div class="col-xs-8 col-md-4">${ !empty user.phone1 ? user.phone1 : ''}&emsp;
-					${ !empty user.phone2 ? user.phone2 : ''}&emsp;${ !empty user.phone3 ? user.phone3 : ''}
+		    
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
+					<div class="col-xs-8 col-md-4">${user.userId}</div>
 				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
+					<div class="col-xs-8 col-md-4">${user.userName}</div>
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>성별</strong></div>
+					<div class="col-xs-8 col-md-4">${user.gender}</div> 
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
+					<div class="col-xs-8 col-md-4">${user.addr}</div>
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>상세주소</strong></div>
+					<div class="col-xs-8 col-md-4">${user.addrDetail}</div>
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
+					<div class="col-xs-8 col-md-4">${ !empty user.phone1 ? user.phone1 : ''}&emsp;
+						${ !empty user.phone2 ? user.phone2 : ''}&emsp;${ !empty user.phone3 ? user.phone3 : ''}
+					</div>
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
+					<div class="col-xs-8 col-md-4">${user.userRegDate}</div>
+				</div>
+				<hr/>
+				
+				<div class="row">
+			  		<div class="col-md-12 text-center ">
+			  			<button id="update" class="btn pull-center" type="button" class="btn btn-primary">회원정보수정</button>
+			  			
+			  			<c:if test="${sessionScope.user.role eq 'admin'}">
+			  				<button id="back" class="btn pull-center" type="button" class="btn btn-primary">목록으로</button>
+			  			</c:if>
+			  			
+			  			<button id="delete" class="btn pull-right" type="button" class="btn btn-primary">회원탈퇴</button>
+					</div><br/>
+		 		</div>
 			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-				<div class="col-xs-8 col-md-4">${user.userRegDate}</div>
-			</div>
-			<hr/>
-			
-			<div class="row">
-		  		<div class="col-md-12 text-center ">
-		  			<button id="update" class="btn pull-center" type="button" class="btn btn-primary">회원정보수정</button>
-		  			<button id="delete" class="btn pull-right" type="button" class="btn btn-primary">회원탈퇴</button>
-				</div><br/>
-	 		</div>
 		</div>
 	</div>
 	
@@ -179,13 +186,14 @@
 					  cancelButtonColor: '#d33',
 					  confirmButtonText: 'YES'
 					}).then(function () {
-					  swal({	   
+					  /* swal({	   
 						  type: 'success',
 						  title: '회원탈퇴 페이지로 이동합니다.',
 						  showConfirmButton: false,
 						  timer: 1000
-						})
-						delay()
+						}) */
+						self.location = "/user/deleteUser";
+						/* delay() */
 					})
 
 			 });
@@ -205,6 +213,12 @@
 				self.location = "/user/deleteUser";
 			},1500) 
 		}
+		
+		$(function(){
+			$("#back").bind('click',function(){
+				history.back();
+			});
+		});
 		
 	</script>
 	<style type="text/css">

@@ -323,7 +323,7 @@
 						console.log(JSONData.userId);
 						
 						if( JSONData.role == 'not' ){
-							alert("탈퇴한회원입니다.");
+							alert("탈퇴한 회원은 30일 후 재가입이 가능합니다.");
 						}else if( JSONData.userId ==null || JSONData=='' ){
 						//$(window.parent.document.location).attr("href","/index.jsp");
 						//$(self.location).attr("href","/index.jsp");  
@@ -339,7 +339,6 @@
 		 } 
 		//============= 카카오 로그인 =============
 		function loginWithKakao() {
-			alert("일로는 들어와?");
 			Kakao.init('fc5658887af25f840e94144f6722b228');
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
@@ -360,7 +359,7 @@
 			                   		/* url : "/user/json/loginUser/"+tempId, */
 			                   		url : "/user/json/kakaoLogin", 
 			                      	method : "POST",
-			                      	dataType : "json",
+			                      	/* dataType : "json", */
 			                      	headers : {
 			                       		"Accept" : "application/json",
 			                       		"Content-Type" : "application/json"
@@ -370,14 +369,14 @@
 										/* password : pw */
 									}),
 
-			                      	success : function(JSONData, status) {     
+			                      	success : function(JSONData, status) {    
+			                      		/* alert(JSONData.user.userId); */
 			                       		if(JSONData.user == null ) {
-			                       			alert(JSONData);
-			                       			alert("반갑습네다.");
-			                       			location.reload();                 
-			                         	}else if(JSONData.user == ''){
-			                         		alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");  
-			                       			$(self.location).attr("href","/user/addUser");
+			                       			alert("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
+			                       			$(self.location).attr("href","/user/addUser?email="+userId+"&snslogin=kakao");                 
+			                         	}else if(JSONData.user != ''){
+			                         		alert("반갑습니다.");  
+			                       			$(self.location).attr("href","/user/loginUser");
 			
 			                       	  		location.reload();
 			                         	}else{
