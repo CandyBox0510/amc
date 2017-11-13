@@ -59,6 +59,13 @@ public class ScreenServiceImpl implements ScreenService {
 
 		return map;
 	}
+	
+	@Override
+	public Map<String,Object> getWishList(Map<String,Object> map) {
+		
+		System.out.println("777777777777777777");
+		return screenDAO.getWishList(map);
+	}
 
 
 	@Override

@@ -135,6 +135,8 @@ function fncGetPageList(currentPage) {
 
         $(".pagination__next").on("click", function() {
         	
+        	alert("next")
+        	
             searchKeyword = $("input[name='searchKeyword']").val();
 
             var currentPage = $("#currentPage").val()
@@ -147,7 +149,10 @@ function fncGetPageList(currentPage) {
         $(".pagination__prev").on("click", function() {
             var currentPage = $("#currentPage").val()
       
+            alert("prev")
             currentPage = parseInt(currentPage) - 1
+            
+            fncGetPageList(currentPage);
 
           
         });
