@@ -336,7 +336,10 @@ public class MovieRestController {
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(pageSize);
+		
+		
+		//search.setPageSize(pageSize);
+		search.setPageSize(20);
 
 		search.setSearchKeyword2("5");
 
@@ -354,13 +357,17 @@ public class MovieRestController {
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
+		
 		System.out.println(resultPage);
 
 		System.out.println("list show ::" + map.get("list"));
 
 		String str = "";
 
-		List<Movie> list = (List<Movie>) map.get("list");
+		List<Movie> list2 = (List<Movie>) map.get("list");
+		
+		System.out.println("MoiveCommingSoon list size  ::" + list2.size());
+		
 
 		// Movie JsonObject 선언(개별)
 		JSONObject movieObject = new JSONObject();
@@ -368,11 +375,13 @@ public class MovieRestController {
 		JSONArray movieArray = new JSONArray();
 		// monthly 정보가 들어갈 JSONObject 선언
 		JSONObject monthlynfo = new JSONObject();
+		
+	
 
-		for (int i = 0; i < list.size(); i++) {
-			movieObject.put("id", list.get(i).getMovieNo());
-			movieObject.put("name", list.get(i).getMovieNm());
-			movieObject.put("startdate", list.get(i).getOpenDt());
+		for (int i = 0; i < list2.size(); i++) {
+			movieObject.put("id", list2.get(i).getMovieNo());
+			movieObject.put("name", list2.get(i).getMovieNm());
+			movieObject.put("startdate", list2.get(i).getOpenDt());
 
 			switch (i) {
 			case 0:
@@ -399,12 +408,36 @@ public class MovieRestController {
 			case 7:
 				movieObject.put("color", "darkred");
 				break;
+			case 8:
+				movieObject.put("color", "#F1948A");
+				break;
+			case 9:
+				movieObject.put("color", "#82E0AA");
+				break;
+			case 10:
+				movieObject.put("color", "#D2B4DE");
+				break;
+			case 11:
+				movieObject.put("color", "#BB8FCE");
+				break;
+			case 12:
+				movieObject.put("color", "#D1F2EB");
+				break;
+			case 13:
+				movieObject.put("color", "#CB4335");
+				break;
+			case 14:
+				movieObject.put("color", "#76D7C4");
+				break;
+			case 15:
+				movieObject.put("color", "#34495E");
+				break;
 			default:
 				movieObject.put("color", "ivory");
 				break;
 			}
 
-			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovieNo() + "&menu=commingsoon");
+			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=commingsoon");
 
 			movieArray.add(i, movieObject);
 			movieObject = new JSONObject();
@@ -655,7 +688,7 @@ public class MovieRestController {
 				break;
 			} 
 	
-        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovie().getMovieNo()+"&menu=movie");
+        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovie().getMovieNo()+"&menu=preview");
 		
         	screenContentArray.add(i, movieObject);		    
         	movieObject = new JSONObject();	   	    
@@ -1160,4 +1193,120 @@ public class MovieRestController {
 			//	 return result;
 	}*/
 
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}", method = RequestMethod.GET)
+	public String searchTrailer(@PathVariable("searchTrailer") String searchTrailer) throws Exception {
+		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
+		searchTrailer = new String(searchTrailer.getBytes("8859_1"), "UTF-8");
+
+		System.out.println("2. searchTrailer => " + searchTrailer);
+
+		String result = movieService2.searchTrailer(searchTrailer);
+		System.out.println("3. result => " + result);
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+		// JSONObject jObject = (JSONObject)jsonParser.parse(jsonObject);
+		System.out.println("4. jsonObject   -> " + jsonObject);
+		// JSONObject json = (JSONObject)jsonObject.get("documents");
+		JSONArray array = (JSONArray) jsonObject.get("documents");
+		/*
+		 * JSONObject data = null; JSONArray jsonArray = new JSONArray();
+		 * JSONObject response = new JSONObject();
+		 */
+
+		JSONObject data = null;
+		JSONArray jsonArray = new JSONArray();
+		JSONObject response = new JSONObject();
+
+		for (int i = 0; i < array.size(); i++) {
+			data = new JSONObject();
+			JSONObject documents = (JSONObject) array.get(i);
+			String title = documents.get("title").toString();
+			String thumbnail = documents.get("thumbnail").toString();
+			String url = documents.get("url").toString();
+			String author = documents.get("author").toString();
+
+			System.out.println("title   => " + title);
+			System.out.println("thumbnail   => " + thumbnail);
+			System.out.println("url   => " + url);
+			System.out.println("author   => " + author);
+
+			System.out.println("test " + url.indexOf("youtube"));
+			if (url.indexOf("youtube") != -1) {
+
+				url = url.replace("watch?v=", "embed/");
+				System.out.println("url값 확인 " + url);
+				data.put("title", title);
+				data.put("thumbnail", thumbnail);
+				data.put("url", url);
+				jsonArray.add(data);
+			}
+
+		}
+
+		response.put("list", jsonArray);
+
+		System.out.println("?????" + response.toString());
+
+		return response.toString();
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/searchPoster/{searchPoster}", method = RequestMethod.GET)
+	public String searchPoster(@PathVariable("searchPoster") String searchPoster) throws Exception {
+		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
+		searchPoster = new String(searchPoster.getBytes("8859_1"), "UTF-8");
+
+		System.out.println("2. searchPoster => " + searchPoster);
+
+		String result = movieService2.searchPoster(searchPoster);
+		System.out.println("3. result => " + result);
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+		System.out.println("4. jsonObject   -> " + jsonObject);
+		JSONArray array = (JSONArray) jsonObject.get("documents");
+
+
+		System.out.println("+++++++++++++++++array + " + array);
+
+		JSONObject data = null;
+		JSONArray jsonArray = new JSONArray();
+		JSONObject response = new JSONObject();
+
+		for (int i = 0; i < array.size(); i++) {
+			data = new JSONObject();
+			JSONObject documents = (JSONObject) array.get(i);
+			String thumbnail_url = documents.get("thumbnail_url").toString();
+			String image_url = documents.get("image_url").toString();
+			int width = Integer.parseInt(documents.get("width").toString());
+			int height = Integer.parseInt(documents.get("height").toString());
+
+			System.out.println("thumbnail_url   => " + thumbnail_url);
+			System.out.println("image_url   => " + image_url);
+			System.out.println("height => " + height);
+			System.out.println("width " + width);
+
+			if (width > 700 && width < height) {
+				data.put("thumbnail_url", thumbnail_url);
+				data.put("image_url", image_url);
+				data.put("width", documents.get("width"));
+				data.put("height", documents.get("height"));
+				jsonArray.add(data);
+			}
+
+		}
+
+		response.put("list", jsonArray);
+
+		System.out.println("?????" + response.toString());
+
+		return response.toString();
+
+	}
+
+	
+	
 }
