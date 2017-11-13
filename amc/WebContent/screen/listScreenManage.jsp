@@ -135,7 +135,7 @@ function fncGetPageList(currentPage) {
 
         $(".pagination__next").on("click", function() {
         	
-        	alert("next")
+        	
         	
             searchKeyword = $("input[name='searchKeyword']").val();
 
@@ -149,7 +149,7 @@ function fncGetPageList(currentPage) {
         $(".pagination__prev").on("click", function() {
             var currentPage = $("#currentPage").val()
       
-            alert("prev")
+
             currentPage = parseInt(currentPage) - 1
             
             fncGetPageList(currentPage);
@@ -194,23 +194,6 @@ body {
 .search {
 	margin-right: 30px;
 }
-
-.movieNm {
-	font-size: 16px;
-	font-weight: bold;
-	display: block;
-	margin-bottom: 5px;
-	margin-top: 5px;
-}
-
-#poster {
-	height: calc(50vh - 100px);
-	width: auto;
-	height: 260px;
-	margin-left: auto;
-	margin-right: auto;
-	display: table;
-}
 .page-heading {
 	margin-top: 100px
 }
@@ -242,6 +225,23 @@ input, select {
 select {
 	font-family: 'Jeju Gothic', sans-serif;
 }
+.movieNm {
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+#poster {
+	height: calc(50vh - 100px);
+	width: auto;
+	height: 260px;
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+}
+
 
 option {
 	  width: 140px;

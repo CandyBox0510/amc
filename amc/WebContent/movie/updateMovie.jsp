@@ -364,17 +364,12 @@
         });
 
         $(document).on('click', '.getPoster', function() {
-        	
-        	
-            image_url = $(".imageUrl", $(this)).val();
-           
-            
-            $("#postUrlCheck").val(image_url); 
-            
-       
-            
-            console.log(image_url);
 
+            image_url = $(".imageUrl", $(this)).val();
+
+            $("#postUrlCheck").val(image_url); 
+
+            console.log(image_url);
             $(".poster").removeAttr("src");
             $(".poster").attr("src", image_url);
             $(".searchPosterModal").modal('hide');
@@ -396,10 +391,11 @@
 
         $(document).on('click', '.searchPoster', function() {
 
-            searchPoster = movieNm;
+            
 
 
             $(".searchPosterModal").modal('show');
+            searchPoster = movieNm;
             searchPoster = encodeURIComponent(searchPoster);
 
             searchPosterResult();
@@ -410,7 +406,8 @@
             searchPoster = $("input[name='searchPoster']").val();
             searchPoster = encodeURIComponent(searchPoster);
 
-            searchPosterResult();
+            
+    searchPosterResult();
         })
 
         $(".searchPosterModal").modal({

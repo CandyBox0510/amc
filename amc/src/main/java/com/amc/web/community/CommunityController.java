@@ -1,11 +1,9 @@
 package com.amc.web.community;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,15 +63,23 @@ public class CommunityController {
 		System.out.println("rootPath => " + rootPath);
 		String attachPath = "images/community/";
 		String fileName = imageFile.getOriginalFilename();
+		// String date = new Date().toString();
+		// System.out.println("date == > " + date);
 
 		fileName = URLEncoder.encode(fileName, "EUC-KR");
 		// fileName= new String(fileName.getBytes(), "iso_8859_1");
 
 		System.out.println("???>>>>>>>>" + fileName.indexOf("%"));
+		long date = new Date().getTime();
+
+		String time = String.valueOf(date);
+		System.out.println("time === > " + time);
 
 		if (fileName.indexOf("%") != -1) {
 			fileName = fileName.replaceAll("%", "");
 		}
+
+		fileName = time + fileName ;
 		File file = new File(rootPath + attachPath + fileName);
 		System.out.println("fileName===> " + fileName);
 
@@ -145,10 +150,16 @@ public class CommunityController {
 		// fileName= new String(fileName.getBytes(), "iso_8859_1");
 
 		System.out.println("???>>>>>>>>" + fileName.indexOf("%"));
+		long date = new Date().getTime();
+
+		String time = String.valueOf(date);
+		System.out.println("time === > " + time);
 
 		if (fileName.indexOf("%") != -1) {
 			fileName = fileName.replaceAll("%", "");
 		}
+
+		fileName = time + fileName ;
 		File file = new File(rootPath + attachPath + fileName);
 		System.out.println("fileName===> " + fileName);
 
@@ -157,8 +168,6 @@ public class CommunityController {
 		if (!(imageFile.isEmpty())) {
 			imageFile.transferTo(file);
 			freeBoard.setFreeBoardImage(fileName);
-		} else {
-			freeBoard.setFreeBoardImage("");
 		}
 
 		/*

@@ -77,8 +77,8 @@
 					</div>
 
 					<div class="freeBoardTable hidden-xs">
-						<table class="freeBoardField">
-							<tr class="col-md-12 col-sm-12  freeBoardField ">
+						<table>
+							<tr class="col-md-12 col-sm-12 freeBoardField">
 								<td class="col-md-1 col-sm-1 text-center">번호</td>
 								<td class="col-md-6 col-sm-6">제목</td>
 								<td class="col-md-2 col-sm-2 text-center">글쓴이</td>
@@ -282,11 +282,17 @@ border : solid 0.5px #4c4145;
 .freeBoardField, .freeBoardFieldXS {
 	font-size: 14px;
 	font-weight: bold;
-	height: 100%;
+	height: 150%;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #FFFFFF;
 	background-color: #4C4145;
+}
+
+.freeBoardField td {
+	height: 100%;
+	padding-top : 8px;
+	padding-bottom : 10px;
 }
 
 .freeBoardFieldXS div {
