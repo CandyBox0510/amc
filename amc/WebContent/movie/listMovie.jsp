@@ -79,7 +79,7 @@
 	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
 	                                    <p >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>개봉일 :${movie.openDt } </strong> </p>
-	                                    
+	                                   
 	                    	    <div style="text-align: left;">
     						    
     						    </div>								
@@ -99,7 +99,7 @@
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -404,6 +404,14 @@
 								var movieNo = $(this).find('#scMovieNo').val();		
 								var userId = $(this).find('#userId').val();			
 								
+								
+								if(userId == null || userId == ''){
+									alert("로그인 후 이용 가능합니다.");
+									exit();
+								}
+								
+								
+								
 								// alert("movieNo: " + movieNo); 					
 								// alert("userId: " + userId); 
 								
@@ -411,10 +419,7 @@
 							    
 									
 								
-								if(userId == null || userId == ''){
-									alert("로그인 후 이용 가능합니다.");
-									return;
-								}
+							
 								
 											
 								$.ajax( 

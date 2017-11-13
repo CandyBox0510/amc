@@ -96,6 +96,7 @@ public class MovieController {
 			search.setSearchKeyword2("manage");
 			search.setSearchKeyword3("manage");
 			
+			System.out.println("111111111111");
 		
 			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
 		} else {
@@ -120,10 +121,23 @@ public class MovieController {
 				if (search.getSearchKeyword() != null) {				
 					search.setSearchCondition("1");	
 				}
-			}	
+			}
+			
+			System.out.println("2222222222222");
+			// 시사회 영화인  경우 로직
+			if(request.getParameter("menu").equals("preview")) {
+				search.setSearchKeyword2("5");
+				
+				System.out.println("시사회 영화 콜 !!!!");
+				
+				if (search.getSearchKeyword() != null) {				
+					search.setSearchCondition("1");	
+				}
+			}
+			
 		}
 		
-			
+		System.out.println("333333333333333");	
 		if (user != null) {
 			System.out.println("User not null ....");
 			
@@ -163,6 +177,9 @@ public class MovieController {
 			System.out.println("list show ::"  + map.get("list"));
 			
 		} else {
+			
+			System.out.println("44444444444444");
+			
 			Map<String , Object> map= movieService.getMovieList(search);
 			List<Movie> movieList = (List) map.get("list");	
 			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
@@ -180,6 +197,11 @@ public class MovieController {
 			System.out.println("list show ::"  + map.get("list"));
 		}
 		
+		System.out.println("menu"  + request.getParameter("menu"));
+		
+		System.out.println("555555555555555");
+		
+	
 		
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
@@ -200,6 +222,11 @@ public class MovieController {
 			System.out.println("calendar.jsp called");
 			//modelAndView.setViewName("/movie/calendar.jsp");
 			return "forward:/movie/calendar.jsp";
+		}
+		else  if(request.getParameter("menu").equals("calendar_preview")) {
+			System.out.println("calendar_preview.jsp called");
+			//modelAndView.setViewName("/movie/calendar.jsp");
+			return "forward:/movie/calendar_preview.jsp";
 		}
 		else if (request.getParameter("menu").equals("commingsoon")) {
 			//modelAndView.setViewName("/movie/listCommingSoon.jsp");
@@ -311,6 +338,8 @@ public class MovieController {
 			
 			
 		} else {
+			System.out.println("menu ====> " +menu);
+			model.addAttribute("menu", menu);
 			System.out.println(movie + "겟무비액션");
 			// modelAndView.setViewName("/movie/getMovie.jsp");
 
@@ -555,7 +584,8 @@ public class MovieController {
 	//프리뷰 리스트 10/30 추가
 	
 	@RequestMapping(value = "getPreviewList")
-	public String getPreviewList(@ModelAttribute("search") Search search, Model model) throws Exception {
+	public String getPreviewList(@ModelAttribute("search") Search search, 
+								 HttpSession session, Model model) throws Exception {
 		System.out.println("/movie/getPreviewList :: ");
 
 		if (search.getCurrentPage() == 0) {
@@ -563,29 +593,76 @@ public class MovieController {
 		}
 
 		search.setPageSize(pageSize);
+		User user = (User)session.getAttribute("user");		
 
 		System.out.println("search값 확인" + search);
+		
+		if (user != null) {
+			System.out.println("User not null ....");
+			
+			Map<String,Object> tempMap = new HashMap<String,Object>();		
+			
+			tempMap.put("search", search);
+			tempMap.put("user", user);
+			
+			System.out.println("66666666666");
+			Map<String, Object> map2 = screenService.getWishList(tempMap);	
+			List<WishList> listWish = ((List<WishList>)screenService.getWishList(tempMap).get("listWish"));
+			
+			System.out.println("screen listWish  length::" + listWish.size()  + "screen listWish  :: " + listWish);
+		
+			Map<String , Object> map= screenService.getPreviewList(search);
+			List<ScreenContent> screenContentList = (List) map.get("list");	
+			System.out.println("screenContentList length::" + screenContentList.size() + "screenContentList :: " + screenContentList);
+			
+			for (int i = 0 ; i < screenContentList.size(); i++) {			
+				for (int j = 0; j < listWish.size() ; j++) {				
+						if (screenContentList.get(i).getMovie().getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
+							
+							screenContentList.get(i).getMovie().setWishList(listWish.get(j));
+							
+							System.out.println("screenContentList wishList exists (WishNo) :" + screenContentList.get(i).getMovie().getWishList().getWishNo());
+						}
+						
+				  }
+			}
+		
+			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);		
+			
+			System.out.println("search condition :: " + search.getSearchCondition());
+			
+			// Model 과 View 연결
+			model.addAttribute("list", map.get("list"));
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			
+			System.out.println("screenContentList show ::"  + map.get("list"));
+			
+		} else {
+	
+			Map<String, Object> map = screenService.getPreviewList(search);
+			
+			Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
+			
+			model.addAttribute("search",map.get("search"));
+			model.addAttribute("list",map.get("list"));
+			model.addAttribute("resultPage", resultPage);
 
-		Map<String, Object> map = screenService.getPreviewList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
-		
-		model.addAttribute("search",map.get("search"));
-		model.addAttribute("list",map.get("list"));
-		model.addAttribute("resultPage", resultPage);
+			System.out.println("search" + map.get("search"));
+			System.out.println("list" + map.get("list"));
+			System.out.println("totalCount" + map.get("totalCount"));
+			System.out.println("resultPage" + resultPage);
 
-		System.out.println("search" + map.get("search"));
-		System.out.println("list" + map.get("list"));
-		System.out.println("totalCount" + map.get("totalCount"));
-		System.out.println("resultPage" + resultPage);
+			System.out.println("/movie/getPreviewList ::  끝");
+			
+			
+			return "forward:/movie/listMoviePreview.jsp";
+		}
 
-		System.out.println("/movie/getPreviewList ::  끝");
-		
-		
 		return "forward:/movie/listMoviePreview.jsp";
-	};
-	
-	
+	}
+
 	
 	
 	

@@ -59,4 +59,12 @@ public class CinemaController {
 		
 		return "forward:/index.jsp";
 	}
+	
+	@RequestMapping(value="completePay", method=RequestMethod.GET)
+	public String completePay(Model model,@RequestParam("impUid")String impUid) throws Exception{
+		
+		model.addAttribute("impUid",impUid);
+		
+		return "forward:/cinema/completePay.jsp";
+	}
 }

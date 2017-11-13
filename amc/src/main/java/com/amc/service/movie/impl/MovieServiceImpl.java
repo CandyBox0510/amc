@@ -629,6 +629,12 @@ public class MovieServiceImpl implements MovieService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String searchPoster(String searchPoster) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }
