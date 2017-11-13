@@ -16,13 +16,15 @@ import com.amc.service.domain.User;
 
 public interface BookingService {
 	
-	public List<Movie> getScreenMovieList(); //다시확인하기
+	public List<Movie> getScreenMovieList(); 
 	
-	public List<ScreenContent> getPreviewList();   //다시확인하기
+	public List<ScreenContent> getPreviewList();   
 	
 	public List<String> getScreenDateList(List<ScreenContent> list, HttpSession session);
 	
 	public List<ScreenContent> getScreenTimeList(String screenDate, HttpSession session);
+	
+	public List<ScreenContent> androidScreenTimeList(String screenDate, HttpSession session, List<ScreenContent> list); 
 	
 	public void addBooking(Booking booking);
 	

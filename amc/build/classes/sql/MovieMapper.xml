@@ -355,22 +355,22 @@
 	</select>
 	
 	<!-- 예나 사용 sql 생성/ 영화예매 1단계용 -->
-	<!-- <select id="screenMovieList" parameterType="search" resultMap="movieSelectMap">
-		SELECT m.movie_no, m.movie_title
+	 <select id="screenMovieList" parameterType="search" resultMap="movieSelectMap">
+		SELECT m.movie_no, m.movie_title, m.rating, m.genre, m.movie_opendate 
 		FROM   movie m, screencontent s
 		WHERE
 			s.preview_flag = 'N'
 			AND m.movie_no = s.movie_no
 			AND s.screen_opentime <![CDATA[>=]]> SYSDATE
 		ORDER BY m.movie_no DESC
-	</select> -->
+	</select> 
 	
-	<!--  상영등록 안되서 temporary로 만든거. 지우기 -->
+	<!--  상영등록이 되어 있지않을때 사용, temporary mapper
 	<select id="screenMovieList" parameterType="search" resultMap="movieSelectMap">
 		SELECT m.movie_no, m.movie_title
 		FROM   movie m
 		ORDER BY m.movie_no DESC
-	</select>
+	</select>-->
 	
 	
 	
