@@ -11,8 +11,6 @@ import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
 
-
-
 public interface MovieDAO {
 
 	

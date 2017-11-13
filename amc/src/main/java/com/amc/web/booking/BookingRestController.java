@@ -33,6 +33,7 @@ import com.amc.service.domain.Booking;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
+import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 import com.amc.service.user.UserService;
 import com.amc.web.cinema.HttpRequestToNode;
@@ -45,19 +46,18 @@ public class BookingRestController {
 		@Autowired
 		@Qualifier("bookingServiceImpl")
 		private BookingService bookingService;
-		
-		///Field
 		@Autowired
 		@Qualifier("screenServiceImpl")
 		private ScreenService screenService;
-		
-		///Field
 		@Autowired
 		@Qualifier("userServiceImpl")
 		private UserService userService;
 		@Autowired
 		@Qualifier("cinemaServiceImpl")
 		private CinemaService cinemaService;
+		@Autowired
+		@Qualifier("movieServiceImpl")
+		private MovieService movieService;
 		//setter Method 구현 않음
 		
 		@Value("#{commonProperties['pageUnit']}")
@@ -68,7 +68,11 @@ public class BookingRestController {
 		// @Value("#{commonProperties['pageSize'] ?: 2}")
 		int pageSize;
 		
-		ObjectMapper objMapper = new ObjectMapper();
+		@Value("#{commonProperties['nodeServerIP']}")
+		String nodeServerIp;
+		
+		ObjectMapper objMapper = new ObjectMapper();		
+		List<ScreenContent> list;
 		
 		public BookingRestController() {
 			System.out.println(this.getClass());
@@ -119,16 +123,17 @@ public class BookingRestController {
 	        search.setSearchCondition(flag);
 	        search.setSearchKeyword(today);
 	        System.out.println(":::::::movieNo : "+movieNo);
-	        List<ScreenContent> list = screenService.getScreenContentList2(search, movieNo);
+	        list = screenService.getScreenContentList2(search, movieNo);
 			
 	        return this.toJSONString(bookingService.getScreenDateList(list, session));
 		}
 		
 		//[Android] 예매1단계 : 시간 선택
 		@RequestMapping(value="json/getScreenTimeJSON/{screenDate}", method=RequestMethod.GET)
-		public String getScreenTimeJSON(@PathVariable("screenDate") String screenDate, HttpSession session,
+		public String ScreenTimeJSON(@PathVariable("screenDate") String screenDate, HttpSession session,
 													Model model) throws Exception{			
-			return this.toJSONString(bookingService.getScreenTimeList(screenDate, session));
+			//설계다시해야하지만 시간관계상 임시방편임.
+			return this.toJSONString(bookingService.androidScreenTimeList(screenDate, session, list));
 		}
 		
 		//[Android] 예매 2단계 : 결제요청 전 선택내역 확인하기
@@ -140,20 +145,36 @@ public class BookingRestController {
 			ScreenContent screenContent = screenService.getScreenContent(screenContentNo);
 			booking.setScreenContentNo(screenContentNo);
 			booking.setScreenContent(screenContent);// ScreeContent class has Movie.
+			booking.setMovie(movieService.getMovie(screenContent.getMovie().getMovieNo()));
 			
 			String seatsNo = selectedSeats.substring(1);
 			booking.setBookingSeatNo(seatsNo);
+			booking.setHeadCount((seatsNo.split(",").length)/2);
+			booking.setTotalTicketPrice(screenContent.getTicketPrice()*(seatsNo.split(",").length)/2);			
 			
-			int headCount = (seatsNo.split(",").length)/2;
-			booking.setHeadCount(headCount);
-			System.out.println("edited seatsNo : "+seatsNo+", headCount : "+headCount);
-			booking.setTotalTicketPrice(screenContent.getTicketPrice()*headCount);
+			return this.toJSONString(booking);
+		}
+		
+		//[Android]예매3단계 : 결제완료 후 예매내역보기
+		@RequestMapping(value="json/addBooking", method=RequestMethod.POST)
+		public String addBooking(@ModelAttribute("booking") Booking booking,
+								 HttpSession session, Model model) throws Exception{	
+			System.out.println("/booking/requestPay : POST");
 			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("booking", booking);
+			//1. ADD booking
+			System.out.println("insert하려는 booking : "+booking);
+			bookingService.addBooking(booking);
 			
+			//2. GET booking
+			booking = bookingService.getBookingByInfo(booking);
+			System.out.println("add 후 no까지 포함된 booking : " + booking);
 			
-			String[] strArray = seatsNo.split(",");
+			//3. ADD statistic
+			User user = (User) session.getAttribute("user");
+			bookingService.updateStatistic(user, booking);
+			
+			// DisplaySeat만들기
+			String[] strArray = booking.getBookingSeatNo().split(",");
 			String displaySeat = "";
 			int k=0;
 	        for(int i=0;i<(strArray.length/2);i++){	        	
@@ -164,9 +185,9 @@ public class BookingRestController {
 	            System.out.println("k : "+k+", displaySeat : "+displaySeat);
 	            k+=2;
 	        }
-			map.put("displaySeat", displaySeat);
+	        booking.setBookingSeatNo(displaySeat);
 			
-			return this.toJSONString(map);
+			return this.toJSONString(booking);
 		}
 		
 		//예매1단계 날짜선택
@@ -223,7 +244,7 @@ public class BookingRestController {
 		public int confirmSeat(@PathVariable("clientId") String clientId, Model model) throws Exception{
 			
 	
-			String urlStr = "http://192.168.0.32:52273/confirmSeat";
+			String urlStr = "http://"+nodeServerIp+":52273/confirmSeat";
 			String body = "clientId="+clientId;
 			
 			try {

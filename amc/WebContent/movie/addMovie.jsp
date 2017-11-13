@@ -33,7 +33,7 @@
   <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">   -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-/1.7.1/css/bootstrap-datepicker.css" />
-    
+  
      
     
   <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
@@ -64,7 +64,7 @@
         <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css"> -->
     
         <!-- Custom -->
-        <link href="/css/jqGridStyle.css?v=1" rel="stylesheet" />
+        <link href="/css/jqGridStyle.css?v=1" rel="stylesheet" /> 
 
 
         <!-- Modernizr --> 
@@ -311,6 +311,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-kr.js"></script>  
+    <!--  <script src="/javascript/trirand/i18n/grid.locale-kr.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
     
@@ -457,13 +459,13 @@
                
                 // 컬럼명
                 //  colNames:['영화CD','영화명','제작국가','상영마감','줄거리','트레일러'], 
-                colNames:['영화CD','영화명','제작국가','개봉날짜','줄거리','트레일러'],
+                colNames:['영화명','영화CD','제작국가','개봉날짜','줄거리','트레일러'],
                 // 컬럼 데이터(추가, 삭제, 수정이 가능하게 하려면 autoincrement컬럼을 제외한 모든 컬럼을 editable:true로 지정)
                 // edittyped은 text, password, ... input type명을 사용
                      
                 colModel:[
-                          {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},
-                          {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},                       
+                          {name:'movieNm', index:'movieNm', align:"left",width:90, sortable:true, editable:true},   
+                          {name:'movieCd', key: true,index:'movieCd',align:"left",sorttype:"int",width:90, sortable:true,editable:true},                                            
    	                      {name:'nationAlt', index:'nationAlt',align:"left", width:90,sortable:true, editable:true},  
    	                  	  {name:'openDt', index:'openDt',align:"left", width:90,sortable:true, editable:true},  
 	                      

@@ -103,6 +103,7 @@ public class ScreenContent {
 				+ previewFlag + ", previewTitle=" + previewTitle + ", ticketOpenDate=" + ticketOpenDate
 				+ ", inviteActor=" + inviteActor + ", screenContentRegDate=" + screenContentRegDate + "]";
 	}
+	
 
 
 

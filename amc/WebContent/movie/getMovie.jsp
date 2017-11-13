@@ -37,19 +37,23 @@
 
 
 		<section class="container">
-			<div class="col-sm-12">
-				<div class="movie">
-					<h2 class="page-heading">${movie.movieNm }</h2>
 
-					<div class="movie__info">
+			<div class="getMovie">
+				<div class="movie">
+					<h2 class="page-heading">영화 상세 정보</h2>
+
+					<div class="movie__info ">
 						<div class="col-sm-4 col-md-3 movie-mobile">
 							<div class="movie__images">
-								<img alt='' src="${movie. postUrl}" width='250px'>
+								<img alt='' src="${movie. postUrl}">
 							</div>
 
 						</div>
 
 						<div class="col-sm-8 col-md-9">
+
+							<p class="movie__title">${movie.movieNm }</p>
+
 							<p class="movie__time">${movie.showTm }분</p>
 
 							<p class="movie__option">
@@ -63,7 +67,9 @@
 							<p class="movie__option">
 								<strong>관람등급: </strong>${movie.watchGradeNm }</p>
 
-							<span id="wish"><i class="fa fa-heart-o fa-2x" id="heartempty" onClick="javascript:addWishList()"></i></span>
+							<span id="wish">
+								<i class="fa fa-heart-o fa-2x" id="heartempty" onClick="javascript:addWishList()"></i>
+							</span>
 							<button class="btn btn-md btn--default" onClick="javascript:posting()">
 								<i class="fa fa-facebook"> &nbsp; </i>공유하기
 							</button>
@@ -86,18 +92,16 @@
 						</div>
 					</div>
 
+					<div class="devider-huge col-md-12"></div>
 
+					<div class="synopsis col-md-12">
+						<h2 class="page-heading">줄거리</h2>
+						<p class="movie__describe">${movie.synopsis }</p>
+					</div>
 
+					<div class="devider-huge col-md-12"></div>
 
-
-					<div class="clearfix"></div>
-
-					<h2 class="page-heading">줄거리</h2>
-
-					<p class="movie__describe">${movie.synopsis }</p>
-
-
-					<div class="steelcut ">
+					<div class="steelcut col-md-12 ">
 						<h2 class="page-heading">스틸컷</h2>
 						<div class="col-md-3 "></div>
 						<div class="col-md-6 center-block " style="margin: 0 auto; padding: 0px, 10px, 0px, 10px">
@@ -128,10 +132,10 @@
 						<div class="col-md-3 "></div>
 					</div>
 
+					<div class="devider-huge col-md-12"></div>
+
 					<div>
-						<h2 class="page-heading  col-md-12">트레일러</h2>
-
-
+						<h2 class="page-heading  col-md-12 col-md-12">트레일러</h2>
 
 
 						<c:if test="${fn:length(movie.trailer) > 10}">
@@ -140,9 +144,10 @@
 							</div>
 						</c:if>
 
+						<div class="devider-huge col-md-12"></div>
 
 					</div>
-					<div class='row'>
+					<div class='row col-md-12'>
 						<div class='col-md-3'>
 							<h2 class="page-heading">예매자 성별 차트</h2>
 
@@ -155,18 +160,20 @@
 						</div>
 						<div class='col-md-6'>
 							<h2 class="page-heading">
-								<span class="fa fa-twitter" id='twitterSearch'> </span> ${movie.movieNm} 실시간 트위터 검색
+								<span class="fa fa-twitter" id='twitterSearch'> </span>
+								${movie.movieNm} 실시간 트위터 검색
 							</h2>
-							<iframe id="realTimeSearch" src="http://192.168.0.10:1337/${movie.movieNm }" frameborder=0>
-								<p>Your browser does not support iframes.</p>
-							</iframe>
-
+							<div class='col-md-12'>
+								<iframe id="realTimeSearch" src="http://183.98.215.171:1337/${movie.movieNm }" frameborder="0">
+									<p>Your browser does not support iframes.</p>
+								</iframe>
+							</div>
 						</div>
 					</div>
 
 				</div>
 
-
+				<div class="devider-huge col-md-12"></div>
 				<div class="choose-container">
 
 
@@ -186,7 +193,7 @@
 							<button type='submit' class="btn btn-md btn--danger movieComment__btn" <c:if test="${user.userId ==null}">disabled="disabled"</c:if> id="addButton">등록</button>
 
 						</div>
-
+						<input type="hidden" name='menu' value="${menu}">
 						<div class="comment-sets"></div>
 					</div>
 				</div>
@@ -196,12 +203,30 @@
 
 		<div class="clearfix">
 			<div id="hidden">
-				<input type="hidden" name='movieNm' value="${movie.movieNm }"> <input type="hidden" name='movieNo' value="${movie.movieNo }"> <input type="hidden" name='userId' value="${user.userId }"> <input type="hidden" name='userRole' value="${user.role }"> <input type="hidden" name='menu' value="${menu}"> <input type="hidden" name='movieComment2' value=""> <input type="hidden" name='movieCommentNo2'> <input type="hidden" name='screenContentNo' value="${screenContent.screenContentNo }"> <input type="hidden" name='openDt' value="${movie.openDt }"> <input type="hidden" name='femaleCnt' value="${movie.femaleCnt}"> <input type="hidden" name="maleCnt" value="${movie.maleCnt}" /> <input type="hidden" name="age10s" value="${movie.age10s}" /> <input type="hidden" name="age20s" value="${movie.age20s}" /> <input type="hidden" name="age30s" value="${movie.age30s}" /> <input type="hidden" name="age40s"
-					value="${movie.age40s}"
-				/> <input type="hidden" name="age50s" value="${movie.age50s}" /> <input type="hidden" name="age60s" value="${movie.age60s}" /> <input type="hidden" name="age60sMore" value="${movie.age60sMore}" /> <input type="hidden" name="buttonFlag" id="buttonFlag" value="">
+				<input type="hidden" name='movieNm' value="${movie.movieNm }">
+				<input type="hidden" name='movieNo' value="${movie.movieNo }">
+				<input type="hidden" name='userId' value="${user.userId }">
+				<input type="hidden" name='userRole' value="${user.role }">
+				<input type="hidden" name='menu' value="${menu}">
+				<input type="hidden" name='movieComment2' value="">
+				<input type="hidden" name='movieCommentNo2'>
+				<input type="hidden" name='screenContentNo' value="${screenContent.screenContentNo }">
+				<input type="hidden" name='openDt' value="${movie.openDt }">
+				<input type="hidden" name='femaleCnt' value="${movie.femaleCnt}">
+				<input type="hidden" name="maleCnt" value="${movie.maleCnt}" />
+				<input type="hidden" name="age10s" value="${movie.age10s}" />
+				<input type="hidden" name="age20s" value="${movie.age20s}" />
+				<input type="hidden" name="age30s" value="${movie.age30s}" />
+				<input type="hidden" name="age40s" value="${movie.age40s}" />
+				<input type="hidden" name="age50s" value="${movie.age50s}" />
+				<input type="hidden" name="age60s" value="${movie.age60s}" />
+				<input type="hidden" name="age60sMore" value="${movie.age60sMore}" />
+				<input type="hidden" name="buttonFlag" id="buttonFlag" value="">
 
 				<form class="search">
 					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+					<input type="hidden" id="startRowNum" name="startRowNum" value="0" />
+
 				</form>
 			</div>
 
@@ -436,27 +461,22 @@
         } //end of addOpenAlarm function
 
         function fncGetPageList(currentPage) {
-
+            
             $('#watchlist').remove();
             $("#currentPage").val(currentPage)
             queryString = $(".search").serialize();
-
+            
             $.ajax({
                 url : "/movie/json/getMovieCommentList/" + movieNo,
                 type : 'POST',
                 data : queryString,
                 dataType : 'json',
                 success : function(JSONData, status) {
-
                     var result = JSONData;
-
                     userId = $("input[name='userId']").val();
                     userRole = $("input[name='userRole']").val();
-
                     displayValue = '<div class="comment">'
-
                     $.each(result, function(idx, val) {
-
                         displayValue += '<p class="comment__user">' + val.user.userId + '</p>' + '<p class="comment__movieComment" id="movieComment'+val.movieCommentNo+'" >'
                         if (val.blindCommentFlag == 'Y') {
                             displayValue += ' <span style="color:gray">블라인드 처리된 게시글입니다.</span>'
@@ -467,7 +487,6 @@
                             displayValue += val.movieComment
                         }
                         displayValue += '</p>' + ' <span class="comment__regDate">' + val.movieCommentRegDate + ' </span>'
-
                         if (userId == val.user.userId || userRole == 'admin') {
                             displayValue += '<span class="comment__update" >'
                             if (val.blindCommentFlag == 'N') {
@@ -483,13 +502,10 @@
                                 }
                                 displayValue += ' </span>'
                             }
-
                         }
                         displayValue += ' <hr>'
                     })
-
                     displayValue += ' </div>'
-
                     $.ajax({
                         url : "/movie/json/getTotalCount/" + movieNo,
                         method : "post",
@@ -499,64 +515,52 @@
                             console.log(JSONData.currentPage);
                             console.log(JSONData.totalCount);
                             console.log(JSONData.endUnitPage);
-
                             displayValue += '<div class="comment-more">'
-
                             if (JSONData.endUnitPage != JSONData.currentPage) {
                                 displayValue += '<div id="watchlist"><i class="fa fa-comment"></i><span id="moreComment">댓글 더 보기</span><div>'
                             }
-
                             displayValue += '</div>'
-
+                            
                             buttonFlag = $("input[name='buttonFlag']").val();
-
+                            
                             if (buttonFlag != "more") {
-
                                 $(".comment-sets").html("");
                                 JSONData.currentPage = 1;
-
                             } else {
-
                                 $("input[name='buttonFlag']").val("");
-
                             }
 
-                            $(".comment-sets").append(displayValue);
-
-                            $(".totalCount").remove();
-
-                            display = '<span class="totalCount"> &nbsp; (' + JSONData.totalCount + ')</span>'
-
-                            $(".commentHeader").append(display);
-
-                            $("#currentPage").val(JSONData.currentPage);
-                            //$("input[name='buttonFlag']").val("");
-
+                       	 $(".comment-sets").html(displayValue);
+                       	 
+                       	 $(".totalCount").remove();
+                       	
+                       	 display = '<span class="totalCount"> &nbsp; ('+JSONData.totalCount+')</span>'
+                        	
+                       	
+                       	 $(".commentHeader").append(display);
+                       	 
+                       	 $("#currentPage").val(JSONData.currentPage);
+                       	 //$("input[name='buttonFlag']").val("");
+                       	
                         }
                     });
-
                 }
-
             });
-
         }
 
         function fncGetMovieComment() {
             $("div[name='update" + $("input[name='movieCommentNo2']").val() + "']").html($("input[name='movieComment2']").val());
-
             console.log(movieCommentNo);
             console.log(movieComment);
-
             var dispaly = '<div id="comment-form" class="movieComment" name="update'+movieCommentNo+'">' + '<input type="hidden" id="movieCommentNo" value="'+movieCommentNo+'">' + '<textarea class="movieComment__text" id="updateMovieCommentText" value="">' + movieComment + '</textarea>' + '<button type="submit" class="btn btn-md btn--shine movieComment__btn" id="updateButton">수정</button></div>'
             //movieComment${movieComment.movieCommentNo }
             $("input[name='movieCommentNo2']").val(movieCommentNo);
             $("input[name='movieComment2']").val(movieComment);
             $("#movieComment" + movieCommentNo).html(dispaly);
-
         }
-
+        
+        
         function fncAddMovieComment() {
-
             var movieComment = $("#addMovieCommentText").val();
             if (movieComment == "") {
                 alert("감상평을 입력해 주세요");
@@ -565,9 +569,7 @@
             $.ajax({
                 url : "/movie/json/addMovieComment/",
                 type : 'POST',
-
                 headers : {
-
                     "Content-Type" : "application/json"
                 },
                 data : JSON.stringify({
@@ -578,10 +580,8 @@
                         userId : userId
                     },
                     movieComment : movieComment
-
                 }),
-                dataType : "json",
-
+                dataType : "text",
                 success : function(JSONData, status) {
                     console.log("fncAddMovieComment()");
                     $("#addMovieCommentText").val(null);
@@ -590,12 +590,11 @@
                 }
             })
         }
-        function fncUpdateMovieComment() {
 
+        function fncUpdateMovieComment() {
             $.ajax({
                 url : "/movie/json/updateMovieComment/",
                 type : 'POST',
-
                 headers : {
                     "Accept" : "application/json",
                     "Content-Type" : "application/json"
@@ -605,38 +604,27 @@
                     movieCommentNo : movieCommentNo
                 }),
                 dataType : "text",
-
                 success : function(JSONData, status) {
-
                     var display = '<input type="hidden" id="movieComment">' + movieComment;
-
                     //$("#movieComment"+movieCommentNo).html(dispaly);
-
                     $("#movieComment" + movieCommentNo).html(movieComment);
-
                     $("#movieComment2").val(movieComment);
-
                     //  fncMovieCommentList()
                     fncGetPageList(currentPage)
                 }
             })
-
         }
 
         function fncDeleteMovieComment() {
-
             if (confirm("정말 삭제하시겠습니까?") == true) {
                 $.ajax({
                     url : "/movie/json/deleteMovieComment/" + movieCommentNo,
                     type : 'GET',
-
                     headers : {
                         "Accept" : "application/json",
                         "Content-Type" : "application/json"
                     },
-
                     dataType : "json",
-
                     success : function(JSONData, status) {
                         console.log("fncDeleteMovieComment() JSONData " + JSONData);
                         // fncMovieCommentList()
@@ -649,45 +637,35 @@
         }
 
         function fncBlindCommentFlag() {
-
             blindComment = "";
             if (blindCommentFlag == 'Y') {
                 blindComment = '취소 '
             }
-
             console.log("fncBlindCommentFlag()의 movieCommentNo ==> " + movieCommentNo)
             console.log("fncBlindCommentFlag()의 blindCommentFlag ==> " + blindCommentFlag)
-
             console.log('dddd');
             if (confirm("정말 블라인드 처리를 " + blindComment + "하시겠습니까?") == true) {
-
                 $.ajax({
                     url : "/movie/json/blindMoiveComment",
                     type : 'POST',
-
                     headers : {
                         "Accept" : "application/json",
                         "Content-Type" : "application/json"
                     },
                     data : JSON.stringify({
-
                         blindCommentFlag : blindCommentFlag,
                         movieCommentNo : movieCommentNo
-
                     }),
                     dataType : "text",
-
                     success : function(JSONData, status) {
                         console.log("fncAddMovieComment()");
                         // fncMovieCommentList()
                         fncGetPageList(currentPage)
                     }
                 })
-
             } else {
                 return;
             }
-
         }
 
         $(document).ready(function() {
@@ -698,69 +676,63 @@
             movieNm = $("input[name='movieNm']").val();
             currentPage = $("#currentPage").val();
             buttonFlag = $("input[name='buttonFlag']").val();
-
             getWishList();
             fncGetPageList(currentPage);
-
             $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
 
+            //감상평 등록
             $(document).on("click", "#addButton", function() {
+                currentPage = 1;
                 fncAddMovieComment();
-                //  fncMovieCommentList();
 
             })
 
+            //감상평 삭제
             $(document).on("click", ".comment__delete", function() {
                 movieCommentNo = $("#movieCommentNo", $(this)).val();
+                currentPage = 1;
                 fncDeleteMovieComment();
 
-                //fncMovieCommentList();
             })
 
+            // 감상평 블라인드 처리
             $(document).on("click", ".comment__blind ", function() {
                 movieCommentNo = $("#movieCommentNo", $(this)).val();
                 blindCommentFlag = $("#blindCommentFlag", $(this)).val();
+                $("#startRowNum").val(2);
                 fncBlindCommentFlag();
                 $("#buttonFlag").val('blind');
-                //    fncMovieCommentList();
+
             })
 
+            // 수정버튼 누르기
             $(document).on("click", ".comment__update", function() {
-
                 movieCommentNo = $("#movieCommentNo", $(this)).val();
                 movieComment = $("#movieComment", $(this)).val();
-
                 fncGetMovieComment();
-
             })
 
+            // 더보기
             $(document).on("click", "#watchlist", function() {
-
                 currentPage = $("#currentPage").val();
-
                 $("#buttonFlag").val('more');
                 buttonFlag = $("input[name='buttonFlag']").val();
-
                 currentPage = parseInt(currentPage) + 1
-
                 fncGetPageList(currentPage);
-
             })
 
+            //수정하기
             $(document).on("click", "#updateButton", function() {
-
                 movieCommentNo = $(this).parent().find("#movieCommentNo").val();
                 movieComment = $(this).parent().find("#updateMovieCommentText").val();
                 $("#buttonFlag").val('update');
+                $("#startRowNum").val(2);
                 fncUpdateMovieComment();
-
             })
 
             $("button[name='booking']").on("click", function() {
-
                 $(self.location).attr("href", "/booking/getScreenMovieList");
             })
-
             $("button[name='ticketOpen']").on("click", function() {
                 if (userId == "") {
                     alert('로그인 후 이용가능합니다')
@@ -769,10 +741,7 @@
                     addOpenAlarm()
                 }
             })
-
         });
-        
-
     </script>
 
 
@@ -786,6 +755,17 @@
 
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 25px;
+	padding-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #4c4145;
+	text-transform: uppercase;
+	background-image: url(../images/components/scarf.png);
+	-webkit-background-size: 21px 6px;
+	background-size: 21px 6px;
+	background-position: left center;
+	background-repeat: no-repeat;
 }
 
 body {
@@ -800,6 +780,10 @@ html {
 	max-width: 500px;
 	width: auto;
 	margin: 0 auto;
+}
+
+.movie .movie__images {
+	max-width: 100%;
 }
 
 .slick-prev:before, .slick-next:before {
@@ -898,6 +882,11 @@ html {
 	height: 100%;
 }
 
+#realTimeSearch {
+	width: 100%;
+	height: 250px;
+}
+
 section {
 	padding-top: 30px
 }
@@ -909,6 +898,50 @@ section {
 
 #wish {
 	margin-top: 50px;
+}
+
+.movie .movie__title {
+	position: relative;
+	font-size: 20px;
+	font-family: 'Jeju Gothic', sans-serif;
+	color: #4c4145;
+	margin-bottom: 0px;
+}
+
+.movie .movie__time {
+	position: relative;
+	font-size: 13px;
+	color: #fe505a;
+	margin-bottom: 0px;
+	padding-left: 20px;
+}
+
+.getMovie {
+	margin-top: 50px;
+	/* width: 100%;
+	height: 100%;
+	padding: 15px 15px 15px 15px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #ffffff;
+	border: solid 1px #ffd564;
+	font-size: 13px;
+	color: #b4b1b2;
+	padding: 8px 19px;
+	-webkit-border-radius: 3px; */
+}
+
+.fa-twitter {
+	color: #537f9b;
+}
+
+.devider-huge {
+	width: 100%;
+	height: 1px;
+	background-color: #ffd564;
+	margin-bottom: 30px;
+	margin-top: 30px;
 }
 </style>
 

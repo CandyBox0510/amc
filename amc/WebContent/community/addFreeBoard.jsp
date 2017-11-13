@@ -42,7 +42,7 @@
 						<div class="field">
 							<div class='col-md-1' id="title">Á¦¸ñ</div>
 							<div class='col-md-11'>
-								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input">
+								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" maxlength="25">
 							</div>
 							<div class='field'>
 								<div class='col-md-12' id="context">
@@ -220,7 +220,7 @@ html {
 	background-color: #ffffff;
 	border: solid 2px #dbdee1;
 	font-size: 13px;
-	color: #b4b1b2;
+	color: #4c4145;
 }
 
 #addButton {

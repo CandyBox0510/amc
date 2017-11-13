@@ -81,10 +81,10 @@
 		FROM product p, transaction t
 		<where>
 			p.prod_no=t.prod_no(+)
-			<if test='(searchKeyword == "G")'>
+			<if test='(searchProdType == "G")'>
 				AND p.prod_type='G'
 			</if>
-			<if test='(searchKeyword == "S")'>
+			<if test='(searchProdType == "S")'>
 				AND p.prod_type='S'
 			</if>
 		</where>		

@@ -74,16 +74,13 @@ public class ProductRestController {
 	}
 	
 	@RequestMapping( value="getGoodsProduct/{prodNo}", method=RequestMethod.GET )
-	public Product getProduct( @PathVariable int prodNo ) throws Exception{
-		System.out.println("여기는 product rest controller :"+prodNo);
-		System.out.println("이건 productService.getProduct(prodNo)");
-		System.out.println(productService.getProduct(prodNo));
-		System.out.println("/product/json/getProduct : GET");
-		
-		//Business Logic
+	public Product getGoodsProduct( @PathVariable int prodNo ) throws Exception{
 		return productService.getProduct(prodNo);
 	}
-
+	@RequestMapping( value="getSnackProduct/{prodNo}", method=RequestMethod.GET )
+	public Product getSnackProduct( @PathVariable int prodNo ) throws Exception{
+		return productService.getProduct(prodNo);
+	}
 	
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
 	public Product updateProduct(	@RequestBody Product product ) throws Exception{
@@ -116,7 +113,6 @@ public class ProductRestController {
 
 	@RequestMapping( value="getGoodsList/{menu}")
 	public Map<String, Object> getGoodsList(@RequestBody Search search,	@PathVariable String menu) throws Exception{
-		System.out.println("★★★★★★★★★★★★★★★★★★★열로들어와서 그런지?GGGGGGGGGGGGGGGGGGGGGGGGGGG");
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
 		}
@@ -135,9 +131,7 @@ public class ProductRestController {
 		}
 		
 		Map<String, Object> map = productService.getGoodsList(search);
-		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		
 		map.put("resultPage", resultPage);
 		
 		return map;
@@ -145,7 +139,6 @@ public class ProductRestController {
 	
 	@RequestMapping( value="getSnackList/{menu}")
 	public Map<String, Object> getSnackList(@RequestBody Search search,	@PathVariable String menu) throws Exception{
-		System.out.println("★★★★★★★★★★★★★★★★★★★열로들어와서 그런지?ssssssssssssssssssssssssssss");
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
 		}
@@ -164,9 +157,7 @@ public class ProductRestController {
 		}
 		
 		Map<String, Object> map = productService.getSnackList(search);
-		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		
 		map.put("resultPage", resultPage);
 		
 		return map;
