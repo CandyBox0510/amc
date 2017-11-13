@@ -101,6 +101,9 @@ public class PurchaseController {
 	@RequestMapping( value="getSaleList" )
 	public String getSaleList(	@ModelAttribute("search") Search search, Model model) throws Exception{
 		
+		System.out.println("search ::" + search);
+		System.out.println("model ::" + model);
+		
 		this.getList(search, model);
 		return "forward:listSale.jsp";
 	}

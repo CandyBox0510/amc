@@ -562,9 +562,13 @@ color:#fe505a;
         var showTm = $("input[name='showTm']").val();
         var endDt = $("input[name='endDt']").val();
         var synopsis = $("input[name='synopsis']").val();
-        var trailer = $("input[name='trailer']").val();
+        var trailer = $("input[name='trailerCheck']").val();
         var pster = $("input[name='postUrlCheck']").val();
+        
         var defaultposterUrl = $(".poster").attr("src");
+        var defaulttrainerUrl = $("#trailerId").val();
+        
+        
         
       
         
@@ -579,6 +583,18 @@ color:#fe505a;
         	$("#postUrlCheck").val(pster); 
                
         }
+        
+    	 if (trailer != null) {
+        	
+        } else {
+        	trailer = defaulttrainerUrl;
+        	alert("trailer url" + trailer);
+        	$("#trailerCheck").val(trailer); 
+               
+        }
+        
+        
+      
      
       
 

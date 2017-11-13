@@ -95,8 +95,11 @@
 	
 			<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
 			
+		
+			
 			<table class="table table-hover table-striped" >
-				<thead>
+				<thead> </thead>
+				    <tbody>
 					<tr>
 						<th>No</th>
 						<th>상품명</th>
@@ -105,7 +108,8 @@
 						<th>현재상태</th>
 						<th>배송현황</th>
 					</tr>
-				</thead>
+					</tbody>
+			
 	      	</table>
 		</div>
 	</div>
@@ -191,9 +195,21 @@
 				},
 				success : function(JSON){
 					var i = JSON.resultPage.totalCount - (JSON.resultPage.currentPage-1)*JSON.resultPage.pageSize + 1;
+					
+					//alert("var value :: " + i);
 					for( x in JSON.list){
 						i--;
 						var sale = JSON.list[x];
+						
+						/* alert("sale " + sale.impId);
+						alert("prodName " + sale.purchaseProd.prodName);
+						alert("userId " + sale.buyer.userId);
+						alert("orderRegDate " + sale.orderRegDate);
+						alert("tranCode " + sale.tranCode);
+						 */
+						
+						
+						
 						var list = '<tr>';
 						list += '<td><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
 						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.orderStock+')</td>';
@@ -214,6 +230,8 @@
 						}
 						list += '</td>';
 						list += '</tr>';
+						
+						//alert("list all" + list);
 						
 						$('tbody').html($('tbody').html() + list);
 					}
