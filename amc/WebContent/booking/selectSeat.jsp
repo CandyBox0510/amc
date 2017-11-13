@@ -19,6 +19,7 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
+  
   <!--  스크립트에서 rollbackSeat 함수는 더이상 사용하지 않음. 컨트롤러에서도. -->
   <script type="text/javascript">
   
@@ -301,7 +302,7 @@
             <div class="order-container">
                 <div class="order">
                     <img class="order__images" alt='' src="/images/tickets.png">
-                    <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
+                    <p class="order__title">Book a ticket<br><span class="order__descript">and have fun movie time</span></p>
                     <div class="order__control">
                         <a href="#" class="order__control-btn active">Booking</a>
                         <!-- <a href="#" class="order__control-btn">Reserve</a> -->
@@ -321,7 +322,7 @@
                     </ul>
                 </div>
 
-                <div class="choose-sits__info">
+                <div class="choose-sits__info" >
                     <ul>
                         <li class="sits-state sits-state--not">Not available</li>
                         <li class="sits-state sits-state--your">Your choice</li>
@@ -331,16 +332,16 @@
           <!--  only UI -->
 	
 
-			<div class="col-sm-8 col-md-9">	
+			<div class="col-sm-8 col-md-8">	
 
-				<iframe id="child" src= "http://183.98.215.171:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
-				style='width:100%; height:450px'  frameborder='0'   align='center'>		 
+				<iframe id="child" src= "http://127.0.0.1:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
+				style='width:100%; height:550px'  frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 				<!-- style='width:100%' -->
 			
 			</div>
-			<div class="col-sm-4 col-md-3">
+			<div class="col-sm-4 col-md-4" style='padding-right:10%'>
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>

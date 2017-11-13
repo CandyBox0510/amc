@@ -30,7 +30,6 @@ import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
 import com.amc.service.screen.ScreenService;
 import com.amc.service.user.UserService;
-import com.amc.web.alarm.AlarmRestController;
 import com.amc.web.cinema.HttpRequestToNode;
 
 @Controller
@@ -212,7 +211,7 @@ public class BookingController {
 			}
 		}
 		
-		return "redirect:/booking/getBookingList";			
+		return "redirect:/booking/getBookingList?searchCondition=now";			
 	}
 	
 	//관리자 예매목록조회

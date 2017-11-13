@@ -28,7 +28,7 @@
 			$(".item").eq(2).html("");
 			$(".item").eq(1).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
-			alert('movie title clicked! : '+movieNo);
+
 			var flag = $("input:hidden[name='flag']").val();
 			
 			$.ajax(
@@ -65,7 +65,6 @@
    
 	//2. 날짜 클릭시
 	$(document).on("click", "li[name='screenDay']",  function(){
-		alert("날짜를 선택하셨습니다.");
 		
 		var date =  $($(this).find("input[name='day']")).val();
 		$(".item").eq(2).html("");
@@ -113,7 +112,6 @@
 		
 		var screenTime = $($(this).find("input[name='screenTime']")).val();
 		var contNo = $($(this).find("input[name='contNo']")).val();
-		alert("시간을 선택하셨습니다  상영번호는 : "+contNo);
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
 

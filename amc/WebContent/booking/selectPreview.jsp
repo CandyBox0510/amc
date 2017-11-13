@@ -88,7 +88,7 @@
 			$(".item").eq(1).html("");
 			$(".item").eq(2).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
-			//alert('movie title clicked! : '+movieNo);
+
 			var flag = $("input:hidden[name='flag']").val();
 			
 			$.ajax(
@@ -127,8 +127,7 @@
    
 	//2. 날짜 클릭시
 	$(document).on("click", "li[name='screenDay']",  function(){
-		//alert("날짜를 선택하셨습니다.");
-		
+
 		var date =  $($(this).find("input[name='day']")).val();
 		$(".item").eq(2).html("");
 		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"일");
@@ -173,9 +172,7 @@
 		
 		var screenTime = $($(this).find("input[name='screenTime']")).val();
 		var contNo = $($(this).find("input[name='contNo']")).val();
-		
 		ticketOpenDate = $($(this).find("input[name='ticketOpenDate']")).val();
-		//alert("선택한 상영번호는 : "+contNo+", 티켓오픈타임은 :"+ticketOpenDate);
 		
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
@@ -205,25 +202,10 @@
 	});
 	
 	$( function(){
- 		
-    	/* $("#randomSeat").on("click", function(){
-    		var screeContentNo = $(".item").eq(3).text();
-    		var headCount = $("input:radio[name=headCount]:checked").val();
-    		if( $("input:radio[name=headCount]:checked").length<1){
-    			alert("인원수를 먼저 선택해주세요.");
-    		}else{
-    			alert("랜덤좌석을 "+headCount+"석 신청합니다.");
-    			self.location="/booking/selectRandomSeat?screenContentNo="+screeContentNo+"&headCount="+headCount;
-    			
-    		}
-    		
-	    }); */
+
 		$("#randomSeat").on("click", function(e){
 			//로그인 여부 체크
 			if( ${sessionScope.user==(null)} ){
-				
-				//alert('로그인 후 이용해 주세요');
-				//로그인 창 모달로 띄우기
 				 
 		        e.preventDefault();
 		        $('.overlay').removeClass('close').addClass('open');

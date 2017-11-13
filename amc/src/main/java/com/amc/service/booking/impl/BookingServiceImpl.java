@@ -169,11 +169,31 @@ public class BookingServiceImpl implements BookingService {
         return dayList;
 	}
 	
-	@Override
+	@Override //웹용
 	public List<ScreenContent> getScreenTimeList(String screenDate, HttpSession session) {
 		
-		List<ScreenContent> timeList = new ArrayList<ScreenContent>();
-		List<ScreenContent> screenContentList = (List<ScreenContent>) session.getAttribute("screenContentList");
+		List<ScreenContent> timeList = new ArrayList<ScreenContent>();				
+		List<ScreenContent> screenContentList = (List<ScreenContent>) session.getAttribute("screenContentList");		
+		
+		for(int i = 0; i<screenContentList.size(); i++){
+        	 
+        	if(screenDate.equals( screenContentList.get(i).getScreenDate().substring(8, 10) )){
+        		ScreenContent tempContent = new ScreenContent();//안으로 넣어야 함 LIST ADD때무네
+        		tempContent.setScreenContentNo(screenContentList.get(i).getScreenContentNo());
+        		tempContent.setScreenOpenTime(screenContentList.get(i).getScreenOpenTime());
+        		tempContent.setTicketOpenDate((screenContentList.get(i).getTicketOpenDate()));
+        		timeList.add(tempContent);
+        		System.out.println("tempContent에 들어간다 : "+tempContent.toString());
+        	}
+        }
+		return timeList;
+	}
+	
+	@Override //안드로이드용
+	public List<ScreenContent> androidScreenTimeList(String screenDate, HttpSession session, List<ScreenContent> list) {
+		
+		List<ScreenContent> timeList = new ArrayList<ScreenContent>();				
+		List<ScreenContent> screenContentList = list;		
 		
 		for(int i = 0; i<screenContentList.size(); i++){
         	 
