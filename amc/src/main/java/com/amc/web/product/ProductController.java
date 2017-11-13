@@ -82,7 +82,7 @@ public class ProductController {
 		
 		double totalStock	= product.getTotalStock();
 		double Stock		= product.getStock();
-		double sale 		= Stock/totalStock*100;
+		double sale 		= 100-Stock/totalStock*100;
 		int result = (int)sale;
 		
 		product.setSalesStock(result);
@@ -200,7 +200,7 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(pageSize);
+		search.setPageSize(12);
 		search.setPageUnit(pageUnit);
 		// Business logic ผ๖วเ
 		Map<String , Object> map=productService.getSnackList(search);

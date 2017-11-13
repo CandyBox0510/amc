@@ -1,6 +1,8 @@
+<<<<<<< HEAD
+=======
 /client/
+
+>>>>>>> refs/remotes/origin/master
 /com/
-/config/
-/log4j.properties
+/client/
 /sql/
-/test.properties

@@ -80,6 +80,8 @@ public interface MovieService {
 
 	String searchTrailer(String searchTrailer) throws Exception;
 
+	String searchPoster(String searchPoster) throws Exception;
+
 	
 	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
 	// public List<WishList> getWishListMovie(Search search, User user);

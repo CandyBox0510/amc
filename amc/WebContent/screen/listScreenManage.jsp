@@ -155,6 +155,8 @@ function fncGetPageList(currentPage) {
             fncGetPageList(currentPage);
 
           
+            fncGetPageList(currentPage);
+        	
         });
 
         

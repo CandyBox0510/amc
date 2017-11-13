@@ -338,6 +338,8 @@ public class MovieController {
 			
 			
 		} else {
+			System.out.println("menu ====> " +menu);
+			model.addAttribute("menu", menu);
 			System.out.println(movie + "°Ù¹«ºñ¾×¼Ç");
 			// modelAndView.setViewName("/movie/getMovie.jsp");
 
