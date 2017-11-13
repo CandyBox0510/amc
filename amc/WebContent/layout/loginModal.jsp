@@ -4,7 +4,7 @@
 <!doctype html>
 
 	    <!-- open/close -->
-        <div class="overlay overlay-hugeinc">
+        <div class="overlay overlay-hugeinc  z-index: 1000">
             
             <section class="container">
 

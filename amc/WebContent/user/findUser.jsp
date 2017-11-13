@@ -105,13 +105,13 @@
 						  		</div>
 								<div class="row">
 								    <div class="col-sm-offset-4  col-sm-4 text-center">
-								      <button type="button" id="findId" class="btn btn-md btn--info"  >확 &nbsp;인</button>
+								      <button type="button" id="findIdbtn" class="btn btn-md btn--info"  >확 &nbsp;인</button>
 								    </div>
 								</div>
 							 	<div class="row">
 							  		<div class="col-sm-offset-4  col-sm-4 text-center">
-								  		<i class="glyphicon glyphicon-ok" id= "user"></i>
-								  		<input type="hidden" value="${user.userId}">
+								  		<i class="glyphicon glyphicon-ok" ></i>
+								  		<%-- <input type="text" id= "uer" value="${user.userId}"> --%>
 								  	</div>
 								</div>
 						</fieldset>
@@ -190,7 +190,7 @@
 -->
        <!--  Custom -->
         <script src="/js/custom.js"></script> 
-	
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.js"></script>
 </body>
 
     <script type='text/javascript'>
@@ -238,7 +238,7 @@
 	});	
 
 	$(function() {
-		$( "#findId" ).on("click" , function() {
+		$( "#findIdbtn" ).on("click" , function() {
 			fncfindId();
 		});
 	});	
@@ -260,7 +260,7 @@
 				alert("이름은 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(b != null && (b.indexOf('@') < 1 || id.indexOf('.') == -1) ){
+			if(b == null && b.length <1 ){
 				alert("생일은 반드시 입력해야합니다..");
 				return;
 			}
@@ -285,7 +285,7 @@
 				$.ajax({
 					url : "/user/json/getId/" ,
 					method : "POST" ,							
-					async : "true",
+					async : true,
 					headers : {
 						"Accept" : "application/json",
 						"Content-Type" : "application/json"
@@ -302,8 +302,12 @@
 						var displayValue = "<h6>"
 													+"아이디 : "+JSONData+"<br/>"										
 													+"</h6>";	
-						$("h6").remove();							
-						$( "#user" ).html(displayValue);								
+													
+						swal('회원님의 아이디는 '+JSONData+'입니다.');													
+						/* $("h6").remove(); */
+						 /* $("#findIdbtn").remove(); 	 */
+						/* $( "#user" ).html(displayValue); */								
+						/* $( "#user" ).text(JSONData); */ 
 					}
 				});
 		
@@ -315,7 +319,6 @@
 	function fncSendMail() {
 		var userName=$("#userName2").val();
 		var userId=$("input[name='userId']").val();	
-		alert(userName);
 			if(userId != "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1) || userId == ""){
     			alert("이메일 형식이 아닙니다.");
     		return;
@@ -326,7 +329,7 @@
 			}
 		
 		$("#findPassword").attr("method" , "POST").attr("action" , "/user/sendPassword").submit();
-		alert("메일을 성공적으로 보냈습니다.");
+		swal("메일을 성공적으로 보냈습니다.");
 	}
 
     </script>

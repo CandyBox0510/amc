@@ -30,10 +30,10 @@ public class ProductController {
 	
 	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
 	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
-	@Value("#{commonProperties['pageUnit'] ?: 5}")
+	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
-	@Value("#{commonProperties['pageSize'] ?: 3}")
+	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 
 	@Autowired
@@ -77,7 +77,9 @@ public class ProductController {
 	public String getGoodsProduct( @RequestParam("prodNo") int prodNo,
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
+		System.out.println("ProductController의 getGoodsProduct 메소드");
 		Product product = productService.getProduct(prodNo);
+		System.out.println("Goods Product :"+product);
 		model.addAttribute("product", product);
 		
 		double totalStock	= product.getTotalStock();
@@ -101,9 +103,18 @@ public class ProductController {
 	public String getSnackProduct( @RequestParam("prodNo") int prodNo,
 								@RequestParam(value="menu",defaultValue="") String menu ,
 								Model model ) throws Exception {
-		
+		System.out.println("ProductController의 getSnackProduct 메소드");
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
+		
+		double totalStock	= product.getTotalStock();
+		double Stock		= product.getStock();
+		double sale 		= 100-Stock/totalStock*100;
+		int result = (int)sale;
+
+		product.setSalesStock(result);
+		
+		System.out.println( "판매 현황 좀 보고싶은데 :"+product.getSalesStock());
 		
 		if(menu!=""){
 			if(menu.equals("manage")){
@@ -142,9 +153,10 @@ public class ProductController {
 			
 	@RequestMapping(value="getGoodsList")
 	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								@RequestParam("menu") String menu, @RequestParam("searchProdType") String searchProdType,
 								HttpSession session) throws Exception{
 		
+		System.out.println("ProductController의 getGoodsList 메소드 시작");
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -154,43 +166,31 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(12);
-		search.setPageUnit(pageUnit);		
+		pageSize = 8;
+		search.setPageSize(pageSize);
+		/*search.setPageUnit(pageUnit);*/		
 		// Business logic 수행
 		Map<String , Object> map=productService.getGoodsList(search);
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$############# MAP :"+map);
-		
-//		Product product = new Product();
-//		
-//		double totalStock	= ((Product)map.get("product")).getTotalStock();
-//		double Stock		= ((Product)map.get("product")).getStock();
-//		double sale 		= Stock/totalStock*100;
-//		int result = (int)sale;
-//		
-//		product.setSalesStock(result);
 		
 		System.out.println(map.get("list"));
-		System.out.println((Product)map.get("product"));
+		System.out.println((Product)map.get("Product"));
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println("resultPage :"+resultPage);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		/*model.addAttribute(arg0, arg1);*/
-		/*model.addAttribute("search", map.get(search));*/
-		
-		System.out.println("session 이거뭐야 :"+session.getAttribute("user"));
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@LIST :"+map.get("list"));
-		System.out.println("############################### MAP :"+map);
+		System.out.println("ProductController의 getGoodsList 메소드 끝");
 		
 		return "forward:/product/listGoodsProduct.jsp?menu="+menu;
 	}
 	
 	@RequestMapping(value="getSnackList")
 	public String getSnackList( @ModelAttribute("search") Search search , Model model ,
-								@RequestParam("menu") String menu, @RequestParam("searchKeyword") String searchKeyword,
+								@RequestParam("menu") String menu, @RequestParam("searchProdType") String searchProdType,
 								HttpSession session) throws Exception{
 		
+		System.out.println("ProductController의 getSnackList 메소드 시작");
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -200,8 +200,9 @@ public class ProductController {
 		if(menu.equals("manage")){
 			search.setStockView(true);
 		}
-		search.setPageSize(12);
-		search.setPageUnit(pageUnit);
+		pageSize = 8;
+		search.setPageSize(pageSize);
+		/*search.setPageUnit(pageUnit);*/
 		// Business logic 수행
 		Map<String , Object> map=productService.getSnackList(search);
 		
@@ -209,6 +210,7 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		System.out.println("ProductController의 getSnackList 메소드 끝");
 		
 		return "forward:/product/listSnackProduct.jsp?menu="+menu;
 	}

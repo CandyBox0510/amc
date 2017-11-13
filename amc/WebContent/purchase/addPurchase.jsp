@@ -49,8 +49,13 @@
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
    
-        <!--   semantic UI  -->
+      	<!--   semantic UI  / 모달창-->
         <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+       	<script src="../semantic/semantic.min.js"></script>
+       	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+        
+        
+        
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -72,6 +77,10 @@
         <header class="header-wrapper header-wrapper--home">
 			<jsp:include page="/layout/topToolbar.jsp" />
    		</header>
+
+<div class="modal-body">
+
+
 
 		<div class="container" id="body">
 			 <h2 class="page-heading"> 상품 구매</h2>
@@ -226,6 +235,20 @@
 				 </div>
 			 </form>
 		 </div>
+		 
+		 
+		 	 
+		 
+		 </div>
+		 
+		 
+		 		<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
+<div class="ui thin info modal"> 
+  <i class="close icon"></i>
+    <div class="content" ></div>
+</div>  
+		
+	
 		 
 		 
  	</div>
