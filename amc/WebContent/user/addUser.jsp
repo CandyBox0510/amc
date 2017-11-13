@@ -243,7 +243,8 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "#addUser" ).on("click" , function() {
-				fncAddUser();
+				fncCheckUser();
+				/* fncAddUser(); */
 			});
 		});	
 		
@@ -343,7 +344,7 @@
  
  
 		//==>""이메일" 유효성Check / ID중복확인" Event 처리 및 연결
-		$(function(){					
+/* 		$(function(){					
 			$('#userId').bind('keyup', function(){
 				var userId = $(this).val().trim();
 				var tempId = userId.split(".");
@@ -359,7 +360,7 @@
 						}, 
 						success : function(JSONData , status){
 							/* alert("JSONData" + JSONData); */
-							if(JSONData){
+							/*if(JSONData){
 								$('span.help-block').html('사용가능한 아이디 입니다.').css('color','blue');
 								check = true;
 							}else{
@@ -376,6 +377,40 @@
 			});
 		});
 			
+		 */
+			function fncCheckUser() {
+				var userId = $("input[name='userId']").val().trim();
+				var tempId = userId.split(".");
+                console.log("userId :: " + userId);
+                console.log("tempId :: " + tempId);
+                alert("fncCheckUser");
+					$.ajax({
+						url : 'json/checkDuplication/'+tempId,
+						method : 'get',
+						async : false,
+						dataType : 'json', 
+						 headers : {
+							'Accept' : 'application/json',
+							'Content-Type' : 'application/json'
+						}, 
+						success : function(JSONData , status){
+							alert("JSONData" + JSONData);
+							if(JSONData){
+								fncAddUser();
+								check = true;
+							}else{
+								alert("이미 존재하는 아이디입니다.");
+								check = false;
+								return;
+							}
+						}
+					});
+				
+					if(userId == ''){
+						$('span.help-block').html('');
+					}
+		 }
+		
 		
 		$(function(){
 			$('#password2').bind('keyup',function(){

@@ -47,19 +47,28 @@
 				<div class="col-md-12">
 					<h2 class="page-heading">자유게시판</h2>
 					<div class="col-md-12 getFreeBoard">
-						<input type="hidden" name="freeBoardNo" value="${freeBoard.freeBoardNo }"> 
-						<input type="hidden" name="userId" value="${user.userId }"> 
+						<input type="hidden" name="freeBoardNo" value="${freeBoard.freeBoardNo }">
+						<input type="hidden" name="userId" value="${user.userId }">
 						<input type="hidden" name="role" value="${user.role }">
 
-						<div class="col-md-12 title">${freeBoard.freeBoardTitle }</div>
-						<div class="row freeBoardInfo">
-							<div class="col-md-1 text-right">작성자</div>
-							<div class="col-md-1 text-left">${freeBoard.user.userId }</div>
-							<div class="col-md-5"></div>
-							<div class="col-md-1 text-right">작성일</div>
-							<div class="col-md-2 text-left">${freeBoard.freeBoardRegDate }</div>
-							<div class="col-md-1 text-right">HIT</div>
-							<div class="col-md-1 text-left">${freeBoard.freeBoardViews }</div>
+						<div class="col-md-12 col-sm-12 title">${freeBoard.freeBoardTitle }</div>
+						<div class="row freeBoardInfo hidden-xs">
+							<div class="col-md-1 col-sm-1 text-right">작성자</div>
+							<div class="col-md-1 col-sm-1 text-left">${freeBoard.user.userId }</div>
+							<div class="col-md-5 col-sm-5"></div>
+							<div class="col-md-1 col-sm-1 text-right">작성일</div>
+							<div class="col-md-2 col-sm-2 text-left">${freeBoard.freeBoardRegDate }</div>
+							<div class="col-md-1 col-sm-1 text-right">HIT</div>
+							<div class="col-md-1 col-sm-1 text-left">${freeBoard.freeBoardViews }</div>
+						</div>
+
+						<div class="row freeBoardInfo hidden-sm hidden-md hidden-lg">
+							<div class="col-xs-4 text-center">작성자</div>
+							<div class="col-xs-8 text-center">${freeBoard.user.userId }</div>
+							<div class="col-xs-4 text-center">작성일</div>
+							<div class="col-xs-8 text-center">${freeBoard.freeBoardRegDate }</div>
+							<div class="col-xs-4 text-center">HIT</div>
+							<div class="col-xs-8 text-center">${freeBoard.freeBoardViews }</div>
 						</div>
 						<div class="col-md-12">
 							<hr>
@@ -75,17 +84,31 @@
 						<div class="col-md-12">
 							<hr>
 						</div>
-						<div class="col-md-12">
-
-							<div class="col-md-1 text-right">첨부파일</div>
-							<div class="col-md-11 text-left">
-								<c:if test="${freeBoard.freeBoardImage == null }">
+						<div class="col-md-12" style="margin-bottom: 20px;">
+							<div class="row freeBoardInfo hidden-xs">
+								<div class="col-md-1 text-right">첨부파일</div>
+								<div class="col-md-11 text-left">
+									<c:if test="${freeBoard.freeBoardImage == null }">
                 			첨부파일이 없습니다.
                 			</c:if>
-							</div>
-							<c:if test="${freeBoard.freeBoardImage != null}">	
+									<c:if test="${freeBoard.freeBoardImage != null}">	
                 			${freeBoard.freeBoardImage}
                 			</c:if>
+								</div>
+							</div>
+							<div class="row freeBoardInfo hidden-sm hidden-md hidden-lg">
+								<div class="col-xs-3 text-left" style="font-size: 10px;">첨부파일</div>
+								<div class="col-xs-9 text-left" style="font-size: 10px;">
+									<c:if test="${freeBoard.freeBoardImage == null }">
+		                				첨부파일이 없습니다.
+		                			</c:if>
+									<c:if test="${freeBoard.freeBoardImage != null}">	
+                						${freeBoard.freeBoardImage}
+                					</c:if>
+								</div>
+							</div>
+
+
 
 						</div>
 
@@ -124,42 +147,43 @@
 
 
 
-		</div>
-		<section class="container">
-			<div class="container col-md-12">
-				<h2 class="page-heading commentHeader">댓글</h2>
-				<div class="comment-wrapper col-md-12">
-					<div id="comment-form" class="comment-form">
-						<c:if test="${user.userId !=null}">
-							<textarea class="comment__text" id="addCommentText" placeholder='댓글을 등록해 주세요'></textarea>
-						</c:if>
-						<c:if test="${user.userId ==null}">
-							<textarea class="comment__text" id="addCommentText" placeholder='로그인 후 이용해주세요' readonly="readonly"></textarea>
-						</c:if>
-						<button type='submit' class="btn btn-md btn--danger comment__btn" <c:if test="${user.userId ==null}">disabled="disabled"</c:if> id="addCommentButton">등록</button>
+
+			<section class="container">
+				<div class="container col-md-12">
+					<h2 class="page-heading commentHeader">댓글</h2>
+					<div class="comment-wrapper col-md-12">
+						<div id="comment-form" class="comment-form">
+							<c:if test="${user.userId !=null}">
+								<textarea class="comment__text" id="addCommentText" placeholder='댓글을 등록해 주세요'></textarea>
+							</c:if>
+							<c:if test="${user.userId ==null}">
+								<textarea class="comment__text" id="addCommentText" placeholder='로그인 후 이용해주세요' readonly="readonly"></textarea>
+							</c:if>
+							<button type='submit' class="btn btn-md btn--danger comment__btn" <c:if test="${user.userId ==null}">disabled="disabled"</c:if> id="addCommentButton">등록</button>
+
+						</div>
+
+						<div class="comment-sets"></div>
 
 					</div>
 
-					<div class="comment-sets"></div>
 
 				</div>
+				<div class="clearfix">
+					<input type="hidden" name='commentNo2'>
+					<input type="hidden" name='comment2'>
+					<input type="hidden" name="parentCommentNo2">
+					<input type="hidden" name="buttonFlag" id="buttonFlag" value="">
+					<form class="search">
+						<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+						<input type="hidden" id="startRowNum" name="startRowNum" value="0" />
+					</form>
+				</div>
+			</section>
 
-
-			</div>
-			<div class="clearfix">
-				<input type="hidden" name='commentNo2'> 
-				<input type="hidden" name='comment2'> 
-				<input type="hidden" name="parentCommentNo2">
-				 <input type="hidden" name="buttonFlag" id="buttonFlag" value="">
-				<form class="search">
-					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
-				</form>
-			</div>
-		</section>
+		</div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
-
-
 	</div>
 
 	<script src="/js/external/modernizr.custom.js"></script>
@@ -194,8 +218,8 @@
          				type : 'POST',
 
          				headers : {
-
-         					"Content-Type" : "application/json"
+         				   "Accept" : "application/json",
+						"Content-Type" : "application/json"
          				},
          				data : JSON.stringify({
          					freeBoard : {
@@ -208,12 +232,13 @@
          					parentCommentNo : parentCommentNo
 
          				}),
-         				dataType : "json",
+         				dataType : "text",
 
          				success : function(JSONData, status) { 					
          					console.log("fncAddComment()");
          					$("#addCommentText").val(null);
          					//fncGetCommentList() 
+         					
          					fncGetPageList(currentPage) 
          				}
          			}) 
@@ -223,8 +248,8 @@
 		
 		function fncTextareaReplyComment() {
 			
-					
-            
+			 $("#comment"+$("input[name='commentNo2']").val()).html($("input[name='comment2']").val());
+
 			$("div[name='reply-form']").remove();
 	
 			 
@@ -241,6 +266,7 @@
 		function fncGetComment() {
 			console.log(commentNo);
 			console.log(comment);
+			alert("fncGetComment comment2"+$("input[name='comment2']").val());
 			
         	 
 			 $("#comment"+$("input[name='commentNo2']").val()).html($("input[name='comment2']").val());
@@ -260,7 +286,7 @@
 		
 		 function fncUpdateComment() {
     	
-				
+
 				$.ajax({
 					url : "/community/json/updateComment/",
 					type : 'POST',
@@ -278,7 +304,12 @@
 					success : function(JSONData, status) {
 						 
 						///fncGetCommentList()
+						//$("#startRowNum").val(0);
+						$("#startRowNum").val(2);
+
+
 						fncGetPageList(currentPage) 
+						
 					}
 				})
 			
@@ -309,6 +340,7 @@
 								alert("답글이 달린 댓글은 삭제가 불가능 합니다.");
 							}
 							//fncGetCommentList();
+							currentPage = 1;
 							fncGetPageList(currentPage) 
 						}
 					})
@@ -348,7 +380,6 @@
                  		val.user.userId
                  		
                  		displayValue += '</p>'
-                 		
               			 
               		 }else{
               			displayValue += '<div class="comment comment-answer">'+		
@@ -386,6 +417,8 @@
               			 }
               		}
               		displayValue+= '</div>'
+              		
+              	
               	 });
               	   
  
@@ -415,16 +448,11 @@
                     		 if(buttonFlag != "more"){
                     		 $(".comment-sets").html("");
                     		 JSONData.currentPage = 1;
- 
-                    		
                     		 }else{
-           
-                    			 
-                    			 $("input[name='buttonFlag']").val("");
-                    			 
+                    			 $("input[name='buttonFlag']").val("");           			 
                     		 }
                     	 
-                    		 $(".comment-sets").append(displayValue);
+                    	 $(".comment-sets").html(displayValue);
                     	 
                     	 $(".totalCount").remove();
                     	
@@ -497,6 +525,8 @@
     			$(document).on("click", "#addCommentButton", function () {
     				parentCommentNo =  0;
     				comment = $("#addCommentText").val();    
+    				$("#buttonFlag").val('add');	
+    				currentPage = 1;
     				fncAddComment(); 		
     			})
     			//댓글/답글 삭제
@@ -517,7 +547,8 @@
 			})
 			//댓글/답글수정
 			$(document).on("click", "#updateCommentButton", function () {
-	
+			    $("#startRowNum").val(2);
+				
        		 	commentNo = $(this).parent().find("#commentNo").val();
        		 	comment =  $(this).parent().find("#updateCommentText").val();
        		 	fncUpdateComment();
@@ -545,7 +576,8 @@
 				parentCommentNo = 	$("input[name='parentCommentNo2']").val();
 	
        		 	comment =  $("#addReplyCommentText").val();
-	
+       		 $("#startRowNum").val(2);
+			
 				fncAddComment(); 		
  
 			})
@@ -576,16 +608,14 @@
 
 </body>
 <style type="text/css">
-
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-
-
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
 }
+
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 }
@@ -599,7 +629,8 @@ section {
 }
 
 .page-heading {
-	margin-top: 100px
+	margin-top: 70px;
+	font-size: 30px;
 }
 
 hr {
@@ -632,7 +663,7 @@ hr {
 }
 
 #freeBoardImage {
-	width: 500px;
+	width: 100%;
 	margin-bottom: 20px;
 }
 

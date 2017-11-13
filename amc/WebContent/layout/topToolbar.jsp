@@ -99,6 +99,9 @@
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
+   <!-- sweetalert -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
 </head>
 
 <!--       <script type="text/javascript">
@@ -127,7 +130,7 @@
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
 				}else{
-					location.replace("/product/getGoodsList?menu=manage&searchKeyword=G");
+					location.replace("/product/getGoodsList?menu=manage&searchProdType=G");
 				}
 				
 			})
@@ -282,7 +285,6 @@
 		 
 		
 		function loginUser() { 	
-			alert($("#userId").val());
 			console.log($("#userId").val());
 			var id=$("#userId").val();
 			var pw=$("input:password").val();
@@ -339,16 +341,19 @@
 		 } 
 		//============= 카카오 로그인 =============
 		function loginWithKakao() {
+			alert("일단 들어와바1");
 			Kakao.init('fc5658887af25f840e94144f6722b228');
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
 		 		success: function(authObj) {
+		 			alert("일단 들어와바2");
 		   			var accessToken = Kakao.Auth.getAccessToken();
 		    		Kakao.Auth.setAccessToken(accessToken);
 		    
 		    		Kakao.API.request({
 		    			url: '/v1/user/me',
 		       			success: function(res) {
+		       				alert("일단 들어와바3");
 			        		console.log("response 확인 :: " + res);
 			           		var userId = res.kaccount_email;       
 			           		/* var tempId = userId.replace(".", ","); */
@@ -369,12 +374,13 @@
 										/* password : pw */
 									}),
 
-			                      	success : function(JSONData, status) {    
-			                      		/* alert(JSONData.user.userId); */
-			                       		if(JSONData.user == null ) {
-			                       			alert("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
+			                      	/* success : function(JSONData, status) { */
+			                      		success : function(text) {
+			                      		alert(JSONData);
+			                       		if(userId == '' ) {
+			                       			swal("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
 			                       			$(self.location).attr("href","/user/addUser?email="+userId+"&snslogin=kakao");                 
-			                         	}else if(JSONData.user != ''){
+			                         	}else if(userId != ''){
 			                         		alert("반갑습니다.");  
 			                       			$(self.location).attr("href","/user/loginUser");
 			
@@ -397,7 +403,6 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a:contains('로그아웃')").on("click" , function() {
-				alert("카카오로그아웃");
 				logoutWithKakao();
 			}); 
 		});
@@ -524,8 +529,8 @@
                          <span class="sub-nav-toggle plus"></span>
                          <a href="#">스토어</a>
                          <ul>
-                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchKeyword=G">굿즈</a></li>
-                             <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchKeyword=S">스낵바</a></li>
+                             <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchProdType=G">굿즈</a></li>
+                             <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchProdType=S">스낵바</a></li>
                          </ul>
                      </li>
                      <li class="visible-xs hidden-sm hidden-md hidden-lg">

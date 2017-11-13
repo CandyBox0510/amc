@@ -13,11 +13,7 @@
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
-    
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
+        
     <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
@@ -31,23 +27,33 @@
     <!-- Stylesheets -->
         <!-- jQuery UI -->
         <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
         <!-- Mobile menu -->
         <link href="../css/gozha-nav.css" rel="stylesheet" />
         <!-- Select -->
         <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
-    
         <!-- Custom -->
         <link href="../css/style.css?v=1" rel="stylesheet" />
-
         <!-- Modernizr --> 
         <script src="../js/external/modernizr.custom.js"></script>
-	
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <!--   Sweetalert2 CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+        <!--   semantic UI  / 모달창-->
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+       	<script src="../semantic/semantic.min.js"></script>
+       	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+		<!--아임포트 CDN -->
+		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 </head>
 
 <body>
-  <%-- <jsp:include page="/layout/topToolbar.jsp" /> --%>
    <div class="wrapper">
         <!-- Banner -->
          <div class="banner-top">
@@ -61,8 +67,6 @@
 		<input type="hidden" name="menu" value="${param.menu}"/>
 		<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
 		<input type="hidden" name="userId" value="${sessionScope.user.userId}"/>
-		<%-- <input type="text" name="userId" value="${sessionScope.user.role}"/> --%>
-		
 		
 	   	<!-- Main content -->
         <section class="container">
@@ -80,14 +84,14 @@
 		       						 onclick="location.href='/product/addProduct'">상 품 등 록
 		       					</button>&emsp;
 		       					<button type="button" class="btn btn-primary pull-right"  
-		       						 onclick="location.href='/product/getSnackList?menu=manage&searchKeyword=S'">스낵 상 품 관 리
+		       						 onclick="location.href='/product/getSnackList?menu=manage&searchProdType=S'">스낵 상 품 관 리
 		       					</button>&emsp;
 		       					<button type="button" class="btn btn-primary pull-right" 
-		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchKeyword=G'">굿즈 상 품 관 리
+		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchProdType=G'">굿즈 상 품 관 리
 		       					</button>	
 		      				</c:if> 
 				            	
-<%-- 			            	<div class="col-sm-6 text-right">
+ 			            	<div class="col-sm-6 text-right">
 				                <form id='search-form' method='get' class="search">
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
@@ -96,10 +100,9 @@
 					                    </select>
 				                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
-				                    <input type="text" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				                </form>
 				             </div>
- --%>				             
+ 				             
 				             
 			             </div>
 			        </div>
@@ -114,8 +117,10 @@
 		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='name'>name</a></li>
 		                                <li class="item-wrap"><a href="#" class="tags__item" data-filter='popularity'>popularity</a></li>
 		                            </ul>
-		                    </div>
- -->		              </div>
+		                    </div> -->
+		              </div>
+ 
+
 		
 					 <div class="cinema-wrap">
 		            	<div class="row">
@@ -125,28 +130,33 @@
 		                 
 		                            <div class="col-xs-6 col-sm-3 cinema-item">
 		                                <div class="cinema">
-		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images">
+		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images info-modal-link">
+		                                    <!-- //모달 ui를 클래스에 넣어줌 -->
 		                                        <img id="poster"alt='' src="../images/uploadFiles/${product.prodImage }" >
 		                                        <input type="hidden" id="prodNo" value="${product.prodNo}"/>
 		                                    </a>
-		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="movieNm">${product.prodName }</a>
+		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="movieNm info-modal-link">${product.prodName }</a>
 		                                    <p><strong>가격</strong>  ${product.prodPrice }<br/><strong>판매시작일   </strong>${product.salesOpenDate}<br/><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
                                 	        <!-- <div class="col-sm-6"> -->
 							                    <div class="progress">
-								                      <p class="progress__info">현재 판매달성률 ${product.salesStock}%</p>
+								                      <p class="progress__info">현재 재고량 ${product.salesStock}%</p>
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
 							                    </div><br/><br/><br/>
 							                <!-- </div> -->
-		                                </div>
-		                            </div>
-		                   		        
+		                             	</div>
+	                   		       	</div>
 	                		 </c:forEach>
 						</div>
 		            </div>     
  				</div>
- 			
+ 				
+					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
+					<div class="ui thin info modal"> 
+					  <i class="close icon"></i>
+					    <div class="content" ></div>
+					</div>  
  			
  					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
@@ -162,10 +172,10 @@
 		</div>
 		
 		<div class="clearfix"></div>
- 
- </div>
+	</div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
+
 
 	<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
@@ -181,65 +191,73 @@
         <!-- <script src="js/external/jquery.inview.js"></script> -->
         <script src="../js/external/jquery.waypoints.min.js"></script>
         <script src="../js/external/inview.min.js"></script>
-
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
         <!-- Mobile menu -->
         <script src="../js/jquery.mobile.menu.js"></script>
         <!-- Select -->
         <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
-
         <!-- Form element -->
         <script src="../js/external/form-element.js"></script>
         <!-- Form validation -->
         <script src="../js/form.js"></script>
-
         <!-- Custom -->
         <script src="../js/custom.js"></script>
-		
-		<script type="text/javascript">
-            $(document).ready(function() { 
-                init_Elements();
-            });
-		</script>
-
+</body>
 <script type="text/javascript">
 			   
+	$(function () {
+	    $('.info-modal-link').each(function () {
+	        $(this).on('click', function (e) {                   
+	            e.preventDefault();
+	            var url = $(this).attr('href'); 
+	            $.get(url, function (data) {
+	                $('.info.modal .content').html(data);
+	                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
+	            });
+	        });              
+	    });
+	});			   
+			   
 	function fncGetPageList(currentPage) {
-	    $("#currentPage").val(currentPage)		  
-	  	alert($("#currentPage").val(currentPage));
-	    $("form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchKeyword=G").submit();
-	    $("input[name='searchKeyword']").val(searchKeyword);
+
+	    $("#currentPage").val(currentPage)
+	      $("#search-form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchProdType=G").submit();
+	     $("input[name='searchKeyword']").val(searchKeyword); 
 	}
-	
-	
-	
-	$(document).ready(function() {
-	   
-	    $("button[name='search']").on("click", function() {
-	    	
-	    	fncGetPageList(1);
+
+
+	    $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
+	    $(function() {
+	        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	        $("button[name='search']").on("click", function() {
+	            fncGetPageList(1);
+	        });
+
+	        $(".pagination__next").on("click", function() {
+	        	
+	            searchKeyword = $("input[name='searchKeyword']").val(); 
+
+	            var currentPage = $("#currentPage").val()
+	            
+	            currentPage = parseInt(currentPage) + 1
+	          
+	            fncGetPageList(currentPage);
+	        });
+
+	        $(".pagination__prev").on("click", function() {
+	            var currentPage = $("#currentPage").val()
+	      
+	            currentPage = parseInt(currentPage) - 1
+	            
+	            fncGetPageList(currentPage);
+	        	
+	        });
 	    });
-	    
-	    $(".pagination__next").on("click", function() {		
-	    	alert("여기들어오니?");
-	    	/* searchKeyword = $("input[name='searchKeyword']").val(); */
-	   
-	        var currentPage = $("#currentPage").val()
-	        alert($("#currentPage").val());
-	        currentPage = parseInt(currentPage)+1
-	        alert(currentPage);
-	        fncGetPageList(currentPage);
-	    });
-	    
-	    $(".pagination__prev").on("click", function() {
-	    	 var currentPage = $("#currentPage").val()
-	         currentPage = parseInt(currentPage)-1
-		   	 
-	        fncGetPageList(currentPage);
-	    });
-	});
 
 </script>
-
 <style type="text/css">
  	
  	#body{ padding-top: 100px; }
@@ -262,9 +280,7 @@
 		  display: block;
 		  margin-bottom: 5px;
 		  margin-top: 5px;
-		  
 	} 
-	
 	html{
         height: auto;
   	}
@@ -302,9 +318,29 @@ progress {
 
 .progress .progress__info {
   font-weight: bold;
-  margin-bottom: 6px;
+  margin-bottom: 0px;
     margin-top: 0px;
 }
-</style>
 
+.ui.modal {
+  display: fade in;
+  position: fixed;
+  z-index: 1001;
+  top: 0%;
+  left: 50%;
+  text-align: center;
+  vertical-align: top;
+  background: #000000;
+  border: none;
+  box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2);
+  -webkit-transform-origin: 50% 25%;
+  transform-origin: 50% 25%;
+  border-radius: 0.28571429rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  will-change: top, left, margin, transform, opacity;
+}
+</style>
 </html>

@@ -72,52 +72,29 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
         </header>
         
-        <!-- Search bar -->
-        <div class="search-wrapper" id="body">
-            <div class="container container--add">
-                <form id='search-form' method='get' class="search">
-                    <input type="text" class="search__field" placeholder="Search">
-                    <select name="sorting_item" id="search-sort" class="search__sort" tabindex="0">
-                        <option value="1" selected='selected'>By title</option>
-                        <option value="2">By year</option>
-                        <option value="3">By producer</option>
-                        <option value="4">By title</option>
-                        <option value="5">By year</option>
-                    </select>
-                    <button type='submit' class="btn btn-md btn--danger search__button">search a movie</button>
-                </form>
-            </div>
-        </div>
-        
         <!-- Main content -->
-                <form id="login-form" class="login" method='get' novalidate=''>
-                    <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+                <form id="loginform" class="login" method='get' novalidate='' >
+                    <p class="login__title">sign in <br><span class="login-edition">welcome to Americode Cinema!</span></p>
 
                     <div class="social social--colored">
-                            <a href='/user/kakaoGetCode'>
-                            	<img src="../images/user/kakaobtn.png" class="social_used">
-                            </a>
-                            <a href='/user/Naver'>
-                            	<img src="../images/user/kakaobtn.png" class="social_used">
-                            </a>
-                            <a href='#'>
-                            	<img src="../images/user/kakaobtn.png" class="social_used">
-                            </a>
+                            <a href='javascript:loginWithKakao()' class="social_variant"><img src="../images/user/kakaobtn.png"></a>&emsp;
+                            <a href='/sns/naver' class="social_variant"><img src="../images/user/naverbtn.PNG" width='34px'></a>
                     </div>
 
-                    <p class="login__tracker">or</p>
+                    <p class="login__tracker">환영합니다<br/> 좋은시간보내세요!</p>
                     
                     <div class="field-wrap">
-                    <input type='email' placeholder='Email' name='userId' id="userId" class="login__input">
-                    <input type='password' placeholder='Password' name='password' id="password" class="login__input">
+                        <input type='email' placeholder='Email'  id='loginId' name='userId' class="login__input" onkeypress="if(event.keyCode==13) {otherlogin(); return false;}">
+                        <input type='password' placeholder='Password' id='loginpassword' name='password' class="login__input" onkeypress="if(event.keyCode==13) {otherlogin(); return false;}">
 
-                    <input type='checkbox' id='#informed' class='login__check styled'>
-                    <label for='#informed' class='login__check-info'>remember me</label>
-                     </div>
+	                    <input type='checkbox' id='#informed' class='login__check styled'>
+	                    <label for='#informed' class='login__check-info'>아이디 저장</label>
+                    </div>
                     
                     <div class="login__control">
-                        <button type='submit' id="login" class="btn btn-md btn--warning btn--wider">sign in</button>
-                        <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+	                    <button type='button' id ='loginUser' class="btn btn-md btn--warning btn--wider">로그인</button>
+	                    <a href="/user/authForm.jsp" class="login__tracker form__tracker">회원 가입</a>
+	                    <a href="/user/findUser.jsp" class="login__tracker form__tracker">아이디/비밀번호 찾기</a>
                     </div>
                 </form>
     </div>
@@ -152,73 +129,72 @@
     
 </body>
     	<script type="text/javascript">
-    	//============= "로그인"  Event 연결 =============
-		$( function() {
+     	//============= "로그인"  Event 연결 =============
+     	$("#loginUser").on("click",function(){
+     		otherlogin();
+     	});
+     		
+		function otherlogin() { 	
+			var id=$("#loginId").val();
+			var pw=$("#loginpassword").val();
 			
-			$("#userId").focus();
+			if(id == null || id.length <1) {
+				alert('ID 를 입력하지 않으셨습니다.');
+				$("#loginId").focus();
+				return;
+			}
 			
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#login").on("click" , function() {
-				var id=$("#userId").val();
-				var pw=$("input:password").val();
-				
-				if(id == null || id.length <1) {
-					alert('ID 를 입력하지 않으셨습니다.');
-					$("#userId").focus();
-					return;
-				}
-				
-				if(pw == null || pw.length <1) {
-					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
-					return;
-				}
-				
-				$.ajax( 
-						{	
-							url : "/user/json/loginUser",
-							method : "POST" ,
-							async : false,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							data : JSON.stringify({
-								userId : id,
-								password : pw
-							}),
-							success : function(JSONData , status) {
-
-								//Debug...
-								//alert(status);
-								//alert("JSONData : \n"+JSONData);
-								//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-								//alert("JSONData : "+ JSONData );
-								//alert("status : "+ status );
-									//alert(JSONData.role);
-									console.log(JSONData.userId);
-									
-									//alert("로그인유저");
-									
-									if( JSONData.role == 'not' ){
-										alert("탈퇴한회원...");
-									}else if( JSONData !='' ){
-									//$(window.parent.document.location).attr("href","/index.jsp");
-									$(self.location).attr("href","/index.jsp");
-									
-									}else{
-										alert("아이디 , 패스워드를 확인하시고 다시 로그인1...");
-									}
-								},
-							error:function(request,status,error){
-								//alert(error);
-								//alert("아이디 , 패스워드를 확인하시고 다시 로그인2...");
-						    }
-					}); 
-				
-			});
-		});	
-		//============= 회원원가입화면이동 =============
+			if(pw == null || pw.length <1) {
+				alert('패스워드를 입력하지 않으셨습니다.');
+				$("#loginpassword").focus();
+				return;
+			}
+			
+			$.ajax( 
+				{	
+					url : "/user/json/loginUser",
+					method : "POST" ,
+					async : false,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					data : JSON.stringify({
+						userId : id,
+						password : pw
+					}),
+					success : function(JSONData , status) {
+	
+						//Debug...
+						//alert(status);
+						//alert("JSONData : \n"+JSONData);
+						//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+						//alert("JSONData : "+ JSONData );
+						//alert("status : "+ status );
+							//alert(JSONData.role);
+							console.log(JSONData.userId);
+							
+							//alert("로그인유저");
+							
+							if( JSONData.role == 'not' ){
+								alert("탈퇴한회원...");
+							}else if( JSONData !='' ){
+							//$(window.parent.document.location).attr("href","/index.jsp");
+							$(self.location).attr("href","/index.jsp");
+							
+							}else{
+								alert("아이디 , 패스워드를 확인하시고 다시 로그인1...");
+							}
+						},
+					error:function(request,status,error){
+						//alert(error);
+						//alert("아이디 , 패스워드를 확인하시고 다시 로그인2...");
+				    }
+			}); 
+     	}	
+     	
+     	
+ 		//============= 회원원가입화면이동 =============
 		$( function() {
 			/* $("a[href='#' ]").on("click" , function() {
 				self.location = "/user/authForm.jsp"
@@ -294,7 +270,7 @@
     	
 		</script>
 <style type="text/css">
- 	#body{ padding-top: 100px; }
+ 	#loginform{ padding-top: 150px; }
  	
  	.social-used {
 	  width: 10px;
