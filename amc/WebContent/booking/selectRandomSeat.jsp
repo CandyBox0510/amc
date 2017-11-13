@@ -278,7 +278,6 @@ function kakaoPay(){
             <div class="choose-sits">
                 <div class="choose-sits__info choose-sits__info--first">
                     <ul>
-                        <li class="sits-price marker--none"><strong>랜덤으로 선택되어 홀딩된 좌석입니다.</strong></li>
                         <li class="sits-price marker--none"><strong>화면을 나가면 좌석 홀딩이 종료됩니다.</strong></li>
                         <li class="sits-price marker--none">
                         	<button onclick="kakaoPay()" class="btn--pay def">결제하기</button>

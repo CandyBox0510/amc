@@ -138,6 +138,13 @@
 
         <!-- Custom -->
         <script src="/js/custom.js"></script>
+        
+  	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+        
 	
 </body>
 	<script type="text/javascript">
@@ -153,12 +160,12 @@
 			
 			$('td:nth-child(2)')
 				.bind('click',function(){
-					self.location = '../product/getProduct?prodNo='+$(this).find('input:hidden').val()+'&menu=manage';
+					self.location = '/product/getProduct?prodNo='+$(this).find('input:hidden').val()+'&menu=manage';
 				});
 			
 			$('td:nth-child(3)')
 				.bind('click',function(){
-					self.location = '../user/getUser?userId='+$(this).text().trim();
+					self.location = '/user/getUser?userId='+$(this).text().trim();
 				});
 			
 			$('td:nth-child(6):contains("배송하기")')
@@ -225,7 +232,7 @@
 		$(function(){
 			
 			$.ajax({
-				url : '../product/json/getIndexProductList',
+				url : '/product/json/getIndexProductList',
 				method : 'get',
 				dataType : 'json',
 				headers : {
@@ -233,7 +240,6 @@
 					'Content-Type' : 'application/json'
 				},
 				success : function(data){
-					alert("여긴드어옴?");
 					var i;
 					for(i=0; i<4 ; i++){
 						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].prodImage!=null ? data.HP[i].prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF'));
@@ -253,7 +259,14 @@
 		});
 		
 	</script>
-	<style>
-		#body{ padding-top: 100px; }
-	</style>
+<style>
+#body{ padding-top: 100px; }
+html{
+     height: auto;
+}
+label {
+	display: inline-block;
+	width: 10em;
+}
+</style>
 </html>

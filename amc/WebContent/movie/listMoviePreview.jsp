@@ -1,97 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 
-<%@ page language="java" contentType="text/html;"
-    pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-
-<!DOCTYPE html>
-<html class="no-js" lang="ko">
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+            <!DOCTYPE html>
+            <html>
 
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+   
 </head>
 
-<body>
 
-    <div class="wrapper">
-   		
-        <div class="banner-top">
+<body>
+    
+   <div class="wrapper">
+        <!-- Banner -->
+         <div class="banner-top">
             <img alt='top banner' src="../images/banners/space.jpg">
-        </div>
-        <header class="header-wrapper header-wrapper--home">
+        </div> 
+          <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
-			
 			<!-- ToolBar End /////////////////////////////////////-->
-   		</header>
+		  </header>  
     <div class="container" id="body">
-                
-        <div class="col-sm-12">
+        
+        <!-- Main content -->
+        <!--  <section class="container"> -->
+        
+                <!-- Search bar -->
+ 			<div class="col-sm-12">
  			
-                <h1 class="page-heading"> ÏãúÏÇ¨Ìöå ÏòÅÌôî </h1>   
-                
-                   <div class="col-md-2 text-right">          
+                <h1 class="page-heading"> Ω√ªÁ»∏ øµ»≠  </h1>                
+				
+			       <div class="col-md-2 text-right">          
                     <form class="form-inline" name="detailForm">
                  
-				    <label class="sr-only" for="searchKeyword">Í≤ÄÏÉâÏñ¥</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="Í≤ÄÏÉâÏñ¥"
+				    <label class="sr-only" for="searchKeyword">∞ÀªˆæÓ</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="∞ÀªˆæÓ"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  	 </form>
 				   </div>
 				   		
 				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
-				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	     
-        		  
-				  <!-- PageNavigation ÏÑ†ÌÉù ÌéòÏù¥ÏßÄ Í∞íÏùÑ Î≥¥ÎÇ¥Îäî Î∂ÄÎ∂Ñ -->
+				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"></i>	  
+			        
+             		  
+				  <!-- PageNavigation º±≈√ ∆‰¿Ã¡ˆ ∞™¿ª ∫∏≥ª¥¬ ∫Œ∫– -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <!-- Login Common PlugIn -->
 				  <jsp:include page="/layout/loginModal.jsp" />   
 				  
-			  <hr/>   
+				  <hr/>   
 				  
 				  <div class="widget" align="center">	
-					  <button type="button" class="btn btn-thumnail">Ïç∏ÎÑ§ÏùºÎ°ú Î≥¥Í∏∞</button>
-					  <button type="button" class="btn btn-calendar">Ï∫òÎ¶∞ÎçîÎ°ú Î≥¥Í∏∞</button>
+					  <button type="button" class="btn btn-thumnail">ΩÊ≥◊¿œ∑Œ ∫∏±‚</button>
+					  <button type="button" class="btn btn-calendar">ƒ∂∏∞¥ı∑Œ ∫∏±‚</button>
 					 
-					  <!-- <input type="submit" value="Ï∫òÎ¶∞ÎçîÎ°ú">   -->
+					  <!-- <input type="submit" value="ƒ∂∏∞¥ı∑Œ">   -->
 					
 				  </div>
-       
-        
+              
                 <div class="cinema-wrap">
 	            	<div class="row">
 				 		<c:set var="i" value="0" />
-                		 <c:forEach var="preview" items="${list }">
+                		 <c:forEach var="preview" items="${list}">
                 		 <c:set var="i" value="${i+1 }" />
                 		 
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
+	                             
 	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
-	                                        <img id="poster"alt='' src="${preview.movie.postUrl}" >                                        
+	                                        <img id="poster"alt='' src="${preview.movie.postUrl}">                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm}</a>
+	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Í∞êÎèÖ :${preview.movie.directors} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ïò§ÌîàÎÇ†Ïßú :${preview. ticketOpenDate} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ÏÉÅÏòÅÎÇ†Ïßú :${preview.screenOpenTime} </strong> </p>
-	                    	     		<p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Í∞ÄÍ≤©  :${preview. ticketPrice} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∞®µ∂ :${preview.movie.directors} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ø¿«¬≥Ø¬• :${preview.ticketOpenDate} </strong> </p>
+	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ªÛøµ≥Ø¬• :${preview.screenOpenTime} </strong> </p>
+	                    	     		<p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∞°∞›  :${preview.ticketPrice} </strong> </p>
+	                    	     		
 	                    	    <div style="text-align: left;">
     						    
     						    </div>								
     							 
-    							 <input type='hidden' name='test${movie.movieNo }'  value='${movie.movieNo }'>
-     						
+    							 <input type='hidden' name='test${preview.movie.movieNo }'  value='${preview.movie.movieNo }'>
+     							${preview.movie.movieNo }
 							    <span style="line-height:0%">
-							    <c:set var="name" value="${movie.wishList.wishNo}"/>
-	 								<c:if test="${name eq '0'}">
-									      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;"> 
-									     	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+							    <c:set var="name" value="${preview.movie.wishList.wishNo}"/>
+							   ${preview.movie.wishList.wishNo}
+	 								<c:if test="${empty name}">
+								<%-- bootstrap icon¿Ã ¿€µø¿Ã µ«¡˙ æ ¿Ω      --%>
+								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
+										text-align : center; margin:0 auto;">   --%>	
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart-o' id="${preview.movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+											<input type='hidden' id='scMovieNo' 	 value="${preview.movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
-								    <c:if test="${name ne '0'}">
-									     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
-									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
+								    <c:if test="${!empty name}">
+									    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-heart' id="${preview.movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    	<input type='hidden' id='scMovieNo' 	 value="${preview.movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
 									</c:if>	
@@ -102,19 +112,21 @@
 	                            <span style="line-height:0%">
 	                             
 	                            <input type='hidden' name='screenMovieNo'  value='"+val.movieNo+"'>	                                                  
-	                            <i class='fa fa-bell' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">ÏòàÎß§ </i>   
+	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='fa fa-phone' id='reserve-ticket' style="color:#FB1D04; text-align : center; margin:0 auto;">øπ∏≈ </i>   
 	                            </span>
-	                         
-	                                    
+	                          
+	                           
 	                                    	     
 	                                </div>
 	                            </div>                      
 	                    		
                 		 </c:forEach>
+                		  
 					</div>
 	           </div>     
-       
-          <div class="coloum-wrapper">
+                              
+ 				
+ 					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
 	                    	<c:if test="${resultPage.currentPage != 1 }">
 	                            <a href='#' class="pagination__prev">prev</a>
@@ -126,27 +138,33 @@
 	                      
 	                </div>
 	               
-              </div>    	
-			
-
+              </div>
+              
+              
         
-        <div class="clearfix"></div>
-
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+      
+    </div>
+    	 <div class="clearfix"></div>	
 	
+	</div>	
+	
+	   
         
-    </div> <!--Ïª®ÌÖåÏù¥ÎÑà ÎÅù -->
-
-  
-		    <script src="/js/custom.js"></script>
-		    
-		    
-	<!--  Semantic UI modal windows pop-up Ïö©  -->
+	 
+		<jsp:include page="/layout/bottomToolbar.jsp" />
+		
+		
+        <!-- Custom ¿Ã∞‘¿÷æÓæﬂ¡ˆ Ω∫≈©∑—≥ª∏±Ω√topπˆ∆∞¿÷¿Ω!!!!!!!!!!! -->
+       
+		<!-- ------------------------------------  -->
+		<script src="/js/custom.js"></script>
+		
+		<!--  Semantic UI modal windows pop-up øÎ  -->
 		<div class="ui mini modal" >
 		<!-- <div class="center"> -->	
 		<div style="border: 1px dashed #BDBDBD; background-color: #FBFCFC;   margin-left: auto;
  		 margin-right: auto; padding: 5px; text-align: center; line-height: 30px; vertical-align:middle;">
-		 <div class="header">ÏòÅÌôî ÏùåÏÑ± Í≤ÄÏÉâ Ï§ë....</div>
+		 <div class="header">øµ»≠ ¿Ωº∫ ∞Àªˆ ¡ﬂ....</div>
 		  <div class="content" >
 		   	<p>
 		   		<form id="webspeech"  method="POST">  
@@ -164,7 +182,7 @@
 									</div>
 						            
 						             
-						            <input type="button" value="ÌÅ¥Î¶≠ÌõÑ ÎßêÌï¥Ï£ºÏÑ∏Ïöî " id="speech-btn" class="positive ui button">  
+						            <input type="button" value="≈¨∏Ø»ƒ ∏ª«ÿ¡÷ººø‰ " id="speech-btn" class="positive ui button">  
 						            
 						            <br/><br/>
 						        
@@ -172,7 +190,7 @@
 						        		   <i class='fa fa-check fa-3x' id="voidSearchOk" style="color:#3498DB"></i>  &nbsp;	
      								 
 						        	  <div class="ui red deny button">
-									              ÎÇòÍ∞ÄÍ∏∞ 
+									              ≥™∞°±‚ 
 							     	 </div>
 						           </div>
 						             
@@ -183,13 +201,14 @@
       							 </div>
       							 </div>
 						 </div>
-		   		</form>
-		  </div>
-	</div>
-</div>
-			    
+		   			</form>
+				  </div>
+			</div>
+		</div>
 	
 </body>
+       
+    
   <!--  ///////////////////////// JavaScript ////////////////////////// -->   
    
     <script type="text/javascript">
@@ -197,265 +216,292 @@
 			    	
 			    	//alert("222")
 			        $("#currentPage").val(currentPage)
-			        $(".form-search").attr("method","POST").attr("action", "/movie/getMovieList?menu=commingsoon").submit();
+			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=movie").submit();
 			    }
 			    
-			     //============= "Í≤ÄÏÉâ"  Event  Ï≤òÎ¶¨ =============	
+			     //============= "∞Àªˆ"  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "button.btn.btn-default" ).on("click" , function() {
 						fncGetPageList(1);
 					});
 					
 				 });
-				
-				//============= "Í≤ÄÏÉâ Icon"  Event  Ï≤òÎ¶¨ =============	
+			     
+				 //============= "∞Àªˆ Icon"  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( ".btn.btn-md.btn--danger.search__button").on("click" , function() {
+						
+						//alert("searchbutton called")
+						fncGetPageList(1);
+					});
+					
+				 });
+				
+				//============= "∞Àªˆ Icon"  Event  √≥∏Æ =============	
+				 $(function() {
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( "#searchIcon").on("click" , function() {
 						
-						alert("searchbutton called")
+						//alert("searchbutton called")
 						fncGetPageList(1);
 					});
 					
 				 });
 				
 				
-				//============= "Banner Top Clieck "  Event  Ï≤òÎ¶¨ =============	
+				//============= "Banner Top Clieck "  Event  √≥∏Æ =============	
 				 $(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$( ".banner-top").on("click" , function() {
 						
-						alert("Banner Top Clieck ")
+						//alert("Banner Top Clieck ")
 						self.location = "/index.jsp";
 					});
 					
 				 });
 				
 				   
-					//============= "Ï∫òÎ¶∞ÎçîÎ°ú Î≥¥Í∏∞"  Event  Ï≤òÎ¶¨ =============	
-					$(function() {
-						 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-calendar" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=calendar";	
-						});	
-					});
-					
-					//============= "Ïç∏ÎÑ§ÏùºÎ°ú Î≥¥Í∏∞"  Event  Ï≤òÎ¶¨ =============	
-					$(function() {
-						 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-						$( "button.btn.btn-thumnail" ).on("click" , function() {	
-							 self.location = "/movie/getMovieList?menu=commingsoon";	
-						});	
-					});
-				
-				  //============= "ÏùåÏÑ± Í≤ÄÏÉâ Ïã§Ìñâ Ìï®Ïàò " Ï≤òÎ¶¨ =============	
-				   function fncWebSpeech() {
-			    		// document.addPurchase.submit();
-			    		// alert("speech post call...")
-			    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
-			    	}
-			    	
-			    	$(function() {
-			    			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			    			//==> 1 Í≥º 3 Î∞©Î≤ï Ï°∞Ìï© : $("tagName.className:filterÌï®Ïàò") ÏÇ¨Ïö©Ìï®.	
-			    			 $( "#voidSearchOk" ).on("click" , function() {
-			    					//Debug..
-			    					// <!-- <a href="javascript:history.go(-1)"></a> -->
-			    					//console.log("value : "+$("#voidSearchOk" ).val());
-			    					fncWebSpeech()
-			    			});
-			    	});	
-						
-				
-				
-				
-				//============= "WishList(Ï∞ú) Event Ï≤òÎ¶¨" DeleteWish Event  Ï≤òÎ¶¨ =============	
+				//============= "ƒ∂∏∞¥ı∑Œ ∫∏±‚"  Event  √≥∏Æ =============	
 				$(function() {
-					 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					 
-					  $(document).on("click", ".fa-heart-o", function () {
-
-							
-							//var movieNo = $(this).next().val();		
-							//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "button.btn.btn-calendar" ).on("click" , function() {	
+						self.location = "/movie/getMovieList?menu=calendar_preview";	
+						 
+					});	
+				});
+				
+				//============= "ΩÊ≥◊¿œ∑Œ ∫∏±‚"  Event  √≥∏Æ =============	
+				$(function() {
+					 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "button.btn.btn-thumnail" ).on("click" , function() {	
+						 self.location = "/movie/getMovieList?menu=preview";	
+					});	
+				});
+				
+				$(function() {
+	    			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	    			//==> 1 ∞˙ 3 πÊπ˝ ¡∂«’ : $("tagName.className:filter«‘ºˆ") ªÁøÎ«‘.	
+	    			 $( "#voidSearchOk" ).on("click" , function() {
+	    					//Debug..
+	    					// <!-- <a href="javascript:history.go(-1)"></a> -->
+	    					//console.log("value : "+$("#voidSearchOk" ).val());
+	    					fncWebSpeech()
+	    			});
+	    	   });	
 			
-							var movieNo = $(this).find('#scMovieNo').val();		
-							var userId = $(this).find('#userId').val();			
-							
-							alert("movieNo: " + movieNo); 					
-							alert("userId: " + userId); 
-							
-					 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-						    
-								
-							
-							if(userId == null || userId == ''){
-								alert("Î°úÍ∑∏Ïù∏ ÌõÑ Ïù¥Ïö© Í∞ÄÎä•Ìï©ÎãàÎã§.");
-								return;
-							}
-							
-										
-							$.ajax( 
-									{
-										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-										type : "GET" ,							
-									}).done(function(data) {
-								//Ï†ïÏÉÅ ÌÜµÏã†Ïù∏ Í≤ΩÏö∞
-								if (data == 'add') {
-									var msg = 'Ï∞úÌïòÍ∏∞ Ïã†Ï≤≠';
-									alert(msg);
-								} else {
-									alert("Ï∞úÌïòÍ∏∞ Ï∑®ÏÜå");
-								}
-							});
-						
-					})
-					 
-					 $(document).on("click", ".fa-heart", function () {
-							
-							
-						 //var movieNo = $(this).next().val();		
-						 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
-		
-						var movieNo = $(this).find('#scMovieNo').val();		
-						var userId = $(this).find('#userId').val();			
-						
-						alert("movieNo: " + movieNo); 					
-						alert("userId: " + userId); 
-						
-						
-						$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
+			   //============= "¿Ωº∫ ∞Àªˆ Ω««‡ «‘ºˆ " √≥∏Æ =============	
+			   function fncWebSpeech() {
+		    		// document.addPurchase.submit();
+		    		// alert("speech post call...")
+		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+		       }
+				
+			//============= "WishList(¬Ú) Event √≥∏Æ" DeleteWish Event  √≥∏Æ =============	
+			$(function() {
+				 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 
+				  $(document).on("click", ".fa-heart-o", function () {
+					  
+					  var movieNo = $(this).find('#scMovieNo').val();		
+					  var userId = $(this).find('#userId').val();	
+					  
+					  //alert($(this).attr('class'));
+					  //var movieNo = $(this).next().val();		
+					  //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+	
+				
 					
-						if(userId == null || userId == ''){
-							alert("Î°úÍ∑∏Ïù∏ ÌõÑ Ïù¥Ïö© Í∞ÄÎä•Ìï©ÎãàÎã§.");
-							return;
-						}
+					  //alert("movieNo: " + movieNo); 					
+					  //alert("userId: " + userId);  
+					  
+					 
+					  
+					  if(userId == null || userId == ''){
+							alert("∑Œ±◊¿Œ »ƒ ¿ÃøÎ ∞°¥…«’¥œ¥Ÿ.");
+							return 
+						} else {
 						
+
+						alert($(this).attr('class'));
+						//var movieNo = $(this).next().val();		
+						//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+		
+					
+						
+						//alert("movieNo: " + movieNo); 					
+						//alert("userId: " + userId);  
+						
+				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+					    
 									
 						$.ajax( 
 								{
 									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
 									type : "GET" ,							
 								}).done(function(data) {
-							//Ï†ïÏÉÅ ÌÜµÏã†Ïù∏ Í≤ΩÏö∞
+							//¡§ªÛ ≈ÎΩ≈¿Œ ∞ÊøÏ
 							if (data == 'add') {
-								var msg = 'Ï∞úÌïòÍ∏∞ Ïã†Ï≤≠';
+								var msg = '¬Ú«œ±‚ Ω≈√ª fa fa-heart-o¿Œ ∞ÊøÏ';
 								alert(msg);
 							} else {
-								alert("Ï∞úÌïòÍ∏∞ Ï∑®ÏÜå");
+								alert("¬Ú«œ±‚ √Îº“");
 							}
 						});
-					})
-			
-			});
-				
+						
+						}
+					
+				})
 				 
-			//============= "ÏòàÏïΩ  Event Ï≤òÎ¶¨"  Event  Ï≤òÎ¶¨ =============	
-			$(function() {
-				 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$("span:contains('ÏòàÎß§')" ).on("click" , function() {
-					 self.location = "/booking/getScreenMovieList";	
-				});	
-			});
+				 $(document).on("click", ".fa-heart", function () {
+					 
+				 var movieNo = $(this).find('#scMovieNo').val();		
+				 var userId = $(this).find('#userId').val();	
+					 
+					 
+				 if(userId == null || userId == ''){
+							alert("∑Œ±◊¿Œ »ƒ ¿ÃøÎ ∞°¥…«’¥œ¥Ÿ.");
+							exit();
+				} 
+						
+					 alert($(this).attr('class'));	
+					 //var movieNo = $(this).next().val();		
+					 //var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
 				
-		    $(function() {
-		        //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		        $("button[name='search']").on("click", function() {
-		        	alert("222")
-		      
-		            fncGetPageList(1);
-		        });
-      
-		    });
+					//alert("movieNo: " + movieNo); 					
+					//alert("userId: " + userId); 
+					
+					
+					$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
+				
+					
+					
+								
+					$.ajax( 
+							{
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								type : "GET" ,							
+							}).done(function(data) {
+						//¡§ªÛ ≈ÎΩ≈¿Œ ∞ÊøÏ
+						if (data == 'delete') {
+							var msg = '¬Ú«œ±‚ √Îº“';
+							alert(msg);
+						} else {
+							alert("¬Ú«œ±‚ Ω≈√ª  fa-heart");
+						}
+					});
+				})
+			 
+		});
+					
+					 
+		//============= "øπæ‡  Event √≥∏Æ"  Event  √≥∏Æ =============	
+		$(function() {
+			 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("span:contains('øπ∏≈')" ).on("click" , function() {
+				 self.location = "/booking/getScreenMovieList";	
+			});	
+		});
+			
+	    $(function() {
+	        //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	        $("button[name='search']").on("click", function() {
+	        	// alert("222")
+	      
+	            fncGetPageList(1);
+	        });
+     
+	    });
 
-            $(document).ready(function() {
-                init_CinemaList();
-                
-                //alert($('html').height() )
-                //alert(window.outerHeight)
-                if($('html').height() < window.outerHeight){
-                	$('html').css('height', '100%');
-                }
-                
-                $("#movie-search-sort").css("width","200px");
-            });
-            
-            
-     	   (function (window, undefined) {
-               "use strict";
-               
-               var document = window.document,
-                   docElement = document.documentElement,
-                   SpeechRecognition = window.webkitSpeechRecognition ||
-                                       window.mozSpeechRecognition ||
-                                       window.msSpeechRecognition ||
-                                       window.oSpeechRecognition ||
-                                       window.SpeechRecognition;
-               function addClass(className) {
-                   docElement.className = docElement.className + ' ' + className;
-               }
-               docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
-               if ( SpeechRecognition !== undefined ) {
-                   addClass('feature');
-               } else {
-                   addClass('no-feature');
-               }
-           })(window);
-   	   
-   	   
-   	   var speech_text ="";   
-   	    
-          (function speechFunction(window, undefined) {
+         $(document).ready(function() {
+             init_CinemaList();
+             
+             //alert($('html').height() )
+             //alert(window.outerHeight)
+             if($('html').height() < window.outerHeight){
+             	$('html').css('height', '100%');
+             }
+             
+             $("#movie-search-sort").css("width","200px");
+         });
+         
+
+  	   (function (window, undefined) {
               "use strict";
-              var speechBtn = document.getElementById('speech-btn'),
+              
+              var document = window.document,
+                  docElement = document.documentElement,
                   SpeechRecognition = window.webkitSpeechRecognition ||
                                       window.mozSpeechRecognition ||
                                       window.msSpeechRecognition ||
                                       window.oSpeechRecognition ||
-                                      window.SpeechRecognition,
-                  speechTranscript = document.getElementById('speech-transcript'),
-                  
-                 
-                  sr;
-              if ( SpeechRecognition !== undefined ) {
-                  sr = new SpeechRecognition();
-                  speechBtn.addEventListener('click', function () {
-                      sr.start();
-                  });
-                  sr.onaudiostart = function () {
-                      speechBtn.setAttribute('disabled', 'disabled');
-                      speechBtn.value = "ÎßêÌï¥Ï£ºÏÑ∏Ïöî!";                             
-                      
-                  };
-                  sr.onspeechstart = function () {
-                      speechBtn.value = "Îì£Í≥† ÏûàÏäµÎãàÎã§....";
-                  };
-                  sr.onspeechend = function () {
-                      speechBtn.value = '...Í∑∏Î¶¨Í≥† ÎÅùÎÇ¥Ï£ºÏÑ∏Ïöî...';
-                  };
-                  sr.onend = function () {
-                      speechBtn.value = 'Í≥ÑÏÜç ÌïòÎ†§Î©¥ Ïó¨Í∏∞Î•º ÌÅ¥Î¶≠Ìï¥Ï£ºÏÑ∏Ïöî!';
-                      speechBtn.removeAttribute('disabled');
-                  };
-                  sr.onresult = function (event) {
-                      speechTranscript.value = event.results[0][0].transcript;
-                     
-                      console.log("speechTranscript :: " + speechTranscript.value);
-                      $("#voidSearchOk").val(speechTranscript.value);
-                      // alert("speeach2 : "+$("#voidSearchOk").val()); 
-                      
-                      var voiceSearch = $("#voidSearchOk").val();
-                      $("#voiceSearchKeyword").val(voiceSearch);
-                      //alert("speeach2"  + voiceSearch);                  
-                      
-                  };
+                                      window.SpeechRecognition;
+              function addClass(className) {
+                  docElement.className = docElement.className + ' ' + className;
               }
-         })(window);
-          
-      	//============= "ÏùåÏÑ± Í≤ÄÏÉâ Icon"  Event  Ï≤òÎ¶¨ =============	
+              docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, '$1js$2');
+              if ( SpeechRecognition !== undefined ) {
+                  addClass('feature');
+              } else {
+                  addClass('no-feature');
+              }
+          })(window);
+  	   
+  	   
+  	   var speech_text ="";   
+  	    
+         (function speechFunction(window, undefined) {
+             "use strict";
+             var speechBtn = document.getElementById('speech-btn'),
+                 SpeechRecognition = window.webkitSpeechRecognition ||
+                                     window.mozSpeechRecognition ||
+                                     window.msSpeechRecognition ||
+                                     window.oSpeechRecognition ||
+                                     window.SpeechRecognition,
+                 speechTranscript = document.getElementById('speech-transcript'),
+                 
+                
+                 sr;
+             if ( SpeechRecognition !== undefined ) {
+                 sr = new SpeechRecognition();
+                 speechBtn.addEventListener('click', function () {
+                     sr.start();
+                 });
+                 sr.onaudiostart = function () {
+                     speechBtn.setAttribute('disabled', 'disabled');
+                     speechBtn.value = "∏ª«ÿ¡÷ººø‰!";                             
+                     
+                 };
+                 sr.onspeechstart = function () {
+                     speechBtn.value = "µË∞Ì ¿÷Ω¿¥œ¥Ÿ....";
+                 };
+                 sr.onspeechend = function () {
+                     speechBtn.value = '...±◊∏Æ∞Ì ≥°≥ª¡÷ººø‰...';
+                 };
+                 sr.onend = function () {
+                     speechBtn.value = '∞Ëº” «œ∑¡∏È ø©±‚∏¶ ≈¨∏Ø«ÿ¡÷ººø‰!';
+                     speechBtn.removeAttribute('disabled');
+                 };
+                 sr.onresult = function (event) {
+                     speechTranscript.value = event.results[0][0].transcript;
+                    
+                     console.log("speechTranscript :: " + speechTranscript.value);
+                     $("#voidSearchOk").val(speechTranscript.value);
+                     // alert("speeach2 : "+$("#voidSearchOk").val()); 
+                     
+                     var voiceSearch = $("#voidSearchOk").val();
+                     $("#voiceSearchKeyword").val(voiceSearch);
+                     //alert("speeach2"  + voiceSearch);                  
+                     
+                 };
+             }
+        })(window);
+         
+         
+     	//============= "¿Ωº∫ ∞Àªˆ Icon"  Event  √≥∏Æ =============	
 		  $(function() {
-			 //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "#voidSearchIcon").on("click" , function() {
 				//alert("modal start...")
 				$('.ui.modal')  
@@ -466,13 +512,15 @@
 			
 		 }); 
 	    	
+
+         
+         
 	            
 		</script>
 		
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
 
-   
 	 #body {
            padding-top: 70px;
            }
@@ -482,7 +530,7 @@
            overflow: auto;
      }	
      
-     .cinema .cinema__images:before {
+      .cinema .cinema__images:before {
 	    content: '';
 	    width: 100%;
 	    height: 100%;
@@ -495,7 +543,6 @@
 	    -o-transition: 0.5s;
 	    transition: 0.5s;
 	   }
-     
      
      #searchIcon
       {     color: #fff;       		
@@ -543,10 +590,11 @@
      height: auto;
     }
       
-</style>
+</style>	
 
 
  <!-- Semantic  UI Applied -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
-	
+
+
 </html>

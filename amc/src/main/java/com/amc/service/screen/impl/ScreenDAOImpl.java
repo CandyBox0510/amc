@@ -24,6 +24,22 @@ public class ScreenDAOImpl implements ScreenDAO {
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
+	
+	@Override
+	public Map<String, Object> getWishList(Map<String, Object> map) {
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		System.out.println("getWishList ================>>>");
+		
+		if(map.get("search")!=null){
+		tempMap.put("totalCount", sqlSession.selectOne("WishListMapper.getTotalCount",map));
+		tempMap.put("listWish", sqlSession.selectList("WishListMapper.getPreviewWishList",map));
+			return tempMap;
+		}else{
+			tempMap.put("listWish", sqlSession.selectList("WishListMapper.getAllWishList",map));
+			return tempMap;
+		}
+	}
 
 	@Override
 	public Map<String, Object> getMovieList(Search search) {

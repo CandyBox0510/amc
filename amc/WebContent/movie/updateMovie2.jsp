@@ -126,10 +126,8 @@
 					<strong>포스터</strong>
 				</div>
 				<div class="col-xs-4 col-md-3">
-					<img class="poster" src="${movie.postUrl}"  width="160px" ` align="left" />
-					
-					<input type="text" value="" name="postUrl" id="postUrlCheck" class="ct_input_g" maxLength="30" />
-			
+					<img class="poster" src="${movie.postUrl}" width="160px" ` align="left" />
+					<!-- <input type="hidden" name="postUrl' class="imageUrl" value="' + JSONData.list[i].image_url  + '"> -->
 				</div>
 				<div class="col-xs-4 col-md-3 ">
 					<span href="#" id="searchPoster" class="searchPoster">포스터 검색</span>
@@ -189,8 +187,7 @@
 					<strong>트레일러 URL</strong>
 				</div>
 				<div class="col-xs-4 col-md-6">
-					<textarea name="trailerName" id="trailerId"  rows="2" cols="60" >${movie.trailer} </textarea>
-					<input type="hidden" value="" name="trailer" id="trailerCheck" class="ct_input_g" maxLength="30" />
+					<textarea name="trailer" id="trailer">${movie.trailer} </textarea>
 				</div>
 				<div class="col-xs-4 col-md-4 ">
 					<span href="#" id="searchTrailer" class="searchTrailer">동영상검색</span>
@@ -250,15 +247,6 @@
 					<i class="fa fa-search"></i>&nbsp; ${movie.movieNm} 포스터
 				</span>
 			</div>
-			<div class="row col-md-12">
-				<div class="row col-md-3">
-					<input type="text" name="searchPoster" placeholder="원하는 검색결과가 없을 때 사용해주세요">
-				</div>
-				<div class="row col-md-2">
-					<button type="button" name="searchClick">검색</button>
-				</div>
-			</div>
-
 			<div class="listPoster scrolling content"></div>
 			<input type="hidden" name="movieNm" value="${movie.movieNm}" />
 		</div>
@@ -318,8 +306,10 @@
         })
     }
 
-    function searchPosterResult() {
-    
+    function searchPoster() {
+
+        searchPoster = movieNm;
+        searchPoster = encodeURIComponent(searchPoster);
         
         
 
@@ -335,8 +325,7 @@
                 displayValue = '<div class="row">';
                 for (var i = 0; i < JSONData.list.length; i++) {
 
-                  displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrlSearch" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>' 
-                   
+                    displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrl" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>'
                 }
                 displayValue += '</div>';
 
@@ -355,24 +344,15 @@
             searchTrailer();
         });
 
-        $(document).on('click', '.getTrailer', function() {        	
+        $(document).on('click', '.getTrailer', function() {
             url = $(".url", $(this)).html();
-            $("#trailerId").val(url);
-            $("#trailerCheck").val(url);
-   
+            $("#trailer").val(url);
+
             $(".searchTrailerModal").modal('hide');
         });
 
         $(document).on('click', '.getPoster', function() {
-        	
-        	
             image_url = $(".imageUrl", $(this)).val();
-           
-            
-            $("#postUrlCheck").val(image_url); 
-            
-       
-            
             console.log(image_url);
 
             $(".poster").removeAttr("src");
@@ -395,23 +375,9 @@
         });
 
         $(document).on('click', '.searchPoster', function() {
-
-            searchPoster = movieNm;
-
-
             $(".searchPosterModal").modal('show');
-            searchPoster = encodeURIComponent(searchPoster);
-
-            searchPosterResult();
-
+            searchPoster();
         });
-
-        $(document).on("click", "button[name='searchClick']", function() {
-            searchPoster = $("input[name='searchPoster']").val();
-            searchPoster = encodeURIComponent(searchPoster);
-
-            searchPosterResult();
-        })
 
         $(".searchPosterModal").modal({
             autofocus : false,
@@ -487,11 +453,9 @@ input {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-
-.getTrailer:hover {
-	color: #fe505a;
+.getTrailer:hover{
+color:#fe505a;
 }
-
 .searchTrailer, .searchPoster {
 	background-color: #4C4145;
 	padding: 7px 7px 7px 7px;
@@ -543,12 +507,8 @@ input {
 	color: #4c4145;
 }
 
-.searchTrailerModal, .searchPosterModal {
+.searchTrailerModal {
 	padding: 10px 10px 10px 10px
-}
-
-.searchPosterModal input {
-	font-size: 10px;
 }
 </style>
 
@@ -590,24 +550,11 @@ input {
         var endDt = $("input[name='endDt']").val();
         var synopsis = $("input[name='synopsis']").val();
         var trailer = $("input[name='trailer']").val();
-        var pster = $("input[name='postUrlCheck']").val();
-        var defaultposterUrl = $(".poster").attr("src");
+        //var postUrl = $("input[name='postUrl']").val();
         
-      
-        
-        // $("#postUrlCheck").val(image_url); 
-        // $("#trailerCheck").val(url);
-        
-        if (pster != null) {
-        	
-        } else {
-        	pster = defaultposterUrl;
-        	alert("pster url" + pster);
-        	$("#postUrlCheck").val(pster); 
-               
-        }
      
-      
+        //alert("postUrl" + postUrl);
+        //alert(directors+actors+genres+watchGradeNm)
 
         if (directors == null || directors.length < 1) {
             alert("감독명은 반드시 입력하여야 합니다.");
@@ -637,14 +584,6 @@ input {
             alert("상영마감은  반드시 입력하셔야 합니다.");
             return;
         }
-      
-      
-     	 /*   var $updateMovie = $('#updateMovie');
-       		  var postUrl = $("input[name='postUrl']").val();
-         */
-        
-            
-       
 
         $("form").attr("method", "POST").attr("action", "/movie/updateMovie").submit();
     }

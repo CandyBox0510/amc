@@ -102,7 +102,6 @@ public class PurchaseController {
 	public String getSaleList(	@ModelAttribute("search") Search search, Model model) throws Exception{
 		
 		this.getList(search, model);
-		
 		return "forward:listSale.jsp";
 	}
 
@@ -131,7 +130,7 @@ public class PurchaseController {
 		search.setPageUnit(pageUnit);
 		
 		Map<String, Object> map = purchaseService.getPurchaseList(search);
-		
+		System.out.println("purchaseController 의 getList 메소드 :" + map);
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
 		model.addAttribute("list", map.get("list"));

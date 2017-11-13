@@ -2,11 +2,19 @@ package com.amc.service.domain;
 
 public class ScreenContent {
 
+	private WishList wishList;
 	private int screenContentNo;
 	// 스크린이 삭제되고 movie가 생김
 	private Movie movie;
 	private String screenDate;
 	private String screenOpenTime;
+	
+	public WishList getWishList() {
+		return wishList;
+	}
+	public void setWishList(WishList wishList) {
+		this.wishList = wishList;
+	}
 	private String screenEndTime;
 	private String screenTheater;
 	private int ticketPrice;
@@ -89,11 +97,11 @@ public class ScreenContent {
 	}
 	@Override
 	public String toString() {
-		return "ScreenContent [screenContentNo=" + screenContentNo + ", movie=" + movie + ", screenDate=" + screenDate
-				+ ", screenOpenTime=" + screenOpenTime + ", screenEndTime=" + screenEndTime + ", screenTheater="
-				+ screenTheater + ", ticketPrice=" + ticketPrice + ", previewFlag=" + previewFlag + ", previewTitle="
-				+ previewTitle + ", ticketOpenDate=" + ticketOpenDate + ", inviteActor=" + inviteActor
-				+ ", screenContentRegDate=" + screenContentRegDate + "]";
+		return "ScreenContent [wishList=" + wishList + ", screenContentNo=" + screenContentNo + ", movie=" + movie
+				+ ", screenDate=" + screenDate + ", screenOpenTime=" + screenOpenTime + ", screenEndTime="
+				+ screenEndTime + ", screenTheater=" + screenTheater + ", ticketPrice=" + ticketPrice + ", previewFlag="
+				+ previewFlag + ", previewTitle=" + previewTitle + ", ticketOpenDate=" + ticketOpenDate
+				+ ", inviteActor=" + inviteActor + ", screenContentRegDate=" + screenContentRegDate + "]";
 	}
 
 

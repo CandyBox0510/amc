@@ -207,7 +207,7 @@ public class UserController {
     	System.out.println(subject);
         
     	StringBuilder sb = new StringBuilder();        
-        String img = "http://192.168.0.32:8080/images/LOGO.png";
+        String img = "http://127.0.0.1:8080/images/LOGO.png";
         
         System.out.println(img);
         sb.append("밑에 이미지를 클릭 하시면 회원가입 화면으로 이동합니다. <br/>" );
