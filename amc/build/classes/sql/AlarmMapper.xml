@@ -110,6 +110,7 @@
 			FROM (SELECT * 
 				  FROM alarm WHERE screencontent_no = ${search.searchKeyword} AND alarm_flag = 'O')inner, users u
 			WHERE inner.user_Id = u.user_Id
+			ORDER BY inner.alarm_regdate
 		</if>
 
  	</select>
@@ -123,6 +124,7 @@
 			FROM (SELECT * 
 				  FROM alarm WHERE screencontent_no = ${search.searchKeyword} AND alarm_flag = 'C' AND alarmseat_no = #{alarm.alarmSeatNo})inner, users u
 			WHERE inner.user_Id = u.user_Id
+			ORDER BY inner.alarm_regdate
 		</if>
 		
  	</select>
@@ -143,7 +145,7 @@
 							  <if test='alarmFlag == "O"'>
 							  AND alarm_flag = 'O'
 							  </if> 
-										) inner_table
+						ORDER BY a.alarm_regdate DESC) inner_table
 						WHERE ROWNUM &lt;=#{search.endRowNum} )
 	WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
  	</select>

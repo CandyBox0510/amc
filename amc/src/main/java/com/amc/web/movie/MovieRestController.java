@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,6 +44,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
+import com.amc.common.util.CommonUtil;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
@@ -1099,6 +1102,83 @@ public class MovieRestController {
 
 		return "forward:/movie/listMovie.jsp";
 	}
+	
+	
+	@RequestMapping(value="/json/androidGetMovie")
+	public String getMovie(@RequestParam(value = "menu", required = true) String menu,
+			@RequestParam(value = "movieNo", required = true) Integer movieNo) throws Exception {
+
+		// Business Logic
+		System.out.println("movieNo ::" + movieNo);
+
+		Movie movie = movieService.getMovie(movieNo);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		String jsonString = URLEncoder.encode(objectMapper.writeValueAsString(movie),"UTF-8");
+		
+		return jsonString;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/json/androidGetPreviewList")
+	public String getPreviewList(@ModelAttribute("search") Search search, Model model) throws Exception {
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		pageSize = 1000000;
+		
+		search.setPageSize(pageSize);
+
+		System.out.println("search값 확인" + search);
+
+		Map<String, Object> map = screenService.getPreviewList(search);
+		
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
+		
+		model.addAttribute("search",map.get("search"));
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+
+		List<ScreenContent> previewList = (List<ScreenContent>)map.get("list");
+		
+		
+		org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
+		JSONObject response = new JSONObject();
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		for(int i = 0; i< previewList.size(); i++){
+
+			 objectMapper = new ObjectMapper();
+			 
+			 jsonArray.add(objectMapper.writeValueAsString(previewList.get(i)));
+		}
+		
+		response.put("list", jsonArray);
+		
+		String jsonString = URLEncoder.encode(response.toJSONString(),"UTF-8");
+		
+		
+		return jsonString;
+	};
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////안드로이드용 끝//////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
 
 	/*
 	 * @RequestMapping(value = "/json/searchTrailer/{searchTrailer}") public
