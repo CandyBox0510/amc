@@ -1,8 +1,11 @@
 package com.amc.web.cinema;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,19 @@ public class CinemaController {
 		model.addAttribute("indexList",cinemaService.index());
 		
 		return "forward:/index.jsp";
+	}
+	
+	@RequestMapping(value="mobileKakaoPay", method=RequestMethod.GET)
+	public String mobileKakaoPay(Model model, @RequestParam("title")String title,
+			@RequestParam("screenOpenTime")String screenOpenTime,@RequestParam("theater")String theater,
+			@RequestParam("bookingSeatNo")String bookingSeatNo,@RequestParam("headCount")String headCount,
+			@RequestParam("totalTicketPrice")String totalTicketPrice,HttpServletRequest request) throws Exception{
+		
+		System.out.println("모바일 카카오페이 ■:"+new String(title.getBytes("8859_1"),"UTF-8"));
+		title=new String(title.getBytes("8859_1"),"UTF-8");
+		model.addAttribute("title", title);
+				
+		return "forward:/cinema/mobileKakaoPay.jsp";
 	}
 	
 	@RequestMapping(value="completePay", method=RequestMethod.GET)
