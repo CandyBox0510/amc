@@ -39,7 +39,7 @@
 	                 
 						    <label class="sr-only" for="searchKeyword">검색어</label>
 						    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-						    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+						     size="15" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 					  	 </form>
 				   </div>
 				   		

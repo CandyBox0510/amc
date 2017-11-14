@@ -439,7 +439,7 @@ public class MovieRestController {
 				break;
 			}
 
-			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=commingsoon");
+			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=movie");
 
 			movieArray.add(i, movieObject);
 			movieObject = new JSONObject();

@@ -603,7 +603,7 @@ input {
         	
         } else {
         	pster = defaultposterUrl;
-        	alert("pster url" + pster);
+        	//alert("pster url" + pster);
         	$("#postUrlCheck").val(pster); 
                
         }
@@ -612,7 +612,7 @@ input {
         	
         } else {
         	trailer = defaulttrainerUrl;
-        	alert("trailer url" + trailer);
+        	//alert("trailer url" + trailer);
         	$("#trailerCheck").val(trailer); 
                
         }

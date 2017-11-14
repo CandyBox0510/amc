@@ -38,7 +38,7 @@
                  
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				     size="15"	 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  	 </form>
 				   </div>
 				   		
@@ -88,7 +88,7 @@
      							
 							    <span style="line-height:0%">
 							    <c:set var="name" value="${preview.movie.wishList.wishNo}"/>
-							    ${preview.movie.wishList.wishNo}
+							 
 	 								<c:if test="${empty name}">
 								<%-- bootstrap icon이 작동이 되질 않음      --%>
 								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
