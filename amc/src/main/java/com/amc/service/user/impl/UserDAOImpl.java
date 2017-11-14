@@ -33,10 +33,16 @@ public class UserDAOImpl implements UserDAO {
 
 	///Method
 	@Override
-	public String getId(User user) throws Exception {
+	public User getId(User user) throws Exception {
 		// TODO Auto-generated method stub
-		user = sqlSession.selectOne("UserMapper.getId",  user);
-		return user.getUserId();
+		return sqlSession.selectOne("UserMapper.getId",  user);
+	}
+
+	@Override
+	public String getPhone(User user) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("여기는 UserDAOImpl 의 getPhone 메서드"+user);
+		return sqlSession.selectOne("UserMapper.getPhone",  user);
 	}
 
 	@Override
@@ -70,8 +76,11 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void deleteUser(User user) throws Exception {
 		System.out.println("탈퇴 합시다 deleteUser daoimpl "+user);
-		
-		sqlSession.update("UserMapper.deleteUser", user);
+		if(user.getPassword() != null){
+			sqlSession.update("UserMapper.deleteUser", user);
+		}else{
+			sqlSession.update("UserMapper.snsDeleteUser", user);
+		}
 	}
 
 	@Override

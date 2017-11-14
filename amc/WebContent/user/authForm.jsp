@@ -67,7 +67,7 @@
 	<div class="wrapper">
     	<!-- Banner -->
         <div class="banner-top">
-			<img alt='top banner' src="../images/banners/space.jpg">
+			<img alt='top banner' src="/images/banners/space.jpg">
         </div> 
         <header class="header-wrapper header-wrapper--home">
 			<jsp:include page="/layout/topToolbar.jsp" />
@@ -101,7 +101,7 @@
 			        				<span id="helpBlock" class="help-block col-sm-8"></span>
 			        		</div>
 				        	<div class="box btn">
-				            	<button type="button" class="btn join">
+				            	<button type="button" class="btn join" id="mailSend">
 				                	<i class="fa fa-envelope"></i>
 				               	 		인증메일발송
 				            	</button>
@@ -113,8 +113,11 @@
  				<fieldset>
 		        	<legend class="screen_out">휴대폰 인증 방법</legend>
 			 			<div class="center">
-			 		
-						
+				
+				<div class="row">	
+					<div class="col-sm-2">
+		      			<input type="text" class="form-name" id="userName" name="userName" placeholder="이름을 적어주세요">
+		    		</div>
                		<div class="contact-info__fieldrow col-sm-2">
 				      	<select class="search-sort" name="phone1" id="phone1">
 						  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
@@ -125,18 +128,20 @@
 						</select>
 		    		</div>
 		    		<div class="col-sm-2">
-		      			<input type="text" class="form__name" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="Phone number First">
+		      			<input type="text" class="form__name" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="Phone number First" maxlength="5">
 		    		</div>
+		    	
 		    		<div class="col-sm-2">
-		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="Phone number last">
+		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="Phone number last" maxlength="5">
 		    		</div>
+				
 				        	<div class="box btn">
 				            	<button type="button" class="btn join" id="sendCode">
 				                	<i class="fa fa-envelope"></i>
 				               	 		인증코드발송
 				            	</button>
 				        	</div> 
-				        	
+				</div>        	
   			 		
 						</div>  
 						<div class="col-sm-2">
@@ -149,6 +154,9 @@
 				            	</button>
 				        	</div> 
 				        	<input type="hidden" value="${serialNo}" name="code" id="CODE">
+				        	<input type="hidden" value="${phone1}" name="phone1" id="authphone1">
+				        	<input type="hidden" value="${phone2}" name="phone2" id="authphone2">
+				        	<input type="hidden" value="${phone3}" name="phone3" id="authphone3">
 		    	</fieldset>
 		    	<br/><br/><br/>
 		    	
@@ -187,7 +195,7 @@
 </body>
 </body>
 	<script type="text/javascript">
- 		var check = false;
+	var check = false;
  		
 		function fncCheckUser() {
 			// Form 유효성 검증
@@ -205,7 +213,7 @@
 	
 		//============= "인증메일발송"  Event 연결 =============
  		 $(function() {
-			$( "button.btn.join" ).on("click" , function() {
+			$( "#mailSend" ).on("click" , function() {
 				fncCheckUser();
 			});
 		});	
@@ -224,22 +232,99 @@
 		//============= "인증Code발송"  Event 연결 =============
 		 $(function() {
 			$( "#sendCode" ).on("click" , function() {
-				alert("여긴 왜안들어와 갑자기");
+				alert("인증코드발송 버튼 누름");
 				fncSendCode();
 			});
 		});	
 		
 		function fncSendCode() {
-			alert("Code를 성공적으로 보냈습니다.");
-			var ran= Math.floor(Math.random() * 100000) + 1;
-			var phone=$('#phone1').val()+$('#phone2').val()+$('#phone3').val();
-			console.log(ran);
-			console.log(phone);
+			alert("fncSendCode 펑션으로 들어옴");
+			var userName=$("input[name='userName']").val();
+			var phone1=$('#phone1').val();
+			var phone2=$('#phone2').val();
+			var phone3=$('#phone3').val();
 			
-			$(self.location).attr("href","/alarm/codePush/userCertification?serialNo="+ran+"&alarmSeatNo="+phone); 
+			
+			if( userName == null || userName.length <1 ) {				
+				alert("이름은 반드시 입력해야합니다.");				
+				/* return check=false; */
+				return;
+			}
+			
+			if( $("input:text[name='phone2']").val() == ""  ||  $("input:text[name='phone3']").val() == "") {
+				alert("휴대폰 번호는 반드시 모두 입력해야합니다.");
+				return;
+			}
+			
+	 		if( $("input:text[name='phone2']").val().length < 3) {
+				alert("휴대폰 번호는 3자리 이상 이여야합니다.");
+				return;
+			}
+	 		
+	 		if( $("input:text[name='phone3']").val().length < 3) {
+				alert("휴대폰 번호는 3자리 이상 이여야합니다.");
+				return;
+			}
+			
+				$.ajax({	
+						url : "/user/json/getPhone",
+						method : "POST" ,
+						async : false,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						data : JSON.stringify({
+							userName : userName,
+							phone1 : phone1,
+							phone2 : phone2,
+							phone3 : phone3
+						}),
+						success : function(JSONData , status) {
+		
+							//Debug...
+							//alert(status);
+							//alert("JSONData : \n"+JSONData);
+							//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+							//alert("JSONData : "+ JSONData );
+							//alert("status : "+ status );
+								//alert(JSONData.role);
+								console.log(JSONData.userId);
+								alert(JSONData.userId);
+								//alert("로그인유저");
+								
+								if( JSONData.userId == null ){
+									var ran= Math.floor(Math.random() * 100000) + 1;
+									/* var phone=$('#phone1').val()+$('#phone2').val()+$('#phone3').val(); */
+									var phone1 = $('#phone1').val();
+									var phone2 = $('#phone2').val();
+									var phone3 = $('#phone3').val();
+
+									var url ="/alarm/codePush/userCertification?serialNo=";
+									url += ran;
+									/* url += "&alarmSeatNo="; */
+									url += "&phone1="; 
+									url += phone1;
+									url += "&phone2=";
+									url += phone2;
+									url += "&phone3=";
+									url += phone3;
+										
+									alert("Code를 성공적으로 보냈습니다.");
+									/* $(self.location).attr("href","/alarm/codePush/userCertification?serialNo="+ran+"&alarmSeatNo="+phone); */ 
+									$(self.location).attr("href",url);
+								}else{
+									alert("이미 등록된 휴대폰입니다.");
+								}
+							},
+						error:function(request,status,error){
+							//alert(error);
+							//alert("아이디 , 패스워드를 확인하시고 다시 로그인2...");
+					    }
+				}); 
 		}
 		
-		//============= "인증Code발송"  Event 연결 =============
+		//============= "인증Code확인"  Event 연결 =============
 		 $(function() {
 			$( "#codeCheck" ).on("click" , function() {
 				fnccodeCheck();
@@ -247,16 +332,19 @@
 		});	
 		
 		function fnccodeCheck() {
-			alert(".");
-			
 			var code=$('#AUTH').val();
 			var codeCheck=$('#CODE').val();
 			
 			console.log(code);
-			alert(codeCheck);
 
 			if(code == codeCheck){
-				$(self.location).attr("href","/user/addUser.jsp");
+				var url ="/user/addUser.jsp?phone1=";
+				url += $('#authphone1').val();
+				url += "&phone2="+$('#authphone2').val();
+				url += "&phone3="+$('#authphone3').val();
+						
+				/* $(self.location).attr("href","/user/addUser.jsp"); */
+					$(self.location).attr("href",url);
 			}else{
 				alert("인증번호를 잘못 입력하셨습니다.");
 			}
@@ -351,6 +439,10 @@
 			   	}
 		  	});
 		}
+		
+
+		
+		
 	</script>	
 	
 <style type="text/css">
