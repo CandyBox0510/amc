@@ -250,6 +250,17 @@
 					
 				 });
 				
+				//============= "검색 Enter KeyDown "  Event  처리 =============	
+				 $(function() {
+					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "input[name=searchKeyword]").keydown(function(key) {
+						
+						if(key.keyCode == 13) { //키가 13이면 실행 ) Enter Key는 13
+							fncGetPageList(1);					
+						}
+					});
+					
+				 });
 				
 				//============= "Banner Top Clieck "  Event  처리 =============	
 				 $(function() {
@@ -534,6 +545,21 @@
 		
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
+	.page-heading {
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-top: 100px
+	}
+	
+	body {
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+
 
 	 #body {
            padding-top: 70px;

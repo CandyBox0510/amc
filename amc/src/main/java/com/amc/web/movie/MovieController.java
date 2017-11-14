@@ -443,6 +443,7 @@ public class MovieController {
           
         System.out.println("dbFileNames testing....  " + dbFileNames);
    
+        System.out.println("movieNo  : "  + movie.getMovieNo());
         System.out.println("dirctor  : "  + movie.getDirector());
         System.out.println("actor    : "  + movie.getActors());
         System.out.println("genre    : "  + movie.getGenres());

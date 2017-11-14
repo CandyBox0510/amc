@@ -338,7 +338,10 @@ public class MovieRestController {
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(pageSize);
+		
+		
+		//search.setPageSize(pageSize);
+		search.setPageSize(20);
 
 		search.setSearchKeyword2("5");
 
@@ -356,13 +359,17 @@ public class MovieRestController {
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
+		
 		System.out.println(resultPage);
 
 		System.out.println("list show ::" + map.get("list"));
 
 		String str = "";
 
-		List<Movie> list = (List<Movie>) map.get("list");
+		List<Movie> list2 = (List<Movie>) map.get("list");
+		
+		System.out.println("MoiveCommingSoon list size  ::" + list2.size());
+		
 
 		// Movie JsonObject 선언(개별)
 		JSONObject movieObject = new JSONObject();
@@ -370,11 +377,13 @@ public class MovieRestController {
 		JSONArray movieArray = new JSONArray();
 		// monthly 정보가 들어갈 JSONObject 선언
 		JSONObject monthlynfo = new JSONObject();
+		
+	
 
-		for (int i = 0; i < list.size(); i++) {
-			movieObject.put("id", list.get(i).getMovieNo());
-			movieObject.put("name", list.get(i).getMovieNm());
-			movieObject.put("startdate", list.get(i).getOpenDt());
+		for (int i = 0; i < list2.size(); i++) {
+			movieObject.put("id", list2.get(i).getMovieNo());
+			movieObject.put("name", list2.get(i).getMovieNm());
+			movieObject.put("startdate", list2.get(i).getOpenDt());
 
 			switch (i) {
 			case 0:
@@ -401,12 +410,36 @@ public class MovieRestController {
 			case 7:
 				movieObject.put("color", "darkred");
 				break;
+			case 8:
+				movieObject.put("color", "#F1948A");
+				break;
+			case 9:
+				movieObject.put("color", "#82E0AA");
+				break;
+			case 10:
+				movieObject.put("color", "#D2B4DE");
+				break;
+			case 11:
+				movieObject.put("color", "#BB8FCE");
+				break;
+			case 12:
+				movieObject.put("color", "#D1F2EB");
+				break;
+			case 13:
+				movieObject.put("color", "#CB4335");
+				break;
+			case 14:
+				movieObject.put("color", "#76D7C4");
+				break;
+			case 15:
+				movieObject.put("color", "#34495E");
+				break;
 			default:
 				movieObject.put("color", "ivory");
 				break;
 			}
 
-			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovieNo() + "&menu=commingsoon");
+			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=commingsoon");
 
 			movieArray.add(i, movieObject);
 			movieObject = new JSONObject();
@@ -553,31 +586,32 @@ public class MovieRestController {
 	}
 
 	@RequestMapping(value = "json/movieOnSchedule_preview", method = RequestMethod.POST)
-	public void movieOnSchedule_preview(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("search") Search search, Model model) throws Exception {
+	public void movieOnSchedule_preview(HttpServletRequest request, 
+										HttpServletResponse response, 
+										@ModelAttribute("search") Search search,
+										Model model) throws Exception {
 
 		System.out.println("json/movieOnSchedule_preview called RestControl ");
 
 		System.out.println("시사화 영화 콜 !!!!");
-
+		
 		System.out.println("/movie/getPreviewList :: ");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-
+		
 		System.out.println("0000000000000000000");
 		search.setPageSize(pageSize);
 
 		System.out.println("search값 확인" + search);
 
 		Map<String, Object> map = screenService.getPreviewList(search);
-
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-
-		model.addAttribute("search", map.get("search"));
-		model.addAttribute("list", map.get("list"));
+		
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
+		
+		model.addAttribute("search",map.get("search"));
+		model.addAttribute("list",map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 
 		System.out.println("search" + map.get("search"));
@@ -587,8 +621,9 @@ public class MovieRestController {
 
 		System.out.println("/movie/getPreviewList ::  끝");
 
-		System.out.println("list show ::" + map.get("list"));
-
+		
+		System.out.println("list show ::"  + map.get("list"));
+		
 		String str = "";
 
 		List<ScreenContent> list = (List<ScreenContent>) map.get("list");
@@ -629,20 +664,22 @@ public class MovieRestController {
 				break;
 			case 7:
 				movieObject.put("color", "darkred");
-				break;
+				break;			
 			default:
 				movieObject.put("color", "ivory");
 				break;
-			}
-
-			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovie().getMovieNo() + "&menu=movie");
-
-			screenContentArray.add(i, movieObject);
-			movieObject = new JSONObject();
+			} 
+	
+        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovie().getMovieNo()+"&menu=preview");
+		
+        	screenContentArray.add(i, movieObject);		    
+        	movieObject = new JSONObject();	   	    
 		}
+            
+     
+		System.out.println("screenContentArray values : " + screenContentArray.toString() );
 
-		System.out.println("screenContentArray values : " + screenContentArray.toString());
-
+	
 		System.out.println("movieArray values : " + screenContentArray.toString());
 
 		monthlynfo.put("monthly", screenContentArray);
@@ -664,6 +701,7 @@ public class MovieRestController {
 			e.printStackTrace();
 		}
 	}
+	
 
 	// 해림 추가
 	@RequestMapping(value = "json/addMovieComment", method = RequestMethod.POST)
@@ -1170,7 +1208,7 @@ public class MovieRestController {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+		
 	/*
 	 * @RequestMapping(value = "/json/searchTrailer/{searchTrailer}") public
 	 * void searchTrailer(@ModelAttribute("search") Search search, @PathVariable
@@ -1282,6 +1320,7 @@ public class MovieRestController {
 		System.out.println("4. jsonObject   -> " + jsonObject);
 		JSONArray array = (JSONArray) jsonObject.get("documents");
 
+
 		System.out.println("+++++++++++++++++array + " + array);
 
 		JSONObject data = null;
@@ -1298,6 +1337,8 @@ public class MovieRestController {
 
 			System.out.println("image_url   => " + image_url);
 
+
+	
 			String extension = image_url.substring(image_url.lastIndexOf(".") + 1);
 			extension = extension.toLowerCase();
 			extension = extension.substring(extension.lastIndexOf("?") + 1);
@@ -1327,4 +1368,6 @@ public class MovieRestController {
 
 	}
 
+	
+	
 }
