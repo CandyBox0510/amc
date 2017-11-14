@@ -212,7 +212,7 @@
         var pw = $("input[name='password']").val();
         var pw_confirm = $("input[name='password2']").val();
         var name = $("input[name='userName']").val();
-        var name = $("input[name='birth']").val();
+        var birth = $("input[name='birth']").val();
         var check = true
         var phone1 = $("#phone1").val();
         var phone2 = $("#phone2").val();

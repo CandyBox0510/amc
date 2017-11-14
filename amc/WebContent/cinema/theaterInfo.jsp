@@ -205,30 +205,29 @@
         	<p/>
         	<p/>
         	<p/>
-            <h1 class="page-heading heading--outcontainer">영화관 사진</h1>
-            <div class="contact">
-                <!-- <div class="center-block theaterphoto" style="width:800px; height:300px" align="center" style="margin-left:auto; margin-right:auto;"> -->
-                <div class="theaterphoto" style="width:800px; height:300px; display:block; margin: 0 auto;" align="center" style="margin-left:auto; margin-right:auto;">
-	   					<div>
-	 					 	<div class="image center-block"><img  src="../images/theater/theaterEnter1.jpg" width="1000px" height="400px"/></div>
-	 					</div>			 				
-	 				
-						<div>
-							<div class="image"><img class="steelCut" src="../images/theater/theaterEnter2.jpg" width="1000px" height="400px"/></div>
-						</div>
-						<div>
-							<div class="image"><img class="steelCut" src="../images/theater/theaterElevator.jpg" width="1000px" height="400px"/></div>
-						</div>
-						
-						<div>
-							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterEnter.jpg" width="1000px" height="400px"/></div>
-						</div>
-						
-						<div>
-							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterLobby.jpg" width="1000px" height="400px"/></div>
-						</div>
-				</div>
-            </div>
+            <h1 class="page-heading heading--outcontainer">AMC 위치</h1>
+              <div class="contact">
+                <div id="map" style="width:100%;height:350px;"></div>
+              </div>
+	            <div class="ui ignored warning message hanna">
+	            		<strong style="font-size:20px"><i class="fa fa-location-arrow">주소</i></strong>
+	            		<div>&nbsp;</div>
+	            		<div>서울특별시 서초구 서초동 1327-15</div>
+	            		<div>서울특별시 서초구 강남대로53길 8 비트아카데미빌딩(AmericodeCinema)</div>
+	            		<div><i class="fa fa-phone"></i> : 02-3486-9600</div>
+	            </div>
+	            <div class="ui ignored info message hanna">
+	            		<strong style="font-size:20px"><i class="fa fa-road">교통편</i></strong>
+	            			<div>&nbsp;</div>
+	            			<div>[버스정류장]</div>
+	            			<div id="busStationName">실시간 정류장 검색중...</div>
+	            			<br/>
+	            			<div>[버스 번호]</div>
+	            			<div id="busNo">실시간 버스번호 검색중...</div>
+	            			<br/>
+	            			<div>[지하철] </div>
+	            			<div id="subway">실시간 지하철 검색중...</div>
+           		 </div>
         </section>
          <div class="contact-form-wrapper">
             <div class="container" style="margin:auto;">
@@ -257,28 +256,29 @@
         </div>
         
         <section class="container">
-        <h1 class="page-heading heading--outcontainer">AMC 위치</h1>
-            <div class="contact">
-                <div id="map" style="width:100%;height:350px;"></div>
-            </div>
-            <div class="ui ignored warning message hanna">
-            		<strong style="font-size:20px"><i class="fa fa-location-arrow">주소</i></strong>
-            		<div>&nbsp;</div>
-            		<div>서울특별시 서초구 서초동 1327-15</div>
-            		<div>서울특별시 서초구 강남대로53길 8 비트아카데미빌딩(AmericodeCinema)</div>
-            		<div><i class="fa fa-phone"></i> : 02-3486-9600</div>
-            </div>
-            <div class="ui ignored info message hanna">
-            		<strong style="font-size:20px"><i class="fa fa-road">교통편</i></strong>
-            			<div>&nbsp;</div>
-            			<div>[버스정류장]</div>
-            			<div id="busStationName">실시간 정류장 검색중...</div>
-            			<br/>
-            			<div>[버스 번호]</div>
-            			<div id="busNo">실시간 버스번호 검색중...</div>
-            			<br/>
-            			<div>[지하철] </div>
-            			<div id="subway">실시간 지하철 검색중...</div>
+        <h1 class="page-heading heading--outcontainer">영화관 사진</h1>
+        	<div class="contact">
+                <!-- <div class="center-block theaterphoto" style="width:800px; height:300px" align="center" style="margin-left:auto; margin-right:auto;"> -->
+                <div class="theaterphoto" style="width:800px; height:300px; display:block; margin: 0 auto;" align="center" style="margin-left:auto; margin-right:auto;">
+	   					<div>
+	 					 	<div class="image center-block"><img  src="../images/theater/theaterEnter1.jpg" width="1000px" height="400px"/></div>
+	 					</div>			 				
+	 				
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/theaterEnter2.jpg" width="1000px" height="400px"/></div>
+						</div>
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/theaterElevator.jpg" width="1000px" height="400px"/></div>
+						</div>
+						
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterEnter.jpg" width="1000px" height="400px"/></div>
+						</div>
+						
+						<div>
+							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterLobby.jpg" width="1000px" height="400px"/></div>
+						</div>
+				</div>
             </div>
         </section>
 

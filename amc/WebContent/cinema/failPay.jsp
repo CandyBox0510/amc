@@ -54,13 +54,6 @@
     }
   </style>
   <script>
-  
-  	/////////////////어디루가야하오
-  	function goApp(){
-  		///////////////////////////
-  		self.loaction = //앱스키마 써주자         "test://"+impUid;
-  	}
-  
   </script>
 </head>
 <body>
@@ -94,7 +87,9 @@
         <div class="row"><p/></div>
         <div class="row"><p/></div>
         <div class="row"><p/></div>
-        <div class="ui fluid large red button" style="width:50%; margin:auto;" onClick="javascript:goApp()">확인</div>
+        <a href="screenmovielist://">
+        <div class="ui fluid large red button" style="width:50%; margin:auto;">확인</div>
+        </a>
       </div>
     </form>
 

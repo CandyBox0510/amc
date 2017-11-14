@@ -93,7 +93,7 @@
         <div class="row"><p/></div>
         <div class="row"><p/></div>
         <div class="row"><p/></div>
-        <a href="test://?impUid=${impUid}">
+        <a href="confirm://impUid=${impUid}">
         <%-- <div class="ui fluid large teal button" style="width:50%; margin:auto;" onClick="javascript:goApp('${impUid}')">확인</div> --%>
         <div class="ui fluid large teal button" style="width:50%; margin:auto;" >확인</div>
         </a>

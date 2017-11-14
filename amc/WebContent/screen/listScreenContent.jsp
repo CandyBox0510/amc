@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
 
-
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.css">
 </head>
 
 <body>
@@ -306,7 +306,7 @@
 <!-- Custom -->
 <script src="/js/custom.js"></script>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
 
 
@@ -457,6 +457,10 @@
         }
         if (ticketPrice == null || ticketPrice.length < 1) {
             alert("가격을 입력해주세요");
+            return;
+        }
+        if (!$.isNumeric(ticketPrice)) {
+            alert(' 가격은 숫자만 입력이 가능합니다');
             return;
         }
 
@@ -652,7 +656,10 @@
             alert("가격을 입력해 주세요");
             return;
         }
-
+        if (!$.isNumeric(ticketPrice)) {
+            alert(' 가격은 숫자만 입력이 가능합니다');
+            return;
+        }
         var previewTitle = $(".updateScreenContentModal input[name='previewTitle']").val();
         var previewOpenDate = $(".updateScreenContentModal input[name='previewOpenDate']").val();
         var previewOpenTime = $(".updateScreenContentModal input[name='previewOpenTime']").val();
@@ -826,6 +833,11 @@
         $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
 
         var screenDate = $("input[name='screenDate']").val();
+
+        $(document).on("click", ".ui-state-disabled", function() {
+
+            swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
+        })
 
         $(document).on("change", "input[name='screenDate']", function() {
             screenDate = $("input[name='screenDate']").val();
@@ -1041,6 +1053,21 @@ input[readonly="readonly"], select[disabled="disabled"] {
 	border-style: solid;
 	border-radius: 5px;
 	color: #ffffff;
+}
+
+.ui-datepicker {
+	border: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding: 0;
+	margin-left: auto;
+	margin-top: 15px;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	position: relative;
 }
 </style>
 </html>

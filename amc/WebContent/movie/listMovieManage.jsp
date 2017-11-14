@@ -185,6 +185,10 @@ function fncGetPageList(currentPage) {
 </body>
 
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 .countPage {
 	font-size: 13px;
 	margin-top: 10px;
@@ -192,6 +196,16 @@ function fncGetPageList(currentPage) {
 
 .search {
 	margin-right: 30px;
+}
+
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	margin-top: 100px
+}
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .movieNm {
