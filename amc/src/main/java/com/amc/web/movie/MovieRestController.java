@@ -3,6 +3,7 @@ package com.amc.web.movie;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -338,9 +339,8 @@ public class MovieRestController {
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
-		
-		//search.setPageSize(pageSize);
+
+		// search.setPageSize(pageSize);
 		search.setPageSize(20);
 
 		search.setSearchKeyword2("5");
@@ -359,7 +359,7 @@ public class MovieRestController {
 
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
-		
+
 		System.out.println(resultPage);
 
 		System.out.println("list show ::" + map.get("list"));
@@ -367,9 +367,8 @@ public class MovieRestController {
 		String str = "";
 
 		List<Movie> list2 = (List<Movie>) map.get("list");
-		
+
 		System.out.println("MoiveCommingSoon list size  ::" + list2.size());
-		
 
 		// Movie JsonObject 선언(개별)
 		JSONObject movieObject = new JSONObject();
@@ -377,8 +376,6 @@ public class MovieRestController {
 		JSONArray movieArray = new JSONArray();
 		// monthly 정보가 들어갈 JSONObject 선언
 		JSONObject monthlynfo = new JSONObject();
-		
-	
 
 		for (int i = 0; i < list2.size(); i++) {
 			movieObject.put("id", list2.get(i).getMovieNo());
@@ -586,32 +583,31 @@ public class MovieRestController {
 	}
 
 	@RequestMapping(value = "json/movieOnSchedule_preview", method = RequestMethod.POST)
-	public void movieOnSchedule_preview(HttpServletRequest request, 
-										HttpServletResponse response, 
-										@ModelAttribute("search") Search search,
-										Model model) throws Exception {
+	public void movieOnSchedule_preview(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("json/movieOnSchedule_preview called RestControl ");
 
 		System.out.println("시사화 영화 콜 !!!!");
-		
+
 		System.out.println("/movie/getPreviewList :: ");
 
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
+
 		System.out.println("0000000000000000000");
 		search.setPageSize(pageSize);
 
 		System.out.println("search값 확인" + search);
 
 		Map<String, Object> map = screenService.getPreviewList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
-		
-		model.addAttribute("search",map.get("search"));
-		model.addAttribute("list",map.get("list"));
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+
+		model.addAttribute("search", map.get("search"));
+		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 
 		System.out.println("search" + map.get("search"));
@@ -621,9 +617,8 @@ public class MovieRestController {
 
 		System.out.println("/movie/getPreviewList ::  끝");
 
-		
-		System.out.println("list show ::"  + map.get("list"));
-		
+		System.out.println("list show ::" + map.get("list"));
+
 		String str = "";
 
 		List<ScreenContent> list = (List<ScreenContent>) map.get("list");
@@ -664,22 +659,20 @@ public class MovieRestController {
 				break;
 			case 7:
 				movieObject.put("color", "darkred");
-				break;			
+				break;
 			default:
 				movieObject.put("color", "ivory");
 				break;
-			} 
-	
-        	movieObject.put("url", "getMovie?movieNo="+list.get(i).getMovie().getMovieNo()+"&menu=preview");
-		
-        	screenContentArray.add(i, movieObject);		    
-        	movieObject = new JSONObject();	   	    
-		}
-            
-     
-		System.out.println("screenContentArray values : " + screenContentArray.toString() );
+			}
 
-	
+			movieObject.put("url", "getMovie?movieNo=" + list.get(i).getMovie().getMovieNo() + "&menu=preview");
+
+			screenContentArray.add(i, movieObject);
+			movieObject = new JSONObject();
+		}
+
+		System.out.println("screenContentArray values : " + screenContentArray.toString());
+
 		System.out.println("movieArray values : " + screenContentArray.toString());
 
 		monthlynfo.put("monthly", screenContentArray);
@@ -701,7 +694,6 @@ public class MovieRestController {
 			e.printStackTrace();
 		}
 	}
-	
 
 	// 해림 추가
 	@RequestMapping(value = "json/addMovieComment", method = RequestMethod.POST)
@@ -1208,48 +1200,13 @@ public class MovieRestController {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-	/*
-	 * @RequestMapping(value = "/json/searchTrailer/{searchTrailer}") public
-	 * void searchTrailer(@ModelAttribute("search") Search search, @PathVariable
-	 * String searchTrailer) throws Exception {
-	 * System.out.println("1. search => " + search);
-	 * System.out.println("2. searchTrailer => " + searchTrailer);
-	 * 
-	 * String result = movieService2.searchTrailer(searchTrailer);
-	 * System.out.println("3. result => " + result);
-	 * 
-	 * ObjectMapper mapper = new ObjectMapper(); ObjectNode node =
-	 * (ObjectNode)mapper.readTree(result);
-	 * 
-	 * JsonNode arrayNode = node.get("documents").get("title");
-	 * 
-	 * ArrayList<String> data = mapper.readValue(arrayNode.traverse(), new
-	 * TypeReference<ArrayList<String>>(){});
-	 * 
-	 * System.out.println("data    " + data);
-	 * 
-	 * 
-	 * JSONArray nameArray =(JSONArray)JSONSerializer.toJSON(result);
-	 * System.out.println(nameArray.size());
-	 * 
-	 * for(Object js : nameArray){ JSONObject json = (JSONObject)js;
-	 * System.out.println(json.get("title")); }
-	 * 
-	 * 
-	 * JSONParser parser = new JSONParser(); JSONObject json = (JSONObject)
-	 * parser.parse(result); String datetime = json.get("datetime").toString();
-	 * System.out.println(datetime);
-	 * 
-	 * // return result; }
-	 */
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}", method = RequestMethod.GET)
 	public String searchTrailer(@PathVariable("searchTrailer") String searchTrailer) throws Exception {
 		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
-		searchTrailer = new String(searchTrailer.getBytes("8859_1"), "UTF-8");
-
+		//searchTrailer = new String(searchTrailer.getBytes("8859_1"), "UTF-8");
+		searchTrailer = URLDecoder.decode(searchTrailer,"UTF-8");
 		System.out.println("2. searchTrailer => " + searchTrailer);
 
 		String result = movieService2.searchTrailer(searchTrailer);
@@ -1307,9 +1264,11 @@ public class MovieRestController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/searchPoster/{searchPoster}", method = RequestMethod.GET)
 	public String searchPoster(@PathVariable("searchPoster") String searchPoster) throws Exception {
-		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
-		searchPoster = new String(searchPoster.getBytes("8859_1"), "UTF-8");
-
+		//searchPoster = URLDecoder.decode(searchPoster.getBytes("8859_1"), "UTF-8");
+		
+		System.out.println("searchPoster 디코딩 전" + searchPoster);
+		//searchPoster = new String(searchPoster.getBytes("8859_1"), "UTF-8");
+		searchPoster = URLDecoder.decode(searchPoster,"UTF-8");
 		System.out.println("2. searchPoster => " + searchPoster);
 
 		String result = movieService2.searchPoster(searchPoster);
@@ -1319,9 +1278,6 @@ public class MovieRestController {
 		JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
 		System.out.println("4. jsonObject   -> " + jsonObject);
 		JSONArray array = (JSONArray) jsonObject.get("documents");
-
-
-		System.out.println("+++++++++++++++++array + " + array);
 
 		JSONObject data = null;
 		JSONArray jsonArray = new JSONArray();
@@ -1335,20 +1291,11 @@ public class MovieRestController {
 			int width = Integer.parseInt(documents.get("width").toString());
 			int height = Integer.parseInt(documents.get("height").toString());
 
-			System.out.println("image_url   => " + image_url);
-
+			int count = image_url.lastIndexOf("type");
 
 	
-			String extension = image_url.substring(image_url.lastIndexOf(".") + 1);
-			extension = extension.toLowerCase();
-			extension = extension.substring(extension.lastIndexOf("?") + 1);
-			System.out.println("extension   ========>>>>>>>  " + extension);
 
-			System.out.println("jpg!!!!!!" + extension.indexOf("jpg"));
-			System.out.println("type#####" + extension.indexOf("type"));
-			
-			
-			if (extension.indexOf("jpg") == 0 && extension.indexOf("type") == -1) {
+			if (count == -1) {
 				if (width > 700 && width < height) {
 					data.put("thumbnail_url", thumbnail_url);
 					data.put("image_url", image_url);
@@ -1359,15 +1306,12 @@ public class MovieRestController {
 			}
 
 		}
-
+		System.out.println("2. searchPoster => " + searchPoster);
 		response.put("list", jsonArray);
 
-		System.out.println("?????" + response.toString());
 
 		return response.toString();
 
 	}
 
-	
-	
 }

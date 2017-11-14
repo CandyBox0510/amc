@@ -98,24 +98,31 @@
 						</tbody>
 					</table>
 
-					<div class="hidden-lg hidden-md hidden-sm col-xs-12 ">
-						<div class="listTitle">
-							<div class="col-xs-12">회원아이디</div>
-							<div class="col-xs-8">회원명</div>
-							<div class="col-xs-4">계정구분</div>
+
+
+
+
+					<div class="xsDisplay">
+						<div class="hidden-lg hidden-md hidden-sm ">
+
+							<div class="listTitleXs col-xs-12">
+								<div class="col-xs-12">회원아이디</div>
+								<div class="col-xs-8">회원명</div>
+								<div class="col-xs-4 text-center">계정구분</div>
+							</div>
+
+							<c:forEach var="user" items="${list}">
+								<div class="col-xs-12">
+									<div class="col-xs-12 xsUserId" title="Click : 회원정보 확인">${user.userId}</div>
+									<div class="col-xs-8 xsUserName">${user.userName}</div>
+									<div class="col-xs-4 xsUserRole">${user.role}</div>
+									<hr class="col-xs-11">
+								</div>
+
+							</c:forEach>
+
+
 						</div>
-
-						<c:set var="i" value="0" />
-						<c:forEach var="user" items="${list}">
-							<c:set var="i" value="${ i+1 }" />
-							<div class="col-xs-12" title="Click : 회원정보 확인">${user.userId}</div>
-							<div class="col-xs-8">${user.userName}</div>
-							<div class="col-xs-4">${user.role}</div>
-							<hr class="col-xs-12">
-						</c:forEach>
-
-
-
 					</div>
 
 
@@ -193,6 +200,10 @@
         $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
         $("td:nth-child(2)").on("click", function() {
+            self.location = "/user/getUser?userId=" + $(this).text().trim();
+        });
+
+        $(".xsUserId").on("click", function() {
             self.location = "/user/getUser?userId=" + $(this).text().trim();
         });
 
@@ -278,14 +289,22 @@
 	padding-top: 100px;
 }
 
-.listTitle {
+.listTitle, .listTitleXs {
 	font-size: 10px;
 	font-weight: bold;
-	height: 40px;
+	height: auto;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #FFFFFF;
 	background-color: #4C4145;
+}
+
+.listTitleXs {
+	font-size: 13px;
+}
+
+.listTitleXs  div {
+	padding: 5px 0px 5px 0px
 }
 
 html {
@@ -400,6 +419,24 @@ select {
 	padding-top: inherit;
 	padding-bottom: inherit;
 	margin-top: inherit;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: solid 0.1px #4c4145;
+}
+
+.xsUserId {
+	font-size: 10pt;
+}
+
+.xsUserRole, .xsUserName {
+	font-size: 9pt
+}
+
+.xsDisplay {
+	margin: 20px 0px 20px 0px
 }
 </style>
 

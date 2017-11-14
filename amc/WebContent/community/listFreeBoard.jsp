@@ -128,9 +128,11 @@
 											<div class="col-xs-2">${ freeBoard.freeBoardViews}</div>
 											<div class="col-xs-3">${ freeBoard.freeBoardRegDate}</div>
 										</div>
-										<div class="col-xs-12 xsHr"><hr/></div>
+										<div class="col-xs-12 xsHr">
+											<hr />
+										</div>
 									</div>
-									
+
 								</c:forEach>
 							</div>
 						</div>
@@ -240,7 +242,7 @@
 
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
-	margin-top: 100px
+	margin-top: 70px
 }
 
 body {
@@ -254,11 +256,11 @@ html {
 section {
 	padding-bottom: 30px
 }
-.xsHr hr{
-margin-top :0px;
-margin-bottom:0px;
 
-border : solid 0.5px #4c4145;
+.xsHr hr {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: solid 0.5px #4c4145;
 }
 
 .count {
@@ -291,8 +293,8 @@ border : solid 0.5px #4c4145;
 
 .freeBoardField td {
 	height: 100%;
-	padding-top : 8px;
-	padding-bottom : 10px;
+	padding-top: 8px;
+	padding-bottom: 10px;
 }
 
 .freeBoardFieldXS div {
