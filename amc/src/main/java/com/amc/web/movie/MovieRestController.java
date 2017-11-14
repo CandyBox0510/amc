@@ -1102,9 +1102,8 @@ public class MovieRestController {
 
 		return "forward:/movie/listMovie.jsp";
 	}
-	
-	
-	@RequestMapping(value="/json/androidGetMovie")
+
+	@RequestMapping(value = "/json/androidGetMovie")
 	public String getMovie(@RequestParam(value = "menu", required = true) String menu,
 			@RequestParam(value = "movieNo", required = true) Integer movieNo) throws Exception {
 
@@ -1112,14 +1111,14 @@ public class MovieRestController {
 		System.out.println("movieNo ::" + movieNo);
 
 		Movie movie = movieService.getMovie(movieNo);
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
-		
-		String jsonString = URLEncoder.encode(objectMapper.writeValueAsString(movie),"UTF-8");
-		
+
+		String jsonString = URLEncoder.encode(objectMapper.writeValueAsString(movie), "UTF-8");
+
 		return jsonString;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/androidGetPreviewList")
 	public String getPreviewList(@ModelAttribute("search") Search search, Model model) throws Exception {
@@ -1129,56 +1128,48 @@ public class MovieRestController {
 		}
 
 		pageSize = 1000000;
-		
+
 		search.setPageSize(pageSize);
 
 		System.out.println("search값 확인" + search);
 
 		Map<String, Object> map = screenService.getPreviewList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
-		
-		model.addAttribute("search",map.get("search"));
-		model.addAttribute("list",map.get("list"));
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+
+		model.addAttribute("search", map.get("search"));
+		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 
-		List<ScreenContent> previewList = (List<ScreenContent>)map.get("list");
-		
-		
+		List<ScreenContent> previewList = (List<ScreenContent>) map.get("list");
+
 		org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
 		JSONObject response = new JSONObject();
 		ObjectMapper objectMapper = new ObjectMapper();
-		
-		for(int i = 0; i< previewList.size(); i++){
 
-			 objectMapper = new ObjectMapper();
-			 
-			 jsonArray.add(objectMapper.writeValueAsString(previewList.get(i)));
+		for (int i = 0; i < previewList.size(); i++) {
+
+			objectMapper = new ObjectMapper();
+
+			jsonArray.add(objectMapper.writeValueAsString(previewList.get(i)));
 		}
-		
+
 		response.put("list", jsonArray);
-		
-		String jsonString = URLEncoder.encode(response.toJSONString(),"UTF-8");
-		
-		
+
+		String jsonString = URLEncoder.encode(response.toJSONString(), "UTF-8");
+
 		return jsonString;
 	};
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////안드로이드용 끝//////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////// 안드로이드용
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 끝//////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/*
 	 * @RequestMapping(value = "/json/searchTrailer/{searchTrailer}") public
@@ -1312,18 +1303,19 @@ public class MovieRestController {
 			extension = extension.substring(extension.lastIndexOf("?") + 1);
 			System.out.println("extension   ========>>>>>>>  " + extension);
 
-			System.out.println("!!!!!!" + extension.indexOf("jpg"));
-			System.out.println("#####" + extension.indexOf("type"));
-			// if (extension.indexOf("jpg") == 0 && extension.indexOf("type") ==
-			// -1) {
-			if (width > 700 && width < height) {
-				data.put("thumbnail_url", thumbnail_url);
-				data.put("image_url", image_url);
-				data.put("width", documents.get("width"));
-				data.put("height", documents.get("height"));
-				jsonArray.add(data);
+			System.out.println("jpg!!!!!!" + extension.indexOf("jpg"));
+			System.out.println("type#####" + extension.indexOf("type"));
+			
+			
+			if (extension.indexOf("jpg") == 0 && extension.indexOf("type") == -1) {
+				if (width > 700 && width < height) {
+					data.put("thumbnail_url", thumbnail_url);
+					data.put("image_url", image_url);
+					data.put("width", documents.get("width"));
+					data.put("height", documents.get("height"));
+					jsonArray.add(data);
+				}
 			}
-			// }
 
 		}
 

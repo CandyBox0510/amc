@@ -66,40 +66,60 @@
 
 
 
-				
-						<table class="table table-hover table-striped ">
-							<thead class="userListField">
-								<tr class="listTitle">
-									<th align="center">No</th>
-									<th align="left">회원 ID</th>
-									<th align="left">회원명</th>
-									<th align="left">주소</th>
-									<th align="left">계정구분</th>
-									<!-- <th align="left">간략정보</th> -->
+
+					<table class="table table-hover table-striped hidden-xs">
+						<thead class="userListField">
+							<tr class="listTitle">
+								<th align="center">No</th>
+								<th align="left">회원 ID</th>
+								<th align="left">회원명</th>
+								<th align="left">주소</th>
+								<th align="left">계정구분</th>
+								<!-- <th align="left">간략정보</th> -->
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:set var="i" value="0" />
+							<c:forEach var="user" items="${list}">
+								<c:set var="i" value="${ i+1 }" />
+								<tr class="userListRecord">
+									<td align="center">${ i }</td>
+									<td align="left" title="Click : 회원정보 확인">${user.userId}</td>
+									<td align="left">${user.userName}</td>
+									<td align="left">${user.addr}</td>
+									<td align="left">${user.role}</td>
+									<!-- <td align="left"></td> -->
+									<%-- <i class="glyphicon glyphicon-ok" id= "${user.userId}"></i> --%>
+									<%-- <input type="hidden" value="${user.userId}"> --%>
 								</tr>
-							</thead>
+							</c:forEach>
 
-							<tbody>
-								<c:set var="i" value="0" />
-								<c:forEach var="user" items="${list}">
-									<c:set var="i" value="${ i+1 }" />
-									<tr class="userListRecord">
-										<td align="center">${ i }</td>
-										<td align="left" title="Click : 회원정보 확인">${user.userId}</td>
-										<td align="left">${user.userName}</td>
-										<td align="left">${user.addr}</td>
-										<td align="left">${user.role}</td>
-										<!-- <td align="left"></td> -->
-										<%-- <i class="glyphicon glyphicon-ok" id= "${user.userId}"></i> --%>
-										<%-- <input type="hidden" value="${user.userId}"> --%>
-									</tr>
-								</c:forEach>
+						</tbody>
+					</table>
 
-							</tbody>
-						</table>
-		
+					<div class="hidden-lg hidden-md hidden-sm col-xs-12 ">
+						<div class="listTitle">
+							<div class="col-xs-12">회원아이디</div>
+							<div class="col-xs-8">회원명</div>
+							<div class="col-xs-4">계정구분</div>
+						</div>
 
-					
+						<c:set var="i" value="0" />
+						<c:forEach var="user" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+							<div class="col-xs-12" title="Click : 회원정보 확인">${user.userId}</div>
+							<div class="col-xs-8">${user.userName}</div>
+							<div class="col-xs-4">${user.role}</div>
+							<hr class="col-xs-12">
+						</c:forEach>
+
+
+
+					</div>
+
+
+
 
 
 
