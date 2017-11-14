@@ -66,40 +66,67 @@
 
 
 
-				
-						<table class="table table-hover table-striped ">
-							<thead class="userListField">
-								<tr class="listTitle">
-									<th align="center">No</th>
-									<th align="left">회원 ID</th>
-									<th align="left">회원명</th>
-									<th align="left">주소</th>
-									<th align="left">계정구분</th>
-									<!-- <th align="left">간략정보</th> -->
+
+					<table class="table table-hover table-striped hidden-xs">
+						<thead class="userListField">
+							<tr class="listTitle">
+								<th align="center">No</th>
+								<th align="left">회원 ID</th>
+								<th align="left">회원명</th>
+								<th align="left">주소</th>
+								<th align="left">계정구분</th>
+								<!-- <th align="left">간략정보</th> -->
+							</tr>
+						</thead>
+
+						<tbody>
+							<c:set var="i" value="0" />
+							<c:forEach var="user" items="${list}">
+								<c:set var="i" value="${ i+1 }" />
+								<tr class="userListRecord">
+									<td align="center">${ i }</td>
+									<td align="left" title="Click : 회원정보 확인">${user.userId}</td>
+									<td align="left">${user.userName}</td>
+									<td align="left">${user.addr}</td>
+									<td align="left">${user.role}</td>
+									<!-- <td align="left"></td> -->
+									<%-- <i class="glyphicon glyphicon-ok" id= "${user.userId}"></i> --%>
+									<%-- <input type="hidden" value="${user.userId}"> --%>
 								</tr>
-							</thead>
+							</c:forEach>
 
-							<tbody>
-								<c:set var="i" value="0" />
-								<c:forEach var="user" items="${list}">
-									<c:set var="i" value="${ i+1 }" />
-									<tr class="userListRecord">
-										<td align="center">${ i }</td>
-										<td align="left" title="Click : 회원정보 확인">${user.userId}</td>
-										<td align="left">${user.userName}</td>
-										<td align="left">${user.addr}</td>
-										<td align="left">${user.role}</td>
-										<!-- <td align="left"></td> -->
-										<%-- <i class="glyphicon glyphicon-ok" id= "${user.userId}"></i> --%>
-										<%-- <input type="hidden" value="${user.userId}"> --%>
-									</tr>
-								</c:forEach>
+						</tbody>
+					</table>
 
-							</tbody>
-						</table>
-		
 
-					
+
+
+
+					<div class="xsDisplay">
+						<div class="hidden-lg hidden-md hidden-sm ">
+
+							<div class="listTitleXs col-xs-12">
+								<div class="col-xs-12">회원아이디</div>
+								<div class="col-xs-8">회원명</div>
+								<div class="col-xs-4 text-center">계정구분</div>
+							</div>
+
+							<c:forEach var="user" items="${list}">
+								<div class="col-xs-12">
+									<div class="col-xs-12 xsUserId" title="Click : 회원정보 확인">${user.userId}</div>
+									<div class="col-xs-8 xsUserName">${user.userName}</div>
+									<div class="col-xs-4 xsUserRole">${user.role}</div>
+									<hr class="col-xs-11">
+								</div>
+
+							</c:forEach>
+
+
+						</div>
+					</div>
+
+
+
 
 
 
@@ -173,6 +200,10 @@
         $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
         $("td:nth-child(2)").on("click", function() {
+            self.location = "/user/getUser?userId=" + $(this).text().trim();
+        });
+
+        $(".xsUserId").on("click", function() {
             self.location = "/user/getUser?userId=" + $(this).text().trim();
         });
 
@@ -258,14 +289,22 @@
 	padding-top: 100px;
 }
 
-.listTitle {
+.listTitle, .listTitleXs {
 	font-size: 10px;
 	font-weight: bold;
-	height: 40px;
+	height: auto;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #FFFFFF;
 	background-color: #4C4145;
+}
+
+.listTitleXs {
+	font-size: 13px;
+}
+
+.listTitleXs  div {
+	padding: 5px 0px 5px 0px
 }
 
 html {
@@ -380,6 +419,24 @@ select {
 	padding-top: inherit;
 	padding-bottom: inherit;
 	margin-top: inherit;
+}
+
+hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: solid 0.1px #4c4145;
+}
+
+.xsUserId {
+	font-size: 10pt;
+}
+
+.xsUserRole, .xsUserName {
+	font-size: 9pt
+}
+
+.xsDisplay {
+	margin: 20px 0px 20px 0px
 }
 </style>
 

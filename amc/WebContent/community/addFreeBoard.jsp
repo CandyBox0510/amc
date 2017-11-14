@@ -41,8 +41,11 @@
 					<div class="addFreeBoard">
 						<div class="field">
 							<div class='col-md-1' id="title">제목</div>
-							<div class='col-md-11'>
+							<div class='col-md-9'>
 								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" maxlength="25">
+							</div>
+							<div class='col-md-2'>
+								<input type="checkbox" name='noticeFlag' id="noticeFlag" class="checkbox styled"> 공지
 							</div>
 							<div class='field'>
 								<div class='col-md-12' id="context">

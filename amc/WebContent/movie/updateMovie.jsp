@@ -126,10 +126,10 @@
 					<strong>포스터</strong>
 				</div>
 				<div class="col-xs-4 col-md-3">
-					<img class="poster" src="${movie.postUrl}"  width="160px" ` align="left" />
-					
+					<img class="poster" src="${movie.postUrl}" width="160px" ` align="left" />
+
 					<input type="text" value="" name="postUrl" id="postUrlCheck" class="ct_input_g" maxLength="30" />
-			
+
 				</div>
 				<div class="col-xs-4 col-md-3 ">
 					<span href="#" id="searchPoster" class="searchPoster">포스터 검색</span>
@@ -189,7 +189,7 @@
 					<strong>트레일러 URL</strong>
 				</div>
 				<div class="col-xs-4 col-md-6">
-					<textarea name="trailerName" id="trailerId"  rows="2" cols="60" >${movie.trailer} </textarea>
+					<textarea name="trailerName" id="trailerId" rows="2" cols="60">${movie.trailer} </textarea>
 					<input type="hidden" value="" name="trailer" id="trailerCheck" class="ct_input_g" maxLength="30" />
 				</div>
 				<div class="col-xs-4 col-md-4 ">
@@ -296,7 +296,8 @@
     function searchTrailer() {
 
         searchTrailer = movieNm + ' 예고편';
-        searchTrailer = encodeURIComponent(searchTrailer);
+      
+        searchTrailer =   encodeURI(encodeURIComponent(searchTrailer));
 
         $.ajax({
             url : "/movie/json/searchTrailer/" + searchTrailer,
@@ -319,9 +320,6 @@
     }
 
     function searchPosterResult() {
-    
-        
-        
 
         $.ajax({
             url : "/movie/json/searchPoster/" + searchPoster,
@@ -335,8 +333,8 @@
                 displayValue = '<div class="row">';
                 for (var i = 0; i < JSONData.list.length; i++) {
 
-                  displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrlSearch" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>' 
-                   
+                    displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrlSearch" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>'
+
                 }
                 displayValue += '</div>';
 
@@ -355,11 +353,11 @@
             searchTrailer();
         });
 
-        $(document).on('click', '.getTrailer', function() {        	
+        $(document).on('click', '.getTrailer', function() {
             url = $(".url", $(this)).html();
             $("#trailerId").val(url);
             $("#trailerCheck").val(url);
-   
+
             $(".searchTrailerModal").modal('hide');
         });
 
@@ -367,7 +365,7 @@
 
             image_url = $(".imageUrl", $(this)).val();
 
-            $("#postUrlCheck").val(image_url); 
+            $("#postUrlCheck").val(image_url);
 
             console.log(image_url);
             $(".poster").removeAttr("src");
@@ -391,12 +389,9 @@
 
         $(document).on('click', '.searchPoster', function() {
 
-            
-
-
             $(".searchPosterModal").modal('show');
             searchPoster = movieNm;
-            searchPoster = encodeURIComponent(searchPoster);
+            searchPoster = encodeURI(encodeURIComponent(searchPoster));
 
             searchPosterResult();
 
@@ -404,10 +399,11 @@
 
         $(document).on("click", "button[name='searchClick']", function() {
             searchPoster = $("input[name='searchPoster']").val();
-            searchPoster = encodeURIComponent(searchPoster);
+            searchPoster =  encodeURI(encodeURIComponent(searchPoster))
+            alert(searchPoster)
+         
 
-            
-    searchPosterResult();
+            searchPosterResult();
         })
 
         $(".searchPosterModal").modal({
@@ -588,39 +584,32 @@ input {
         var synopsis = $("input[name='synopsis']").val();
         var trailer = $("input[name='trailerCheck']").val();
         var pster = $("input[name='postUrlCheck']").val();
-        
+
         var defaultposterUrl = $(".poster").attr("src");
         var defaulttrainerUrl = $("#trailerId").val();
-        
-        
-        
-      
-        
+
         // $("#postUrlCheck").val(image_url); 
         // $("#trailerCheck").val(url);
-        
+
         if (pster != null) {
-        	
+
         } else {
         	pster = defaultposterUrl;
         	//alert("pster url" + pster);
-        	$("#postUrlCheck").val(pster); 
+        	$("#postUrlCheck").val(pster);
                
+         
         }
-        
-    	 if (trailer != null) {
-        	
+
+        if (trailer != null) {
+
         } else {
         	trailer = defaulttrainerUrl;
         	//alert("trailer url" + trailer);
         	$("#trailerCheck").val(trailer); 
                
+          
         }
-        
-        
-      
-     
-      
 
         if (directors == null || directors.length < 1) {
             alert("감독명은 반드시 입력하여야 합니다.");
@@ -650,14 +639,10 @@ input {
             alert("상영마감은  반드시 입력하셔야 합니다.");
             return;
         }
-      
-      
-     	 /*   var $updateMovie = $('#updateMovie');
-       		  var postUrl = $("input[name='postUrl']").val();
+
+        /*   var $updateMovie = $('#updateMovie');
+        	  var postUrl = $("input[name='postUrl']").val();
          */
-        
-            
-       
 
         $("form").attr("method", "POST").attr("action", "/movie/updateMovie").submit();
     }

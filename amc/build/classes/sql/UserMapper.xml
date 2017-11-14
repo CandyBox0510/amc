@@ -52,6 +52,16 @@
 	   	WHERE user_id = #{userId} and user_name = #{userName} and password = #{password}
 	 </update>
 	 
+ 	 <!-- SQL : UPDATE (DeleteUser)-->
+	 <update	id="snsDeleteUser"	parameterType="user" >
+	   	UPDATE users
+	   		<set>
+		   		deleteuser_flag = 'Y',
+		   		role = 'not'
+	   		</set>
+	   	WHERE user_id = #{userId} and user_name = #{userName} 
+	 </update>
+	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="deleteCheck"	parameterType="user"	resultMap="userSelectMap">
 		SELECT deleteuser_flag 		
@@ -98,10 +108,9 @@
 		   		password	= #{password},
 				phone1		= #{phone1},
 				phone2		= #{phone2},
-				phone3		= #{phone3},						
-<!-- 				addr 		= #{addr},
-				
-				addr_detail	= #{addrDetail} -->
+				phone3		= #{phone3},
+				addr		= #{addr},
+				addr_detail	= #{addrDetail}		
 	   		</set>
 	   	WHERE user_id = #{userId}
 	 </update>
@@ -109,9 +118,17 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getId"	parameterType="user"	resultMap="userSelectMap">
 		SELECT
-		user_id, password 		
+		user_id, password, role 		
 		FROM users 
 		WHERE user_name = #{userName} and phone1 = #{phone1} and phone2 = #{phone2} and phone3 = #{phone3} and birth = #{birth}
+	 </select>
+	 
+ 	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPhone"	parameterType="user"	resultMap="userSelectMap">
+		SELECT
+		user_id 		
+		FROM users 
+		WHERE phone1 = #{phone1} and phone2 = #{phone2} and phone3 = #{phone3}
 	 </select>
 
 	<!-- SQL : SELECT ROW Count -->	 

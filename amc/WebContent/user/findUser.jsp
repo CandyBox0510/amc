@@ -144,10 +144,10 @@
 										</select>
 					    			</div>
 								    <div class="col-sm-2">
-								  		<input type="text" class="form__name" id="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호">
+								  		<input type="text" class="form__name" id="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호" maxlength="5">
 								    </div>
 								    <div class="col-sm-2">
-								    	<input type="text" class="form__name" id="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호">
+								    	<input type="text" class="form__name" id="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호" maxlength="5">
 								    </div>
 					    			<!-- <input type="hidden" name="phone"  /> -->
 					  			</div>
@@ -297,17 +297,23 @@
 						phone2 : p2,
 						phone3 : p3
 					}),
-					dataType : "text",
+					/* dataType : "text",  */
 					success : function(JSONData , status) {
-						var displayValue = "<h6>"
-													+"아이디 : "+JSONData+"<br/>"										
-													+"</h6>";	
-													
-						swal('회원님의 아이디는 '+JSONData+'입니다.');													
-						/* $("h6").remove(); */
-						 /* $("#findIdbtn").remove(); 	 */
-						/* $( "#user" ).html(displayValue); */								
-						/* $( "#user" ).text(JSONData); */ 
+						var role = JSONData.role
+						if( role == 'not'){
+							alert("탈퇴한 계정은 30일 후 재등록 가능합니다.");
+						}else{
+							var displayValue = "<h6>"
+								+"아이디 : "+JSONData.userId+"<br/>"										
+								+"</h6>";	
+								
+							swal('회원님의 아이디는 '+JSONData.userId+'입니다.');													
+							/* $("h6").remove(); */
+							 /* $("#findIdbtn").remove(); 	 */
+							/* $( "#user" ).html(displayValue); */								
+							/* $( "#user" ).text(JSONData); */	
+						}
+						 
 					}
 				});
 		
@@ -319,15 +325,36 @@
 	function fncSendMail() {
 		var userName=$("#userName2").val();
 		var userId=$("input[name='userId']").val();	
-			if(userId != "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1) || userId == ""){
-    			alert("이메일 형식이 아닙니다.");
-    		return;
-    		}
-			if(userName == null || userName.length <1){
-				alert("이름은 반드시 입력하셔야 합니다.");
-				return;
-			}
+		var p1 = $("#phone1").val();
+		var p2 = $("#phone2").val();
+		var p3 = $("#phone3").val();
 		
+		
+		if(userId != "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1) || userId == ""){
+   			alert("이메일 형식이 아닙니다.");
+   			return;
+   		}
+		
+		if(userName == null || userName.length <1){
+			alert("이름은 반드시 입력하셔야 합니다.");
+			return;
+		}
+		
+	 	if ($("#phone2").val() == "" || $("#phone3").val() == "") {
+            alert("휴대폰 번호는 반드시 모두 입력해야합니다.");
+            return;
+        }
+
+        if ($("#phone2").val().length < 3) {
+            alert("휴대폰 번호는 3자리 이상 이여야합니다.");
+            return;
+        }
+
+        if ($("#phone3").val().length < 3) {
+            alert("휴대폰 번호는 3자리 이상 이여야합니다.");
+            return;
+        }
+	
 		$("#findPassword").attr("method" , "POST").attr("action" , "/user/sendPassword").submit();
 		swal("메일을 성공적으로 보냈습니다.");
 	}
