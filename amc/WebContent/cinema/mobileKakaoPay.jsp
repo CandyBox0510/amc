@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,8 +86,6 @@
 				}); //end of Imp.request_pay
 			}//end of kakaoPay function
 	 
-	 
-	
   </script>
 </head>
 <body>
@@ -122,42 +122,46 @@
         <div class="ui horizontal label" style="width:100%">영화/시사회 제목</div>
             <div class="ui left icon input">
 	            <i class="record icon"></i>
-	            <input type="text" name="title" placeholder="title" readOnly="readonly">
+	            <input type="text" name="title" placeholder="title" readOnly="readonly" value="${title}">
             </div>
         </div>
         <div class="field">
         <div class="ui horizontal label" style="width:100%">상영날짜</div>
             <div class="ui left icon input">
 	            <i class="checked calendar icon"></i>
-	            <input type="text" name="screenOpenTime" placeholder="screenOpenTime" readOnly="readonly">
+	            <c:set var="title" value="${param.screenOpenTime}"/>
+	            <script>
+	            </script>
+	            
+	            <input type="text" name="screenOpenTime" placeholder="screenOpenTime" readOnly="readonly" value="${param.screenOpenTime}">
             </div>
         </div>
         <div class="field">
         <div class="ui horizontal label" style="width:100%">상영관</div>
             <div class="ui left icon input">
 	            <i class="sign in icon"></i>
-	            <input type="text" name="theater" placeholder="theater" readOnly="readonly">
+	            <input type="text" name="theater" placeholder="theater" readOnly="readonly" value="${param.theater} 상영관">
             </div>
         </div>
         <div class="field">
         <div class="ui horizontal label" style="width:100%">예매좌석</div>
             <div class="ui left icon input">
 	            <i class="street view icon"></i>
-	            <input type="text" name="bookingSeatNo" placeholder="bookingSeatNo" readOnly="readonly">
+	            <input type="text" name="bookingSeatNo" placeholder="bookingSeatNo" readOnly="readonly" value="${param.bookingSeatNo}">
             </div>
         </div>
         <div class="field">
         <div class="ui horizontal label" style="width:100%">티켓수</div>
             <div class="ui left icon input">
 	            <i class="ticket icon"></i>
-	            <input type="text" name="headCount" placeholder="headCount" readOnly="readonly">
+	            <input type="text" name="headCount" placeholder="headCount" readOnly="readonly" value="${param.headCount} 장">
             </div>
         </div>
         <div class="field">
         <div class="ui horizontal label" style="width:100%">금액</div>
             <div class="ui left icon input">
 	            <i class="won icon"></i>
-	            <input type="text" name="ticketPrice" placeholder="ticketPrice" readOnly="readonly">
+	            <input type="text" name="ticketPrice" placeholder="ticketPrice" readOnly="readonly" value="${param.totalTicketPrice} 원">
             </div>
         </div>
         <div class="row"><p/></div>

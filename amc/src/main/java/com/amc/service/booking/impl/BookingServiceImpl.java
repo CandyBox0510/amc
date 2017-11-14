@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.amc.common.Search;
@@ -50,6 +51,8 @@ public class BookingServiceImpl implements BookingService {
 		this.movieDAO = movieDAO;
 	}
 
+	@Value("#{commonProperties['nodeServerIP']}")
+	String nodeServerIP;
 	
 	@Override
 	public List<Movie> getScreenMovieList() {
@@ -129,7 +132,7 @@ public class BookingServiceImpl implements BookingService {
 		//1) 좌석정보 업데이트하기
 		Booking booking = bookingDAO.getBooking(bookingNo);
 
-		String urlStr = "http://183.98.215.171:52273/deleteResv";
+		String urlStr = "http://"+nodeServerIP+":52273/deleteResv";
 		String body = "screenNo="+booking.getScreenContentNo()+"&seat="+booking.getBookingNo();
 		try {
 			int responseCode = HttpRequestToNode.httpRequest(urlStr, body);

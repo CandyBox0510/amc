@@ -8,13 +8,6 @@ public class ScreenContent {
 	private Movie movie;
 	private String screenDate;
 	private String screenOpenTime;
-	
-	public WishList getWishList() {
-		return wishList;
-	}
-	public void setWishList(WishList wishList) {
-		this.wishList = wishList;
-	}
 	private String screenEndTime;
 	private String screenTheater;
 	private int ticketPrice;
@@ -23,6 +16,7 @@ public class ScreenContent {
 	private String ticketOpenDate;
 	private String inviteActor;
 	private String screenContentRegDate;
+	
 	public int getScreenContentNo() {
 		return screenContentNo;
 	}
@@ -95,6 +89,12 @@ public class ScreenContent {
 	public void setScreenContentRegDate(String screenContentRegDate) {
 		this.screenContentRegDate = screenContentRegDate;
 	}
+	public WishList getWishList() {
+		return wishList;
+	}
+	public void setWishList(WishList wishList) {
+		this.wishList = wishList;
+	}
 	@Override
 	public String toString() {
 		return "ScreenContent [wishList=" + wishList + ", screenContentNo=" + screenContentNo + ", movie=" + movie
@@ -103,6 +103,7 @@ public class ScreenContent {
 				+ previewFlag + ", previewTitle=" + previewTitle + ", ticketOpenDate=" + ticketOpenDate
 				+ ", inviteActor=" + inviteActor + ", screenContentRegDate=" + screenContentRegDate + "]";
 	}
+	
 
 
 

@@ -250,6 +250,15 @@
 					<i class="fa fa-search"></i>&nbsp; ${movie.movieNm} 포스터
 				</span>
 			</div>
+			<div class="row col-md-12">
+				<div class="row col-md-3">
+					<input type="text" name="searchPoster" placeholder="원하는 검색결과가 없을 때 사용해주세요">
+				</div>
+				<div class="row col-md-2">
+					<button type="button" name="searchClick">검색</button>
+				</div>
+			</div>
+
 			<div class="listPoster scrolling content"></div>
 			<input type="hidden" name="movieNm" value="${movie.movieNm}" />
 		</div>
@@ -309,10 +318,8 @@
         })
     }
 
-    function searchPoster() {
-
-        searchPoster = "영화 " + movieNm;
-        searchPoster = encodeURIComponent(searchPoster);
+    function searchPosterResult() {
+    
         
         
 
@@ -357,17 +364,12 @@
         });
 
         $(document).on('click', '.getPoster', function() {
-        	
-        	
-            image_url = $(".imageUrl", $(this)).val();
-           
-            
-            $("#postUrlCheck").val(image_url); 
-            
-       
-            
-            console.log(image_url);
 
+            image_url = $(".imageUrl", $(this)).val();
+
+            $("#postUrlCheck").val(image_url); 
+
+            console.log(image_url);
             $(".poster").removeAttr("src");
             $(".poster").attr("src", image_url);
             $(".searchPosterModal").modal('hide');
@@ -388,9 +390,25 @@
         });
 
         $(document).on('click', '.searchPoster', function() {
+
+            
+
+
             $(".searchPosterModal").modal('show');
-            searchPoster();
+            searchPoster = movieNm;
+            searchPoster = encodeURIComponent(searchPoster);
+
+            searchPosterResult();
+
         });
+
+        $(document).on("click", "button[name='searchClick']", function() {
+            searchPoster = $("input[name='searchPoster']").val();
+            searchPoster = encodeURIComponent(searchPoster);
+
+            
+    searchPosterResult();
+        })
 
         $(".searchPosterModal").modal({
             autofocus : false,
@@ -466,9 +484,11 @@ input {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-.getTrailer:hover{
-color:#fe505a;
+
+.getTrailer:hover {
+	color: #fe505a;
 }
+
 .searchTrailer, .searchPoster {
 	background-color: #4C4145;
 	padding: 7px 7px 7px 7px;
@@ -520,8 +540,12 @@ color:#fe505a;
 	color: #4c4145;
 }
 
-.searchTrailerModal {
+.searchTrailerModal, .searchPosterModal {
 	padding: 10px 10px 10px 10px
+}
+
+.searchPosterModal input {
+	font-size: 10px;
 }
 </style>
 

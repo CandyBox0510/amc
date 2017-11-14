@@ -459,6 +459,10 @@
             alert("가격을 입력해주세요");
             return;
         }
+        if (!$.isNumeric(ticketPrice)) {
+            alert(' 가격은 숫자만 입력이 가능합니다');
+            return;
+        }
 
         var previewTitle = $("input[name='previewTitle']").val();
         var previewOpenDate = $("input[name='previewOpenDate']").val();
@@ -652,7 +656,10 @@
             alert("가격을 입력해 주세요");
             return;
         }
-
+        if (!$.isNumeric(ticketPrice)) {
+            alert(' 가격은 숫자만 입력이 가능합니다');
+            return;
+        }
         var previewTitle = $(".updateScreenContentModal input[name='previewTitle']").val();
         var previewOpenDate = $(".updateScreenContentModal input[name='previewOpenDate']").val();
         var previewOpenTime = $(".updateScreenContentModal input[name='previewOpenTime']").val();

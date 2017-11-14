@@ -63,7 +63,7 @@
 									<button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 									<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 								</form>
-						
+
 							</div>
 						</div>
 					</div>
@@ -76,9 +76,9 @@
 						</c:if>
 					</div>
 
-					<div class="freeBoardTable">
-						<table class="freeBoardField">
-							<tr class="col-md-12 col-sm-12  freeBoardField">
+					<div class="freeBoardTable hidden-xs">
+						<table>
+							<tr class="col-md-12 col-sm-12 freeBoardField">
 								<td class="col-md-1 col-sm-1 text-center">번호</td>
 								<td class="col-md-6 col-sm-6">제목</td>
 								<td class="col-md-2 col-sm-2 text-center">글쓴이</td>
@@ -86,40 +86,71 @@
 								<td class="col-md-2 col-sm-2 text-center">등록일</td>
 							</tr>
 						</table>
+
+						<div>
+							<table>
+								<c:forEach var="freeBoard" items="${list }">
+									<tr class="col-md-12 col-sm-12 freeBoardRecord">
+										<td class="col-md-1 col-sm-1  text-center ">${ freeBoard.freeBoardNo}</td>
+										<td class="col-md-6 col-sm-6 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+										</td>
+										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.user.userId}</td>
+										<td class="col-md-1 col-sm-1 text-center">${ freeBoard.freeBoardViews}</td>
+										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.freeBoardRegDate}</td>
+									</tr>
+								</c:forEach>
+							</table>
+						</div>
 					</div>
-					<div>
-						<table>
-							<c:forEach var="freeBoard" items="${list }">
-								<tr class="col-md-12 col-sm-12 freeBoardRecord">
-									<td class="col-md-1 col-sm-1  text-center ">${ freeBoard.freeBoardNo}</td>
-									<td class="col-md-6 col-sm-6 title">
-										<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
-									</td>
-									<td class="col-md-2 col-sm-2 text-center">${ freeBoard.user.userId}</td>
-									<td class="col-md-1 col-sm-1 text-center">${ freeBoard.freeBoardViews}</td>
-									<td class="col-md-2 col-sm-2 text-center">${ freeBoard.freeBoardRegDate}</td>
-								</tr>
-							</c:forEach>
+
+					<div class="freeBoardTable hidden-md hidden-sm hidden-lg">
 
 
+						<div class="freeBoardFieldXS text-center" style="height: 50px; font-size: 10px;">
+							<div class="col-xs-12">제목</div>
+							<div class="col-xs-4">글쓴이</div>
+							<div class="col-xs-4">HIT</div>
+							<div class="col-xs-4">등록일</div>
+						</div>
 
-						</table>
-
-
-						<div class="clearfix"></div>
-
-						<div class="coloum-wrapper">
-							<div class="pagination paginatioon--full">
-								<c:if test="${resultPage.currentPage != 1 }">
-									<a href='#' class="pagination__prev">prev</a>
-								</c:if>
-								<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
-									<a href='#' class="pagination__next">next</a>
-								</c:if>
+						<div>
+							<div>
+								<c:forEach var="freeBoard" items="${list }">
+									<div class="freeBoardRecordXS">
+										<div class="col-xs-2 boardNo">${ freeBoard.freeBoardNo}</div>
+										<div class="col-xs-10 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+										</div>
+										<div class="col-xs-12 text-center recordXs">
+											<div class="col-xs-4"></div>
+											<div class="col-xs-3">${ freeBoard.user.userId}</div>
+											<div class="col-xs-2">${ freeBoard.freeBoardViews}</div>
+											<div class="col-xs-3">${ freeBoard.freeBoardRegDate}</div>
+										</div>
+										<div class="col-xs-12 xsHr"><hr/></div>
+									</div>
+									
+								</c:forEach>
 							</div>
 						</div>
 
 					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="coloum-wrapper">
+						<div class="pagination paginatioon--full">
+							<c:if test="${resultPage.currentPage != 1 }">
+								<a href='#' class="pagination__prev">prev</a>
+							</c:if>
+							<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
+								<a href='#' class="pagination__next">next</a>
+							</c:if>
+						</div>
+					</div>
+
+
 				</div>
 
 			</section>
@@ -223,11 +254,12 @@ html {
 section {
 	padding-bottom: 30px
 }
+.xsHr hr{
+margin-top :0px;
+margin-bottom:0px;
 
-
-
-
-
+border : solid 0.5px #4c4145;
+}
 
 .count {
 	margin-top: 10px;
@@ -247,22 +279,43 @@ section {
 	margin-top: 10px;
 }
 
-.freeBoardField {
+.freeBoardField, .freeBoardFieldXS {
 	font-size: 14px;
 	font-weight: bold;
-	height: 40px;
+	height: 150%;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #FFFFFF;
 	background-color: #4C4145;
 }
 
-.freeBoardRecord {
+.freeBoardField td {
+	height: 100%;
+	padding-top : 8px;
+	padding-bottom : 10px;
+}
+
+.freeBoardFieldXS div {
+	padding-top: 1px;
+	padding-bottom: 1px;
+	height: 50%;
+	background-color: #4C4145;
+}
+
+.freeBoardRecord, freeBoardRecordXS {
 	font-size: 13px;
 	height: 50px;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #4C4145;
+}
+
+.freeBoardRecordXS div {
+	margin-bottom: 5px;
+}
+
+.freeBoardRecordXS .title {
+	margin-top: 5px;
 }
 
 .freeBoardRecord>td {
@@ -273,6 +326,16 @@ section {
 .title {
 	font-size: 13px;
 	font-weight: bold;
+}
+
+.recordXs {
+	font-size: 10px;
+}
+
+.boardNo {
+	margin-top: 5px;
+	font-size: 10px;
+	color: #969b9f;
 }
 
 .title:hover {
@@ -297,7 +360,6 @@ section {
 	margin-bottom: 10px;
 }
 
-
 #search-form {
 	display: block;
 	margin-top: 1em;
@@ -306,7 +368,6 @@ section {
 .search__button {
 	padding: 5px 5px 5px 5px;
 }
-
 
 input, select {
 	height: 30px;
@@ -326,17 +387,15 @@ select {
 }
 
 option {
-	  width: 140px;
-    top: 37px !important;
-    border: none;
-    padding: 14px 7px;
-    z-index: 23;
-    background-color: #4c4145;
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
-    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
-    
-    
+	width: 140px;
+	top: 37px !important;
+	border: none;
+	padding: 14px 7px;
+	z-index: 23;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
 }
 </style>
 

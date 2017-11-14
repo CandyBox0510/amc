@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="org.springframework.util.StringUtils" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!doctype html>
 <html>
 <head>
@@ -288,16 +288,15 @@ function kakaoPay(){
                 <div class="choose-sits__info">
                     <ul>
                         <li class="sits-state sits-state--not">Not available</li>
-                        <li class="sits-state sits-state--your">Yourd choice</li>
+                        <li class="sits-state sits-state--your">Your choice</li>
                     </ul>
                 </div>
           </div>
           <!--  only UI -->
 	
 			<div  class="col-sm-8 com-md-9">
-
-
-				<iframe id="child" src="http://183.98.215.171:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
+			  <c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>
+				<iframe id="child" src="http://${ip}:52273/random_select?screenNo=${screenContent.screenContentNo}&headCount=${headCount}"
 				style='width:100%; height:400px;' frameborder='0'  align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
