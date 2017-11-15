@@ -78,8 +78,11 @@ public class MovieController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-
-		User user = (User) session.getAttribute("user");
+		
+	
+		
+		User user = (User)session.getAttribute("user");		
+		
 
 		System.out.println("pagesize " + search.getPageSize());
 
@@ -87,8 +90,10 @@ public class MovieController {
 
 		System.out.println("menu :" + request.getParameter("menu"));
 
-		if (request.getParameter("menu").equals("manage")) {
+		if(request.getParameter("menu").equals("manage")) {
 
+
+			
 			search.setSearchKeyword2("manage");
 			search.setSearchKeyword3("manage");
 
@@ -201,6 +206,18 @@ public class MovieController {
 
 		System.out.println("555555555555555");
 
+		
+		if(search.getCurrentPage() > 1) {
+			search.setSearchCondition(null);
+			search.setSearchKeyword(null);
+		}
+		
+		
+		System.out.println("search condition 2:: " + search.getSearchCondition());
+		System.out.println("search 2 " + search);
+		
+	
+		
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건
 		// "searchCondtion=7" 은 일반인 검색에 해당됨

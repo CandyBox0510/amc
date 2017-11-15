@@ -56,7 +56,7 @@
       } 
 		
 	 	 if (days < 1){
-	         days = "";
+	         days = -1;
 	     }
       
       if (hours < 10){
@@ -74,7 +74,11 @@
       if(diff<1){
       	
       }else{
-			document.getElementById("dpTime").innerHTML =days+ "일 " + hours + ":" + minutes + ":" + seconds;
+    	  if(days==-1){
+    		  document.getElementById("dpTime").innerHTML =hours + ":" + minutes + ":" + seconds;
+    	  }else{
+    		  document.getElementById("dpTime").innerHTML =days+ "일 " + hours + ":" + minutes + ":" + seconds;  
+    	  }		
       }
   }
   

@@ -94,7 +94,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-		<script src="/js/kakao.js"></script>
+
    
    
    
@@ -545,12 +545,6 @@
                              <li class="menu__nav-item"><a href="/product/getGoodsList?menu=search&searchProdType=G">±ÂÁî</a></li>
                              <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchProdType=S">½º³¼¹Ù</a></li>
                          </ul>
-                     </li>
-                     <li class="visible-xs hidden-sm hidden-md hidden-lg">
-                     	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
-                     	<!-- <a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> -->
-                     	<a href="logoutWithKakao();" class="btn--sign">·Î±×¾Æ¿ô</a> 
-                     </li>
                      <c:if test="${!empty sessionScope.user}">
 						<c:if test="${sessionScope.user.role eq 'admin'}">
 	                     <li>
@@ -567,7 +561,10 @@
 	                     </li>
 	                     </c:if>
                      </c:if>
-
+                     <li class="visible-xs hidden-sm hidden-md hidden-lg">
+                     	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
+                     	<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> 
+                     </li>
                  </ul>
              </nav>
              

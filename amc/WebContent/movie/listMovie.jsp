@@ -39,16 +39,17 @@
 	                 
 						    <label class="sr-only" for="searchKeyword">검색어</label>
 						    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-						    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-					  	 </form>
+						     size="15" value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+					  		  
+						     <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+						    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+						  	 </form>
 				   </div>
 				   		
 				  <i class='fa fa-search' id="searchIcon" style="color:grey"></i>  &nbsp; 	
 				  <i class='fa fa-microphone' id="voidSearchIcon" style="color:grey"> </i>	
 				
-	         		  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+	         	
 				  <!-- Login Common PlugIn -->
 				
 				  <jsp:include page="/layout/loginModal.jsp" />   
@@ -76,9 +77,9 @@
 	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>개봉일 :${movie.openDt } </strong> </p>
+	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
 	                                   
 	                    	    <div style="text-align: left;">
     						    
@@ -92,14 +93,14 @@
 								<%-- bootstrap icon이 작동이 되질 않음      --%>
 								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
 										text-align : center; margin:0 auto;">   --%>	
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
+								<i class='fa fa-heart-o' id="${movie.movieNo}" style="color:#FF5733;text-align : center; margin:0 auto;"> 	 
 											<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	
 									     </i> 						
 								    </c:if>	
 								    
 								    <c:if test="${name ne '0'}">
-									    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
+									    <i class='fa fa-heart' id="${movie.movieNo}" style="color:#FF5733; text-align : center; margin:0 auto;">
 									    	<input type='hidden' id='scMovieNo' 	 value="${movie.movieNo}">	 
 							    			<input type='hidden' id='userId'  	 	 value="${user.userId}">	 
 									    </i> 						
@@ -218,9 +219,13 @@
 				
 	  			function fncGetPageList(currentPage) {
 	  
-	  				// alert("1111")
+	  				//alert("1111")
 	  
 					$("#currentPage").val(currentPage)
+					
+					var aa = $("#currentPage").val(currentPage);
+	  				//alert("next page #" + aa);
+					
 					$(".form-search").attr("method","POST").attr("action", "/movie/getMovieList?menu=search").submit();
 				
 					
@@ -501,15 +506,33 @@
 					});	
 				});
 					
-			/*     $(function() {
-			        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			        $("button[name='search']").on("click", function() {
-			        	alert("222")
-			      
-			            fncGetPageList(1);
-			        });
-	      
-			    }); */
+				$(".pagination__next").on("click", function() {
+		        	
+		        	//alert("next")
+		        	
+		            searchKeyword = $("input[name='searchKeyword']").val();
+
+		            var currentPage = $("#currentPage").val()
+		            
+		            //alert("currentPage :: " + currentPage)          
+		  
+		            currentPage =  parseInt(currentPage) + 1;
+		       
+		          
+		            fncGetPageList(currentPage);
+		        });
+
+		        $(".pagination__prev").on("click", function() {
+		            var currentPage = $("#currentPage").val()
+		      
+		            //alert("prev")
+		            currentPage = parseInt(currentPage) - 1
+		            
+		            fncGetPageList(currentPage);
+
+		          
+		        });
+			    
 
 	            $(document).ready(function() {
 	                init_CinemaList();

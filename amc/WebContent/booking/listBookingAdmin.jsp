@@ -59,11 +59,11 @@
     			            	<div class="col-sm-6 text-right">
 				                <form id='search-form' class="search ">
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"
-				                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+				                    value="${!empty search.searchKeyword ? search.searchKeyword : '' }">
 				                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 				                        <option value="userId" ${ ! empty search.searchCondition && search.searchCondition eq "userId" ? "selected" : "" }>회원아이디</option>
 				                        <option value="movieTitle" ${ ! empty search.searchCondition && search.searchCondition eq "movieTitle" ? "selected" : "" }>영화제목</option>
-				                        <option value="previewFlag" ${ ! empty search.searchCondition && search.searchCondition eq "previewFlag" ? "selected" : "" }>시사회</option>	                     
+				                        <option value="bookingNo" ${ ! empty search.searchCondition && search.searchCondition eq "previewFlag" ? "selected" : "" }>예매번호</option>	                     
 				                    </select>
 				                    <button type='button' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
@@ -74,9 +74,6 @@
 			        </div>
 			        
 			        <div class ="col-md-12 text-right">
-			        	<c:if test="${user.userId != null }">
-			        		<button type="button" class="btn btn-md btn--warning btn--wider" id = 'writeButton'><i class="fa fa-pencil"></i> 글쓰기</button>
-			        	</c:if>
 			        </div>
 			        
 				<div class ="col-md-12 col-xs-12 freeBoardTable">
@@ -158,18 +155,19 @@
 		<script type="text/javascript">
 		
 		 function fncGetPageList(currentPage) {
-		        $("#currentPage").val(currentPage)		  
-		      
+		        $("#currentPage").val(currentPage)		  		      
 		        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
 		 }
 		 
 		 function fncGetNextPage() {
-		        $("#currentPage").val(${resultPage.currentPage}+1)		  		      
-		        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
+		 	var currentPage = ${resultPage.currentPage};
+	        $("#currentPage").val(currentPage+1)		  		      
+	        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
 		 }
 		 function fncGetPrePage() {
-		        $("#currentPage").val(${resultPage.currentPage}-1)		  		      
-		        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
+			 var currentPage = ${resultPage.currentPage};   
+			 $("#currentPage").val( currentPage-1)		  		      
+		     $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
 		 }
 		 
             $(document).ready(function() {

@@ -595,19 +595,19 @@ input {
         if (pster != null) {
 
         } else {
-            pster = defaultposterUrl;
-
-            $("#postUrlCheck").val(pster);
+     	pster = defaultposterUrl;
+        	//alert("pster url" + pster);
+        	$("#postUrlCheck").val(pster);
 
         }
 
         if (trailer != null) {
 
         } else {
-            trailer = defaulttrainerUrl;
-
-            $("#trailerCheck").val(trailer);
-
+             	trailer = defaulttrainerUrl;
+        	//alert("trailer url" + trailer);
+        	$("#trailerCheck").val(trailer); 
+          
         }
 
         if (directors == null || directors.length < 1) {
