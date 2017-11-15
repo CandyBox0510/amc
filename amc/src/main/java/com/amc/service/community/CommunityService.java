@@ -33,5 +33,11 @@ public interface CommunityService {
 
 	int getFreeBoardTotalCount(int freeBoardNo) throws Exception;
 
+	List<FreeBoard> getNoticeList();
+
+
+
+	int getNoticeListCount(int freeBoardNo) throws Exception;
+
 	
 }
