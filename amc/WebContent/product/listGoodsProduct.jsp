@@ -48,8 +48,6 @@
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-		<!--아임포트 CDN -->
-		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 </head>
 
@@ -179,7 +177,7 @@
 
 	<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -256,6 +254,37 @@
 	        	
 	        });
 	    });
+	    
+    	//6. Progressbar
+  		//Count function for progressbar
+  		function init_progressBar(duration) {
+             $('.progress').each(function() {
+                 var value = $(this).find('.progress__bar').attr('data-level');
+                 var result = value + '%';
+                 if(duration) {
+                     $(this).find('.progress__current').animate({width : value + '%'}, duration);
+                 }
+                 else {
+                     $(this).find('.progress__current').css({'width' : value + '%'});
+                 }
+                 
+             });
+          }
+
+//           inview progress bars
+//            $('.progress').one('inview', function (event, visible) {
+//                if (visible == true) {
+                     
+//                }
+//            });
+
+          var inview = new Waypoint.Inview({
+            element: $('.progress')[0],
+            enter: function(direction) {
+              init_progressBar(2000);
+            }
+          });
+
 
 </script>
 <style type="text/css">

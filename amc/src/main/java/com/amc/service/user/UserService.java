@@ -24,7 +24,10 @@ public interface UserService {
 	public void deleteUser(User user) throws Exception;
 
 	// 회원 ID 찾기
-	public String getId(User user) throws Exception;
+	public User getId(User user) throws Exception;
+	
+	// phone 중복 찾기
+	public String getPhone(User user) throws Exception;
 	
 	// 회원 ID 중복 확인	
 	public boolean checkDuplication(String userId) throws Exception;

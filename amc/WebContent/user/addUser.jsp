@@ -40,7 +40,7 @@
 			<br />
 			<br />
 			<!-- form Start /////////////////////////////////////-->
-			<form id="form" class="form row" method='post' novalidate="">
+			<form id="addUser-form" class="form row" method='post' novalidate="">
 				<input type="hidden" value="${param.phone1}" id="authPhone1" name="phone1">
 				<input type="hidden" value="${param.phone2}" id="authPhone2" name="phone2">
 				<input type="hidden" value="${param.phone3}" id="authPhone3" name="phone3">
@@ -212,7 +212,7 @@
         var pw = $("input[name='password']").val();
         var pw_confirm = $("input[name='password2']").val();
         var name = $("input[name='userName']").val();
-        var name = $("input[name='birth']").val();
+        var birth = $("input[name='birth']").val();
         var check = true
         var phone1 = $("#phone1").val();
         var phone2 = $("#phone2").val();
@@ -298,7 +298,7 @@
 
                     if (check == true) {
                         alert('회원가입을 축하합니다.');
-                        $("#form").attr("method", "POST").attr("action", "/user/addUser").submit();
+                        $("#addUser-form").attr("method", "POST").attr("action", "/user/addUser").submit();
                     }
                 } else {
                     alert("이미 등록된 휴대폰입니다.");

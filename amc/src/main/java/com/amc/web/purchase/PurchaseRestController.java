@@ -79,7 +79,7 @@ public class PurchaseRestController {
 	
 	@RequestMapping( value="listPurchase" )
 	public Map<String, Object> listPurchase(	@RequestBody Search search	) throws Exception{
-		
+		System.out.println("purchaseRestController 의 listPurchase 메소드 :"+search);
 		
 		System.out.println("PurchaseRestController listPurchase called");
 		return this.getList(search);
@@ -142,7 +142,7 @@ public class PurchaseRestController {
 		
 		
 		//map.put("serarch", search);
-		
+		System.out.println("purchaseRestController 의 getList메소드의 map : "+map);
 		return map;
 	}
 	

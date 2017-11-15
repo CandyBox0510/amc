@@ -94,6 +94,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+		<script src="/js/kakao.js"></script>
    
    
    
@@ -345,7 +346,11 @@
 			Kakao.init('fc5658887af25f840e94144f6722b228');
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
-		 		success: function(authObj) {
+				
+				persistAccessToken: true,
+				persistRefreshToken: true,
+				
+				success: function(authObj) {
 		 			alert("일단 들어와바2");
 		   			var accessToken = Kakao.Auth.getAccessToken();
 		    		Kakao.Auth.setAccessToken(accessToken);
@@ -374,13 +379,15 @@
 										/* password : pw */
 									}),
 
-			                      	/* success : function(JSONData, status) { */
-			                      		success : function(text) {
-			                      		alert(JSONData);
-			                       		if(userId == '' ) {
-			                       			swal("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
+			                      	 success : function(JSONData) { 
+/* 			                      		alert(JSONData.userId);
+			                      		alert(JSON.stringify(JSONData));
+ */			                       		if(JSONData == null || JSONData == '') {
+			                       			alert("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
 			                       			$(self.location).attr("href","/user/addUser?email="+userId+"&snslogin=kakao");                 
-			                         	}else if(userId != ''){
+			                         	}else if(JSONData.role == 'not'){
+			                         		alert("탈퇴한 회원은 30일 후 재가입 가능 합니다.");
+			                         	}else if(JSONData != ''){
 			                         		alert("반갑습니다.");  
 			                       			$(self.location).attr("href","/user/loginUser");
 			
@@ -403,17 +410,23 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a:contains('로그아웃')").on("click" , function() {
+				alert("카카오로그아웃1");
 				logoutWithKakao();
 			}); 
 		});
 	 
 		function logoutWithKakao() {
-			 Kakao.init('fc5658887af25f840e94144f6722b228'); 
+			 alert("카카오로그아웃2"); 
+			 /* Kakao.Auth.logout(); */
 			 Kakao.Auth.logout(function(){
+				alert("카카오 로그아웃3");
+				var frm = document.applicationJoinForm;
+				  frm.submit();
 				setTimeout(function(){
+					location.href="http://developers.kakao.com/logout";
 					location.href="/user/logoutUser/"
 				},300);
-				}); 
+			}); 
 		}
 		
 	   	function openHistory(){
@@ -535,7 +548,8 @@
                      </li>
                      <li class="visible-xs hidden-sm hidden-md hidden-lg">
                      	<a href="#" class="btn--sign">[${sessionScope.user.userName}] 님&emsp;</a>
-                     	<a href="/user/logoutUser" class="btn--sign">로그아웃</a> 
+                     	<!-- <a href="/user/logoutUser" class="btn--sign">로그아웃</a> -->
+                     	<a href="logoutWithKakao();" class="btn--sign">로그아웃</a> 
                      </li>
                      <c:if test="${!empty sessionScope.user}">
 						<c:if test="${sessionScope.user.role eq 'admin'}">
@@ -656,12 +670,12 @@ div#user {
 }
 
 </style>
-<script>
+<!-- <script>
 $( function() {
 	if( '${sessionScope.user.role}' == 'admin'){
 		$("ul#navigation").css("padding","0 0 0 20px");
 	}
 })
-</script>
+</script> -->
 </html>
 

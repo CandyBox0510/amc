@@ -20,7 +20,10 @@ public interface UserDAO {
 	public void updateUser(User user) throws Exception;
 	
 	// 회원 id 찾기
-	public String getId(User user) throws Exception ;
+	public User getId(User user) throws Exception;
+	
+	// phone 중복 찾기
+	public String getPhone(User user) throws Exception;
 			
 	// 회원 탈퇴
 	public void deleteUser(User user) throws Exception;
