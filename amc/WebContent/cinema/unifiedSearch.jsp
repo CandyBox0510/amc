@@ -60,32 +60,48 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
         
-         <!-- Search bar -->
-        <div class="search-wrapper">
-            <div class="container container--add">
-                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
-                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
-                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
-                </form>
-            </div>
-        </div>
         
         
         <!-- Main content -->
-        <div class="place-form-area">
+    	<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+         <div class="contact-form-wrapper-search">
+         <div class="place-form-area">
         <section class="container">
             <div class="order-container">
                 <div class="order">
                     <img class="order__images" alt='' src="/images/unifiedSearch.png">
-                    <p class="order__title">통합검색 <br><span class="order__descript">in amc homepage</span></p>
+                    <div class="order__title">통합검색 <br><span class="order__descript">in amc homepage</span></div>
                 </div>
             </div>
+         </section>
+         </div>
+         	<div class="container" style="margin:auto;">
+	            <div class="container" style="margin:auto;">
+					        <!-- Search bar -->
+			        <div class="search-wrapper">
+			            <div class="container container--add">
+			                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
+			                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
+			                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
+			                </form>
+			            </div>
+			        </div>
+	            </div>
+            </div>
+        </div>
+        
+        <div class="place-form-area">
+        <section class="container">
             
             <!-- 영화 통합검색  시작-->
             <div class="order-step-area">
@@ -356,11 +372,12 @@
 	  font-size: 120%;
 	   line-height:4.3em
 	 }
-	 .header-wrapper {
-	  background: rgba(46, 41, 46, 0.8);;
-	  position: relative;
-	  z-index: 120;
-	  height: 55px;
+	 .contact-form-wrapper-search{
+	  background-color: #dbdee1;
+	  overflow: hidden;
+	  margin: -30px 0 80px;
+	  padding: 56px 0 60px;
 	}
+	 
  </style>
 </html>

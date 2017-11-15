@@ -54,12 +54,6 @@
     }
   </style>
   <script>
-  
-  	function goApp(impUid){
-  		alert(impUid);
-  		self.loaction = "amc://"+impUid;
-  	}
-  
   </script>
 </head>
 <body>
@@ -89,11 +83,11 @@
 			<div class="ui ignored info message" style="width:80%; margin:auto">	
 				결제가 성공적으로 <br/> 완료되었습니다.
       		</div>
-        </div>
+        </div>        
         <div class="row"><p/></div>
         <div class="row"><p/></div>
         <div class="row"><p/></div>
-        <a href="confirm://impUid=${impUid}">
+        <a href="confirm://impUid=${impUid}/${param.screenContentNo}/${param.bookingSeatNo}">
         <%-- <div class="ui fluid large teal button" style="width:50%; margin:auto;" onClick="javascript:goApp('${impUid}')">확인</div> --%>
         <div class="ui fluid large teal button" style="width:50%; margin:auto;" >확인</div>
         </a>

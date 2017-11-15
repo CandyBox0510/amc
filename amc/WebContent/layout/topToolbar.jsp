@@ -533,10 +533,6 @@
                              <li class="menu__nav-item"><a href="/product/getSnackList?menu=search&searchProdType=S">½º³¼¹Ù</a></li>
                          </ul>
                      </li>
-                     <li class="visible-xs hidden-sm hidden-md hidden-lg">
-                     	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
-                     	<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> 
-                     </li>
                      <c:if test="${!empty sessionScope.user}">
 						<c:if test="${sessionScope.user.role eq 'admin'}">
 	                     <li>
@@ -553,7 +549,10 @@
 	                     </li>
 	                     </c:if>
                      </c:if>
-
+                     <li class="visible-xs hidden-sm hidden-md hidden-lg">
+                     	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
+                     	<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> 
+                     </li>
                  </ul>
              </nav>
              

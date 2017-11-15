@@ -242,7 +242,7 @@
 			  var no = ${screenContent.ticketPrice};
 			  
 			  if(event.data==null || event.data==""){
-			  initializeSeat();
+			  //initializeSeat();
 			  
 			  }else{
 				  $.ajax(

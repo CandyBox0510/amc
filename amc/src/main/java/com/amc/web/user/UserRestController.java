@@ -9,11 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jettison.json.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -194,6 +196,16 @@ public class UserRestController {
 
 	}
 	
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////안드로이드용 시작//////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
 	@RequestMapping(value="/addUuid")
 	public String addUuid(@RequestParam("token")String token, 
 									@RequestParam("userId")String userId) throws Exception{
@@ -201,5 +213,37 @@ public class UserRestController {
 		System.out.println("안드로이드에서 온 토큰 token : "+token+" userId :"+userId);
 		
 		return userService.addUuid(token, userId);
+	}
+	
+    
+	@RequestMapping( value="/updateAndroidUser")
+	public String updateUser( @ModelAttribute("user") User user , Model model,
+								@RequestBody String jsonString) throws Exception{
+		
+		System.out.println("/updateAndroidUser : POST");
+		org.json.simple.JSONObject jsonObject = (org.json.simple.JSONObject)JSONValue.parse(jsonString);
+		System.out.println(jsonObject.toJSONString());
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		user = objectMapper.readValue(jsonObject.get("user").toString(), User.class);
+		
+		User tempUser = userService.getUser(user.getUserId());
+		
+		user.setUserNo(tempUser.getUserNo());
+		user.setPassword(tempUser.getPassword());
+		user.setRole(tempUser.getRole());
+		user.setUserRegDate(tempUser.getUserRegDate());
+		user.setBirth(tempUser.getBirth());
+		user.setCalendarType(tempUser.getCalendarType());
+		user.setGender(tempUser.getGender());
+		user.setDeleteUserFlag(tempUser.getDeleteUserFlag());
+		user.setUuId(tempUser.getUuId());
+		
+		System.out.println("update전 user"+user);
+		
+		userService.updateUser(user);
+		
+		return "1"; 
 	}
 }

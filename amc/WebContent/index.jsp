@@ -437,20 +437,22 @@
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
                         <%-- <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:185px; height:264px;"> --%>
+                        <a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=movie">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
-                        </c:if>
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
+                        </a>
+                        <ul class="movie-beta__info">
+                             <li><span class="best-voted jeju"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
                              <li>
                                 <p class="movie__time">${indexList.mainMovieList[count-1].showTm} min</p>
                                 <p>${indexList.mainMovieList[count-1].genres}</p>
-                                <p>38 comments</p>
+                                <p>${indexList.commentCount[count-1]} comments</p>
                              </li>
                              <li class="last-block">
-                             	 <p>${indexList.mainMovieList[count-1].movieNm}</p>
+                             	 <p>누적관객 수 : ${indexList.mainMovieList[count-1].maleCnt+indexList.mainMovieList[count-1].femaleCnt}명</p>
                                  <a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=${who}" class="slide__link">more</a>
                              </li>
                          </ul>
+                        </c:if>
                      </div>
                  </c:if>
                  <c:if test="${count == 3 }">
@@ -459,20 +461,22 @@
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
+                     	<a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=movie">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
-                        </c:if>
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
+                        </a>
+                        <ul class="movie-beta__info">
+                             <li><span class="best-voted jeju"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
                              <li>
                                 <p class="movie__time">${indexList.mainMovieList[count-1].showTm} min</p>
                                 <p>${indexList.mainMovieList[count-1].genres}</p>
-                                <p>38 comments</p>
+                                <p>${indexList.commentCount[count-1]} comments</p>
                              </li>
                              <li class="last-block">
-                            	 <p>${indexList.mainMovieList[count-1].movieNm}</p>
+                            	 <p>누적관객 수 : ${indexList.mainMovieList[count-1].maleCnt+indexList.mainMovieList[count-1].femaleCnt}명</p>
                                  <a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=${who}" class="slide__link">more</a>
                              </li>
                          </ul>
+                        </c:if>
                      </div>
                  </c:if>
 				 <c:if test="${count == 4}">
@@ -481,20 +485,22 @@
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
+                     	<a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=movie">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
-                        </c:if>
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
+                        </a>
+                        <ul class="movie-beta__info">
+                             <li><span class="best-voted jeju"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
                              <li>
                                 <p class="movie__time">${indexList.mainMovieList[count-1].showTm} min</p>
                                 <p>${indexList.mainMovieList[count-1].genres}</p>
-                                <p>38 comments</p>
+                                <p>${indexList.commentCount[count-1]} comments</p>
                              </li>
                              <li class="last-block">
-                             	 <p>${indexList.mainMovieList[count-1].movieNm}</p>
+                             	 <p>누적관객 수 : ${indexList.mainMovieList[count-1].maleCnt+indexList.mainMovieList[count-1].femaleCnt}명</p>
                                  <a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=${who}" class="slide__link">more</a>
                              </li>
                          </ul>
+                        </c:if>
                      </div>
                 </c:if>
                 <c:if test="${count > 4 }">
@@ -503,20 +509,22 @@
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl ne null}">
+                     	<a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=movie">
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
-                        </c:if>
-                         <ul class="movie-beta__info">
-                             <li><span class="best-voted">71 people voted today</span></li>
+                        </a>
+                 	      <ul class="movie-beta__info">
+                             <li><span class="best-voted jeju"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
                              <li>
                                 <p class="movie__time">${indexList.mainMovieList[count-1].showTm} min</p>
                                 <p>${indexList.mainMovieList[count-1].genres}</p>
-                                <p>38 comments</p>
+                                <p>${indexList.commentCount[count-1]} comments</p>
                              </li>
                              <li class="last-block">
-                             	 <p>${indexList.mainMovieList[count-1].movieNm}</p>
+                             	 <p>누적관객 수 : ${indexList.mainMovieList[count-1].maleCnt+indexList.mainMovieList[count-1].femaleCnt}명</p>
                                  <a href="/movie/getMovie?movieNo=${indexList.mainMovieList[count-1].movieNo}&menu=${who}" class="slide__link">more</a>
                              </li>
                          </ul>
+                        </c:if>
                      </div>
 				</c:if>
                 </c:forEach>
@@ -578,8 +586,7 @@
                     <c:set var="i" value="0"/>
                     <c:set var="count" value="1"/>
                     <c:forEach var="movie" items="${indexList.mainMovieList }">
-                    <c:set var="i" value="${i+1}"/>
-                    	<c:if test="${count == 1}">
+                   	<c:if test="${count == 1}">
                     	<!-- Movie variant with time -->
                             <div class="movie movie--test movie--test--dark movie--test--left">
                                 <div class="movie__images">
@@ -590,15 +597,34 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
-
-                                    <p class="movie__time">${movie.showTm}</p>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <c:if test="${movie.watchGradeNm eq 'ageAll'}">
+                                    	<img src="/images/ageAll.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age12'}">
+                                    	<img src="/images/age12.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age15'}">
+                                    	<img src="/images/age15.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age19'}">
+                                    	<img src="/images/age19.png" style="width:25px; height:25px;">
+                                    </c:if>
+									<br/>
+									
+                                    <p class="movie__time">${movie.showTm} Min</p>
 
                                     <p class="movie__option">${movie.genres}</p>
                                     
-                                    <div class="movie__rate">
-                                    	<div>${movie.watchGradeNm}</div>
-                                    </div>               
+                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    
+                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <c:set var="i" value="${i+1}"/>
+                                    
+                                    <p class="movie__option">감독 : ${movie.directors}</p>
+                                    
+                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
+                                    
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -614,15 +640,33 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
-
-                                    <p class="movie__time">${movie.showTm}</p>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <c:if test="${movie.watchGradeNm eq 'ageAll'}">
+                                    	<img src="/images/ageAll.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age12'}">
+                                    	<img src="/images/age12.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age15'}">
+                                    	<img src="/images/age15.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age19'}">
+                                    	<img src="/images/age19.png" style="width:25px; height:25px;">
+                                    </c:if>
+									<br/>
+									
+                                    <p class="movie__time">${movie.showTm} Min</p>
 
                                     <p class="movie__option">${movie.genres}</p>
                                     
-                                    <div class="movie__rate">
-                                        <div>${movie.watchGradeNm}</div>
-                                    </div>               
+                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    
+                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <c:set var="i" value="${i+1}"/>
+                                    
+                                    <p class="movie__option">감독 : ${movie.directors}</p>
+                                    
+                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -638,15 +682,33 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
-
-                                    <p class="movie__time">${movie.showTm}</p>
+                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <c:if test="${movie.watchGradeNm eq 'ageAll'}">
+                                    	<img src="/images/ageAll.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age12'}">
+                                    	<img src="/images/age12.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age15'}">
+                                    	<img src="/images/age15.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age19'}">
+                                    	<img src="/images/age19.png" style="width:25px; height:25px;">
+                                    </c:if>
+									<br/>
+									
+                                    <p class="movie__time">${movie.showTm} Min</p>
 
                                     <p class="movie__option">${movie.genres}</p>
                                     
-                                    <div class="movie__rate">
-                                        <div>${movie.watchGradeNm}</div>
-                                    </div>               
+                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    
+                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <c:set var="i" value="${i+1}"/>
+                                    
+                                    <p class="movie__option">감독 : ${movie.directors}</p>
+                                    
+                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -662,15 +724,33 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>
-
-                                    <p class="movie__time">${movie.showTm}</p>
+                                   <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                   <c:if test="${movie.watchGradeNm eq 'ageAll'}">
+                                    	<img src="/images/ageAll.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age12'}">
+                                    	<img src="/images/age12.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age15'}">
+                                    	<img src="/images/age15.png" style="width:25px; height:25px;">
+                                    </c:if>
+                                    <c:if test="${movie.watchGradeNm eq 'age19'}">
+                                    	<img src="/images/age19.png" style="width:25px; height:25px;">
+                                    </c:if>
+									<br/>
+									
+                                    <p class="movie__time">${movie.showTm} Min</p>
 
                                     <p class="movie__option">${movie.genres}</p>
                                     
-                                    <div class="movie__rate">
-                                        <div>${movie.watchGradeNm}</div>
-                                    </div>               
+                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    
+                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <c:set var="i" value="${i+1}"/>
+                                    
+                                    <p class="movie__option">감독 : ${movie.directors}</p>
+                                    
+                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -705,7 +785,6 @@
                               <div class="promo__content">
                                   <ul>
                                   	  <li class="store-variant"><a href="#"><img alt='' src="../images/google-play.svg"></a></li>
-                                      <li class="store-variant"><a href="#"><img alt='' src="../images/apple-store.svg"></a></li>
                                   </ul>
                               </div>
                           </div>
@@ -719,10 +798,11 @@
         
         <div class="clearfix"></div>
 
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+		
 		<jsp:include page="/layout/loginModal.jsp" />
         
     </div> <!--컨테이너 끝 -->
+    <jsp:include page="/layout/bottomToolbar.jsp" />
 
     	
 
@@ -736,12 +816,17 @@
 		</script>
 </body>
  <style>
+ @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
       html{
  	     height: auto;
       }
       .movie-best .movie-beta__info {
 	    width: 100%;
-	   	 
 	  }
+	  
+
+	.jeju {
+		font-family: 'Jeju Gothic', sans-serif;
+	}
  </style>
 </html>

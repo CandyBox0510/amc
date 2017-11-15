@@ -57,28 +57,33 @@
   </style>
   <script>
   	IMP.init('imp41659269');
+  	
 	 function kakaoPay(){
-			//alert("name : "+things);
-				IMP.request_pay({
+		    var screenContentNo = '${param.screenContentNo}' 
+		  	var bookingSeatNo = '${param.bookingSeatNo}'
+		  	var price = '${param.totalTicketPrice}'
+		  	var title = '${title}'
+
+		  		IMP.request_pay({
 				    pg : 'kakao',
 				    pay_method : 'kapy',
 				    merchant_uid : 'merchant_' + new Date().getTime(),
-				    name : "hi",
-				    amount : 1234,
+				    name : "예매 : "+title,
+				    amount : price,
 				    buyer_tel : 123456789,
-				    m_redirect_url : "abcdabcad"
+				    buyer_email : screenContentNo,
+				    buyer_addr : bookingSeatNo
 				}, function(rsp) {
 					
 				    if ( rsp.success ){
 				    	var impUid = rsp.imp_uid;
 				    	alert(impUid)
-				    	self.location = "amc://process/"+impUid
-				    	
+				    	alert("amc://process/"+impUid+"?"+rsp.buyer_email+"&"+rsp.buyer_addr)
+				    	self.location = "amc://process/"+impUid+"/"+rsp.buyer_email+"/"+rsp.buyer_addr
 				    
 				    } else {
 				        
 				        self.location = "amc://cancel"
-				        
 				        
 				    }//end of rsp.success else 
 					
@@ -167,6 +172,7 @@
         <div class="row"><p/></div>
         <div class="row"><p/></div>
         <div class="row"><p/></div>
+        <input type="hidden" name="screenContentNo" value="${param.screenContentNo}">
         <div class="ui fluid large teal button" onClick="javascript:kakaoPay();">결제하기</div>
       </div>
     </form>

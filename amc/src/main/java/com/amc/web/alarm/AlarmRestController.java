@@ -319,4 +319,16 @@ public class AlarmRestController {
 		
 	}
 	
+	@RequestMapping( value="/json/deleteAndroidAlarm/{alarmNo}")
+	public int deleteAndroidAlarm(@ModelAttribute("User")User user,
+									@ModelAttribute("Alarm")Alarm alarm,
+										   @PathVariable("alarmNo") String alarmNo,
+										   HttpSession session,Model model) throws Exception {
+				
+		alarm.setAlarmNo(Integer.parseInt(alarmNo));
+		alarm.setUser(user);
+		
+		return alarmService.deleteAlarm(alarm);
+	}
+	
 }
