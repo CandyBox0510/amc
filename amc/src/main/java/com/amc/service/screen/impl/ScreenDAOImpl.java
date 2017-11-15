@@ -98,6 +98,11 @@ public class ScreenDAOImpl implements ScreenDAO {
 		
 		System.out.println("SEARCH :::: " + search);
 		
+		// 검색어가 들어온 경우 로직
+		if(search.getSearchKeyword() != null) {
+			search.setSearchCondition("1");
+		} 
+		
 		List<ScreenContent> list = sqlSession.selectList("ScreenContentMapper.getPreviewList", search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

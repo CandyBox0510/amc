@@ -81,6 +81,7 @@ public class MovieController {
 		}
 		search.setPageSize(pageSize);
 		
+	
 		
 		User user = (User)session.getAttribute("user");		
 		
@@ -90,7 +91,7 @@ public class MovieController {
 		
 		System.out.println("menu :" + request.getParameter("menu"));
 		
-		
+		 
 		if(request.getParameter("menu").equals("manage")) {
 			
 			search.setSearchKeyword2("manage");
@@ -200,6 +201,15 @@ public class MovieController {
 		System.out.println("menu"  + request.getParameter("menu"));
 		
 		System.out.println("555555555555555");
+		
+		if(search.getCurrentPage() > 1) {
+			search.setSearchCondition(null);
+			search.setSearchKeyword(null);
+		}
+		
+		
+		System.out.println("search condition 2:: " + search.getSearchCondition());
+		System.out.println("search 2 " + search);
 		
 	
 		

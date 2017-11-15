@@ -72,13 +72,14 @@
 	                             
 	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
 	                                        <img id="poster"alt='' src="${preview.movie.postUrl}">                                        
+	                                    
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">${preview.previewTitle}</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감독 :${preview.movie.directors} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;오픈날짜 :${preview.ticketOpenDate} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상영날짜 :${preview.screenOpenTime} </strong> </p>
-	                    	     		<p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격  :${preview.ticketPrice} </strong> </p>
+	                                    <p ><strong>감독 :${preview.movie.directors} </strong> </p>
+	                                    <p ><strong>오픈날짜 :${preview.ticketOpenDate} </strong> </p>
+	                                    <p ><strong>상영날짜 :${preview.screenOpenTime} </strong> </p>
+	                    	     		<p ><strong>가격  :${preview.ticketPrice} </strong> </p>
 	                    	     		
 	                    	    <div style="text-align: left;">
     						    
@@ -216,7 +217,7 @@
 			    	
 			    	//alert("222")
 			        $("#currentPage").val(currentPage)
-			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=movie").submit();
+			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=preview").submit();
 			    }
 			    
 			     //============= "검색"  Event  처리 =============	

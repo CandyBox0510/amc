@@ -126,11 +126,13 @@
 	           </div>     
                               
  				
+ 				
  					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
 	                    	<c:if test="${resultPage.currentPage != 1 }">
 	                            <a href='#' class="pagination__prev">prev</a>
 	                    	</c:if>
+	                    	
 	                     	<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">	            
 	                            <a href='#' class="pagination__next">next</a>
 	                      	</c:if>
@@ -415,13 +417,18 @@
         	
         	//alert("next")
         	
-            searchKeyword = $("input[name='searchKeyword']").val();
+            var searchKeyword = $("input[name='searchKeyword']").val();
 
             var currentPage = $("#currentPage").val()
             
-            //alert("currentPage :: " + currentPage)          
+            // alert("currentPage ::" + currentPage);
+            
+           
   
             currentPage =  parseInt(currentPage) + 1;
+            
+            // alert("currentPage next :: " + currentPage);
+            // alert("searchkeywor ::" + searchKeyword);
        
           
             fncGetPageList(currentPage);
