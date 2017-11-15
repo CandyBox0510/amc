@@ -91,7 +91,7 @@ public class CinemaServiceImpl implements CinemaService {
 	}
 
 	@Override
-	public Map<String, Object> index() {
+	public Map<String, Object> index() throws Exception {
 		Map<String, Object> index = new HashMap<String,Object>();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         Calendar calendar = Calendar.getInstance();
@@ -102,8 +102,34 @@ public class CinemaServiceImpl implements CinemaService {
 	
 		
 		index = cinemaDAO.index();
-		index.put("mainMovieList", movieDAO.uniMovieList(search)); //MovieDAO에서 가지고 온 현재 상영중인 영화 List<Movie>를 풋 
-
+		List<Movie> movieList = movieDAO.uniMovieList(search);
+		String rating = "";
+		
+		for(Movie movie : movieList){
+			rating = movie.getWatchGradeNm();
+			if(rating.startsWith("전체")){
+				movie.setWatchGradeNm("ageAll");
+			}else if(rating.startsWith("12세")){
+				movie.setWatchGradeNm("age12");
+			}else if(rating.startsWith("15세")){
+				movie.setWatchGradeNm("age15");
+			}else if(rating.startsWith("청소년")){
+				movie.setWatchGradeNm("age19");
+			}
+		}
+		
+		index.put("mainMovieList", movieList); //MovieDAO에서 가지고 온 현재 상영중인 영화 List<Movie>를 풋
+		
+		List<String> commentCount = new ArrayList<String>();
+				
+		
+		for(int i = 0 ; i < movieList.size(); i++){
+			if(movieList.get(i) != null){
+				commentCount.add(movieDAO.getTotalCount(movieList.get(i).getMovieNo())+"");
+			}
+		}
+		index.put("commentCount", commentCount);
+		
 		//MovieDAO 에서 잘 가지고 왔나 확인용
 		for (Movie movie : movieDAO.uniMovieList(search)) {
 			System.out.println(movie.getMovieNm());

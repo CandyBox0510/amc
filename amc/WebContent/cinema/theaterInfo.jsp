@@ -49,11 +49,8 @@
 		  crossorigin="anonymous"></script>
 		<script src="../semantic/semantic.min.js"></script>
 		
-		<!-- hanna font -->
-		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-		
 <script>
-	$(function(){
+	/* $(function(){
 		 
 			$.ajax(
 					{
@@ -110,7 +107,7 @@
 					}		
 			)
 		
-	});
+	}); */
 </script>
 
 
@@ -174,9 +171,8 @@
 
 </style>
 </head>
-<body>
 
-	
+<body>
 <div class="wrapper">
 		<!-- Banner -->
         <div class="banner-top">
@@ -184,27 +180,19 @@
         </div>
 
         <!-- Header section -->
-        <header class="header-wrapper">
+        <header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
         </header>
-        
-        <!-- Search bar -->
-        <div class="search-wrapper">
-            <div class="container container--add">
-                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
-                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
-                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
-                </form>
-            </div>
-        </div>
+
+
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 		
-					
         <section class="container">
-        	<p/>
-        	<p/>
-        	<p/>
             <h1 class="page-heading heading--outcontainer">AMC 위치</h1>
               <div class="contact">
                 <div id="map" style="width:100%;height:350px;"></div>
@@ -281,6 +269,41 @@
 				</div>
             </div>
         </section>
+        
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        
+   		<div class="contact-form-wrapper-search">
+         <div class="place-form-area">
+        <section class="container">
+            <div class="order-container">
+                <div class="order">
+                    <img class="order__images" alt='' src="/images/unifiedSearch.png">
+                    <div class="order__title">통합검색 <br><span class="order__descript">in amc homepage</span></div>
+                </div>
+            </div>
+         </section>
+         </div>
+         	<div class="container" style="margin:auto;">
+	            <div class="container" style="margin:auto;">
+					        <!-- Search bar -->
+			        <div class="search-wrapper">
+			            <div class="container container--add">
+			                <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search">
+			                    <input type="text" class="search__field" placeholder="Search" name="searchKeyword">
+			                    <button type='submit' class="btn btn-md btn--danger search__button" onClick="javascript:unifiedSearch()">search a amc</button>
+			                </form>
+			            </div>
+			        </div>
+	            </div>
+            </div>
+        </div>
 
 
 			<!---------------------------------- 스크립트 -------------------------------->
@@ -354,7 +377,7 @@
 				});
 			</script>
 			<!-- 파노라마용 스크립트 end-->
-			
+		
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 </div>
@@ -396,8 +419,9 @@
                  $('.overlay').removeClass('close');}, 500);
          });
          </script>
+         <script src="/js/jquery.mobile.menu.js"></script>
+         <script src="/js/custom.js"></script>
          
-
 </body>
  <style>
       html{
@@ -414,11 +438,14 @@
 	  font-size: 120%;
 	   line-height:4.3em
 	 }
-	 .header-wrapper {
-	  background: rgba(46, 41, 46, 0.8);;
-	  position: relative;
-	  z-index: 120;
-	  height: 55px;
+	.auth--home .auth__show {
+	  background: transparent;
+	}
+	.contact-form-wrapper-search{
+	  background-color: #dbdee1;
+	  overflow: hidden;
+	  margin: 76px 0;
+	  padding: 56px 0 60px;
 	}
  </style>
 

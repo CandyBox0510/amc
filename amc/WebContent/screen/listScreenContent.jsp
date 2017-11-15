@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.css">
+
 </head>
 
 <body>
@@ -404,7 +405,7 @@
      $(".screenContentEndTime").val(null);
 
      $("span .checkbox").css("background-position","0px 0px") 
-     $("input[name='previewChecked']").prop("checked", false ); 
+    
 
      $("input[name='previewTitle']").val(null);
      $("input[name='previewOpenDate']").val(null);
@@ -577,7 +578,7 @@
                 if (JSONData.previewFlag == 'Y') {
                     /*   $("input[name='previewChecked']").prop("checked", true); */
                     // $("input[name='previewChecked']").prop("checked");
-                    $("#previewChecked").attr("checked", true);
+                  //  $("#previewChecked").attr("checked", true);
 
                     // $(".updateScreenContentModal input[name='previewChecked']").prop("checked", true);
 
@@ -798,7 +799,7 @@
     }
 
     $(document).ready(function() {
-
+     
         fncGetScreenContentList();
         openDt = $("input[name='openDt']").val();
         endDt = $("input[name='endDt']").val();
@@ -834,10 +835,12 @@
 
         var screenDate = $("input[name='screenDate']").val();
 
-        $(document).on("click", ".ui-state-disabled", function() {
 
-            swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
-        })
+            $(document).on("click", ".ui-state-disabled", function() {
+
+                swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
+            })
+
 
         $(document).on("change", "input[name='screenDate']", function() {
             screenDate = $("input[name='screenDate']").val();
@@ -879,7 +882,9 @@
             });
         })
 
+
         $(document).on("change", "select[name='screenTheater']", function() {
+          
             screenDate = $("input[name='screenDate']").val();
             if ($("input[name='screenContentOpenTime']").val() != "") {
                 fncCheckScreenDupTime()

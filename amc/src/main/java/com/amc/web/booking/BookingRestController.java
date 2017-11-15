@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
+import com.amc.service.alarm.AlarmService;
 import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Booking;
@@ -58,6 +59,9 @@ public class BookingRestController {
 		@Autowired
 		@Qualifier("movieServiceImpl")
 		private MovieService movieService;
+		@Autowired
+		@Qualifier("alarmServiceImpl")
+		private AlarmService alarmService;
 		//setter Method 구현 않음
 		
 		@Value("#{commonProperties['pageUnit']}")
@@ -156,10 +160,24 @@ public class BookingRestController {
 		}
 		
 		//[Android]예매3단계 : 결제완료 후 예매내역보기
-		@RequestMapping(value="json/addBooking", method=RequestMethod.POST)
-		public String addBooking(@ModelAttribute("booking") Booking booking,
+		@RequestMapping(value="json/addBookingConfirm/{userId}/{screenContentNo}/{bookingSeatNo}/{impId}", method=RequestMethod.GET) 
+		public String addBooking(@PathVariable("userId") String userId,
+				 				 @PathVariable("screenContentNo") int screenContentNo,
+				 				 @PathVariable("bookingSeatNo") String bookingSeatNo,
+						 		 @PathVariable("impId") String impUid,
 								 HttpSession session, Model model) throws Exception{	
 			System.out.println("/booking/requestPay : POST");
+			ScreenContent screenContent = screenService.getScreenContent(screenContentNo);
+			
+			Booking booking = new Booking();
+			booking.setImpId(impUid);
+			booking.setBookingSeatNo(bookingSeatNo);
+			booking.setScreenContentNo(screenContentNo);
+			booking.setUserId(userId);
+			booking.setHeadCount((bookingSeatNo.split(",").length)/2);
+			booking.setTotalTicketPrice(screenContent.getTicketPrice()*booking.getHeadCount());
+			String qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://"+nodeServerIp+":8000/booking/getBooking?bookingNo="+impUid;
+			booking.setQrUrl(qrUrl);
 			
 			//1. ADD booking
 			System.out.println("insert하려는 booking : "+booking);
@@ -170,7 +188,7 @@ public class BookingRestController {
 			System.out.println("add 후 no까지 포함된 booking : " + booking);
 			
 			//3. ADD statistic
-			User user = (User) session.getAttribute("user");
+			User user = userService.getUser(userId);
 			bookingService.updateStatistic(user, booking);
 			
 			// DisplaySeat만들기
@@ -359,16 +377,33 @@ public class BookingRestController {
 	    	String subject = "AMC에서 예매하신 내역입니다.";	
 	    	StringBuilder sb = new StringBuilder();  
 	    	sb.append("예매번호 : "+booking.getBookingNo()+"<br>");
-	    	sb.append(booking.getScreenContent().getPreviewTitle()+" ["+booking.getMovie().getMovieNm()+"]<br>");
+	    	if(booking.getScreenContent().getPreviewFlag().equals("Y")){
+	    		sb.append(booking.getScreenContent().getPreviewTitle());
+	    	}	    	
+	    	sb.append("  ["+booking.getMovie().getMovieNm()+"]<br>");
 	    	sb.append("상영일시 : "+booking.getScreenContent().getScreenOpenTime());
 	        sb.append("<br>QR코드를 클릭하시면 예매정보를 확인하실 수 있습니다.<br/>" );
-	        sb.append("<a href=http://127.0.0.1:8080/user/addUser?email="+userEmailAddr+">");
-	        sb.append("<img src='"+booking.getQrUrl()+"'/></a>");        
+	        sb.append("<a href=http://"+nodeServerIp+":8000/booking/getBooking?bookingNo="+booking.getBookingNo()+">");
+	        sb.append("<img src='https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://"+nodeServerIp+":8000/booking/getBooking?bookingNo="+booking.getBookingNo()+"'/></a>");        
 	        
 	        userService.send(subject, sb.toString(), "bitcampamc@gmail.com", userEmailAddr, null);
 			
 			return;
 		}
+		
+		//이메일로 QR코드 보내기
+		@RequestMapping(value="json/sendSMSQR", method=RequestMethod.GET)
+		public String sendSMSQR(@RequestParam("bookingNo") String bookingNo, 
+							@RequestParam("phone") String phone, 
+							HttpSession session, Model model) throws Exception{	
+			System.out.println("★ booking/json/sendSMSQR (in restController)");
+			
+			User user = (User)session.getAttribute("user");
+			alarmService.smsPush("booking", bookingNo, user.getUserId(), "");
+			return "/alarm/json/push/Booking?"+bookingNo+"&phone="+phone;
+		}
+		
+		
 }
 
 

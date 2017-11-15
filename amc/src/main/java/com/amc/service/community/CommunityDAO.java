@@ -34,4 +34,9 @@ public interface CommunityDAO {
 
 	int getFreeBoardTotalCount(int freeBoardNo);
 
+	List<FreeBoard> getNoticeList();
+
+
+	int getNoticeListCount(int freeBoardNo) throws Exception;
+
 }
