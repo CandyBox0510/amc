@@ -73,7 +73,8 @@
 	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
 	                                        <img id="poster"alt='' src="${preview.movie.postUrl}">                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm }
+	                                    </a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
 	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감독 :${preview.movie.directors} </strong> </p>
 	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;오픈날짜 :${preview.ticketOpenDate} </strong> </p>

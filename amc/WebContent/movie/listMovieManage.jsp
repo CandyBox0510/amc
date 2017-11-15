@@ -80,6 +80,7 @@
 								<c:if test="${resultPage.currentPage != 1 }">
 									<a href='#' class="pagination__prev">prev</a>
 								</c:if>
+							
 								<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
 									<a href='#' class="pagination__next">next</a>
 								</c:if>
