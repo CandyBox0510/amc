@@ -192,7 +192,9 @@ public class UserController {
 	public String deleteUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
 
 		System.out.println("/user/deleteUser : POST");
+		
 		userService.deleteUser(user);
+	
 		session.invalidate();
 		return "redirect:/index.jsp";
 	}

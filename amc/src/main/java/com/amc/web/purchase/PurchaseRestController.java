@@ -79,7 +79,9 @@ public class PurchaseRestController {
 	
 	@RequestMapping( value="listPurchase" )
 	public Map<String, Object> listPurchase(	@RequestBody Search search	) throws Exception{
+		System.out.println("purchaseRestController 의 listPurchase 메소드 :"+search);
 		
+		System.out.println("PurchaseRestController listPurchase called");
 		return this.getList(search);
 	}
 	
@@ -124,14 +126,23 @@ public class PurchaseRestController {
 		}
 		search.setPageSize(pageSize);
 		search.setPageUnit(pageUnit);
+		
+		System.out.println("PurchaseRestController getList called...");
 
 		Map<String, Object> map = purchaseService.getPurchaseList(search);
 		
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
-		map.put("resultPage", resultPage);
-		map.put("serarch", search);
+		System.out.println("resultPage " + resultPage);
+		System.out.println("search " + search);
 		
+		
+		map.put("resultPage", resultPage);
+		map.put("search", search);
+		
+		
+		//map.put("serarch", search);
+		System.out.println("purchaseRestController 의 getList메소드의 map : "+map);
 		return map;
 	}
 	

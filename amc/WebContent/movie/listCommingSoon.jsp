@@ -74,10 +74,10 @@
                 		 
 	                            <div class="col-xs-6 col-sm-3 cinema-item">
 	                                <div class="cinema">
-	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon' class="cinema__images">
+	                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=movie' class="cinema__images">
 	                                        <img id="poster"alt='' src="${movie.postUrl }" >                                        
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=commingsoon" class="movieNm">${movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=movie" class="movieNm">${movie.movieNm }</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
 	                                    <p ><strong>개봉일 :${movie.openDt } </strong> </p>
 	                                    
@@ -250,6 +250,17 @@
 					
 				 });
 				
+				//============= "검색 Enter KeyDown "  Event  처리 =============	
+				 $(function() {
+					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$( "input[name=searchKeyword]").keydown(function(key) {
+						
+						if(key.keyCode == 13) { //키가 13이면 실행 ) Enter Key는 13
+							fncGetPageList(1);					
+						}
+					});
+					
+				 });
 				
 				//============= "Banner Top Clieck "  Event  처리 =============	
 				 $(function() {
@@ -534,6 +545,21 @@
 		
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 <style type="text/css">
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
+	.page-heading {
+		font-family: 'Jeju Gothic', sans-serif;
+		margin-top: 100px
+	}
+	
+	body {
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+
 
 	 #body {
            padding-top: 70px;

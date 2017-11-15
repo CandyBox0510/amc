@@ -43,14 +43,34 @@ public class UserRestController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-/*	@RequestMapping( value="getUser/{userId}", method={RequestMethod.GET,RequestMethod.POST} )
-	public User getUser( @PathVariable String userId ) throws Exception{
-		
-		System.out.println("/user/json/getUser : GET");
-		
-		//Business Logic
-		return userService.getUser(userId);
-	}*/
+	@RequestMapping( value="getPhone", method=RequestMethod.POST)
+	public String getPhone(  @RequestBody User user,
+							 HttpSession session) throws Exception {
+
+	  System.out.println("::::::::::::::::"+user);
+	  
+	  /*userService.getId(user);*/
+	  
+      /*return "forward:/user/main.jsp";*/
+	  System.out.println("여기는 controller : "+userService.getPhone(user));
+	  
+	  return userService.getPhone(user);
+	}
+	
+	@RequestMapping( value="getId", method=RequestMethod.POST)
+	public User getId(  @RequestBody User user,
+							 HttpSession session) throws Exception {
+
+	  System.out.println(user);
+	  
+	  /*userService.getId(user);*/
+	  
+      /*return "forward:/user/main.jsp";*/
+	  System.out.println("여기는 controller : "+userService.getId(user));
+	  
+	  return userService.getId(user);
+	}
+	
 	@RequestMapping( value="getUser/{tempId}", method={RequestMethod.GET,RequestMethod.POST} )
 	public User getUser( @PathVariable String tempId ) throws Exception{
 		
@@ -84,7 +104,6 @@ public class UserRestController {
 			model.addAttribute("user", dbUser);
 			return dbUser;
 		}else if(!user.getPassword().equals(dbUser.getPassword())){
-			System.out.println("?????????????????????????????????????");
 			return null;
 		}else{
 			if(user.getPassword().equals(dbUser.getPassword())){
@@ -104,20 +123,6 @@ public class UserRestController {
 		String userId = tempId.replace(",", ".");
 		return userService.checkDuplication(userId);
 	}
-		
-	@RequestMapping( value="getId", method=RequestMethod.POST)
-	public String getId(  @RequestBody User user,
-							 HttpSession session) throws Exception {
-
-	  System.out.println(user);
-	  
-	  /*userService.getId(user);*/
-	  
-      /*return "forward:/user/main.jsp";*/
-	  System.out.println("여기는 controller : "+userService.getId(user));
-	  
-	  return userService.getId(user);
-   }
 	
 	@RequestMapping( value="kakaoLogin", method=RequestMethod.POST )
 	public User kakaoJsLogin(	@RequestBody User user, Model model,
@@ -130,9 +135,11 @@ public class UserRestController {
 			System.out.println("널 값이다");
 			System.out.println(dbUser);
 			model.addAttribute("user", dbUser);
+			return dbUser;
+		}else if(!user.getPassword().equals(dbUser.getPassword())){
 			return null;
 		}else{
-			System.out.println("여기는 들어오면 안된단 말이야");
+			System.out.println("UserRestController의 kakaoLogin메소드에서 User가 있을떄");
 			session.setAttribute("user", dbUser);
 			return dbUser;
 		}

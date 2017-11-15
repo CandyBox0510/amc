@@ -38,7 +38,7 @@ import com.amc.service.user.UserDAO;
 //==> 회원관리 서비스 구현
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
-	
+
 	///Field
 	@Autowired
 	@Qualifier("userDAOImpl")
@@ -120,12 +120,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getId(User user) throws Exception {
+	public User getId(User user) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("여기는 serviceImpl : "+userDAO.getId(user));
 		return userDAO.getId(user);
 	}
 
+	@Override
+	public String getPhone(User user) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("여기는 userServiceImpl의 getPhone 메서도 : "+userDAO.getPhone(user));
+		return userDAO.getPhone(user);
+	}
+	
 	@Override
 	public void deleteUser(User user) throws Exception {
 		// TODO Auto-generated method stub

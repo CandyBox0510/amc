@@ -6,6 +6,8 @@
 <head>
 <meta charset="EUC-KR">
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetswal2/6.11.5/sweetswal2.min.css">
+
 </head>
 
 <body>
@@ -41,8 +43,14 @@
 					<div class="addFreeBoard">
 						<div class="field">
 							<div class='col-md-1' id="title">제목</div>
-							<div class='col-md-11'>
+							<div class='col-md-9'>
 								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" maxlength="25">
+							</div>
+							<div class='col-md-2'>
+								<c:if test="${user.role =='admin'}">
+									<input type="checkbox" name='noticeFlag' id="noticeFlag" class="checkbox styled"> 공지
+								</c:if>
+
 							</div>
 							<div class='field'>
 								<div class='col-md-12' id="context">
@@ -50,14 +58,15 @@
 								</div>
 								<div class='col-md-1' id="title">첨부파일</div>
 								<div class='col-md-11'>
-									<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span> <input type="file" id="imageFile" name="imageFile" class="add__input">
+									<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span>
+									<input type="file" id="imageFile" name="imageFile" class="add__input">
 								</div>
 							</div>
 						</div>
 						<div class="col-md-12" id="buttonWrap">
 							<button type='button' class="btn btn-md btn--warning btn--wider" id="addButton">등록하기</button>
 							<button type='button' class="btn btn-md btn--warning btn--wider" id="cancleButton">취소하기</button>
-					
+
 						</div>
 						<div>
 							<input type="hidden" name="userId" id="userId" value="${user.userId }">
@@ -66,6 +75,8 @@
 				</form>
 
 				<div class="clearfix"></div>
+
+				<input type="hidden" name="getNoticeListCount" value="${getNoticeListCount}">
 			</div>
 
 
@@ -94,21 +105,22 @@
 	<!-- Custom -->
 	<script src="/js/custom.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetswal2/6.11.5/sweetswal2.min.js"></script>
 
 	<script type="text/javascript">
-        function fncAddFreeBoard() {
+        function fncCheckEmpty() {
             freeBoardTitle = $("input[name='freeBoardTitle']").val();
             freeBoardContent = $("textarea[name='freeBoardContent']").val();
             imageFile = $("input[name='imageFile']").val();
-          
+
             console.log(freeBoardTitle + "   " + freeBoardContent + "   " + imageFile);
 
             if (freeBoardTitle == null || freeBoardTitle.length < 1) {
-                alert("제목을 입력 해 주세요");
+                swal("<span style='font-size:15px'>제목을 입력 해 주세요</span>");
                 return;
             }
             if (freeBoardContent == null || freeBoardContent.length < 1) {
-                alert("내용을 입력 해 주세요");
+                swal("<span style='font-size:15px'>내용을 입력 해 주세요</span>");
                 return;
             }
             if (imageFile != "") {
@@ -118,23 +130,59 @@
                 if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
 
                 } else {
-                    alert("업로드가능한 확장자가 아닙니다. 다시 확인해주세요");
+                    swal("<span style='font-size:15px'>업로드가능한 확장자가 아닙니다. 다시 확인해주세요</span>");
                     return;
                 }
             }
+        }
+        function fncAddFreeBoard() {
 
+            freeBoardTitle = $("input[name='freeBoardTitle']").val();
+            freeBoardContent = $("textarea[name='freeBoardContent']").val();
+            imageFile = $("input[name='imageFile']").val();
+
+            console.log(freeBoardTitle + "   " + freeBoardContent + "   " + imageFile);
+
+            if (freeBoardTitle == null || freeBoardTitle.length < 1) {
+                swal("<span style='font-size:15px'>제목을 입력 해 주세요</span>");
+                return;
+            }
+            if (freeBoardContent == null || freeBoardContent.length < 1) {
+                swal("<span style='font-size:15px'>내용을 입력 해 주세요</span>");
+                return;
+            }
+            if (imageFile != "") {
+                extension = imageFile.substring(imageFile.lastIndexOf(".") + 1);
+                extension = extension.toLowerCase();
+
+                if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
+
+                } else {
+                    swal("<span style='font-size:15px'>업로드가능한 확장자가 아닙니다. 다시 확인해주세요</span>");
+                    return;
+                }
+            }
             $("#addFreeForm").attr("method", "POST").attr("action", "/community/addFreeBoard").attr('enctype', 'multipart/form-data').submit();
         }
 
         $(document).ready(function() {
+            getNoticeListCount = $("input[name='getNoticeListCount']").val();
             userId = $("input[name=userId]").val()
             if ($('html').height() < window.outerHeight) {
                 $('html').css('height', '100%');
             }
 
             $(document).on("click", "#addButton", function() {
+                noticeFlag = $("#noticeFlag").is(":checked");
+    
+                if (getNoticeListCount >= 3 && noticeFlag == true) {
+                    fncCheckEmpty();
+                    swal("<span style='font-size:15px'>공지는 3개까지만 올릴 수 있습니다. <br/>새로운 공지를 등록하시려면 이전 공지를 삭제해주세요</span>");
+                } else {
 
-                fncAddFreeBoard();
+                    fncAddFreeBoard();
+
+                }
 
             })
 
@@ -158,11 +206,10 @@
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-
-
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
 }
+
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 }

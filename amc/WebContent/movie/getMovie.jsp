@@ -461,11 +461,11 @@
         } //end of addOpenAlarm function
 
         function fncGetPageList(currentPage) {
-            
+
             $('#watchlist').remove();
             $("#currentPage").val(currentPage)
             queryString = $(".search").serialize();
-            
+
             $.ajax({
                 url : "/movie/json/getMovieCommentList/" + movieNo,
                 type : 'POST',
@@ -520,9 +520,9 @@
                                 displayValue += '<div id="watchlist"><i class="fa fa-comment"></i><span id="moreComment">´ñ±Û ´õ º¸±â</span><div>'
                             }
                             displayValue += '</div>'
-                            
+
                             buttonFlag = $("input[name='buttonFlag']").val();
-                            
+
                             if (buttonFlag != "more") {
                                 $(".comment-sets").html("");
                                 JSONData.currentPage = 1;
@@ -530,18 +530,17 @@
                                 $("input[name='buttonFlag']").val("");
                             }
 
-                       	 $(".comment-sets").html(displayValue);
-                       	 
-                       	 $(".totalCount").remove();
-                       	
-                       	 display = '<span class="totalCount"> &nbsp; ('+JSONData.totalCount+')</span>'
-                        	
-                       	
-                       	 $(".commentHeader").append(display);
-                       	 
-                       	 $("#currentPage").val(JSONData.currentPage);
-                       	 //$("input[name='buttonFlag']").val("");
-                       	
+                            $(".comment-sets").html(displayValue);
+
+                            $(".totalCount").remove();
+
+                            display = '<span class="totalCount"> &nbsp; (' + JSONData.totalCount + ')</span>'
+
+                            $(".commentHeader").append(display);
+
+                            $("#currentPage").val(JSONData.currentPage);
+                            //$("input[name='buttonFlag']").val("");
+
                         }
                     });
                 }
@@ -558,8 +557,7 @@
             $("input[name='movieComment2']").val(movieComment);
             $("#movieComment" + movieCommentNo).html(dispaly);
         }
-        
-        
+
         function fncAddMovieComment() {
             var movieComment = $("#addMovieCommentText").val();
             if (movieComment == "") {
@@ -730,8 +728,15 @@
                 fncUpdateMovieComment();
             })
 
-            $("button[name='booking']").on("click", function() {
-                $(self.location).attr("href", "/booking/getScreenMovieList");
+            $("a[name='booking']").on("click", function() {
+ 
+                if (menu == "preview") {
+               
+                    $(self.location).attr("href", "/booking/getPreviewList");
+                } else {
+                    $(self.location).attr("href", "/booking/getScreenMovieList");
+                }
+
             })
             $("button[name='ticketOpen']").on("click", function() {
                 if (userId == "") {
@@ -938,7 +943,7 @@ section {
 
 .devider-huge {
 	width: 100%;
-	height: 1px;
+	height: 3px;
 	background-color: #ffd564;
 	margin-bottom: 30px;
 	margin-top: 30px;

@@ -76,9 +76,12 @@
 						</c:if>
 					</div>
 
+
+
+
 					<div class="freeBoardTable hidden-xs">
-						<table class="freeBoardField">
-							<tr class="col-md-12 col-sm-12  freeBoardField ">
+						<table>
+							<tr class="col-md-12 col-sm-12 freeBoardField">
 								<td class="col-md-1 col-sm-1 text-center">번호</td>
 								<td class="col-md-6 col-sm-6">제목</td>
 								<td class="col-md-2 col-sm-2 text-center">글쓴이</td>
@@ -89,16 +92,39 @@
 
 						<div>
 							<table>
-								<c:forEach var="freeBoard" items="${list }">
+
+								<c:set var="i" value="0" />
+								<c:forEach var="noticeList" items="${map.noticeList }">
+									<tr class="col-md-12 col-sm-12 freeBoardRecordNotice">
+										<td class="col-md-1 col-sm-1  text-center "><i class="fa fa-bullhorn" aria-hidden="true"></i></td>
+										<td class="col-md-6 col-sm-6 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${noticeList.freeBoardNo}">${ noticeList.freeBoardTitle}</a>
+											(${map.noticeCommentCount[i]})
+										</td>
+										<td class="col-md-2 col-sm-2 text-center">${ noticeList.user.userId}</td>
+										<td class="col-md-1 col-sm-1 text-center">${ noticeList.freeBoardViews}</td>
+										<td class="col-md-2 col-sm-2 text-center">${ noticeList.freeBoardRegDate}</td>
+									</tr>
+
+									<c:set var="i" value="${i+1 }" />
+								</c:forEach>
+
+
+								<c:set var="i" value="0" />
+								<c:forEach var="freeBoard" items="${map.list }">
 									<tr class="col-md-12 col-sm-12 freeBoardRecord">
 										<td class="col-md-1 col-sm-1  text-center ">${ freeBoard.freeBoardNo}</td>
 										<td class="col-md-6 col-sm-6 title">
 											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+											(${map.freeBoardCommentCount[i]})
+
+
 										</td>
 										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.user.userId}</td>
 										<td class="col-md-1 col-sm-1 text-center">${ freeBoard.freeBoardViews}</td>
 										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.freeBoardRegDate}</td>
 									</tr>
+									<c:set var="i" value="${i+1 }" />
 								</c:forEach>
 							</table>
 						</div>
@@ -116,11 +142,36 @@
 
 						<div>
 							<div>
-								<c:forEach var="freeBoard" items="${list }">
+								<c:set var="i" value="0" />
+								<c:forEach var="noticeList" items="${map.noticeList }">
+									<div class="freeBoardRecordXS">
+										<div class="col-xs-2 notice"><i class="fa fa-bullhorn text-center " aria-hidden="true"></i></div>
+										<div class="col-xs-10 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${noticeList.freeBoardNo}">${ noticeList.freeBoardTitle}</a>
+											(${map.noticeCommentCount[i]})
+										</div>
+										<div class="col-xs-12 text-center recordXs">
+											<div class="col-xs-4"></div>
+											<div class="col-xs-3">${ noticeList.user.userId}</div>
+											<div class="col-xs-2">${ noticeList.freeBoardViews}</div>
+											<div class="col-xs-3">${ noticeList.freeBoardRegDate}</div>
+										</div>
+										<div class="col-xs-12 xsHr">
+											<hr />
+										</div>
+									</div>
+									<c:set var="i" value="${i+1 }" />
+								</c:forEach>
+							</div>
+							<div>
+
+								<c:set var="i" value="0" />
+								<c:forEach var="freeBoard" items="${map.list }">
 									<div class="freeBoardRecordXS">
 										<div class="col-xs-2 boardNo">${ freeBoard.freeBoardNo}</div>
 										<div class="col-xs-10 title">
 											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+											(${map.freeBoardCommentCount[i]})
 										</div>
 										<div class="col-xs-12 text-center recordXs">
 											<div class="col-xs-4"></div>
@@ -128,9 +179,11 @@
 											<div class="col-xs-2">${ freeBoard.freeBoardViews}</div>
 											<div class="col-xs-3">${ freeBoard.freeBoardRegDate}</div>
 										</div>
-										<div class="col-xs-12 xsHr"><hr/></div>
+										<div class="col-xs-12 xsHr">
+											<hr />
+										</div>
 									</div>
-									
+									<c:set var="i" value="${i+1 }" />
 								</c:forEach>
 							</div>
 						</div>
@@ -164,6 +217,8 @@
 		<div class="clearfix"></div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
+
+
 	</div>
 
 
@@ -224,7 +279,7 @@
 
             $(document).on("click", "#writeButton", function() {
 
-                $(self.location).attr("href", "/community/addFreeBoard.jsp");
+                $(self.location).attr("href", "/community/addFreeBoard");
 
             })
 
@@ -240,7 +295,7 @@
 
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
-	margin-top: 100px
+	margin-top: 70px
 }
 
 body {
@@ -254,11 +309,11 @@ html {
 section {
 	padding-bottom: 30px
 }
-.xsHr hr{
-margin-top :0px;
-margin-bottom:0px;
 
-border : solid 0.5px #4c4145;
+.xsHr hr {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	border: solid 0.5px #4c4145;
 }
 
 .count {
@@ -282,11 +337,17 @@ border : solid 0.5px #4c4145;
 .freeBoardField, .freeBoardFieldXS {
 	font-size: 14px;
 	font-weight: bold;
-	height: 100%;
+	height: 150%;
 	vertical-align: middle;
 	padding-top: 5px;
 	color: #FFFFFF;
 	background-color: #4C4145;
+}
+
+.freeBoardField td {
+	height: 100%;
+	padding-top: 8px;
+	padding-bottom: 10px;
 }
 
 .freeBoardFieldXS div {
@@ -296,7 +357,7 @@ border : solid 0.5px #4c4145;
 	background-color: #4C4145;
 }
 
-.freeBoardRecord, freeBoardRecordXS {
+.freeBoardRecord, freeBoardRecordXS, .freeBoardRecordNotice {
 	font-size: 13px;
 	height: 50px;
 	vertical-align: middle;
@@ -312,12 +373,12 @@ border : solid 0.5px #4c4145;
 	margin-top: 5px;
 }
 
-.freeBoardRecord>td {
+.freeBoardRecord>td, .freeBoardRecordNotice>td {
 	border-bottom: 1px solid #969b9f;
 	padding: 15px;
 }
 
-.title {
+.freeBoardRecordNotice .title {
 	font-size: 13px;
 	font-weight: bold;
 }
@@ -332,7 +393,7 @@ border : solid 0.5px #4c4145;
 	color: #969b9f;
 }
 
-.title:hover {
+.title a :hover {
 	color: #fe505a;
 }
 

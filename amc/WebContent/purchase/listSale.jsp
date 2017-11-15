@@ -54,6 +54,121 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
         <script src="../semantic/semantic.min.js"></script>
+        
+        	<script type="text/javascript">
+		var currentPage = 0,
+			searchKeyword = 'saleList';
+		
+		function init(){
+
+			$('td:nth-child(1)')
+				.bind('click',function(){
+					self.location = 'getPurchase?impId='+$(this).find('input:hidden').val();
+				});
+			
+			$('td:nth-child(2)')
+				.bind('click',function(){
+					self.location = '/product/getProduct?prodNo='+$(this).find('input:hidden').val()+'&menu=manage';
+				});
+			
+			$('td:nth-child(3)')
+				.bind('click',function(){
+					self.location = '/user/getUser?userId='+$(this).text().trim();
+				});
+			
+			$('td:nth-child(6):contains("배송하기")')
+				.bind('click',function(){
+					self.location = 'updateTranCode?impId='+$(this).find('input:hidden').val()+'&tranCode=2&menu=manage';
+				});
+		}
+		
+		function fncNextList(){
+			currentPage++;
+			$.ajax({
+				url : 'json/listPurchase',
+				method : 'post',
+				async : false,
+				dataType : 'json',
+				data : JSON.stringify({
+					currentPage : currentPage,
+					searchKeyword : searchKeyword
+				}),
+				headers : {
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				},
+				success : function(JSON){
+					var i = JSON.resultPage.totalCount - (JSON.resultPage.currentPage-1)*JSON.resultPage.pageSize + 1;
+					for( x in JSON.list){
+						i--;
+						var sale = JSON.list[x];
+						var list = '<tr>';
+						list += '<td><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
+						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.orderStock+')</td>';
+						list += '<td>'+sale.buyer.userId+'</td>';
+						list += '<td>'+sale.orderRegDate+'</td>';
+						list += '<td>'
+						if(sale.tranCode == '1'){
+							list += '구매완료';
+						}else if(sale.tranCode == '2'){
+							list += '배송중';
+						}else if(sale.tranCode == '3'){
+							list += '배송완료';
+						}
+						list += '</td>';
+						list += '<td>';
+						if(sale.tranCode == '1'){
+							list += '<input type="hidden" name="impId" value="'+sale.impId+'">배송하기';
+						}
+						list += '</td>';
+						list += '</tr>';
+						
+						$('tbody').html($('tbody').html() + list);
+					}
+					init();
+				}
+			});
+		}
+		
+		$(function(){
+			init();
+			while($(document).height() == $(window).height() && currentPage < $('input:hidden[name="maxPage"]').val()){
+				fncNextList();
+			}
+		});
+
+		$(function(){
+			
+			$.ajax({
+				url : '/product/json/getIndexProductList',
+				method : 'get',
+				dataType : 'json',
+				headers : {
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				},
+				success : function(data){
+					var i;
+					for(i=0; i<4 ; i++){
+						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].prodImage!=null ? data.HP[i].prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF'));
+						$($('.popular')[i]).find('span').text(data.HP[i].stock);
+						$($('.popular')[i]).find('h4').append(data.HP[i].prodName);
+					}
+				}
+			});
+		});
+		$(window).scroll(function(event){
+			if(currentPage < $('input:hidden[name="maxPage"]').val()){
+				if(pageYOffset == ($(document).height()-$(window).height())){
+					window.scrollTo(0,$(document).height()-$(window).height()-1);
+					fncNextList();
+				}
+			}
+		});
+		
+	</script>
+        
+        
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -94,9 +209,12 @@
 		    </div>
 	
 			<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
+			<input type="text" value="${sale.buyer.userId}">			
+		
 			
 			<table class="table table-hover table-striped" >
-				<thead>
+				<thead> </thead>
+				    <tbody>
 					<tr>
 						<th>No</th>
 						<th>상품명</th>
@@ -105,7 +223,8 @@
 						<th>현재상태</th>
 						<th>배송현황</th>
 					</tr>
-				</thead>
+					</tbody>
+			
 	      	</table>
 		</div>
 	</div>
@@ -115,8 +234,8 @@
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+       <!--  <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script> -->
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
         <!-- jQuery UI -->
@@ -190,10 +309,28 @@
 					'Content-Type' : 'application/json'
 				},
 				success : function(JSON){
+					alert(JSON);
+					alert("뭐야이거 잘 가지고 오자나 데이터는 ");
 					var i = JSON.resultPage.totalCount - (JSON.resultPage.currentPage-1)*JSON.resultPage.pageSize + 1;
+					alert(i);
+					alert(JSON.list);
+					alert(JSON.list.user.userId);
+					console.log("sale.impId:"+sale.impId);
+					
+					//alert("var value :: " + i);
 					for( x in JSON.list){
 						i--;
 						var sale = JSON.list[x];
+						
+						/* alert("sale " + sale.impId);
+						alert("prodName " + sale.purchaseProd.prodName);
+						alert("userId " + sale.buyer.userId);
+						alert("orderRegDate " + sale.orderRegDate);
+						alert("tranCode " + sale.tranCode);
+						 */
+						
+						
+						
 						var list = '<tr>';
 						list += '<td><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
 						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.orderStock+')</td>';
@@ -214,6 +351,8 @@
 						}
 						list += '</td>';
 						list += '</tr>';
+						
+						//alert("list all" + list);
 						
 						$('tbody').html($('tbody').html() + list);
 					}

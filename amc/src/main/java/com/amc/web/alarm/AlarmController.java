@@ -135,10 +135,15 @@ public class AlarmController {
 	public String codePush(@PathVariable("type")String type,
 						@RequestParam(value="serialNo",defaultValue="")String serialNo,
 						@RequestParam(value="userId",defaultValue="")String userId,
-						@RequestParam(value="alarmSeatNo",defaultValue="")String alarmSeatNo,
+						/*@RequestParam(value="alarmSeatNo",defaultValue="")String alarmSeatNo,*/
+						@RequestParam(value="phone1",defaultValue="")String phone1,
+						@RequestParam(value="phone2",defaultValue="")String phone2,
+						@RequestParam(value="phone3",defaultValue="")String phone3,
 						Model model) throws Exception{
 			
-		System.out.println("AlarmRestController.java 의 codePush 메소드"); 
+		System.out.println("AlarmRestController.java 의 codePush 메소드");
+		String alarmSeatNo = phone1 + phone2 + phone3;
+		System.out.println("alarmSeatNo ::::::::" + alarmSeatNo);
 		if(!type.equals("") || type !=null){
 			
 			System.out.println("AlarmRestController :: " +type+","+serialNo+","+userId+","+alarmSeatNo);
@@ -149,7 +154,14 @@ public class AlarmController {
 				String pushResult = alarmService.appPush(type, serialNo, userId, alarmSeatNo);
 			}
 		}
+		System.out.println("AlarmController 의 codePush 메소드 의 phone" + alarmSeatNo);
 		model.addAttribute("serialNo",serialNo);
+		System.out.println("phone1" + phone1);
+		model.addAttribute("phone1",phone1);
+		System.out.println("phone2" + phone2);
+		model.addAttribute("phone2",phone2);
+		System.out.println("phone3" + phone3);
+		model.addAttribute("phone3",phone3);
 		
 		return  "forward:/user/authForm.jsp";
 		

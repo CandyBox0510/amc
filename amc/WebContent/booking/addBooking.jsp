@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!doctype html>
 <html>
 <head>
@@ -68,13 +69,14 @@
                                 <span class="ticket__item">Hall: <span class="ticket__hall"> <br>${booking.screenContent.screenTheater}관</span></span>
                                 <span class="ticket__item ticket__price">price: <strong class="ticket__cost">${booking.totalTicketPrice}원</strong></span>
                             </div>
-
+                            
+ 							<c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>
                             <div class="ticket-primery">
                                 <span class="ticket__item ticket__item--primery ticket__film">Film<br><strong class="ticket__movie">${booking.movie.movieNm} ${booking.screenContent.previewTitle}</strong></span>
                                 <span class="ticket__item ticket__item--primery" style="vertical-align:middle">
                                 	Sits: <span  align='center left'  class="ticket__place">${displaySeat}</span>
                                 	<iframe style='width:50%; height:90%'  frameborder='0' align='right' 
-                                	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=abc" scrolling="no"></iframe>
+                                	 src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://${ip}:8000/booking/getBooking?bookingNo=${booking.bookingNo}" scrolling="no"></iframe>
 								</span>
                             </div>
 

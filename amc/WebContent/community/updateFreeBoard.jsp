@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetswal2/6.11.5/sweetswal2.min.css">
 
 </head>
 
@@ -40,8 +41,17 @@
 					<div class="addFreeBoard">
 						<div class="field">
 							<div class='col-md-1' id="title">제목</div>
-							<div class='col-md-11'>
+
+							<div class='col-md-9'>
 								<input type='text' name='freeBoardTitle' id="freeBoardTitle" class="add__input" value="${freeBoard.freeBoardTitle}" maxlength="25">
+							</div>
+							<div class='col-md-2'>
+								<c:if test="${user.role =='admin'}">
+									<div class="check"></div>
+
+									<input type="hidden" name='noticeFlag' id="noticeFlag">
+								</c:if>
+
 							</div>
 							<div class='field'>
 								<div class='col-md-12' id="context">
@@ -49,7 +59,8 @@
 								</div>
 								<div class='col-md-1' id="title">첨부파일</div>
 								<div class='col-md-11'>
-									<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span> 
+									<input type="text" name="getNoticeListCount" value="${getNoticeListCount}">
+									<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span>
 									<input type="file" id="imageFile" name="imageFile" class="add__input" value="${freeBoard.freeBoardImage }">
 								</div>
 							</div>
@@ -61,14 +72,15 @@
 						<div>
 							<input type="hidden" name="userId" id="userId" value="${freeBoard.user.userId }">
 							<input type="hidden" name="freeBoardNo" id="freeBoardNo" value="${freeBoard.freeBoardNo }">
-							
+
 						</div>
 					</div>
 				</form>
 
+				<input type="hidden" name="noticeFlagBoolean" value="${freeBoard.noticeFlag}">
+
 				<div class="clearfix"></div>
 			</div>
-
 
 		</div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
@@ -93,8 +105,35 @@
 	<!-- Custom -->
 	<script src="/js/custom.js"></script>
 
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetswal2/6.11.5/sweetswal2.min.js"></script>
 	<script type="text/javascript">
+	     function fncCheckEmpty() {
+	            freeBoardTitle = $("input[name='freeBoardTitle']").val();
+	            freeBoardContent = $("textarea[name='freeBoardContent']").val();
+	            imageFile = $("input[name='imageFile']").val();
+
+	            console.log(freeBoardTitle + "   " + freeBoardContent + "   " + imageFile);
+
+	            if (freeBoardTitle == null || freeBoardTitle.length < 1) {
+	                swal("<span style='font-size:15px'>제목을 입력 해 주세요</span>");
+	                return;
+	            }
+	            if (freeBoardContent == null || freeBoardContent.length < 1) {
+	                swal("<span style='font-size:15px'>내용을 입력 해 주세요</span>");
+	                return;
+	            }
+	            if (imageFile != "") {
+	                extension = imageFile.substring(imageFile.lastIndexOf(".") + 1);
+	                extension = extension.toLowerCase();
+
+	                if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
+
+	                } else {
+	                    swal("<span style='font-size:15px'>업로드가능한 확장자가 아닙니다. 다시 확인해주세요</span>");
+	                    return;
+	                }
+	            }
+	        }
         function fncAddFreeBoard() {
             freeBoardTitle = $("input[name='freeBoardTitle']").val();
             freeBoardContent = $("textarea[name='freeBoardContent']").val();
@@ -102,11 +141,11 @@
             console.log(freeBoardTitle + "   " + freeBoardContent + "   " + imageFile);
 
             if (freeBoardTitle == null || freeBoardTitle.length < 1) {
-                alert("제목을 입력 해 주세요");
+                swal("<span style='font-size:15px'>제목을 입력 해 주세요</span>");
                 return;
             }
             if (freeBoardContent == null || freeBoardContent.length < 1) {
-                alert("내용을 입력 해 주세요");
+                swal("<span style='font-size:15px'>내용을 입력 해 주세요</span>");
                 return;
             }
             if (imageFile != "") {
@@ -114,9 +153,9 @@
                 extension = extension.toLowerCase();
 
                 if (extension == 'jpg' || extension == 'jpeg' || extension == 'png' || extension == 'gif') {
-                    
+
                 } else {
-                    alert("업로드가능한 확장자가 아닙니다. 다시 확인해주세요");
+                    swal("<span style='font-size:15px'>업로드가능한 확장자가 아닙니다. 다시 확인해주세요</span>");
                     return;
                 }
             }
@@ -125,10 +164,47 @@
         }
 
         $(document).ready(function() {
+            getNoticeListCount = $("input[name='getNoticeListCount']").val();
+            noticeFlag = $("input[name='noticeFlagBoolean']").val();
+
+            if (noticeFlag == 'Y') {
+
+                display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 공지'
+
+                $("input[name='noticeFlag']").val("on");
+
+                $(".check").html(display);
+
+            } else {
+                display = '<i class="fa fa-square-o" aria-hidden="true"></i> 공지'
+                $("input[name='noticeFlag']").val(null);
+                $(".check").html(display);
+            }
+
+            $(document).on("click", ".fa-square-o", function() {
+
+                display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 공지'
+                $("input[name='noticeFlag']").val("on");
+                $(".check").html(display);
+            })
+
+            $(document).on("click", ".fa-check-square-o", function() {
+                display = '<i class="fa fa-square-o" aria-hidden="true"></i> 공지'
+                $("input[name='noticeFlag']").val(null);
+                $(".check").html(display);
+            })
 
             $(document).on("click", "#addButton", function() {
+                check = 'fa fa-check-square-o'
 
-                fncAddFreeBoard();
+                if (getNoticeListCount >= 3 && check == $(".check i").attr("class")) {
+                    fncCheckEmpty();
+                    swal("<span style='font-size:15px'>공지는 3개까지만 올릴 수 있습니다. <br/> 새로운 공지를 등록하시려면 이전 공지를 삭제해주세요</span>");
+                } else {
+
+                    fncAddFreeBoard();
+
+                }
 
             })
 
@@ -148,20 +224,17 @@
 
 </body>
 <style type="text/css">
-
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-
-
 .page-heading {
 	font-family: 'Jeju Gothic', sans-serif;
 }
+
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 
 .page-heading {
 	margin-top: 100px

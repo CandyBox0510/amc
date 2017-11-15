@@ -39,14 +39,14 @@
 		  </div>
 		  
 		  <c:if test='${user.password != null}'>
-		  <div class="row">
-		 	 <label for="password" class="col-sm-offset-1 col-sm-4 control-label"><strong>비밀번호</strong></label>
-		  
-		    <div class="col-sm-3">
-		      <input type="password" class="form__name" id="password" name="password" placeholder="비밀번호">
-		    </div>
-		    <span id="helpBlock2" class="help-block2 col-sm-6"></span>
-		  </div>
+			  <div class="row">
+			 	 <label for="password" class="col-sm-offset-1 col-sm-4 control-label"><strong>비밀번호</strong></label>
+			  
+			    <div class="col-sm-3">
+			      <input type="password" class="form__name" id="password" name="password" placeholder="비밀번호">
+			    </div>
+			    <span id="helpBlock2" class="help-block2 col-sm-6"></span>
+			  </div>
 		  </c:if>
 		  <div class="row">
 		  	<label for="userName" class="col-sm-offset-1 col-sm-4 control-label"><strong>이  름</strong></label>
@@ -72,31 +72,6 @@
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 
-   <!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
-
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
        	<!-- sweetalert -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.1/sweetalert2.all.min.js"></script>
         
@@ -124,10 +99,13 @@
 				alert("아이디는 반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
-				return;
+			if(pw){
+				if(pw == null || pw.length <1){
+					alert("패스워드는  반드시 입력하셔야 합니다.");
+					return;
+				}
 			}
+			
 			if(name == null || name.length <1){
 				alert("이름은  반드시 입력하셔야 합니다.");
 				return;
