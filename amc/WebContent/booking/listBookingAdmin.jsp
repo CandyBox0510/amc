@@ -8,22 +8,14 @@
 <html>
 <head>
 	<!-- Basic Page Needs -->
-        <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	
-		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
-		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-  
-
-
-	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+     <meta charset="utf-8">
+     <title>관리자용 예매목록</title>
+     <meta name="description" content="A Template by Gozha.net">
+     <meta name="keywords" content="HTML, CSS, JavaScript">
+     <meta name="author" content="Gozha.net">
+ 
+ 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link href="/css/external/jquery.selectbox.css" rel="stylesheet" />	
 </head>
 
 <body>
@@ -118,12 +110,7 @@
 	            </div>
             </div>
 
-        </section>
-        
-            
-
-            
-                
+        </section>      
         </div>
         
         <div class="clearfix"></div>
@@ -134,76 +121,74 @@
     </div>
 
 		
-         <script src="/js/external/modernizr.custom.js"></script> 
-	
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+   <script src="/js/external/modernizr.custom.js"></script> 
 
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script> 
+   <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+   <!-- jQuery UI -->
+   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   <!-- Bootstrap 3--> 
+   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
+   <!-- Mobile menu -->
+   <script src="/js/jquery.mobile.menu.js"></script>
+    <!-- Select -->
+   <script src="/js/external/jquery.selectbox-0.2.min.js"></script> 
 
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
-       
+   <!-- Custom -->
+	<script src="/js/custom.js"></script>
+
+	<script type="text/javascript">
 		
-		<script type="text/javascript">
-		
-		 function fncGetPageList(currentPage) {
-		        $("#currentPage").val(currentPage)		  		      
-		        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
-		 }
-		 
-		 function fncGetNextPage() {
-		 	var currentPage = ${resultPage.currentPage};
-	        $("#currentPage").val(currentPage+1)		  		      
+	 function fncGetPageList(currentPage) {
+	        $("#currentPage").val(currentPage)		  		      
 	        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
-		 }
-		 function fncGetPrePage() {
-			 var currentPage = ${resultPage.currentPage};   
-			 $("#currentPage").val( currentPage-1)		  		      
-		     $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
-		 }
-		 
-            $(document).ready(function() {
-                init_MovieList();
+	 }
+	 
+	 function fncGetNextPage() {
+	 	var currentPage = ${resultPage.currentPage};
+        $("#currentPage").val(currentPage+1)		  		      
+        $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
+	 }
+	 function fncGetPrePage() {
+		 var currentPage = ${resultPage.currentPage};   
+		 $("#currentPage").val( currentPage-1)		  		      
+	     $("#search-form").attr("method", "POST").attr("action", "/booking/getAdminBookingList").submit();
+	 }
+	 
+           $(document).ready(function() {
+               init_MovieList();
 
-                if($('html').height() < window.outerHeight){
-                	$('html').css('height', '100%');
-                }
-    			
-            });
-            
-    		
-    		//A. 예매번호 클릭시 예매상세페이지 이동
-    		$(document).on("click", ".bookingNo",  function(){
-    			
-    			var bookingNo =  $($(this).find("input[name='bookingNo']")).val();
-    			self.location = "/booking/getBooking?bookingNo="+bookingNo;
-    		});
-    		
-    		//B. 영화제목 클릭시 영화상세페이지 이동
-    		$(document).on("click", ".movieName",  function(){
-    			
-    			var movieNo =  $($(this).find("input[name='movieNo']")).val();
-    			self.location = "/movie/getMovie?movieNo="+movieNo+"&menu=search";
-    		});
-    		
-    		//C. 검색
-			$("button[name='search']").on("click", function() {
-                	
-                	fncGetPageList(1);
-		    });
+               if($('html').height() < window.outerHeight){
+               	$('html').css('height', '100%');
+               }
+   			
+           });
+           
+   		
+   		//A. 예매번호 클릭시 예매상세페이지 이동
+   		$(document).on("click", ".bookingNo",  function(){
+   			
+   			var bookingNo =  $($(this).find("input[name='bookingNo']")).val();
+   			self.location = "/booking/getBooking?bookingNo="+bookingNo;
+   		});
+   		
+   		//B. 영화제목 클릭시 영화상세페이지 이동
+   		$(document).on("click", ".movieName",  function(){
+   			
+   			var movieNo =  $($(this).find("input[name='movieNo']")).val();
+   			self.location = "/movie/getMovie?movieNo="+movieNo+"&menu=search";
+   		});
+   		
+   		//C. 검색
+		$("button[name='search']").on("click", function() {
+               	
+               	fncGetPageList(1);
+	    });
 
-		</script>
-		    
+	</script>
 
 </body>
+
 <style type="text/css">
 html{
   height: auto;

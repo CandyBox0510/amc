@@ -43,7 +43,8 @@
 
 		<div class="container">
 
-			<br /> <br />
+			<br />
+			<br />
 
 			<div class="page-header">
 				<h2 class=" page-heading">${movie.movieNm}</h2>
@@ -259,6 +260,7 @@
 				</div>
 			</div>
 
+
 			<div class="listPoster scrolling content"></div>
 			<input type="hidden" name="movieNm" value="${movie.movieNm}" />
 		</div>
@@ -293,11 +295,7 @@
         /* $(self.location).attr("href","/cinema/unifiedSearch"); */
     }
 
-    function searchTrailer() {
-
-        searchTrailer = movieNm + ' 예고편';
-      
-        searchTrailer =   encodeURI(encodeURIComponent(searchTrailer));
+    function searchTrailerResult() {
 
         $.ajax({
             url : "/movie/json/searchTrailer/" + searchTrailer,
@@ -311,7 +309,7 @@
                 displayValue = "";
                 for (var i = 0; i < JSONData.list.length; i++) {
 
-                    displayValue += '<div class="col-md-12 getTrailer"><div class="col-md-3"><img src="'+JSONData.list[i].thumbnail+'"></div>' + '<div class="col-md-9">' + '<div class="title">' + JSONData.list[i].title + '</div>' + '<div class="url">' + JSONData.list[i].url + '</div>' + '	</div></div>'
+                    displayValue += '<div class="col-md-12 getTrailer">' + '<div class="col-md-3"><img src="'+JSONData.list[i].thumbnail+'"></div>' + '<div class="col-md-9">' + '<div class="title">' + JSONData.list[i].title + '</div>' + '<div class="url">' + JSONData.list[i].url + '</div>' + '	</div></div>'
                 }
 
                 $(".listTrailer").html(displayValue);
@@ -331,6 +329,7 @@
             success : function(JSONData, status) {
 
                 displayValue = '<div class="row">';
+
                 for (var i = 0; i < JSONData.list.length; i++) {
 
                     displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrlSearch" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>'
@@ -348,10 +347,59 @@
 
         movieNm = $("input[name='movieNm']").val();
 
-        $(document).on('click', '.searchTrailer', function() {
-            $(".searchTrailerModal").modal('show');
-            searchTrailer();
+        $(".searchTrailerModal").modal({
+            autofocus : false,
+            closable : true,
+            observeChanges : true,
+            onApprove : function() {
+
+                return false;
+            },
+            selector : {
+                close : '.close.icon'
+            }
+
         });
+
+        $(".searchPosterModal").modal({
+            autofocus : false,
+            closable : true,
+            observeChanges : true,
+            onApprove : function() {
+
+                return false;
+            },
+            selector : {
+                close : '.close.icon'
+            }
+
+        });
+
+        $(document).on('click', '.searchTrailer', function() {
+            searchTrailer = movieNm + ' 예고편';
+
+            searchTrailer = encodeURI(encodeURIComponent(searchTrailer));
+
+            searchTrailerResult();
+            $(".searchTrailerModal").modal('show');
+
+        });
+
+        $(document).on('click', '.searchPoster', function() {
+            searchPoster = movieNm;
+            searchPoster = encodeURI(encodeURIComponent(searchPoster));
+
+            searchPosterResult();
+            $(".searchPosterModal").modal('show');
+
+        });
+
+        $(document).on("click", "button[name='searchClick']", function() {
+            searchPoster = $("input[name='searchPoster']").val();
+            searchPoster = encodeURI(encodeURIComponent(searchPoster))
+
+            searchPosterResult();
+        })
 
         $(document).on('click', '.getTrailer', function() {
             url = $(".url", $(this)).html();
@@ -371,53 +419,6 @@
             $(".poster").removeAttr("src");
             $(".poster").attr("src", image_url);
             $(".searchPosterModal").modal('hide');
-        });
-
-        $(".searchTrailerModal").modal({
-            autofocus : false,
-            closable : true,
-            observeChanges : true,
-            onApprove : function() {
-
-                return false;
-            },
-            selector : {
-                close : '.close.icon'
-            }
-
-        });
-
-        $(document).on('click', '.searchPoster', function() {
-
-            $(".searchPosterModal").modal('show');
-            searchPoster = movieNm;
-            searchPoster = encodeURI(encodeURIComponent(searchPoster));
-
-            searchPosterResult();
-
-        });
-
-        $(document).on("click", "button[name='searchClick']", function() {
-            searchPoster = $("input[name='searchPoster']").val();
-            searchPoster =  encodeURI(encodeURIComponent(searchPoster))
-            alert(searchPoster)
-         
-
-            searchPosterResult();
-        })
-
-        $(".searchPosterModal").modal({
-            autofocus : false,
-            closable : true,
-            observeChanges : true,
-            onApprove : function() {
-
-                return false;
-            },
-            selector : {
-                close : '.close.icon'
-            }
-
         });
 
     })
@@ -506,7 +507,7 @@ input {
 	overflow: auto;
 }
 
-.listTrailer>div {
+.listTrailer>div, .listPoster>div {
 	margin-bottom: 5px
 }
 
@@ -523,7 +524,7 @@ input {
 	color: #4c4145;
 }
 
-#trailer {
+#trailerId {
 	width: 100%;
 	min-height: 50px;
 	padding: 8px 19px;
@@ -594,20 +595,18 @@ input {
         if (pster != null) {
 
         } else {
-        	pster = defaultposterUrl;
+     	pster = defaultposterUrl;
         	//alert("pster url" + pster);
         	$("#postUrlCheck").val(pster);
-               
-         
+
         }
 
         if (trailer != null) {
 
         } else {
-        	trailer = defaulttrainerUrl;
+             	trailer = defaulttrainerUrl;
         	//alert("trailer url" + trailer);
         	$("#trailerCheck").val(trailer); 
-               
           
         }
 
@@ -651,7 +650,6 @@ input {
     function fncDeleteMovie() {
 
         var movieNo = $("input[name='movieNo']").val();
-        alert("movieNo" + movieNo);
 
         $("form").attr("method", "POST").attr("action", "/movie/deleteMovie?movieNo=" + movieNo).submit();
     }

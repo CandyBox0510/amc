@@ -211,7 +211,7 @@
             $(document).on("click", "#cancleButton", function() {
 
                 if (confirm("정말 등록을 취소하시겠습니까?") == true) {
-                    history.go(-1);
+                    $(self.location).attr("href", "/community/getFreeBoardList");
                 } else {
                     return;
                 }

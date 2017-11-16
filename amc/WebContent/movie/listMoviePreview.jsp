@@ -1,24 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html>
-            <html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
-   
+
 </head>
 
 
 <body>
-    
-   <div class="wrapper">
-        <!-- Banner -->
-         <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div> 
-          <header class="header-wrapper header-wrapper--home">
+
+	<div class="wrapper">
+		<!-- Banner -->
+		<div class="banner-top">
+			<img alt='top banner' src="../images/banners/space.jpg">
+		</div>
+		<header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->

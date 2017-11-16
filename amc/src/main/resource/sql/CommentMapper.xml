@@ -49,6 +49,13 @@
 		AND 1>=(SELECT COUNT(*) FROM freeboardcomment WHERE parent_no = #{commentContent}) 
 	</delete>
 	
+	
+	<delete id="deleteFreeBoardCommentAll" parameterType="int" >
+		DELETE FROM freeboardcomment
+		WHERE freeboard_no = #{freeBoard.freeBoardNo}
+
+	</delete>
+	
 
 	
    <select id="getFreeBoardCommentList" parameterType="map" resultMap="commentSelectMap">
