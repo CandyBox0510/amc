@@ -353,7 +353,7 @@
 									
 						$.ajax( 
 								{
-									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
 									type : "GET" ,							
 								}).done(function(data) {
 							//정상 통신인 경우
@@ -395,7 +395,7 @@
 								
 					$.ajax( 
 							{
-								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
 								type : "GET" ,							
 							}).done(function(data) {
 						//정상 통신인 경우
