@@ -70,6 +70,15 @@ public class MovieDAOImpl implements MovieDAO {
 			System.out.println((Movie)m);
 		}*/
 		
+		//next & previous button 처리 로직			
+		if(search.getCurrentPage() >= 1) {
+			
+			if(search.getSearchKeyword() != null && search.getSearchKeyword().length() == 0)
+			{
+				 search.setSearchCondition(null);
+				 search.setSearchKeyword(null);
+			}
+		}
 		
 		System.out.println("search.getSearchKeyword2() ::"  + search.getSearchKeyword2());
 		

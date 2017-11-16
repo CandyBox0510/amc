@@ -1,17 +1,19 @@
 package com.amc.service.domain;
 
 public class FreeBoard {
-	
+
 	private int freeBoardNo;
 	private User user;
-	//private String userId;
+	// private String userId;
 	private String freeBoardTitle;
 	private String freeBoardRegDate;
 	private String freeBoardContent;
 	private int freeBoardViews;
 	private String freeBoardImage;
-	
-	public FreeBoard(){
+	private String noticeFlag;
+	private Comment comment;
+
+	public FreeBoard() {
 		super();
 	}
 
@@ -23,7 +25,6 @@ public class FreeBoard {
 		this.freeBoardNo = freeBoardNo;
 	}
 
-	
 	public User getUser() {
 		return user;
 	}
@@ -72,14 +73,32 @@ public class FreeBoard {
 		this.freeBoardImage = freeBoardImage;
 	}
 
+	public String getNoticeFlag() {
+		return noticeFlag;
+	}
+
+	public void setNoticeFlag(String noticeFlag) {
+		this.noticeFlag = noticeFlag;
+	}
+	
+	
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public String toString() {
 		return "FreeBoard [freeBoardNo=" + freeBoardNo + ", user=" + user + ", freeBoardTitle=" + freeBoardTitle
 				+ ", freeBoardRegDate=" + freeBoardRegDate + ", freeBoardContent=" + freeBoardContent
-				+ ", freeBoardViews=" + freeBoardViews + ", freeBoardImage=" + freeBoardImage + "]";
+				+ ", freeBoardViews=" + freeBoardViews + ", freeBoardImage=" + freeBoardImage + ", noticeFlag="
+				+ noticeFlag + ", comment=" + comment + "]";
 	}
 
 
-	
 
 }

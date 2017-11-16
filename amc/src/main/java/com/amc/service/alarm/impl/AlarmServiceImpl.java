@@ -378,7 +378,10 @@ public class AlarmServiceImpl implements AlarmService {
 							"예매번호 : "+booking.getBookingNo()+
 							"\n시사회명 : "+booking.getScreenContent().getPreviewTitle()+
 							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
-							"\n좌석 : "+(String)jsonObject.get("seatNo")+ 
+							"\n좌석 : "+(String)jsonObject.get("seatNo")+
+							"\nQRqode : "+"https://chart.googleapis.com/" +
+										  "chart?chs=150x150&cht=qr&chl=" +
+										  "http://183.98.215.171:8080/booking/getBooking?bookingNo="+serialNo +
 							"\n예매가 완료되었습니다.");
 				}else{
 					pushValue.put("content", "[예매 확인]\n"+

@@ -233,8 +233,7 @@
 		  }else if(event.data.indexOf("duplicated")==0){
 			  //내가 고른좌석을 다른사람이 예매한경우
 			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');
-			  $("input[name='bookingSeatNo']").val("");
-			  initializeSeat();
+			  self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
 			 
 		  } 
 		  else{	  	
@@ -242,6 +241,7 @@
 			  var no = ${screenContent.ticketPrice};
 			  
 			  if(event.data==null || event.data==""){
+			  //좌석을 모두 선택해제 한경우 
 			  initializeSeat();
 			  
 			  }else{
@@ -341,7 +341,7 @@
 			<div class="col-sm-8 col-md-8">	
 			<c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>			
 				<iframe id="child" src= "http://${ip}:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
-				style='width:100%; height:550px'  frameborder='0'   align='center'>		 
+				style='width:100%; height:450px; overflow-x:scroll' scrolling="yes" frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 				<!-- style='width:100%' -->
@@ -408,17 +408,21 @@
             $(document).ready(function() {
                 init_BookingOne();
                 
-                if($('html').height() < window.outerHeight){
-                	$('html').css('height', '100%');
-                }
+                $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)");
+                
             });
+            
+
+
+        
 		</script>
   
 
 		</body>
 		<style type="text/css">
-		html{
+		body{
 		  height: auto;
+
 		}
 
    .abc{ 
@@ -461,5 +465,10 @@
    .def{
    		font-family: 'Jeju Gothic', sans-serif;
    }
+   
+   
+   .tp-caption.boxshadow, .boxshadow {
+    box-shadow: 0 0 20px rgba(0,0,0,0);
+}
    </style>
 </html>

@@ -25,6 +25,7 @@ import com.amc.service.booking.BookingService;
 import com.amc.service.cinema.CinemaService;
 import com.amc.service.domain.Booking;
 import com.amc.service.domain.Movie;
+import com.amc.service.domain.Product;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.movie.MovieService;
@@ -175,6 +176,12 @@ public class BookingController {
         booking.setBookingSeatNo(displaySeat);
 		model.addAttribute("booking", booking);
 		
+		/****************************************/
+		//¿ÞÂÊ¹è³Ê¿¡ ±¤°íÃß°¡
+		Map<String, Object> indexMap = cinemaService.index();
+		List<Product> bestProductList = (List<Product>) indexMap.get("bestProductList");	
+		model.addAttribute("bestProductList", bestProductList);
+		
 		return "forward:/booking/getBooking.jsp";
 	}
 	
@@ -232,6 +239,7 @@ public class BookingController {
 		
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
 	
 		return "forward:/booking/listBookingAdmin.jsp";
 	}

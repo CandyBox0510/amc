@@ -270,7 +270,18 @@
 		var currentPage = 0,
 			searchKeyword = 'saleList';
 		
+		
+		
 		function init(){
+			
+			var docHeight = $(document).height();
+			var winHeight = $(window).height();
+			var maxPage = $('input:hidden[name="maxPage"]').val();
+			
+			// alert("Init docHeight :" + docHeight + "Init winHeight" + winHeight + "Init maxPage" + maxPage);
+			
+			
+			
 
 			$('td:nth-child(1)')
 				.bind('click',function(){
@@ -293,12 +304,21 @@
 				});
 		}
 		
+		
+		
 		function fncNextList(){
+			var docHeight = $(document).height();
+			var winHeight = $(window).height();
+			var maxPage = $('input:hidden[name="maxPage"]').val();
+			
+			// alert("docHeight :" + docHeight + "winHeight" + winHeight + "maxPage" + maxPage);
+			
+			
 			currentPage++;
 			$.ajax({
 				url : 'json/listPurchase',
 				method : 'post',
-				async : false,
+				async : true,
 				dataType : 'json',
 				data : JSON.stringify({
 					currentPage : currentPage,
@@ -362,8 +382,18 @@
 		}
 		
 		$(function(){
-			init();
+			init();	
+			
+			var docHeight = $(document).height();
+			var winHeight = $(window).height() + 100;
+			var maxPage = $('input:hidden[name="maxPage"]').val();
+			
+			// alert("whileHeight :" + docHeight + "whilewinHeight" + winHeight + "whilemaxPage" + maxPage + "currentPage"  + currentPage);
+			
+			
 			while($(document).height() == $(window).height() && currentPage < $('input:hidden[name="maxPage"]').val()){
+				// alert("while looping start.....")
+				
 				fncNextList();
 			}
 		});
@@ -388,6 +418,8 @@
 				}
 			});
 		});
+		
+		
 		$(window).scroll(function(event){
 			if(currentPage < $('input:hidden[name="maxPage"]').val()){
 				if(pageYOffset == ($(document).height()-$(window).height())){
@@ -396,6 +428,7 @@
 				}
 			}
 		});
+		
 		
 	</script>
 <style>

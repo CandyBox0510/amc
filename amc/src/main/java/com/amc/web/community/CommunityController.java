@@ -3,6 +3,7 @@ package com.amc.web.community;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,10 +50,20 @@ public class CommunityController {
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 
+	@RequestMapping(value = "addFreeBoard", method = RequestMethod.GET)
+	public String addFreeBoard(Model model) throws Exception {
+		int freeBoardNo = 0;
+		int getNoticeListCount = communityService.getNoticeListCount(freeBoardNo);
+		System.out.println("getNoticeListCount==>" + getNoticeListCount);
+		model.addAttribute("getNoticeListCount", getNoticeListCount);
+
+		return "forward:/community/addFreeBoard.jsp";
+	}
+
 	@RequestMapping(value = "addFreeBoard", method = RequestMethod.POST)
 	public String addFreeBoard(@ModelAttribute("freeBoard") FreeBoard freeBoard, @RequestParam("userId") String userId,
 			@RequestParam(value = "imageFile", required = false) MultipartFile imageFile, Model model,
-			HttpServletRequest request) throws IOException {
+			HttpServletRequest request) throws Exception {
 
 		System.out.println("CommunityController의 addFreeBoard POST 시작");
 		System.out.println("0. userId ==> " + userId);
@@ -79,7 +90,7 @@ public class CommunityController {
 			fileName = fileName.replaceAll("%", "");
 		}
 
-		fileName = time + fileName ;
+		fileName = time + fileName;
 		File file = new File(rootPath + attachPath + fileName);
 		System.out.println("fileName===> " + fileName);
 
@@ -113,18 +124,25 @@ public class CommunityController {
 		freeBoard.setFreeBoardContent(freeBoardContent);
 		communityService.addFreeBoard(freeBoard);
 		model.addAttribute("freeBoard", freeBoard);
+
 		System.out.println("CommunityController의 addFreeBoard POST 끝");
 
 		return "redirect:/community/getFreeBoardList";
 	};
 
 	@RequestMapping(value = "updateFreeBoard", method = RequestMethod.GET)
-	public String updateFreeBoard(@RequestParam("freeBoardNo") int freeBoardNo, Model model) {
+	public String updateFreeBoard(@RequestParam("freeBoardNo") int freeBoardNo, Model model) throws Exception {
 
 		System.out.println("CommunityController의 updateFreeBoard GET 시작");
 		System.out.println("1. freeBoardNo ==> " + freeBoardNo);
 		FreeBoard freeBoard = communityService.getFreeBoard(freeBoardNo);
+
+		int getNoticeListCount = communityService.getNoticeListCount(freeBoardNo);
+		System.out.println("getNoticeListCount==>" + getNoticeListCount);
+
+		
 		System.out.println("2. freeBoard ==> " + freeBoard);
+		model.addAttribute("getNoticeListCount", getNoticeListCount);
 		model.addAttribute("freeBoard", freeBoard);
 		System.out.println("CommunityController의 updateFreeBoard GET 끝");
 
@@ -159,7 +177,7 @@ public class CommunityController {
 			fileName = fileName.replaceAll("%", "");
 		}
 
-		fileName = time + fileName ;
+		fileName = time + fileName;
 		File file = new File(rootPath + attachPath + fileName);
 		System.out.println("fileName===> " + fileName);
 
@@ -169,15 +187,6 @@ public class CommunityController {
 			imageFile.transferTo(file);
 			freeBoard.setFreeBoardImage(fileName);
 		}
-
-		/*
-		 * if(!(imageFile.isEmpty())){ FileOutputStream fos = new
-		 * FileOutputStream(new File(fsr.getPath(),
-		 * imageFile.getOriginalFilename())); fos.write(imageFile.getBytes());
-		 * fos.flush(); fos.close();
-		 * 
-		 * freeBoard.setFreeBoardImage(imageFile.getOriginalFilename()); }
-		 */
 
 		User user = new User();
 		user.setUserId(userId);
@@ -228,28 +237,67 @@ public class CommunityController {
 		System.out.println("2. search ==> " + search);
 
 		List<FreeBoard> list = communityService.getFreeBoardList(search);
+		List<FreeBoard> noticeList = communityService.getNoticeList();
+
+		List<Integer> freeBoardNoList = new ArrayList<Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println("list.get(i).getFreeBoardNo()   ==> " + i + " " + list.get(i).getFreeBoardNo());
+			freeBoardNoList.add(list.get(i).getFreeBoardNo());
+		}
+		System.out.println(freeBoardNoList + "freeBoardNoList");
+		List<Integer> freeBoardCommentCount = new ArrayList<Integer>();
+		for (int i = 0; i < freeBoardNoList.size(); i++) {
+			int freeBoardNo = freeBoardNoList.get(i);
+			freeBoardCommentCount.add(communityService.getFreeBoardTotalCount(freeBoardNo));
+		}
+		System.out.println(freeBoardCommentCount + "freeBoardCommentCount");
+
+		List<Integer> freeBoardNoticeList = new ArrayList<Integer>();
+		for (int i = 0; i < noticeList.size(); i++) {
+			System.out.println(
+					"noticeList.get(i).getFreeBoardNo()   ==> " + i + " " + noticeList.get(i).getFreeBoardNo());
+			freeBoardNoticeList.add(noticeList.get(i).getFreeBoardNo());
+		}
+		System.out.println(freeBoardNoticeList + "freeBoardNoticeList");
+		List<Integer> noticeCommentCount = new ArrayList<Integer>();
+		for (int i = 0; i < freeBoardNoticeList.size(); i++) {
+			int freeBoardNo = freeBoardNoticeList.get(i);
+			noticeCommentCount.add(communityService.getFreeBoardTotalCount(freeBoardNo));
+		}
+		System.out.println(noticeCommentCount + "noticeCommentCount");
 
 		System.out.println("3. list ==> " + list);
-
+		System.out.println("3-1. noticeList ==> " + noticeList);
 		int totalCount = communityService.getTotalCount(search);
 
 		System.out.println("4. totalCount ==> " + totalCount);
 
 		Page resultPage = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 		System.out.println("5. resultPage ==> " + resultPage);
+		/*
+		 * Map<String, Object> map = new HashMap<String, Object>();
+		 * 
+		 * map.put("list", list); map.put("totalCount", totalCount);
+		 * map.put("resultPage", resultPage); map.put("search", search);
+		 * 
+		 * System.out.println("5. Map ==> " + map);
+		 */
+
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		map.put("list", list);
-		map.put("totalCount", totalCount);
-		map.put("resultPage", resultPage);
-		map.put("search", search);
-
-		System.out.println("5. Map ==> " + map);
-
-		model.addAttribute("search", map.get("search"));
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("totalCount", map.get("totalCount"));
+		map.put("freeBoardCommentCount", freeBoardCommentCount);
+		map.put("noticeList", noticeList);
+		map.put("noticeCommentCount", noticeCommentCount);
+		System.out.println("여기여기여기 map " + map);
+		model.addAttribute("search", search);
+		// model.addAttribute("list", list);
+		// model.addAttribute("freeBoardCommentCount", freeBoardCommentCount);
+		model.addAttribute("totalCount", totalCount);
 		model.addAttribute("resultPage", resultPage);
+		// model.addAttribute("noticeList", noticeList);
+		// model.addAttribute("noticeCommentCount", noticeCommentCount);
+		model.addAttribute("map", map);
 
 		System.out.println("MovieController의 getMovieCommentList메소드 끝");
 

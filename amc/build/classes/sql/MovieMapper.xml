@@ -329,9 +329,11 @@
 	
 	
 	<select id="uniMovieList" parameterType="search" resultMap="movieSelectMap">
-		SELECT *
+	SELECT out_table.*, NVL((male_count),0)+NVL((female_count),0) AS booking_count
+	FROM(SELECT *
 	        FROM (   SELECT inner_table.* , ROWNUM AS row_seq
-	                    FROM      (   SELECT movie_no, movie_title, poster, to_char(movie_opendate, 'yy/mm/dd') movie_opendate, runningtime, rating, genre 
+	                    FROM      (   SELECT movie_no, movie_title, poster, to_char(movie_opendate, 'yy/mm/dd') movie_opendate, 
+	                    					 runningtime, rating, genre, actor, director, male_count, female_count 
 	                                  FROM   movie 
 	                                   <if test="searchCondition != null">
 	                                    <where>
@@ -351,7 +353,8 @@
 	                                    </where>
 	                                   </if>
 	                                 ORDER BY movie_no DESC ) inner_table
-	              ) ORDER BY row_seq
+	              ) ORDER BY row_seq) out_table
+	ORDER BY booking_count desc, movie_no
 	</select>
 	
 	<!-- 예나 사용 sql 생성/ 영화예매 1단계용 -->

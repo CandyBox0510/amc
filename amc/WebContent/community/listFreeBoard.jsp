@@ -76,6 +76,9 @@
 						</c:if>
 					</div>
 
+
+
+
 					<div class="freeBoardTable hidden-xs">
 						<table>
 							<tr class="col-md-12 col-sm-12 freeBoardField">
@@ -89,16 +92,39 @@
 
 						<div>
 							<table>
-								<c:forEach var="freeBoard" items="${list }">
+
+								<c:set var="i" value="0" />
+								<c:forEach var="noticeList" items="${map.noticeList }">
+									<tr class="col-md-12 col-sm-12 freeBoardRecordNotice">
+										<td class="col-md-1 col-sm-1  text-center "><i class="fa fa-bullhorn" aria-hidden="true"></i></td>
+										<td class="col-md-6 col-sm-6 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${noticeList.freeBoardNo}">${ noticeList.freeBoardTitle}</a>
+											(${map.noticeCommentCount[i]})
+										</td>
+										<td class="col-md-2 col-sm-2 text-center">${ noticeList.user.userId}</td>
+										<td class="col-md-1 col-sm-1 text-center">${ noticeList.freeBoardViews}</td>
+										<td class="col-md-2 col-sm-2 text-center">${ noticeList.freeBoardRegDate}</td>
+									</tr>
+
+									<c:set var="i" value="${i+1 }" />
+								</c:forEach>
+
+
+								<c:set var="i" value="0" />
+								<c:forEach var="freeBoard" items="${map.list }">
 									<tr class="col-md-12 col-sm-12 freeBoardRecord">
 										<td class="col-md-1 col-sm-1  text-center ">${ freeBoard.freeBoardNo}</td>
 										<td class="col-md-6 col-sm-6 title">
 											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+											(${map.freeBoardCommentCount[i]})
+
+
 										</td>
 										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.user.userId}</td>
 										<td class="col-md-1 col-sm-1 text-center">${ freeBoard.freeBoardViews}</td>
 										<td class="col-md-2 col-sm-2 text-center">${ freeBoard.freeBoardRegDate}</td>
 									</tr>
+									<c:set var="i" value="${i+1 }" />
 								</c:forEach>
 							</table>
 						</div>
@@ -116,11 +142,36 @@
 
 						<div>
 							<div>
-								<c:forEach var="freeBoard" items="${list }">
+								<c:set var="i" value="0" />
+								<c:forEach var="noticeList" items="${map.noticeList }">
+									<div class="freeBoardRecordXS">
+										<div class="col-xs-2 notice"><i class="fa fa-bullhorn text-center " aria-hidden="true"></i></div>
+										<div class="col-xs-10 title">
+											<a href="/community/getFreeBoard?freeBoardNo=${noticeList.freeBoardNo}">${ noticeList.freeBoardTitle}</a>
+											(${map.noticeCommentCount[i]})
+										</div>
+										<div class="col-xs-12 text-center recordXs">
+											<div class="col-xs-4"></div>
+											<div class="col-xs-3">${ noticeList.user.userId}</div>
+											<div class="col-xs-2">${ noticeList.freeBoardViews}</div>
+											<div class="col-xs-3">${ noticeList.freeBoardRegDate}</div>
+										</div>
+										<div class="col-xs-12 xsHr">
+											<hr />
+										</div>
+									</div>
+									<c:set var="i" value="${i+1 }" />
+								</c:forEach>
+							</div>
+							<div>
+
+								<c:set var="i" value="0" />
+								<c:forEach var="freeBoard" items="${map.list }">
 									<div class="freeBoardRecordXS">
 										<div class="col-xs-2 boardNo">${ freeBoard.freeBoardNo}</div>
 										<div class="col-xs-10 title">
 											<a href="/community/getFreeBoard?freeBoardNo=${freeBoard.freeBoardNo}">${ freeBoard.freeBoardTitle}</a>
+											(${map.freeBoardCommentCount[i]})
 										</div>
 										<div class="col-xs-12 text-center recordXs">
 											<div class="col-xs-4"></div>
@@ -132,7 +183,7 @@
 											<hr />
 										</div>
 									</div>
-
+									<c:set var="i" value="${i+1 }" />
 								</c:forEach>
 							</div>
 						</div>
@@ -146,7 +197,7 @@
 							<c:if test="${resultPage.currentPage != 1 }">
 								<a href='#' class="pagination__prev">prev</a>
 							</c:if>
-							<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
+								<c:if test="${resultPage.maxPage !=  resultPage.currentPage}">
 								<a href='#' class="pagination__next">next</a>
 							</c:if>
 						</div>
@@ -166,6 +217,8 @@
 		<div class="clearfix"></div>
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
+
+
 	</div>
 
 
@@ -226,7 +279,7 @@
 
             $(document).on("click", "#writeButton", function() {
 
-                $(self.location).attr("href", "/community/addFreeBoard.jsp");
+                $(self.location).attr("href", "/community/addFreeBoard");
 
             })
 
@@ -304,7 +357,7 @@ section {
 	background-color: #4C4145;
 }
 
-.freeBoardRecord, freeBoardRecordXS {
+.freeBoardRecord, freeBoardRecordXS, .freeBoardRecordNotice {
 	font-size: 13px;
 	height: 50px;
 	vertical-align: middle;
@@ -320,12 +373,12 @@ section {
 	margin-top: 5px;
 }
 
-.freeBoardRecord>td {
+.freeBoardRecord>td, .freeBoardRecordNotice>td {
 	border-bottom: 1px solid #969b9f;
 	padding: 15px;
 }
 
-.title {
+.freeBoardRecordNotice .title {
 	font-size: 13px;
 	font-weight: bold;
 }
@@ -340,7 +393,7 @@ section {
 	color: #969b9f;
 }
 
-.title:hover {
+.title a :hover {
 	color: #fe505a;
 }
 

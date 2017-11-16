@@ -66,8 +66,8 @@ public class Movie {
 	
 	
 	//additional filed for statistics 
-	private int	   maleCnt;
-	private int	   femaleCnt;
+	private int	maleCnt;
+	private int	femaleCnt;
 	private int    age10s;
 	private int    age20s;
 	private int    age30s;

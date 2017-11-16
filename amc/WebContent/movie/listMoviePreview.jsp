@@ -1,24 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-            <!DOCTYPE html>
-            <html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 
 <head>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
-   
+
 </head>
 
 
 <body>
-    
-   <div class="wrapper">
-        <!-- Banner -->
-         <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div> 
-          <header class="header-wrapper header-wrapper--home">
+
+	<div class="wrapper">
+		<!-- Banner -->
+		<div class="banner-top">
+			<img alt='top banner' src="../images/banners/space.jpg">
+		</div>
+		<header class="header-wrapper header-wrapper--home">
 			<!-- ToolBar Start /////////////////////////////////////-->
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
@@ -38,7 +37,7 @@
                  
 				    <label class="sr-only" for="searchKeyword">검색어</label>
 				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				     size="15"	 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  	 </form>
 				   </div>
 				   		
@@ -66,19 +65,20 @@
 				 		<c:set var="i" value="0" />
                 		 <c:forEach var="preview" items="${list}">
                 		 <c:set var="i" value="${i+1 }" />
-                		 
-	                            <div class="col-xs-6 col-sm-3 cinema-item">
+                		 	   	<div class="col-xs-12 col-sm-3">
+								 <div class=" cinema-item">
 	                                <div class="cinema">
 	                             
 	                                    <a href='/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview' class="cinema__images">
 	                                        <img id="poster"alt='' src="${preview.movie.postUrl}">                                        
+	                                    
 	                                    </a>
-	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${preview.movie.movieNm }</a>
+	                                    <a href="/movie/getMovie?movieNo=${preview.movie.movieNo}&menu=preview" class="movieNm">${preview.previewTitle}</a>
 	                                    <style>P{margin-top:0px;margin-bottom:0px;}</style>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감독 :${preview.movie.directors} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;오픈날짜 :${preview.ticketOpenDate} </strong> </p>
-	                                    <p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;상영날짜 :${preview.screenOpenTime} </strong> </p>
-	                    	     		<p ><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격  :${preview.ticketPrice} </strong> </p>
+	                                    <p ><strong>감독 :${preview.movie.directors} </strong> </p>
+	                                    <p ><strong>오픈날짜 :${preview.ticketOpenDate} </strong> </p>
+	                                    <p ><strong>상영날짜 :${preview.screenOpenTime} </strong> </p>
+	                    	     		<p ><strong>가격  :${preview.ticketPrice} </strong> </p>
 	                    	     		
 	                    	    <div style="text-align: left;">
     						    
@@ -88,7 +88,7 @@
      							
 							    <span style="line-height:0%">
 							    <c:set var="name" value="${preview.movie.wishList.wishNo}"/>
-							    ${preview.movie.wishList.wishNo}
+							 
 	 								<c:if test="${empty name}">
 								<%-- bootstrap icon이 작동이 되질 않음      --%>
 								<%-- <i class='glyphicon glyphicon-heart-empty' id="${movie.movieNo}" style="color:#FF5733;
@@ -119,7 +119,7 @@
 	                                    	     
 	                                </div>
 	                            </div>                      
-	                    		
+	                    	</div>	
                 		 </c:forEach>
                 		  
 					</div>
@@ -131,7 +131,7 @@
 	                    	<c:if test="${resultPage.currentPage != 1 }">
 	                            <a href='#' class="pagination__prev">prev</a>
 	                    	</c:if>
-	                     	<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">	            
+	                     	<c:if test="${resultPage.maxPage !=  resultPage.currentPage}">	            
 	                            <a href='#' class="pagination__next">next</a>
 	                      	</c:if>
 	                    </div>
@@ -216,7 +216,7 @@
 			    	
 			    	//alert("222")
 			        $("#currentPage").val(currentPage)
-			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=movie").submit();
+			        $(".form-inline").attr("method","POST").attr("action", "/movie/getMovieList?menu=preview").submit();
 			    }
 			    
 			     //============= "검색"  Event  처리 =============	
@@ -309,7 +309,7 @@
 			   function fncWebSpeech() {
 		    		// document.addPurchase.submit();
 		    		// alert("speech post call...")
-		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=movie").submit();
+		    		$("#webspeech").attr("method","POST").attr("action","/movie/getMovieList?menu=preview").submit();
 		       }
 				
 			//============= "WishList(찜) Event 처리" DeleteWish Event  처리 =============	
@@ -352,7 +352,7 @@
 									
 						$.ajax( 
 								{
-									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
 									type : "GET" ,							
 								}).done(function(data) {
 							//정상 통신인 경우
@@ -394,7 +394,7 @@
 								
 					$.ajax( 
 							{
-								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
 								type : "GET" ,							
 							}).done(function(data) {
 						//정상 통신인 경우
@@ -614,6 +614,65 @@
 		display: table;
 
 	}
+	
+
+
+	.cinema-item {
+		border: dashed 1px #969b9f;
+		margin: 5px;
+		padding-top: 15px;
+		padding-left: 5px;
+		padding-right: 5px;
+		border-radius: 5px;
+		/* 	border-radius: 10px; */
+	}
+		
+
+	p {
+		font-size: 13px;
+		font-weight: lighter;
+	}
+	
+	p strong {
+		font-weight: nomal;
+	}
+	
+		.search {
+		margin-right: 30px;
+	}
+	
+	.page-heading {
+		margin-top: 100px
+	}
+	
+	option {
+		width: 140px;
+		top: 37px !important;
+		border: none;
+		padding: 14px 7px;
+		z-index: 23;
+		background-color: #4c4145;
+		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	}
+	
+	
+	input, select {
+		height: 30px;
+		width: auto;
+		border: none;
+		box-shadow: none;
+		border: 1px solid #dbdee1;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		font-size: 13px;
+		color: #b4b1b2;
+	}
+	
+
+	
 
     html{
      height: auto;

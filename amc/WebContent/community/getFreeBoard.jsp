@@ -266,8 +266,7 @@
 		function fncGetComment() {
 			console.log(commentNo);
 			console.log(comment);
-			alert("fncGetComment comment2"+$("input[name='comment2']").val());
-			
+		
         	 
 			 $("#comment"+$("input[name='commentNo2']").val()).html($("input[name='comment2']").val());
 

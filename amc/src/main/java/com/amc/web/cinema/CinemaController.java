@@ -67,9 +67,10 @@ public class CinemaController {
 	public String mobileKakaoPay(Model model, @RequestParam("title")String title,
 			@RequestParam("screenOpenTime")String screenOpenTime,@RequestParam("theater")String theater,
 			@RequestParam("bookingSeatNo")String bookingSeatNo,@RequestParam("headCount")String headCount,
-			@RequestParam("totalTicketPrice")String totalTicketPrice,HttpServletRequest request) throws Exception{
-		
-		System.out.println("모바일 카카오페이 ■:"+new String(title.getBytes("8859_1"),"UTF-8"));
+			@RequestParam("totalTicketPrice")String totalTicketPrice,@RequestParam("screenContentNo")String screenContentNo,
+			HttpServletRequest request) throws Exception{
+
+		System.out.println("■■■■모바일 카카오페이■■■■ : "+screenContentNo);
 		title=new String(title.getBytes("8859_1"),"UTF-8");
 		model.addAttribute("title", title);
 				
