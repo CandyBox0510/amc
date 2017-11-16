@@ -35,6 +35,16 @@
       document.getElementById('child').contentWindow.postMessage(event.data,"*");
       $("input[name='seats']").val(event.data);
       
+      if(event.data==null || event.data==""){
+		  //좌석을 모두 선택해제 한경우
+    	  $("#seatNo").text("");
+           	
+          $("input[name='displaySeat']").val("");
+          $("input[name='headCount']").val("");
+          $("input[name='totalTicketPrice']").val("");
+		  
+	  }else{
+      
         $.ajax({
                url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
                method : "GET" ,
@@ -49,7 +59,8 @@
                           $("#seatNo").html(JSONData.seatNo);
                        }//end of if문
                }
-      });//end of ajax
+        });//end of ajax
+	  }
            
    }
 
@@ -206,7 +217,7 @@
           </div>
           <!--  only UI -->
    
-         <div class="col-sm-8 com-md-9">
+         <div class="col-sm-8 com-md-8">
          <c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>   
             <iframe id="child" src="http://${ip}:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
@@ -214,7 +225,7 @@
             </iframe>
             <!-- style='width:100%' -->
          </div>
-         <div class="col-sm-4 col-md-3">
+         <div class="col-sm-4 col-md-4">
             <div class="row"><p/></div>
             <div class="row"><p/></div>
             <div class="row"><p/></div>

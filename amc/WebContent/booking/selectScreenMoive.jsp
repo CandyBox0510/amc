@@ -4,144 +4,21 @@
 <!doctype html>
 <html>
 <head>
-	<!-- Basic Page Needs -->
-        <meta charset="utf-8">
-        <title>AMovie - (Preview)Booking step 1</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
+<!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <title>AMovie - (Preview)Booking step 1</title>
+    <meta name="description" content="A Template by Gozha.net">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Gozha.net">
         
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
 	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+	<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 		
 
-   <script type="text/javascript">
-		  $( function() {
-		
-		$("li[name='movieName']").on("click" , function() {
-			
-			var movieNo =  $($(this).find("input[name='movieNo']")).val();
-			var movieName =  $($(this).find("input[name='movieName']")).val();
-			$(".item").eq(3).text("");
-			$(".item").eq(2).html("");
-			$(".item").eq(1).html("");
-			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
-
-			var flag = $("input:hidden[name='flag']").val();
-			
-			$.ajax(
-					{
-						url : "/booking/json/getScreenDate/"+movieNo+"/"+flag,						
-						method : "GET" ,
-						dataType : "json" ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData, status) {
-							console.log('히히 : '+JSONData);								
-	                        var str = "";
-	                        if(JSONData != ""){
-	                            $(JSONData).each(
-	                               function(){	
-	                            	   
-	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this+'일'
-	                            	   str+=    '<input type="hidden" name="day" value='+this+'>'	
-									   str+=  '</li>'; //this.substring(3,5)를 this로 바꿈
-	                               });//end of each fnc                            
-	                        }//end of if문
-	                       
-	                        $(".col-sm-6.items-wrap").eq(1).find(".time-select__item").remove();
-	                        $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
-	                        $(".col-sm-6.items-wrap").eq(1).html(str);
-	                        
-						}
-				});//end of ajax
-		});
-
-	});
    
-	//2. 날짜 클릭시
-	$(document).on("click", "li[name='screenDay']",  function(){
-		
-		var date =  $($(this).find("input[name='day']")).val();
-		$(".item").eq(2).html("");
-		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"일");
-		$(".item").eq(3).text("");
-		
-		$.ajax(
-				{
-					url : "/booking/json/getScreenTime/"+date,						
-					method : "GET" ,
-					dataType : "json" ,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					}, 
-					async : false,
-					success : function(JSONData, status) {
-						console.log('screenTime 받아옴 : '+JSONData);								
-                       var str = "";
-                       if(JSONData != ""){
-                           $(JSONData).each(
-                              function(){
-                            	  
-                           	   str+= '<li class="time-select__item abc" name="screenTime">시간 : '+this.screenOpenTime
-                           	   +     ', 상영번호 : '+this.screenContentNo+''
-                           	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
-                           	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
-                           	   +'</li>' ;				
-
-                              }//end of function
-                            );
-                       }//end of if문
-                       
-                      
-                       
-                       $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
-                       $(".col-sm-6.items-wrap").eq(2).html(str);
-
-					}
-			});//end of ajax
-	});
-	
-	//3. 시간클릭시
-	$(document).on("click", "li[name='screenTime']",  function(){
-		
-		var screenTime = $($(this).find("input[name='screenTime']")).val();
-		var contNo = $($(this).find("input[name='contNo']")).val();
-		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
-		$(".item").eq(3).text(contNo);
-
-	});
-		
-	 $(document).on("click", "#gotoSeat",  function(e){
-		 
-		
-		 //로그인 여부 체크
-		if( ${sessionScope.user==null} ){
-			
-			e.preventDefault();
-	        $('.overlay').removeClass('close').addClass('open');
-			
-		}else{
-			
-			var screenContentNo = $(".item").eq(3).text();
-			if(screenContentNo.length<1){
-				alert('영화정보를 먼저 선택해주세요');
-			}else{
-				self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;	
-			}
-			
-		}
-		
-		
-		
-	
-	}); 
-   </script> 
     <script type="text/javascript">
     
    </script>
@@ -230,7 +107,7 @@
 
 				<br><br>
                 <div class="choose-indector choose-indector--time abc">
-                    <strong>Choosen: </strong>
+                    <strong>Choosen : </strong>
                     <span class="choosen-area">
                     	<span class="item"></span>
 						<span class="item"></span>
@@ -278,35 +155,160 @@
 		<jsp:include page="/layout/loginModal.jsp" />
         
 
-		<!-- JavaScript-->
-		<script src="/js/external/modernizr.custom.js"></script>
+	<!-- JavaScript-->
+	<script src="/js/external/modernizr.custom.js"></script>
 	
-		<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
+	<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+	
+	<!-- jQuery UI -->
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<!-- Bootstrap 3--> 
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+	
+	<!-- Mobile menu -->
+	<script src="/js/jquery.mobile.menu.js"></script>
+	 <!-- Select -->
+	<script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+	
+	<!-- Custom -->
+	<script src="/js/custom.js"></script>
+			
+	<script type="text/javascript">
+	          $(document).ready(function() {
+	              //init_BookingOne();
+	              if($('html').height() < window.outerHeight){
+	              	$('html').css('height', '100%');
+	              }
+	
+	              
+	          });
+	</script>
+	<script type="text/javascript">
+	$( function() {
 		
-		<script type="text/javascript">
-            $(document).ready(function() {
-                init_BookingOne();
-                if($('html').height() < window.outerHeight){
-                	$('html').css('height', '100%');
-                }
+		$("li[name='movieName']").on("click" , function() {
+			
+			//클릭시 색깔 변하게
+			//$("li[name='movieName']").removeClass('active');
+			$(this).addClass('active2');
+			
+			var movieNo =  $($(this).find("input[name='movieNo']")).val();
+			var movieName =  $($(this).find("input[name='movieName']")).val();
+			$(".item").eq(3).text("");
+			$(".item").eq(2).html("");
+			$(".item").eq(1).html("");
+			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
 
-                
-            });
-		</script>
+			var flag = $("input:hidden[name='flag']").val();
+			
+			$.ajax(
+					{
+						url : "/booking/json/getScreenDate/"+movieNo+"/"+flag,						
+						method : "GET" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status) {
+							console.log('히히 : '+JSONData);								
+	                        var str = "";
+	                        if(JSONData != ""){
+	                            $(JSONData).each(
+	                               function(){	
+	                            	   
+	                            	   str+=  '<li class="time-select__item abc" name="screenDay">'+this+'일'
+	                            	   str+=    '<input type="hidden" name="day" value='+this+'>'	
+									   str+=  '</li>'; //this.substring(3,5)를 this로 바꿈
+	                               });//end of each fnc                            
+	                        }//end of if문
+	                       
+	                        $(".col-sm-6.items-wrap").eq(1).find(".time-select__item").remove();
+	                        $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
+	                        $(".col-sm-6.items-wrap").eq(1).html(str);
+	                        
+						}
+				});//end of ajax
+		});
 
+	});
+   
+	//2. 날짜 클릭시
+	$(document).on("click", "li[name='screenDay']",  function(){
+		
+		var date =  $($(this).find("input[name='day']")).val();
+		$(".item").eq(2).html("");
+		$(".item").eq(1).html("&nbsp;&nbsp;"+date+"일");
+		$(".item").eq(3).text("");
+		
+		$.ajax(
+				{
+					url : "/booking/json/getScreenTime/"+date,						
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					}, 
+					async : false,
+					success : function(JSONData, status) {
+						console.log('screenTime 받아옴 : '+JSONData);								
+                       var str = "";
+                       if(JSONData != ""){
+                           $(JSONData).each(
+                              function(){
+                            	  
+                           	   str+= '<li class="time-select__item abc" name="screenTime">시간 : '+this.screenOpenTime
+							 /*+     ', 상영번호 : '+this.screenContentNo+'' */
+                           	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
+                           	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
+                           	   +'</li>' ;				
+
+                              }//end of function
+                            );
+                       }//end of if문
+                       
+                      
+                       
+                       $(".col-sm-6.items-wrap").eq(2).find(".time-select__item").remove();
+                       $(".col-sm-6.items-wrap").eq(2).html(str);
+
+					}
+			});//end of ajax
+	});
+	
+	//3. 시간클릭시
+	$(document).on("click", "li[name='screenTime']",  function(){
+		
+		var screenTime = $($(this).find("input[name='screenTime']")).val();
+		var contNo = $($(this).find("input[name='contNo']")).val();
+		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
+		$(".item").eq(3).text(contNo);
+
+	});
+		
+	 $(document).on("click", "#gotoSeat",  function(e){
+		 
+		
+		 //로그인 여부 체크
+		if( ${sessionScope.user==null} ){
+			
+			e.preventDefault();
+	        $('.overlay').removeClass('close').addClass('open');
+			
+		}else{
+			
+			var screenContentNo = $(".item").eq(3).text();
+			if(screenContentNo.length<1){
+				alert('영화정보를 먼저 선택해주세요');
+			}else{
+				self.location = "/booking/selectSeat?screenContentNo="+screenContentNo;	
+			}
+			
+		}
+
+	}); 
+   </script> 
 </body>
 
 <style>
@@ -354,10 +356,13 @@ html{
 .time-select .time-select__item:hover:after {
   background-image: url(../images/components/bg-time-hover.png);
 }
-.time-select .time-select__item.active {
+.time-select .time-select__item.active{
   background-color: #fe505a;
 }
-.time-select .time-select__item.active:after {
+.time-select .time-select__item.active:after { 
+  background-image: url(../images/components/bg-time-hover.png);
+}
+.time-select .time-select__item.active{
   background-image: url(../images/components/bg-time-hover.png);
 }
 .choose-indector {
@@ -383,7 +388,7 @@ html{
 
 }
 .abc{
-	  font-family: 'Hanna', sans-serif; 
+	  font-family: 'Jeju Gothic', sans-serif;
 }
 
 </style>
