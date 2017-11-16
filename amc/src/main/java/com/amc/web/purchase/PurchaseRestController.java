@@ -59,11 +59,11 @@ public class PurchaseRestController {
 		return purchase;
 	}
 	
-	@RequestMapping( value="getPurchase/{tranNo}", method=RequestMethod.GET )
-	public Purchase getPurchase( @PathVariable String impId	)throws Exception{
-		
+	@RequestMapping( value="getPurchase/{ImpId}", method=RequestMethod.GET )
+	public Purchase getPurchase( @PathVariable String ImpId	)throws Exception{
+		System.out.println(":::::impId"+ImpId);
 		Purchase purchase = new Purchase();
-		purchase.setImpId(impId);
+		purchase.setImpId(ImpId);
 		purchase = purchaseService.getPurchase(purchase);
 		
 		return purchase;
@@ -71,7 +71,7 @@ public class PurchaseRestController {
 	
 	@RequestMapping( value="updatePurchase", method=RequestMethod.POST )
 	public Purchase updatePurchase(	@RequestBody Purchase purchase	) throws Exception{
-		
+		System.out.println(":::PurchaseController의 updatePurchase 메소드 시작");
 		purchaseService.updatePurchase(purchase);
 		
 		return purchaseService.getPurchase(purchase);

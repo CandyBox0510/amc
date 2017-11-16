@@ -10,6 +10,8 @@
 <html>
 <head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.js"></script>
+
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -89,8 +91,6 @@
 							</div>
 						</div>
 					</div><!-- 굿즈 상품정보 -->
-		
-
 			
 				<!-- Progress bar -->
 	                <div class="col-sm-4">
@@ -110,6 +110,8 @@
 <div class="modal-footer"  align="right">
 <br/><br/><br/>
 </div>
+
+<script src="../js/custom.js"></script>
 </body>
 
 	<script type="text/javascript">
@@ -292,6 +294,23 @@ button:-moz-focusring,
 .col-xs-7 {
   width: 58.33333333%;
   font-size: 15px;
+}
+
+progress {
+	margin-top:0px;
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+.progress__bar {
+  margin-bottm:30px;
+  /* height: 15px; */
+  padding: 1px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #4c4145;
 }
 
 </style>

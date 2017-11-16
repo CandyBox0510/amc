@@ -78,11 +78,16 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
    		</header>
 
+<div class="modal-body">
+
+
+
 		<div class="container" id="body">
 			 <h2 class="page-heading"> 상품 구매</h2>
 			<form class="form row" id="purchase">
 				<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo }" />
 				<input type="hidden" name="purchaseProd.prodName" value="${product.prodName }"/>
+				<input type="hidden" name="purchaseProd.prodImage" value="${product.prodImage }"/>
 				<input type="hidden" name="buyer.userId" value="${user.userId }"/>
 				<input type="hidden" name="tranCode" value="1"/>
 				<div class="row">
@@ -215,16 +220,10 @@
 							     </div>	
 							     </div>
 						 	 </div>
- 					
- 					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
-					  <i class="close icon"></i>
-					    <div class="content" ></div>
-					</div>  
 							 
 							 <div class="row">
 							 	<div class="add-purchase col-sm-offset-3 col-sm-9">
-									<button type="button" class="btn btn-md btn--purchase info-modal-link" >
+									<button type="button" class="btn btn-md btn--purchase">
 										구매
 									</button>
 									<button type="button" class="btn btn-md btn--info">
@@ -237,7 +236,7 @@
 				 </div>
 			 </form>
 		 </div>
-		 
+	 </div>
  	</div>
 		
 		<jsp:include page="/layout/bottomToolbar.jsp" />
@@ -245,6 +244,7 @@
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -270,20 +270,6 @@
 </body>
 
 	<script type="text/javascript">
-	$(function () {
-	    $('.info-modal-link').each(function () {
-	    	alert("일단 들어와바");
-	        $(this).on('click', function (e) {                   
-	            e.preventDefault();
-	            var url = $(this).attr('method','post').attr('action','addPurchase'); 
-	            $.post(url, function (data) {
-	                $('.info.modal .content').html(data);
-	                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
-	            });
-	        });              
-	    });
-	});	
-	
 	//imp초기화는 페이지 첫단에 해주는게 좋음
  	IMP.init('imp41659269');
 	var things = "AMC : ";

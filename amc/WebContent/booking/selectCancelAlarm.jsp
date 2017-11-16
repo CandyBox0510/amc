@@ -224,7 +224,7 @@
           </div>
           <!--  only UI -->
    
-         <div class="col-sm-8 com-md-9">
+         <div class="col-sm-8 com-md-8">
          <c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>   
             <iframe id="child" src="http://${ip}:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
@@ -232,7 +232,7 @@
             </iframe>
             <!-- style='width:100%' -->
          </div>
-         <div class="col-sm-4 col-md-3">
+         <div class="col-sm-4 col-md-4">
             <div class="row"><p/></div>
             <div class="row"><p/></div>
             <div class="row"><p/></div>

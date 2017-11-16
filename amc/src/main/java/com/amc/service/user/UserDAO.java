@@ -32,7 +32,7 @@ public interface UserDAO {
 	public int getTotalCount(Search search) throws Exception ;
 	
 	// È¸¿øÅ»Åð À¯Àú È®ÀÎ
-	public String deleteCheck(User user) throws Exception;
+	public User deleteCheck(User user) throws Exception;
 	
 	public int updateUuid(User user);
 		

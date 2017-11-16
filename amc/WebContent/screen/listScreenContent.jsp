@@ -37,12 +37,13 @@
 						</div>
 					</div>
 					<div class="col-sm-8 col-md-9">
+						<p class="movie__title">
+							${movie.movieNm }</p>
 						<p class="movie__time">
 							<input type="hidden" name='showTm' value="${movie.showTm }">
 							${movie.showTm }분
 						</p>
-						<p class="movie__option">
-							<strong>제목 : </strong>${movie.movieNm }</p>
+
 						<p class="movie__option">
 							<strong>개봉일 : </strong>
 							<input type="hidden" name='openDt' value="${movie.openDt }">${movie.openDt }</p>
@@ -58,7 +59,7 @@
 						<p class="movie__option">
 							<strong>관람등급: </strong>${movie.watchGradeNm }</p>
 						<p class="movie__option">
-							<i class="fa fa-bars" onclick="history.go(-1)"> &nbsp;&nbsp; 상영목록으로</i>
+							<i class="fa fa-bars" onclick="location.href='/screen/getScreenList'"> &nbsp;&nbsp; 상영목록으로</i>
 						</p>
 					</div>
 				</div>
@@ -235,10 +236,10 @@
 			</div>
 			<div>
 				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회</div>
-				<div class="col-md-1 col-sm-1">
-					<input type="checkbox" class="checkbox styled" name='previewChecked' id="previewChecked">
+				<div class="col-md-3 col-sm-3 checkFlag">
+					<!-- <input type="checkbox" class="checkbox styled" name='previewChecked' id="previewChecked"> -->
 				</div>
-				<div class="col-md-5 col-sm-5 checkPreviewWrapper"></div>
+				<div class="col-md-3 col-sm-3 checkPreviewWrapper"></div>
 			</div>
 			<div>
 				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회제목</div>
@@ -562,7 +563,7 @@
                 $(".updateScreenContentModal  input[name='screenContentEndTime' ]").val(JSONData.screenEndTime);
                 $(".updateScreenContentModal select[name='screenTheater' ]").val(JSONData.screenTheater);
                 $(".updateScreenContentModal input[name='ticketPrice' ]").val(JSONData.ticketPrice);
-
+                $("input[name='screenContentNo']").val(screenContentNo);
                 $(".updateScreenContentModal input[name='previewTitle' ]").val(null);
                 $(".updateScreenContentModal input[name='previewOpenDate' ]").val(null);
                 $(".updateScreenContentModal input[name='previewOpenTime' ]").val(null);
@@ -572,16 +573,22 @@
                     $(".updateScreenContentModal input[name='screenContentOpenTime' ]").removeAttr("readonly");
                     $(".updateScreenContentModal select[name='screenTheater']").removeAttr("disabled");
 
+                    display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 시사회'
+                    $("input[name='previewFlag']").val("on");
+                    $(".checkFlag").html(display);
+
+                } else {
+                    display = '<i class="fa fa-square-o" aria-hidden="true"></i> 시사회'
+                    $("input[name='previewFlag']").val(null);
+                    $(".checkFlag").html(display);
                 }
                 previewChecked = $("#previewChecked").is(":checked");
 
                 if (JSONData.previewFlag == 'Y') {
                     /*   $("input[name='previewChecked']").prop("checked", true); */
                     // $("input[name='previewChecked']").prop("checked");
-                  //  $("#previewChecked").attr("checked", true);
-
+                    //  $("#previewChecked").attr("checked", true);
                     // $(".updateScreenContentModal input[name='previewChecked']").prop("checked", true);
-
                     var previewOpenDate = JSONData.ticketOpenDate;
                     previewOpenDate = previewOpenDate.substr(0, 10);
                     previewOpenDate = previewOpenDate.replace(/\//gi, "-");
@@ -634,6 +641,8 @@
 
         screenContentNo = $("input[name='screenContentNo']").val();
 
+        alert("screenContentNo" + screenContentNo);
+
         screenEndTime = $("input:hidden[name='screenEndTime2']").val();
 
         screenEndTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentEndTime']").val();
@@ -684,8 +693,9 @@
                 return;
             }
         }
-
-        if (previewChecked == true) {
+        previewFlagCheck = $("input[name='previewFlag']").val();
+        alert("previewFlagCheck    " + previewFlagCheck)
+        if (previewFlagCheck == "on") {
             var previewFlag = "Y";
         } else {
             var previewFlag = "N";
@@ -731,6 +741,8 @@
                     fncGetScreenContentList();
                     /*  funClearInputBox() */
                 }
+
+                window.location.reload()
             }
         });
 
@@ -799,7 +811,35 @@
     }
 
     $(document).ready(function() {
-     
+
+        $(document).on("click", ".fa-square-o", function() {
+
+            display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 시사회'
+
+            $("input[name='previewTitle']").removeAttr("readonly");
+            $("input[name='previewOpenTime']").removeAttr("readonly");
+            $("input[name='inviteActor']").removeAttr("readonly");
+
+            $("input[name='previewFlag']").val("on");
+            $(".checkFlag").html(display);
+
+            $("input[name='previewOpenDate']").datepicker({
+                dateFormat : 'yy-mm-dd',
+                minDate : today,
+                maxDate : screenDate
+            });
+        })
+
+        $(document).on("click", ".fa-check-square-o", function() {
+            display = '<i class="fa fa-square-o" aria-hidden="true"></i> 시사회'
+            $("input[name='previewFlag']").val(null);
+            $(".checkFlag").html(display);
+            $("input[name='previewTitle']").attr("readonly", true);
+            $("input[name='previewOpenTime']").attr("readonly", true);
+            $("input[name='inviteActor']").attr("readonly", true);
+            $(".checkPreview").remove();
+        })
+
         fncGetScreenContentList();
         openDt = $("input[name='openDt']").val();
         endDt = $("input[name='endDt']").val();
@@ -835,12 +875,10 @@
 
         var screenDate = $("input[name='screenDate']").val();
 
+        $(document).on("click", ".ui-state-disabled", function() {
 
-            $(document).on("click", ".ui-state-disabled", function() {
-
-                swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
-            })
-
+            swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
+        })
 
         $(document).on("change", "input[name='screenDate']", function() {
             screenDate = $("input[name='screenDate']").val();
@@ -882,9 +920,8 @@
             });
         })
 
-
         $(document).on("change", "select[name='screenTheater']", function() {
-          
+
             screenDate = $("input[name='screenDate']").val();
             if ($("input[name='screenContentOpenTime']").val() != "") {
                 fncCheckScreenDupTime()
@@ -954,7 +991,7 @@
             autofocus : false,
             closable : false,
             onApprove : function() {
-                window.location.reload()
+
                 return false;
             },
             onDeny : function() {
@@ -967,7 +1004,7 @@
             autofocus : false,
             closable : false,
             onApprove : function() {
-                window.location.reload()
+
                 return false;
             },
             onDeny : function() {
@@ -979,6 +1016,29 @@
     });
 </script>
 <style type="text/css">
+.movie .movie__images {
+	position: relative;
+	border: 3px solid #ffd564;
+	width: fit-content;
+}
+
+.movie .movie__time:before {
+	content: "\f017";
+	font: 16px "FontAwesome";
+	color: #fe505a;
+	position: inherit;
+	top: 2px;
+	left: 0;
+}
+
+.movie .movie__time {
+	position: relative;
+	font-size: 13px;
+	color: #fe505a;
+	margin-bottom: 20px;
+	padding-left: 0;
+}
+
 .toolBar {
 	margin-top: 100px
 }
@@ -994,7 +1054,7 @@ input, select {
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	font-size: 13px;
-	color: #b4b1b2;
+	color: #4C4145;
 	padding: 5px 5px 5px;
 }
 

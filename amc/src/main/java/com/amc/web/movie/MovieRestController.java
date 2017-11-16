@@ -436,7 +436,7 @@ public class MovieRestController {
 				break;
 			}
 
-			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=commingsoon");
+			movieObject.put("url", "getMovie?movieNo=" + list2.get(i).getMovieNo() + "&menu=movie");
 
 			movieArray.add(i, movieObject);
 			movieObject = new JSONObject();
@@ -1317,7 +1317,7 @@ public class MovieRestController {
 	
 
 			if (count == -1) {
-				if (width > 700 && width < height) {
+				if (width > 500 && width < height) {
 					data.put("thumbnail_url", thumbnail_url);
 					data.put("image_url", image_url);
 					data.put("width", documents.get("width"));

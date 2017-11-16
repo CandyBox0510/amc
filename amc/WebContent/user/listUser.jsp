@@ -136,7 +136,7 @@
 							<c:if test="${resultPage.currentPage != 1 }">
 								<a href='#' class="pagination__prev">prev</a>
 							</c:if>
-							<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
+							<c:if test="${resultPage.maxPage !=  resultPage.currentPage}">
 								<a href='#' class="pagination__next">next</a>
 							</c:if>
 						</div>
@@ -186,14 +186,6 @@
         $("#search-form").attr("method", "POST").attr("action", "/user/getUserList").submit();
         $("input[name='searchKeyword']").val(searchKeyword);
     }
-
-    //============= "검색"  Event  처리 =============	
-    $(function() {
-        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-        $("button.btn.btn-default").on("click", function() {
-            fncGetList(1);
-        });
-    });
 
     //============= userId 에 회원정보보기  Event  처리(Click) =============	
     $(function() {

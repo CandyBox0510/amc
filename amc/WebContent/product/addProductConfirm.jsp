@@ -72,10 +72,10 @@
 				<ul>
 					<li><a href="#tabs-1">등록상품보기</a></li>
 				</ul>
-				
+				<input type="hidden" value="${product.prodType}">
 				<div class="row" id="tabs-1">
 					<div class="col-xs-5">
-						<c:if test="${!empty product.prodImage}">	
+						<c:if test="${!empty product.prodImage}">
 							<img src="../images/uploadFiles/${product.prodImage}" class="img-responsive"/>
 						</c:if>
 						<c:if test="${empty product.prodImage}">
@@ -83,6 +83,10 @@
 						</c:if>
 					</div>
 					<div class="col-xs-7">
+						<dl class="dl-horizontal">
+							<dt>상품구분</dt>
+							<dd>${product.prodType eq 'G'? "굿즈" : "스낵" }</dd>
+						</dl>				
 						<dl class="dl-horizontal">
 							<dt>상품명</dt>
 							<dd>${product.prodName}</dd>
@@ -158,7 +162,7 @@
 			$('#tabs').tabs();
 			
 			$('a.add:contains("확인")').bind('click',function(){
-				self.location.href = 'getGoodsList?menu=manage';
+				self.location.href = 'getGoodsList?menu=manage&searchProdType='+$('input[type="hidden"]').val();
 			});
 			
 			$('a.add:contains("추가등록")').bind('click',function(){
@@ -170,6 +174,9 @@
 	
 	<style type="text/css">
 	 	#body{ padding-top: 100px; }
+	 	html {
+			height: auto;
+		}
 	</style>
 	
 </html>

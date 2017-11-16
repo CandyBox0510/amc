@@ -111,7 +111,7 @@
 				return;
 			}
 			
-		/*  alert("여기는 ajax");
+		  alert("여기는 ajax");
 				$.ajax({
 					url : "/user/json/deleteCheck/" ,
 					method : "POST" ,							
@@ -125,32 +125,35 @@
 						password : pw,
 						userName : name
 					}),
-					dataType : "text",
+					/* dataType : "text", */
 					success : function(JSONData , status) {
-						alert(JSONData);
-						
-						
+						if(JSONData.role=="not"||JSONData.deleteFlag=="Y"){
+							alert("이미 탈퇴한 회원입니다.");
+						}else if(JSONData.role=="user"||JSONData.deleteFlag=="N"){
+							swal({
+								  title: '탈퇴를 진행하시겠습니까?',
+								  text: "'예'를 누르시면 탈퇴 후 메인페이지로 이동합니다!",
+								  type: 'warning',
+								  showCancelButton: true,
+								  confirmButtonColor: '#3085d6',
+								  cancelButtonColor: '#d33',
+								  confirmButtonText: '예, 탈퇴하겠습니다!'
+								}).then(function () {
+								  swal({	   
+									  type: 'success',
+									  title: '그동안 이용해 주셔서 감사합니다.',
+									  showConfirmButton: false,
+									  timer: 1500
+									})
+									delay()
+								})
+
+						}else{
+							alert("회원 정보가 없습니다.");
+						}
 					}
-				});  */
-			
-			
-				swal({
-					  title: '탈퇴를 진행하시겠습니까?',
-					  text: "'예'를 누르시면 탈퇴 후 메인페이지로 이동합니다!",
-					  type: 'warning',
-					  showCancelButton: true,
-					  confirmButtonColor: '#3085d6',
-					  cancelButtonColor: '#d33',
-					  confirmButtonText: '예, 탈퇴하겠습니다!'
-					}).then(function () {
-					  swal({	   
-						  type: 'success',
-						  title: '그동안 이용해 주셔서 감사합니다.',
-						  showConfirmButton: false,
-						  timer: 1500
-						})
-						delay()
-					})
+				});  
+				
 		}
  	
 		function sleep(num){	//[1/1000초]
