@@ -10,13 +10,11 @@
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>굿즈 상품목록</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-        
     <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
+     <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
     
     <!-- Fonts -->
         <!-- Font awesome - icon font -->
@@ -25,19 +23,6 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Stylesheets -->
-        <!-- jQuery UI -->
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-        <!-- Mobile menu -->
-        <link href="../css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Custom -->
-        <link href="../css/style.css?v=1" rel="stylesheet" />
-        <!-- Modernizr --> 
-        <script src="../js/external/modernizr.custom.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
         <!--   semantic UI  / 모달창-->
@@ -78,20 +63,33 @@
                    			</div>
                    			
 	                   		<c:if test="${param.menu=='manage'}">
-		       					<button type="button" class="btn btn-primary pull-right"  
+		       					<button type="button" class="btn btn-md btn--info"  
 		       						 onclick="location.href='/product/addProduct'">상 품 등 록
 		       					</button>&emsp;
-		       					<button type="button" class="btn btn-primary pull-right"  
+		       					<button type="button" class="btn btn-md btn--info"  
 		       						 onclick="location.href='/product/getSnackList?menu=manage&searchProdType=S'">스낵 상 품 관 리
 		       					</button>&emsp;
-		       					<button type="button" class="btn btn-primary pull-right" 
+		       					<button type="button" class="btn btn-md btn--info" 
 		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchProdType=G'">굿즈 상 품 관 리
 		       					</button>	
 		      				</c:if> 
-				            	
- 			            	<div class="col-sm-6 text-right">
+		      				
+		      				 <div class="col-sm-6 text-right">
 				                <form id='search-form' method='get' class="search">
-				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"/>
+				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}" onkeypress="if(event.keyCode==13) { fncGetPageList(1); return false;}"/>
+				                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
+				                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
+				                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
+				                    </select>
+				                    <button type='button' class="btn btn-md btn--danger search__button" name="search" >검색하기</button>
+				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
+				                </form>
+				             </div>
+		      				
+				            	
+<%--  			            	<div class="col-sm-6 text-right">
+				                <form id='search-form' method='get' class="search">
+				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
@@ -100,7 +98,7 @@
 				                    <input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 				                </form>
 				             </div>
- 				             
+ --%> 				             
 				             
 			             </div>
 			        </div>
@@ -137,7 +135,9 @@
 		                                    <p><strong>가격</strong>  ${product.prodPrice }<br/><strong>판매시작일   </strong>${product.salesOpenDate}<br/><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
                                 	        <!-- <div class="col-sm-6"> -->
 							                    <div class="progress">
-								                      <p class="progress__info">현재 재고량 ${product.salesStock}%</p>
+								                	<p class="progress__info">
+								                		${param.menu eq 'search'? "현재 재고율" : "현재 판매율" }${product.salesStock}%
+								                    </p>
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
@@ -203,6 +203,9 @@
         <script src="../js/form.js"></script>
         <!-- Custom -->
         <script src="../js/custom.js"></script>
+        
+        
+        
 </body>
 <script type="text/javascript">
 			   
@@ -210,7 +213,7 @@
 	    $('.info-modal-link').each(function () {
 	        $(this).on('click', function (e) {                   
 	            e.preventDefault();
-	            var url = $(this).attr('href'); 
+	            var url = $(this).attr('href');
 	            $.get(url, function (data) {
 	                $('.info.modal .content').html(data);
 	                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
@@ -220,10 +223,9 @@
 	});			   
 			   
 	function fncGetPageList(currentPage) {
-
-	    $("#currentPage").val(currentPage)
-	      $("#search-form").attr("method", "POST").attr("action", "/product/getGoodsList?menu=search&searchProdType=G").submit();
-	     $("input[name='searchKeyword']").val(searchKeyword); 
+		$("#currentPage").val(currentPage)
+	    $("#search-form").attr("method", "POST").attr("action", "/product/getGoodsList?menu="+$("input[name='menu']").val()+"&searchProdType=G").submit();
+	    $("input[name='searchKeyword']").val(searchKeyword); 
 	}
 
 
@@ -370,6 +372,13 @@ progress {
   -ms-user-select: text;
   user-select: text;
   will-change: top, left, margin, transform, opacity;
+}
+
+.btn--info{
+	position : relative;
+	left : 160px;
+    background-color: #6dc5dd;
+    border: solid 1px #6ac7f7;
 }
 </style>
 </html>

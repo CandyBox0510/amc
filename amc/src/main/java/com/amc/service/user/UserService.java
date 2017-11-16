@@ -36,7 +36,7 @@ public interface UserService {
 	public boolean checkId(String userId) throws Exception;
 	
 	// 회원탈퇴 유저 확인
-	public String deleteCheck(User user) throws Exception;
+	public User deleteCheck(User user) throws Exception;
 	
 	//==> 회원관리에서 서비스할 내용 추상화/캡슐화한 Service  Interface Definition  
 	public boolean send(String subject, String text, String from, String to, String filePath);

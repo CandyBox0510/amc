@@ -113,6 +113,11 @@
 <div class="modal-footer"  align="right">
 <br/><br/><br/>
 </div>
+
+
+<!-- Form element -->
+        <script src="../js/external/form-element.js"></script>
+
 </body>
 
 	<script type="text/javascript">
@@ -296,6 +301,23 @@ button:-moz-focusring,
   width: 58.33333333%;
   font-size: 15px;
 }
+progress {
+	margin-top:0px;
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+.progress__bar {
+  margin-bottm:30px;
+  /* height: 15px; */
+  padding: 1px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #4c4145;
+}
+
 
 </style>
 </html>

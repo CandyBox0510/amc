@@ -35,6 +35,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User getId(User user) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("::::getId ÀÇ user ::"+user);
 		return sqlSession.selectOne("UserMapper.getId",  user);
 	}
 
@@ -48,11 +49,12 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void addUser(User user) throws Exception {
 		System.out.println("addUser DAOImpl °ª :" + user);
-		if(user.getPassword() == null ){
+		/*if(user.getPassword() == null ){
 			sqlSession.insert("UserMapper.snsAddUser", user);
 		}else{
 			sqlSession.insert("UserMapper.addUser", user);
-		}
+		}*/
+		sqlSession.insert("UserMapper.addUser", user);
 	}
 
 	@Override
@@ -70,6 +72,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(":::::: user"+user);
 		sqlSession.update("UserMapper.updateUser", user);
 	}
 
@@ -90,8 +93,9 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public String deleteCheck(User user) throws Exception {
+	public User deleteCheck(User user) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(":::::deleteCheck ÀÇ user"+user);
 		return sqlSession.selectOne("UserMapper.deleteCheck", user);
 	}
 

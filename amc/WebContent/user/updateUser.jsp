@@ -76,6 +76,9 @@
 	       		<h2 class="text-info">회원정보수정</h2>
 		       	<h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 		    </div><br/><br/>
+		    
+		    <input type="hidden" value="${user.password}" id="snslogin">
+		    
 			<form id="form" class="form row" method='post' novalidate="">
 		  		<div class="row">
 			    	<label for="userId" class="col-sm-offset-1 col-sm-3 control-label"><strong>아 이 디</strong></label>
@@ -275,23 +278,28 @@
 			var name=$("input[name='userName']").val();
 			var pw=$("input[name='password']").val();
 			var pw_confirm=$("input[name='password2']").val();
+			var snslogin=$("input[type='hidden']").val();
 			
 			if(name == null || name.length <1){
 				alert("이름은  반드시 입력하셔야 합니다.");
 				return;
 			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
-				/* return check=false; */
-				return; 
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				/* return check=false; */
+			if(snslogin != ''){
+				if(pw == null || pw.length <1){
+					alert("패스워드는  반드시 입력하셔야 합니다.");
+					/* return check=false; */
+					return; 
+				}
+				if(pw_confirm == null || pw_confirm.length <1){
+					alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+					/* return check=false; */
+					return;
+				}
+				$("#form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 				return;
 			}
-				
-			$("#form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			
+			$("#form").attr("method" , "POST").attr("snslogin","snslogin").attr("action" , "/user/updateUser").submit();
 		}
 	
 		

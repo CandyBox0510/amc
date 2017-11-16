@@ -9,10 +9,6 @@
    <!-- Basic Page Needs -->
         <meta charset="euc-kr">
         <title>아이디/비밀번호 찾기</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
 <!--     Mobile Specific Metas
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
@@ -53,6 +49,10 @@
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
         <script src="../semantic/semantic.min.js"></script> -->
+        
+        <!--   Sweetalert2 CDN  -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+        
 
 </head>
 
@@ -81,7 +81,7 @@
 								<div class="row">
 							  		<label for="birth" class="col-sm-offset-1 col-sm-4 control-label"><strong>생 년 월 일</strong></label>
 							 	 		<div class="col-sm-3">
-							  				<input type="date" class="form__name" name="birth" id="birth" placeholder="생년월일" >
+							  				<input type="text" class="inputtype" name="birth" id="birth" placeholder="생년월일" >
 							  			</div>
 								</div>
 						  		<div class="row">
@@ -96,10 +96,10 @@
 										</select>
 					    			</div>
 							    	<div class="col-sm-2">
-							      		<input type="text" class="form__name" id="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호">
+							      		<input type="text" class="form__name" id="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호" maxlength="5">
 							    	</div>
 							    	<div class="col-sm-2">
-							      		<input type="text" class="form__name" id="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호">
+							      		<input type="text" class="form__name" id="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호" maxlength="5">
 							    	</div>
 					    			<!-- <input type="hidden" name="phone"  /> -->
 						  		</div>
@@ -135,7 +135,7 @@
 					  			<div class="row">
 					    			<label for="phone" class="col-sm-offset-1 col-sm-4 control-label"><strong>휴대전화번호</strong></label>
 					     			<div class="contact-info__fieldrow col-sm-2">
-					      				<select class="search-sort" name="phone1" id="phone1">
+					      				<select class="search-sort" name="phone1" id="Mphone1">
 										  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
 											<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
 											<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
@@ -144,10 +144,10 @@
 										</select>
 					    			</div>
 								    <div class="col-sm-2">
-								  		<input type="text" class="form__name" id="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호" maxlength="5">
+								  		<input type="text" class="form__name" id="Mphone2" value="${ ! empty user.phone2 ? user.phone2 : ''}" name="phone2" placeholder="번호" maxlength="5">
 								    </div>
 								    <div class="col-sm-2">
-								    	<input type="text" class="form__name" id="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호" maxlength="5">
+								    	<input type="text" class="form__name" id="Mphone3" value="${ ! empty user.phone3 ? user.phone3 : ''}" name="phone3" placeholder="번호" maxlength="5">
 								    </div>
 					    			<!-- <input type="hidden" name="phone"  /> -->
 					  			</div>
@@ -188,6 +188,10 @@
         Form validation
         <script src="/js/form.js"></script>
 -->
+		<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+		<!-- jQuery UI -->
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
        <!--  Custom -->
         <script src="/js/custom.js"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.js"></script>
@@ -238,9 +242,21 @@
 	});	
 
 	$(function() {
+
 		$( "#findIdbtn" ).on("click" , function() {
 			fncfindId();
 		});
+		
+		date = new Date();
+        
+		$("input[name='birth']").datepicker({
+        	dateFormat : 'yy-mm-dd',
+            maxDate : date,
+            yearRange : '1900:2030',
+            changeMonth : true,
+            changeYear : true,
+            monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+        });
 	});	
 
 
@@ -279,9 +295,6 @@
 				/* return check=false; */
 				return; 
 			}
-		
-		
-			
 				$.ajax({
 					url : "/user/json/getId/" ,
 					method : "POST" ,							
@@ -302,16 +315,17 @@
 						var role = JSONData.role
 						if( role == 'not'){
 							alert("탈퇴한 계정은 30일 후 재등록 가능합니다.");
-						}else{
+						}else if( role == 'user'){
 							var displayValue = "<h6>"
 								+"아이디 : "+JSONData.userId+"<br/>"										
 								+"</h6>";	
-								
 							swal('회원님의 아이디는 '+JSONData.userId+'입니다.');													
 							/* $("h6").remove(); */
 							 /* $("#findIdbtn").remove(); 	 */
 							/* $( "#user" ).html(displayValue); */								
 							/* $( "#user" ).text(JSONData); */	
+						}else{
+							swal('회원님의 계정은 등록되어 있지 않습니다.');
 						}
 						 
 					}
@@ -325,9 +339,9 @@
 	function fncSendMail() {
 		var userName=$("#userName2").val();
 		var userId=$("input[name='userId']").val();	
-		var p1 = $("#phone1").val();
-		var p2 = $("#phone2").val();
-		var p3 = $("#phone3").val();
+		var pp1 = $("#Mphone1").val();
+		var pp2 = $("#Mphone2").val();
+		var pp3 = $("#Mphone3").val();
 		
 		
 		if(userId != "" && (userId.indexOf('@') < 1 || userId.indexOf('.') == -1) || userId == ""){
@@ -340,30 +354,61 @@
 			return;
 		}
 		
-	 	if ($("#phone2").val() == "" || $("#phone3").val() == "") {
+	 	if (pp2 == "" || pp3 == "") {
             alert("휴대폰 번호는 반드시 모두 입력해야합니다.");
             return;
         }
 
-        if ($("#phone2").val().length < 3) {
+        if (pp2.length < 3) {
             alert("휴대폰 번호는 3자리 이상 이여야합니다.");
             return;
         }
 
-        if ($("#phone3").val().length < 3) {
+        if (pp3.length < 3) {
             alert("휴대폰 번호는 3자리 이상 이여야합니다.");
             return;
         }
-	
-		$("#findPassword").attr("method" , "POST").attr("action" , "/user/sendPassword").submit();
-		swal("메일을 성공적으로 보냈습니다.");
+      
+        $.ajax({
+			url : "/user/json/getId/" ,
+			method : "POST" ,							
+			async : true,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			data : JSON.stringify({
+				userId : userId,
+				userName : userName,
+				phone1 : pp1,
+				phone2 : pp2,
+				phone3 : pp3
+			}),
+			/* dataType : "text",  */
+			success : function(JSONData , status) {
+				var role = JSONData.role
+				alert(role);
+				var flag = JSONData.deleteUserFlag
+				alert(flag);
+				if( role == 'not'){
+					alert("탈퇴한 계정은 30일 후 재등록 가능합니다.");
+				}else if( role == 'user' && flag == 'Y'){
+					$("#findPassword").attr("method" , "POST").attr("action" , "/user/sendPassword").submit();
+					swal("메일을 성공적으로 보냈습니다.");	
+				}else if( flag == 'S'){
+					swal('회원님은 SNS 계정으로 등록하셨습니다. SNS계정으로 로그인 해주세요.');
+				}else{
+					swal('회원님의 계정은 등록되어 있지 않습니다.');
+				}
+				 
+			}
+		});
+		
 	}
 
     </script>
 
 <style type="text/css">
-	.ui-datepicker-calendar > tbody td.ui-datepicker-week-end:first-child a { color:#f00; }
-	.ui-datepicker-calendar > tbody td.ui-datepicker-week-end:last-child a { color:#00f; }
 
  	#body{ padding-top: 100px; }
  	input, select {
@@ -399,6 +444,34 @@
  	html{
         height: auto;
   	} 
+  	.inputtype {
+	margin-bottom: 10px;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+	position: relative;
+}
 	 
+	 .ui-datepicker {
+	border: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding: 0;
+	margin-left: auto;
+	margin-top: 15px;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	position: relative;
+}
 </style>
 </html>

@@ -80,7 +80,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="deleteCheck", method={RequestMethod.GET,RequestMethod.POST} )
-	public String deleteCheck( @RequestBody User user, Model model,
+	public User deleteCheck( @RequestBody User user, Model model,
 										HttpSession session  ) throws Exception{
 		System.out.println("/user/json/deleteCheck : POST");
 		return userService.deleteCheck(user);
@@ -130,12 +130,9 @@ public class UserRestController {
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if(dbUser==null || dbUser.getRole().equals("not")){
-			System.out.println("널 값이다");
-			System.out.println(dbUser);
+			System.out.println(":::dbUser ::" + dbUser);
 			model.addAttribute("user", dbUser);
 			return dbUser;
-		}else if(!user.getPassword().equals(dbUser.getPassword())){
-			return null;
 		}else{
 			System.out.println("UserRestController의 kakaoLogin메소드에서 User가 있을떄");
 			session.setAttribute("user", dbUser);

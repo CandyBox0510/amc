@@ -27,9 +27,7 @@
                         <div class="field-wrap">
                         <input type='email' placeholder='Email'  id='userId' name='userId' class="login__input" onkeypress="if(event.keyCode==13) {loginUser(); return false;}">
                         <input type='password' placeholder='Password' id='password' name='password' class="login__input" onkeypress="if(event.keyCode==13) {loginUser(); return false;}">
-
-                        <input type='checkbox' id='#informed' class='login__check styled'>
-                        <label for='#informed' class='login__check-info'>아이디 저장</label>
+						<br/><br/><br/>
                          </div>
                         
                         <div class="login__control">

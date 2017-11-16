@@ -217,12 +217,11 @@
 			})
 			
 			$(".myPurchase").on("click",function(){
-				alert("oops!");
 				if( '${sessionScope.user.userId}' == ''){
 					alert("로그인을 다시 해주세요");
 				    $('.overlay').removeClass('close').addClass('open');
 				}else{
-					location.replace("/purchase/getPurchaseList");
+					location.replace("/purchase/getPurchaseList?searchKeyword=purchaseList&searchCondition=${sessionScope.user.userId}");
 				}
 			})
 			
@@ -270,9 +269,9 @@
 					success : function(JSONData , status) {
 						console.log(JSONData.userId);
 						if( JSONData.role == 'not' ){
-							alert("탈퇴한회원입니다.");
+							swal("탈퇴한회원입니다.");
 						}else if( JSONData.userId ==null || JSONData=='' ){
-							alert(JSONData+"아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+							swal(JSONData+"아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
 						}else{
 							window.parent.document.location.reload();
 						}
@@ -291,7 +290,6 @@
 			var pw=$("input:password").val();
 			
 			if(id == null || id.length <1) {
-				alert("자바스크립트 제목으로 만든 이벤트");
 				alert('ID 를 입력하지 않으셨습니다.');
 				$("#userId").focus();
 				return;
@@ -326,11 +324,11 @@
 						console.log(JSONData.userId);
 						
 						if( JSONData.role == 'not' ){
-							alert("탈퇴한 회원은 30일 후 재가입이 가능합니다.");
+							swal("탈퇴한 회원은 30일 후 재가입이 가능합니다.");
 						}else if( JSONData.userId ==null || JSONData=='' ){
 						//$(window.parent.document.location).attr("href","/index.jsp");
 						//$(self.location).attr("href","/index.jsp");  
-							alert("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
+							swal("아이디 , 패스워드를 확인하시고 다시 로그인 해주세요."); 
 						}else{
 							window.parent.document.location.reload();
 						}
@@ -342,7 +340,6 @@
 		 } 
 		//============= 카카오 로그인 =============
 		function loginWithKakao() {
-			alert("일단 들어와바1");
 			Kakao.init('fc5658887af25f840e94144f6722b228');
 			// 로그인 창을 띄웁니다.
 			Kakao.Auth.login({
@@ -351,14 +348,12 @@
 				persistRefreshToken: true,
 				
 				success: function(authObj) {
-		 			alert("일단 들어와바2");
 		   			var accessToken = Kakao.Auth.getAccessToken();
 		    		Kakao.Auth.setAccessToken(accessToken);
 		    
 		    		Kakao.API.request({
 		    			url: '/v1/user/me',
 		       			success: function(res) {
-		       				alert("일단 들어와바3");
 			        		console.log("response 확인 :: " + res);
 			           		var userId = res.kaccount_email;       
 			           		/* var tempId = userId.replace(".", ","); */
@@ -380,17 +375,19 @@
 									}),
 
 			                      	 success : function(JSONData) { 
-/* 			                      		alert(JSONData.userId);
-			                      		alert(JSON.stringify(JSONData));
- */			                       		if(JSONData == null || JSONData == '') {
+ 			                      		//alert(JSONData.userId);
+ 			                      		//alert(JSONData.deleteUserFlag );
+			                      		//alert(JSON.stringify(JSONData));
+ 			                       		if(JSONData == null || JSONData == '') {
 			                       			alert("계정이 없습니다. 회원가입을 해주시기 바랍니다..");
 			                       			$(self.location).attr("href","/user/addUser?email="+userId+"&snslogin=kakao");                 
 			                         	}else if(JSONData.role == 'not'){
-			                         		alert("탈퇴한 회원은 30일 후 재가입 가능 합니다.");
+			                         		swal("탈퇴한 회원은 30일 후 재가입 가능 합니다.");
+			                         	}else if(JSONData.deleteUserFlag == 'R'){
+			                         		swal("이미 가입된 아이디입니다.");		                         	               		
 			                         	}else if(JSONData != ''){
-			                         		alert("반갑습니다.");  
+			                         		swal("반갑습니다.");  
 			                       			$(self.location).attr("href","/user/loginUser");
-			
 			                       	  		location.reload();
 			                         	}else{
 			                       	  		location.reload();
@@ -410,16 +407,13 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a:contains('로그아웃')").on("click" , function() {
-				alert("카카오로그아웃1");
 				logoutWithKakao();
 			}); 
 		});
 	 
 		function logoutWithKakao() {
-			 alert("카카오로그아웃2"); 
 			 /* Kakao.Auth.logout(); */
 			 Kakao.Auth.logout(function(){
-				alert("카카오 로그아웃3");
 				var frm = document.applicationJoinForm;
 				  frm.submit();
 				setTimeout(function(){

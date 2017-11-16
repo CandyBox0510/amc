@@ -187,14 +187,6 @@
         $("input[name='searchKeyword']").val(searchKeyword);
     }
 
-    //============= "검색"  Event  처리 =============	
-    $(function() {
-        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-        $("button.btn.btn-default").on("click", function() {
-            fncGetList(1);
-        });
-    });
-
     //============= userId 에 회원정보보기  Event  처리(Click) =============	
     $(function() {
         $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")

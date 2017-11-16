@@ -45,7 +45,6 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("uploadFilePath")
 	private FileSystemResource fsr;
-	
 	/*Constructor*/
 	public ProductRestController(){
 		System.out.println(this.getClass());
@@ -98,16 +97,22 @@ public class ProductRestController {
 	public boolean uploadFile( @RequestParam("file") MultipartFile file ) throws Exception{
 		System.out.println("productRestController의 uploadfile");
 		boolean result = false;
-		
+		System.out.println(":::::::productRestController 의 uploadFile 부분 fsr.getPath() :"+fsr.getPath());
+		System.out.println(":::::::productRestController 의 uploadFile 부분 file.getOriginalFilename() :"+file.getOriginalFilename());
 		if(!file.isEmpty()){
 			try{
+				
+				System.out.println("file 경로와 file 이름 시작");
+				System.out.println("file 경로와 file 이름 시작1"+fsr.getPath());
+				System.out.println("file 경로와 file 이름 시작2"+file.getOriginalFilename());
+
 				file.transferTo(new File(fsr.getPath(),file.getOriginalFilename()));
 				result = true;
 			}catch(Exception e){
 				System.out.println(file.getOriginalFilename()+" upload fail;");
 			}
 		}
-		
+		System.out.println("@@@@@@"+result);
 		return result;
 	}
 

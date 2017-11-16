@@ -58,13 +58,18 @@ public class UserController {
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser( @ModelAttribute("user") User user ) throws Exception {
-		System.out.println("/user/addUser : POST");
-		System.out.println("유저 무슨값이 들어오길래 년 값이 0이래 :" + user);
+		System.out.println(" :::: /user/addUser : POST User ="+user);
+		
+		String phone1 = user.getPhone1();
+		String phone2 = user.getPhone2();
+		String phone3 = user.getPhone3();
+		user.setPhone1(phone1.replace(",", ""));
+		user.setPhone2(phone2.replace(",", ""));
+		user.setPhone3(phone3.replace(",", ""));
 		
 		String birth2 = user.getBirth();
 		user.setBirth(birth2.replaceAll("-",""));	
-		System.out.println(user.getBirth());
-		
+		System.out.println("UserController 의 addUser POST 메소드"+user);
 		userService.addUser(user);
 		return "redirect:/index.jsp";
 	}
@@ -155,8 +160,7 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
-	public String updateUser( @RequestParam("userId") String userId , Model model ) throws Exception{
-
+	public String updateUser( @RequestParam("userId") String userId , Model model,HttpSession session ) throws Exception{
 		System.out.println("/user/updateUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
@@ -167,16 +171,19 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
+	public String updateUser( @ModelAttribute("user") User user, 
+								/*@RequestParam(value="snslogin", required=false) String snslogin ,*/ 
+									Model model , HttpSession session) throws Exception{
 
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
 		userService.updateUser(user);
-		String sessionId=((User)session.getAttribute("user")).getUserId();
-		if(sessionId.equals(user.getUserId())){
-			session.setAttribute("user", user);
+		System.out.println(":::::session 정보"+(User)session.getAttribute("user"));
+		String sessionRole = ((User)session.getAttribute("user")).getRole();
+		if(sessionRole.equals(user.getRole())){
+			User updateUser = userService.getUser(user.getUserId());
+			session.setAttribute("user", updateUser);
 		}
-		
 		return "redirect:/user/getUser?userId="+user.getUserId();
 	}
 	

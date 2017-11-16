@@ -232,7 +232,7 @@
 
     $(function() {
         $("#back").bind('click', function() {
-            history.back();
+        	self.location = "/user/getUserList";
         });
     });
 </script>
