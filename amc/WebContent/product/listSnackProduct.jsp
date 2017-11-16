@@ -10,13 +10,11 @@
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>스낵바 상품목록</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-        
     <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
+    <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
     
     <!-- Fonts -->
         <!-- Font awesome - icon font -->
@@ -25,19 +23,6 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Stylesheets -->
-        <!-- jQuery UI -->
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-        <!-- Mobile menu -->
-        <link href="../css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="../css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Custom -->
-        <link href="../css/style.css?v=1" rel="stylesheet" />
-        <!-- Modernizr --> 
-        <script src="../js/external/modernizr.custom.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
         <!--   semantic UI  / 모달창-->
@@ -93,7 +78,7 @@
 				            	
  			            	<div class="col-sm-6 text-right">
 				                <form id='search-form' method='get' class="search">
-				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword"/>
+				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}" onkeypress="if(event.keyCode==13) { fncGetPageList(1); return false;}"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
@@ -143,7 +128,9 @@
 		                                    <p><strong>가격</strong>  ${product.prodPrice }<br/><strong>판매시작일   </strong>${product.salesOpenDate}<br/><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
                                 	        <!-- <div class="col-sm-6"> -->
 							                    <div class="progress">
-								                      <p class="progress__info">현재 재고량 ${product.salesStock}%</p>
+								                      <p class="progress__info">
+								                      		${param.menu eq 'search'? "현재 재고율" : "현재 판매율" }${product.salesStock}%
+								                      </p>
 								                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
@@ -155,6 +142,12 @@
 						</div>
 		            </div>     
  				</div>
+ 					
+ 					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
+					<div class="ui thin info modal"> 
+					  <i class="close icon"></i>
+					    <div class="content" ></div>
+					</div>  
  			
  					<div class="coloum-wrapper">
 	                    <div class="pagination paginatioon--full">
@@ -177,7 +170,6 @@
 
 	<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -220,10 +212,9 @@
 	});			   
 			   
 	function fncGetPageList(currentPage) {
-
-	    $("#currentPage").val(currentPage)
-	      $("#search-form").attr("method", "POST").attr("action", "/product/getSnackList?menu=search&searchProdType=S").submit();
-	     $("input[name='searchKeyword']").val(searchKeyword); 
+		$("#currentPage").val(currentPage)
+	    $("#search-form").attr("method", "POST").attr("action", "/product/getSnackList?menu="+$("input[name='menu']").val()+"&searchProdType=S").submit();
+	    $("input[name='searchKeyword']").val(searchKeyword); 
 	}
 
 
@@ -254,6 +245,36 @@
 	        	
 	        });
 	    });
+	    
+    	//6. Progressbar
+  		//Count function for progressbar
+  		function init_progressBar(duration) {
+             $('.progress').each(function() {
+                 var value = $(this).find('.progress__bar').attr('data-level');
+                 var result = value + '%';
+                 if(duration) {
+                     $(this).find('.progress__current').animate({width : value + '%'}, duration);
+                 }
+                 else {
+                     $(this).find('.progress__current').css({'width' : value + '%'});
+                 }
+                 
+             });
+          }
+
+//           inview progress bars
+//            $('.progress').one('inview', function (event, visible) {
+//                if (visible == true) {
+                     
+//                }
+//            });
+
+          var inview = new Waypoint.Inview({
+            element: $('.progress')[0],
+            enter: function(direction) {
+              init_progressBar(2000);
+            }
+          });
 
 
 </script>

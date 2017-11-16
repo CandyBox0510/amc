@@ -119,7 +119,7 @@
 									all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
-									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 									all += 		'<div class="alert alert-danger" role="alert">'
 									all +=			'<strong>티켓 오픈 일자</strong><br/>'
 									all +=			'<p class="'+alarm[i].alarmNo+'">'
@@ -162,7 +162,7 @@
 									     	 });//end of ajax
 										}
 									});
-									//alert(alarm[i].alarmNo);
+									
 									dpTime(alarm[i].alarmNo);
 									setInterval("dpTime("+alarm[i].alarmNo+");",1000);
 									
@@ -224,7 +224,11 @@
 	  }
   	}
   	
-  	
+  	function resize(){
+  		alert("리사이즈");
+  		$(".here").html("");
+  		$(".here").html("<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>");
+  	}
   	
    </script> 
 </head>
@@ -284,10 +288,21 @@
         </section>
        
        
-       	<jsp:include page="/layout/bottomToolbar.jsp" />
+       	
 		<jsp:include page="/layout/loginModal.jsp" />
      </div>
-  
+     <div class="here">
+     	<c:if test="${list.size() < 1}">
+        <br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	</c:if>
+     </div>
+  		<jsp:include page="/layout/bottomToolbar.jsp" />
 
 
    <!-- JavaScript-->

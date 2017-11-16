@@ -72,7 +72,6 @@
 		$("#now").on("click",function(){
 			condition = 'now';
 			count = 2;
-			alert("11");
 			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
@@ -80,7 +79,6 @@
 		$("#past").on("click",function(){
 			condition = 'past';
 			count = 2;
-			alert("22");
 			$(".gallery-wrapper").empty();
 			loadList(1,condition);
 		});
@@ -115,7 +113,7 @@
 													all += 'movie'												   
 											   }
 									all +=	   '">'
-									all += 	  '<img src="' +booking[i].movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+									all += 	  '<img src="' +booking[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 									all += 		'<div class="alert alert-success" role="alert">'
 									all +=			'<strong><td align="left">'
 											   if(booking[i].screenContent.previewFlag == 'Y'){
@@ -218,10 +216,21 @@
         </section>
        
        
-       	<jsp:include page="/layout/bottomToolbar.jsp" />
+       	
 		<jsp:include page="/layout/loginModal.jsp" />
      </div>
-  
+     <div class="here">
+     	<c:if test="${list.size() < 1}">
+        <br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	</c:if>
+     </div>
+  	 <jsp:include page="/layout/bottomToolbar.jsp" />
 
 
    <!-- JavaScript-->

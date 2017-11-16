@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public String deleteCheck(User user) throws Exception {
+	public User deleteCheck(User user) throws Exception {
 		// TODO Auto-generated method stub
 		return userDAO.deleteCheck(user);
 	}

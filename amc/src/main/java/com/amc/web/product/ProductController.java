@@ -1,7 +1,11 @@
 package com.amc.web.product;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.amc.service.product.ProductService;
 import com.amc.common.Page;
 import com.amc.common.Search;
@@ -28,8 +34,6 @@ public class ProductController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
-	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 참조 할것
-	//==> 아래의 두개를 주석을 풀어 의미를 확인 할것
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	
@@ -51,8 +55,10 @@ public class ProductController {
 	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public String addProduct( @ModelAttribute("product") Product product,
-							@RequestParam(value="file", required=false) MultipartFile file) throws Exception {
-
+							@RequestParam(value="file", required=false) MultipartFile file,
+							 HttpSession session) throws Exception {
+		
+		System.out.println("producController의 addProduct 메소드 : file"+file);
 		product.setProdImage("");
 		if(file != null && !file.isEmpty()){
 			product.setProdImage(file.getOriginalFilename());
@@ -62,7 +68,7 @@ public class ProductController {
 		
 		return "forward:addProductConfirm.jsp";
 	}
-	
+
 	@RequestMapping( value="deleteProduct", method=RequestMethod.GET )
 	public String deleteProduct( @RequestParam("prodNo") int prodNo,									
 									Model model ) throws Exception{
@@ -81,14 +87,7 @@ public class ProductController {
 		Product product = productService.getProduct(prodNo);
 		System.out.println("Goods Product :"+product);
 		model.addAttribute("product", product);
-		
-		double totalStock	= product.getTotalStock();
-		double Stock		= product.getStock();
-		double sale 		= 100-Stock/totalStock*100;
-		int result = (int)sale;
-		
-		product.setSalesStock(result);
-		
+				
 		System.out.println( "판매 현황 좀 보고싶은데 :"+product.getSalesStock());
 		
 		if(menu!=""){
@@ -106,14 +105,7 @@ public class ProductController {
 		System.out.println("ProductController의 getSnackProduct 메소드");
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product", product);
-		
-		double totalStock	= product.getTotalStock();
-		double Stock		= product.getStock();
-		double sale 		= 100-Stock/totalStock*100;
-		int result = (int)sale;
-
-		product.setSalesStock(result);
-		
+				
 		System.out.println( "판매 현황 좀 보고싶은데 :"+product.getSalesStock());
 		
 		if(menu!=""){
@@ -165,11 +157,16 @@ public class ProductController {
 		}
 		if(menu.equals("manage")){
 			search.setStockView(true);
+			search.setSearchKeyword2("manage");
+		}
+		if(menu.equals("search")){
+			search.setSearchKeyword2("search");
 		}
 		pageSize = 8;
 		search.setPageSize(pageSize);
 		/*search.setPageUnit(pageUnit);*/		
 		// Business logic 수행
+		
 		Map<String , Object> map=productService.getGoodsList(search);
 		
 		System.out.println(map.get("list"));
@@ -180,7 +177,7 @@ public class ProductController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		System.out.println("ProductController의 getGoodsList 메소드 끝");
+		System.out.println("ProductController의 getGoodsList 메소드 끝"+map.get("list"));
 		
 		return "forward:/product/listGoodsProduct.jsp?menu="+menu;
 	}
@@ -199,6 +196,10 @@ public class ProductController {
 		}
 		if(menu.equals("manage")){
 			search.setStockView(true);
+			search.setSearchKeyword2("manage");
+		}
+		if(menu.equals("search")){
+			search.setSearchKeyword2("search");
 		}
 		pageSize = 8;
 		search.setPageSize(pageSize);

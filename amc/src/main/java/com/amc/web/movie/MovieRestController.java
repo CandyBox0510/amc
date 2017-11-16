@@ -1070,11 +1070,15 @@ public class MovieRestController {
 				 data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(),"UTF-8"));
 				 data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(),"UTF-8"));
 				 data.put("movieNo", movieList.get(i).getMovieNo());
-				 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
+				 if(movieList.get(i).getTrailer() != null && !movieList.get(i).getTrailer().equals("")){
+					 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
+				 }
 				 data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(),"UTF-8"));
 				 data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(),"UTF-8"));
 				 data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(),"UTF-8"));
-				 data.put("steelCut", URLEncoder.encode(movieList.get(i).getSteelCut(),"UTF-8"));
+				 if(movieList.get(i).getSteelCut() != null && !movieList.get(i).getSteelCut().equals("")){
+					 data.put("steelCut", URLEncoder.encode(movieList.get(i).getSteelCut(),"UTF-8"));
+				 }
 				 jsonArray.add(data);
 			}
 			response.put("list", jsonArray);

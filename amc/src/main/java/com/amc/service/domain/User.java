@@ -20,9 +20,19 @@ public class User {
 	private String gender;
 	private String deleteUserFlag;
 	private String uuId;
-
+	private String snsLogin;
+	
+	
 	public int getUserNo() {
 		return userNo;
+	}
+
+	public String getSnsLogin() {
+		return snsLogin;
+	}
+
+	public void setSnsLogin(String snsLogin) {
+		this.snsLogin = snsLogin;
 	}
 
 	public void setUserNo(int userNo) {
@@ -155,7 +165,9 @@ public class User {
 				+ ", role=" + role + ", addr=" + addr + ", addrDetail=" + addrDetail + ", userRegDate=" + userRegDate
 				+ ", birth=" + birth + ", phone1=" + phone1 + ", phone2=" + phone2 + ", phone3=" + phone3
 				+ ", calendarType=" + calendarType + ", gender=" + gender + ", deleteUserFlag=" + deleteUserFlag
-				+ ", uuId=" + uuId + "]";
+				+ ", uuId=" + uuId + ", snsLogin=" + snsLogin + "]";
 	}
+
+	
 
 }

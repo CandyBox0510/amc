@@ -119,7 +119,7 @@
 												all += "movie"
 											}
 								all +=    '">'
-								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 								all += 		'<div class="alert alert-success" role="alert">'
 								all +=			'<strong>취소표 신청 좌석</strong><br/>['
 								all +=           alarm[i].alarmSeatNo
@@ -139,7 +139,7 @@
 											if(alarm[i].screenContent.previewFlag == 'Y'){
 												all += alarm[i].screenContent.previewTitle
 											}else{
-												all += alarm[i].movie.movieNm
+												all += alarm[i].screenContent.movie.movieNm
 											}
 								all += 	   '</p></a>'
 								all +=	'</div>'
@@ -147,6 +147,7 @@
 									
 								console.log($(".gallery-wrapper").html());
 								$(".gallery-wrapper").html($(".gallery-wrapper").html()+all);
+								
 								$( ".label-success" ).on("click" , function() {
 									if(confirm("삭제하시겠습니까?")!=0){
 									 $.ajax({
@@ -234,10 +235,21 @@
             </div>
         </section>
        
-      
-       	<jsp:include page="/layout/bottomToolbar.jsp" />
+      	
 		<jsp:include page="/layout/loginModal.jsp" />
      </div>
+     <div class="here">
+     	<c:if test="${list.size() < 1}">
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	</c:if>
+     </div>
+       	<jsp:include page="/layout/bottomToolbar.jsp" />
   
 
 
@@ -268,15 +280,29 @@
         <script src="/js/custom.js"></script>
       
       <script type="text/javascript">
-            $(document).ready(function() {
-                init_BookingOne();
-            });
+            
+/*            $(function(){
+        		if($(window).height() == $(document).height()){
+        			fncFooterPositioning();
+        		}
+        	});
+            
+         	function fncFooterPositioning(){
+        		$('footer').css('position', 'absolute')
+        		.css('top', document.body.scrollHeight-300);
+         	}
+         	
+         	$(window).resize(function(){
+        		fncFooterPositioning();
+         	});
+ */
       </script>
 </body>
  <style>
       html{
  	     height: auto;
-      }
+      } 
+      
       .col-sm-4{
       	/* background-color: #EDEDED; */
       	background-color: #c1ffbc;

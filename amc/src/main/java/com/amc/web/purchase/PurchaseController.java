@@ -57,7 +57,9 @@ public class PurchaseController {
 	@RequestMapping( value="addPurchase", method=RequestMethod.POST )
 	public String addPurchase(	@ModelAttribute("purchase") Purchase purchase	) throws Exception{
 
+		System.out.println("################### purchase :::" + purchase);
 		purchaseService.addPurchase(purchase);
+		
 		System.out.println("%%%%%%%%%%%%%%%%%%orderRegDate :"+purchase.getOrderRegDate());
 		
 		return "forward:addPurchaseConfirm.jsp";
@@ -89,12 +91,12 @@ public class PurchaseController {
 		return "redirect:getPurchase?impId="+purchase.getImpId();
 	}
 	
-	@RequestMapping( value="getPurchaseList" )
+	@RequestMapping( value="getPurchaseList", method={RequestMethod.GET, RequestMethod.POST})
 	public String getPurchaseList(	@ModelAttribute("search") Search search,
-								Model model		) throws Exception{
-		
+								Model model	) throws Exception{
+		System.out.println("PurchaseController의 getPurchaseList 메소드 시작" +search);
 		this.getList(search, model);
-		
+		System.out.println("PurchaseController의 getPurchaseList 메소드 끝");
 		return "forward:listPurchase.jsp";
 	}
 	

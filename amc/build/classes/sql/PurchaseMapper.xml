@@ -44,7 +44,7 @@
 		#{totalProdPrice},
 		#{tranCode},
 		SYSDATE,
-		#{purchaseProd.prodNo},
+		#{purchaseProd.prodNo},		
 		#{buyer.userId},
 	</sql>
 	
@@ -53,21 +53,21 @@
 	<insert id="addPurchase" parameterType="purchase">
 	 	INSERT 
 		INTO transaction 
-		VALUES	(	seq_transaction_order_no.nextval, <include refid="addUnit"/> seq_transaction_IMP_ID_no.nextval 	)
+		VALUES	(	seq_transaction_order_no.nextval, <include refid="addUnit"/> seq_transaction_IMP_ID_no.nextval, #{purchaseProd.prodImage} )
  	</insert>
  	
 	<insert id="addPurchaseCount" parameterType="purchase">
 		INSERT
 		INTO transaction
-		VALUES	(	seq_transaction_order_no.CURRVAL, <include refid="addUnit"/> seq_transaction_IMP_ID_no.nextval	)
+		VALUES	(	seq_transaction_order_no.CURRVAL, <include refid="addUnit"/> seq_transaction_IMP_ID_no.nextval, #{purchaseProd.prodImage}	)
 	</insert>
 	
 	<!-- SQL : SELECT ONE -->
 	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
 		SELECT
 			t.IMP_ID, p.prod_name, t.prod_no, t.user_id user_id, t.payment_option, t.receiver_name,
-			t.receiver_phone1, t.ADDR_DLVY, t.ADDR_DLVYDETAIL, t.order_regdate, 
-			t.tran_code, COUNT(t2.IMP_ID) purchase_count, p.stock-NVL(vt.cnt,0) stock
+			t.receiver_phone1,t.receiver_phone2,t.receiver_phone3, t.ADDR_DLVY, t.ADDR_DLVYDETAIL, t.order_regdate, 
+			t.tran_code, COUNT(t2.IMP_ID) purchase_count, p.stock-NVL(vt.cnt,0) stock, t.ORDER_STOCK
 		FROM
 			transaction t, transaction t2, product p, (SELECT prod_no AS prod_no, COUNT(*) AS cnt FROM transaction GROUP BY prod_no) vt
 		<where>
@@ -76,8 +76,8 @@
 		</where>
 		GROUP BY
 			t.IMP_ID, p.prod_name, t.prod_no, t.user_id, t.payment_option, t.receiver_name, 
-			t.receiver_phone1, t.ADDR_DLVY, t.ADDR_DLVYDETAIL, t.order_regdate, 
-			t.tran_code, t2.order_no, p.stock, vt.cnt
+			t.receiver_phone1, t.receiver_phone2, t.receiver_phone3, t.ADDR_DLVY, t.ADDR_DLVYDETAIL, t.order_regdate, 
+			t.tran_code, t2.order_no, p.stock, vt.cnt, t.ORDER_STOCK
 	</select>
 	
  	<delete id="deletePurchaseForUpdate" parameterType="int">

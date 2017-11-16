@@ -14,15 +14,12 @@
 	
 	<!-- 참조 : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
 	
 	<style>
 		body{
@@ -74,11 +71,11 @@
 			
 			$('.btn-primary:contains("정보수정")').bind('click',function(){
 				$.ajax({
-					url : 'json/updatePurchase',
+					url : '/purchase/json/updatePurchase',
 					method : 'post',
 					dataType : 'json',
 					data : JSON.stringify({
-						tranNo : $('input[name="impId"]').val(),
+						impId : $('input[name="impId"]').val(),
 						paymentOption : $('select[name="paymentOption"]').val(),
 						orderStock : $('select[name="orderStock"]').val(),
 						receiverName : $('input[name="receiverName"]').val(),
@@ -102,7 +99,7 @@
 						init();
 					},
 					error : function(){
-						alert("ㅠㅠ 실패");
+						alert("정보수정실패");
 					}
 				});
 			});
@@ -206,4 +203,90 @@
 	</div>
 </div>
 </body>
+
+<style type="text/css">
+ 	#body{ padding-top: 0px; }
+ 	.countPage {
+	  	font-size: 13px;
+	   	margin-top: 10px;
+	}
+	 
+ 	.search{
+		margin-right : 30px;
+	} 
+	
+ 	section{
+		margin-bottom : 30px
+	}
+	
+	.movieNm {
+		  font-size: 0px;
+		  font-weight: bold;
+		  display: block;
+		  margin-bottom: 0px;
+		  margin-top: 0px;
+	}
+		html{
+	        height: auto;
+	  	}
+	  	
+.ui.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  z-index: 1;
+  opacity: 0.8;
+  font-size: 1.25em;
+  color: #FFFFFF;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.625rem 0rem 0rem 0rem;
+}  	  
+
+
+.ui.modal > .header {
+  display: block;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background: #FFFFFF;
+  margin: 0em;
+  padding: 1.25rem 1.5rem;
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 0px dotted ButtonText;
+}
+
+.ui.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  top: 00%;
+  left: 50%;
+  text-align: left;
+  background: #000000;
+  border: none;
+  box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2);
+  -webkit-transform-origin: 00% 25%;
+  transform-origin: 50% 25%;
+  border-radius: 0.28571429rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  will-change: top, left, margin, transform, opacity;
+}
+
+.col-xs-7 {
+  width: 58.33333333%;
+  font-size: 15px;
+}
+
+</style>
 </html>

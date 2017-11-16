@@ -110,7 +110,7 @@
 								all += 	'<div class="gallery-item">'
 								all += 	 '<div style="overflow-y:hidden; height:365px;">'
 								all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu=movie">'
-								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 								all +=    '</div>'
 								all += 		'<div class="alert alert-info" role="alert">'
 								all +=			'<strong>'+wishList[i].wishFlag+'</strong><br/>'
@@ -209,10 +209,20 @@
        
        
        
-       <!-- bottomToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-	   <!-- bottomToolBar End /////////////////////////////////////-->
+       <jsp:include page="/layout/loginModal.jsp" />
      </div>
+     <div class="here">
+     	<c:if test="${list.size() < 1}">
+        <br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	</c:if>
+     </div>
+  	 <jsp:include page="/layout/bottomToolbar.jsp" />
   
 
 d
