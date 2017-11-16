@@ -189,15 +189,14 @@
 					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY-MM-DD') ticket_opendate 
 					FROM movie, (SELECT * FROM screencontent WHERE screen_opentime> SYSDATE AND preview_flag = 'Y') screencontent  
 					WHERE movie.movie_no = screencontent.movie_no
-		<if test="searchCondition != null" >
+		
+		<if test="searchCondition == 1" >
 			    
-				<if test="searchCondition == 1 and searchKeyword != '' ">
-					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+				<if test="searchKeyword != '' ">
+					AND screencontent.preview_title LIKE '%'||#{searchKeyword}||'%'
 				</if>
-				<if test="searchCondition == 2 and searchKeyword != '' ">
-					WHERE director LIKE '%${searchKeyword}%'
-				</if>
-			</if>
+			
+		</if>
 
 		ORDER BY movie_no ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum})
@@ -214,15 +213,14 @@
 					screencontent.ticket_price, TO_CHAR(screenContent.ticket_opendate,'YYYY/MM/DD HH24:MI') ticket_opendate 
 					FROM movie, (SELECT * FROM screencontent WHERE screen_opentime> SYSDATE AND preview_flag = 'Y') screencontent  
 					WHERE movie.movie_no = screencontent.movie_no
-		<if test="searchCondition != null" >
+		
+		<if test="searchCondition == 1" >
 			    
-				<if test="searchCondition == 1 and searchKeyword != '' ">
-					WHERE movie_title LIKE '%'||#{searchKeyword}||'%'
+				<if test="searchKeyword != '' ">
+					AND screencontent.preview_title LIKE '%'||#{searchKeyword}||'%'
 				</if>
-				<if test="searchCondition == 2 and searchKeyword != '' ">
-					WHERE director LIKE '%${searchKeyword}%'
-				</if>
-			</if>
+			
+		</if>
 
 		ORDER BY movie_no ) inner_table
 		WHERE ROWNUM &lt;= #{endRowNum})

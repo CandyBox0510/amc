@@ -62,8 +62,10 @@ public class CommunityDAOImpl implements CommunityDAO {
 	public void deleteFreeBoard(int freeBoardNo) {
 		System.out.println("communityDAOImpl의 deleteFreeBoard 시작...");
 		System.out.println("1. freeBoardNo값 ==> " + freeBoardNo);
+		int deleteFreeComment = sqlSession.delete("CommentMapper.deleteFreeBoardCommentAll",freeBoardNo);
+		System.out.println("2. deleteFreeComment의 값 ==> " + deleteFreeComment);
 		int deleteFreeBoard = sqlSession.delete("FreeBoardMapper.deleteFreeBoard", freeBoardNo);
-		System.out.println("2. deleteFreeBoard의 값 ==> " + deleteFreeBoard);
+		System.out.println("3. deleteFreeBoard의 값 ==> " + deleteFreeBoard);
 		System.out.println("communityDAOImpl의 deleteFreeBoard 끝...");
 
 	}

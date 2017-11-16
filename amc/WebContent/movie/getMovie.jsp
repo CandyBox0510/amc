@@ -40,10 +40,15 @@
 
 			<div class="getMovie">
 				<div class="movie">
-					<h2 class="page-heading">영화 상세 정보</h2>
+					<c:if test="${menu == 'preview' }">
+						<h2 class="page-heading">시사회 상세 정보</h2>
+					</c:if>
+					<c:if test="${menu != 'preview' }">
+						<h2 class="page-heading">영화 상세 정보</h2>
+					</c:if>
 
-					<div class="movie__info ">
-						<div class="col-sm-4 col-md-3 movie-mobile">
+					<div class="movie__info col-md-12 col-sm-12">
+						<div class="col-sm-4 col-md-3">
 							<div class="movie__images">
 								<img alt='' src="${movie. postUrl}">
 							</div>
@@ -52,7 +57,15 @@
 
 						<div class="col-sm-8 col-md-9">
 
-							<p class="movie__title">${movie.movieNm }</p>
+
+							<c:if test="${menu != 'preview' }">
+								<p class="movie__title" style="font-size: 20px; color: #4c4145;">${movie.movieNm }</p>
+							</c:if>
+
+							<c:if test="${menu == 'preview' }">
+								<p class="movie__PreviewTitle">${screenContent.previewTitle }<span class="movie__title"> (${movie.movieNm })</span>
+								</p>
+							</c:if>
 
 							<p class="movie__time">${movie.showTm }분</p>
 
@@ -78,9 +91,20 @@
 									<i class="fa fa-bell" id="ticketIcon"></i> &nbsp; 티켓오픈알림
 								</button>
 							</c:if>
-							<button class="btn btn-md btn--slow" onClick="javascript:history.go(-1)">
-								<i class="fa fa-bars"></i> &nbsp; 목록으로
-							</button>
+							<c:if test="${menu == 'preview' }">
+								<button class="btn btn-md btn--slow" onClick="location.href='/movie/getMovieList?menu=preview'">
+									<i class="fa fa-bars"></i> &nbsp; 목록으로
+								</button>
+
+							</c:if>
+							<c:if test="${menu != 'preview' }">
+								<button class="btn btn-md btn--slow" onClick="history.go(-1);">
+									<i class="fa fa-bars"></i> &nbsp; 목록으로
+								</button>
+
+							</c:if>
+
+
 
 
 							<div class="movie__btns movie__btns--full">
@@ -729,9 +753,9 @@
             })
 
             $("a[name='booking']").on("click", function() {
- 
+
                 if (menu == "preview") {
-               
+
                     $(self.location).attr("href", "/booking/getPreviewList");
                 } else {
                     $(self.location).attr("href", "/booking/getScreenMovieList");
@@ -785,10 +809,6 @@ html {
 	max-width: 500px;
 	width: auto;
 	margin: 0 auto;
-}
-
-.movie .movie__images {
-	max-width: 100%;
 }
 
 .slick-prev:before, .slick-next:before {
@@ -907,18 +927,40 @@ section {
 
 .movie .movie__title {
 	position: relative;
-	font-size: 20px;
+	font-size: 17px;
 	font-family: 'Jeju Gothic', sans-serif;
-	color: #4c4145;
+	color: #969b9f;
 	margin-bottom: 0px;
+}
+
+.movie .movie__PreviewTitle {
+	font-size: 20px;
+	color: #4c4145;
+	font-family: 'Jeju Gothic', sans-serif;
+	margin-bottom: 0px;
+}
+
+.movie .movie__images {
+	position: relative;
+	border: 3px solid #ffd564;
+	width: fit-content;
+}
+
+.movie .movie__time:before {
+	content: "\f017";
+	font: 16px "FontAwesome";
+	color: #fe505a;
+	position: inherit;
+	top: 2px;
+	left: 0;
 }
 
 .movie .movie__time {
 	position: relative;
 	font-size: 13px;
 	color: #fe505a;
-	margin-bottom: 0px;
-	padding-left: 20px;
+	margin-bottom: 20px;
+	padding-left: 0;
 }
 
 .getMovie {

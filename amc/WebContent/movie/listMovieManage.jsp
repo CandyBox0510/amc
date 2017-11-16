@@ -62,7 +62,7 @@
 										<a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=manage' class="cinema__images"> 
 											<img id="poster" alt='' src="${movie.postUrl }"> 
 										</a> 
-										<a href="/screen/getScreenContentList/${movie.movieNo}" class="movieNm">${movie.movieNm }</a>
+										<a href="/movie/getMovieList/${movie.movieNo}" class="movieNm">${movie.movieNm }</a>
 										<p><strong>개봉일</strong>${movie.openDt }<br><strong>장르 </strong>${movie.genres }<br> 
 										   <strong>감독</strong> ${movie.director }<br><strong>등록일 </strong>${movie.movieRegDate } 
 										</p>
@@ -80,6 +80,7 @@
 								<c:if test="${resultPage.currentPage != 1 }">
 									<a href='#' class="pagination__prev">prev</a>
 								</c:if>
+							
 								<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
 									<a href='#' class="pagination__next">next</a>
 								</c:if>

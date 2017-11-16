@@ -233,8 +233,7 @@
 		  }else if(event.data.indexOf("duplicated")==0){
 			  //내가 고른좌석을 다른사람이 예매한경우
 			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');
-			  $("input[name='bookingSeatNo']").val("");
-			  initializeSeat();
+			  self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
 			 
 		  } 
 		  else{	  	
