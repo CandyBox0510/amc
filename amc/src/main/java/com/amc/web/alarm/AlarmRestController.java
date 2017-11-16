@@ -29,6 +29,7 @@ import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.alarm.AlarmService;
 import com.amc.service.domain.Alarm;
+import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
 import com.amc.service.user.UserService;
 import com.amc.web.booking.BookingRestController;
@@ -329,6 +330,40 @@ public class AlarmRestController {
 		alarm.setUser(user);
 		
 		return alarmService.deleteAlarm(alarm);
+	}
+	
+	@RequestMapping(value="/json/getCancelAlarmOfScreenContentNo")
+	public String selectCancelAlarm(@RequestParam("screenContentNo") String screenContentNo,
+								     HttpSession session, Model model) throws Exception{
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		User user = (User)session.getAttribute("user");
+		ScreenContent screenContent = new ScreenContent();
+		screenContent.setScreenContentNo(Integer.parseInt(screenContentNo));
+		
+		tempMap.put("user", user);
+		tempMap.put("screenContent", screenContent);
+		
+		List<Alarm> alarmList = alarmService.getCancelAlarmOfScreenContentNo(tempMap);
+		System.out.println("유저의 해당 상영의 취소표알림 리스트"+alarmList);
+		BookingRestController brc = new BookingRestController();
+		JSONObject jsonObject = new JSONObject();
+		String restSeats = "";
+		
+		for(int i = 0; i < alarmList.size(); i++){
+			if(i-1 == alarmList.size()){
+				restSeats += alarmList.get(i).getAlarmSeatNo();
+			}else{
+				restSeats += alarmList.get(i).getAlarmSeatNo()+",";
+			}
+		}
+		jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(restSeats, 1000, null));
+		
+		restSeats = (String)jsonObject.get("seatNo");
+		
+		System.out.println("Seats::::::::::::::"+restSeats);
+
+		return restSeats;	
 	}
 	
 }

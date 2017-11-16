@@ -47,9 +47,36 @@ public class AlarmController {
 	
 	@RequestMapping(value="selectCancelAlarm", method=RequestMethod.POST)
 	public String selectCancelAlarm(@ModelAttribute("screenContent") ScreenContent screenContent,
-									 Model model) throws Exception{
+								     HttpSession session, Model model) throws Exception{
+		Map<String,Object> tempMap = new HashMap<String,Object>();
+		
+		User user = (User)session.getAttribute("user");
+		
+		tempMap.put("user", user);
+		tempMap.put("screenContent", screenContent);
+		
+		List<Alarm> alarmList = alarmService.getCancelAlarmOfScreenContentNo(tempMap);
+		System.out.println("유저의 해당 상영의 취소표알림 리스트"+alarmList);
+		BookingRestController brc = new BookingRestController();
+		JSONObject jsonObject = new JSONObject();
+		String seats = "";
+		
+		for(int i = 0; i < alarmList.size(); i++){
+			if(i-1 == alarmList.size()){
+				seats += alarmList.get(i).getAlarmSeatNo();
+			}else{
+				seats += alarmList.get(i).getAlarmSeatNo()+",";
+			}
+		}
+		jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seats, 1000, null));
+		
+		seats = (String)jsonObject.get("seatNo");
+		
+		System.out.println("Seats::::::::::::::"+seats);
 		
 		model.addAttribute("screeContent", screenContent);
+		model.addAttribute("seats",seats);
+
 		return "forward:/booking/selectCancelAlarm.jsp";	
 	}
 	

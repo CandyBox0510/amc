@@ -174,6 +174,12 @@ public class AlarmServiceImpl implements AlarmService {
 	public int deleteAlarm(Alarm alarm) {
 		return alarmDAO.deleteAlarm(alarm);
 	}
+	
+	
+	@Override
+	public List<Alarm> getCancelAlarmOfScreenContentNo(Map<String, Object> map) {
+		return alarmDAO.getCancelAlarmOfScreenContentNo(map);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
