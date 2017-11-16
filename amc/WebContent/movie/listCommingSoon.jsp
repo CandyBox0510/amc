@@ -329,32 +329,26 @@
 						
 						if(userId == null || userId == ''){
 							alert("로그인 후 이용 가능합니다.");
-							exit();
-						}
-						
-						
-						
-				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-					    
-							
-				
-						
-									
-						$.ajax( 
-								{
-									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-									type : "GET" ,							
-								}).done(function(data) {
-							//정상 통신인 경우
-							if (data == 'add') {
-								var msg = '찜하기 신청';
-								alert(msg);
-							} else {
-								alert("찜하기 취소");
+							$('.overlay').removeClass('close').addClass('open');
+							//exit();
+						} else {
+				 	  		  $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+
+						 	  	$.ajax( 
+										{
+											url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+											type : "GET" ,							
+										}).done(function(data) {
+									//정상 통신인 경우
+									if (data == 'add') {
+										var msg = '찜하기 신청';
+										alert(msg);
+									} else {
+										alert("찜하기 취소");
+									}
+								})
 							}
-						});
-					
-				})
+						})
 				 
 				 $(document).on("click", ".fa-heart", function () {
 						
@@ -373,26 +367,26 @@
 				
 					if(userId == null || userId == ''){
 						alert("로그인 후 이용 가능합니다.");
-						return;
-					}
-					
+						$('.overlay').removeClass('close').addClass('open');
+						// return;
+					} else {
 								
-					$.ajax( 
-							{
-								url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-								type : "GET" ,							
-							}).done(function(data) {
-						//정상 통신인 경우
-						if (data == 'add') {
-							var msg = '찜하기 신청';
-							alert(msg);
-						} else {
-							alert("찜하기 취소");
+							$.ajax( 
+									{
+										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+										type : "GET" ,							
+									}).done(function(data) {
+								//정상 통신인 경우
+								if (data == 'add') {
+									var msg = '찜하기 신청';
+									alert(msg);
+								} else {
+									alert("찜하기 취소");
+								}
+							})
 						}
-					});
-				})
-		
-		});
+					})
+				});
 					
 					 
 		//============= "예약  Event 처리"  Event  처리 =============	
