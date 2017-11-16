@@ -31,4 +31,6 @@ public interface AlarmDAO {
 	
 	public int deleteAlarm(Alarm alarm);
 	
+	public List<Alarm> getCancelAlarmOfScreenContentNo(Map<String,Object> map);
+	
 }

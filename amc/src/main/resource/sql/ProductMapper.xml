@@ -30,17 +30,19 @@
 		INTO product 
 		VALUES ( seq_product_prod_no.nextval, 
 					#{prodType}, 
+					#{prodImage}, 
 					#{prodName},
+					#{prodDetail},
+					#{prodSetInfo},
 					#{salesOpenDate}, 
 					#{salesEndDate}, 
-					#{totalStock}, 
-					#{stock}, 
 					#{prodPrice},
-					#{expiryDate}, 
+					#{totalStock},
+					#{salesStock},  
+					#{stock}, 
 					SYSDATE,
-					#{prodDetail},
-					#{prodSetInfo}, 
-					#{prodImage} )
+					#{expiryDate}
+					)
 	</insert>
 	
 	<!-- SQL : SELECT ONE -->	
@@ -77,16 +79,27 @@
 	
 	<sql id="productList">
 		SELECT
-			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, 100-(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock
+			<if test='(searchKeyword2 == "search")'>p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, (p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
+			<if test='(searchKeyword2 == "manage")'>p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, 100-(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
 		FROM product p, transaction t
 		<where>
-			p.prod_no=t.prod_no(+)
+			p.prod_no=t.prod_no(+) AND p.sales_enddate>=SYSDATE
 			<if test='(searchProdType == "G")'>
 				AND p.prod_type='G'
 			</if>
 			<if test='(searchProdType == "S")'>
 				AND p.prod_type='S'
 			</if>
+			
+ 			<if test='searchKeyword!="" and searchKeyword !=null' >
+  				<if test="searchCondition==1">
+  						AND p.prod_name	like '%'|| #{searchKeyword}||'%'
+  				</if> 
+	  			<if test="searchCondition==2">
+  						AND p.prod_price = #{searchKeyword}
+  				</if>  				
+  			</if>
+ 			
 		</where>		
 		GROUP BY p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock, t.prod_no, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, p.sales_stock
 		<trim prefix="HAVING" prefixOverrides="AND | OR">

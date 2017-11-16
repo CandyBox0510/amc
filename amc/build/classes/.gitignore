@@ -1,6 +1,6 @@
 /client/
 /com/
-/config/
-/log4j.properties
-/sql/
+/client/
 /test.properties
+/config/
+/sql/

@@ -35,21 +35,25 @@
       document.getElementById('child').contentWindow.postMessage(event.data,"*");
       $("input[name='seats']").val(event.data);
       
-        $.ajax({
-               url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
-               method : "GET" ,
-               dataType : "json" ,
-               headers : {
-                  "Accept" : "application/json",
-                  "Content-Type" : "application/json"
-               },                  
-               success : function(JSONData, status) {
-                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);
-                       if(JSONData != ""){
-                          $("#seatNo").html(JSONData.seatNo);
-                       }//end of if문
-               }
-      });//end of ajax
+      if(event.data==null||event.data==""){
+    	  $("#seatNo").html("");
+      }else{
+	        $.ajax({
+	               url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
+	               method : "GET" ,
+	               dataType : "json" ,
+	               headers : {
+	                  "Accept" : "application/json",
+	                  "Content-Type" : "application/json"
+	               },                  
+	               success : function(JSONData, status) {
+	                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);
+	                       if(JSONData != ""){
+	                          $("#seatNo").html(JSONData.seatNo);
+	                       }//end of if문
+	               }
+	      });//end of ajax
+      }
            
    }
 
@@ -115,14 +119,28 @@
                 }).done(function(result) {
                    console.log("result : " + result);
                    if ( result == 'success' ) {
-                      var msg = '취소표 알림 신청 성공';
-                      swal({
-                           //position: 'top-right',
-                           type: 'success',
-                           title: '취소표 알림 신청 성공!',
-                           showConfirmButton: true,
-                           timer: 2000
-                         })
+					  $("#seatNo").text("");
+					  $.ajax({
+		                   url: "/alarm/json/getCancelAlarmOfScreenContentNo?"+
+		                		 "user.userId="+userId+
+		                		 "&screenContentNo="+$("input[name='screenContentNo']").val()
+		                }).done(function(result) {
+		                	$("#seats").text("");
+		                	$("#seats").text(result);
+		                	swal({
+		                     	  title: '취소표 알림 신청 성공',
+		                     	  text: "취소표 알림 신청 리스트를 확인하시겠습니까?",
+		                     	  type: 'success',
+		                     	  showCancelButton: true,
+		                     	  confirmButtonColor: '#3085d6',
+		                     	  cancelButtonColor: '#d33',
+		                     	  confirmButtonText: '이동',
+		                     	  cancelButtonText: '취소'
+		                     	}).then(function () {
+		                     	  self.location = "/alarm/getCancelAlarmList?alarmFlag=C"
+		                     	})
+		                })
+                      
                    } else if( result == 'exceed'){
                       swal(
                               '취소표알림 자리 수 초과!',
@@ -206,7 +224,7 @@
           </div>
           <!--  only UI -->
    
-         <div class="col-sm-8 com-md-9">
+         <div class="col-sm-8 com-md-8">
          <c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>   
             <iframe id="child" src="http://${ip}:52273/cancelAlarm?screenNo=${screenContent.screenContentNo}" 
             style='width:100%; height:400px'  frameborder='0' align='center'>       
@@ -214,17 +232,20 @@
             </iframe>
             <!-- style='width:100%' -->
          </div>
-         <div class="col-sm-4 col-md-3">
+         <div class="col-sm-4 col-md-4">
             <div class="row"><p/></div>
             <div class="row"><p/></div>
             <div class="row"><p/></div>
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
-						<li><span class="category__item hanna">Seats: <span id="seatNo"></span></span></li>
+						<li><span class="category__item hanna">신청할 좌석: <span id="seatNo"></span></span></li>
+						<li><span class="category__item hanna">신청된 좌석: <span id="seats">${seats}</span></span></li>
                       </ul>
             </div>
             <button class="ui brown button" style="width:100%; height:50%;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <br/>
+            
          </div>
         </section>  
        

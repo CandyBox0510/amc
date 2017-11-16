@@ -24,12 +24,14 @@
   
   <!--  스크립트에서 rollbackSeat 함수는 더이상 사용하지 않음. 컨트롤러에서도. -->
   <script type="text/javascript">
+ 
+
   
   IMP.init('imp41659269');
 	var things = "AMC : ";
 		things += "예매"
-
-	
+ 
+  
 	function kakaoPay(){
 			//alert("name : "+things);
 				IMP.request_pay({
@@ -198,9 +200,8 @@
   		$("form").attr("method" , "POST").attr("action" , "/booking/addBooking").submit();	
   		
   	}
-	  	
-  	function initializeSeat(){
-		console.log('initializeSeat 요청옴');
+  	
+	function initializeSeat(){
 		
 		$("#seatNo").text("");
         $("#headCount").text("");
@@ -209,8 +210,7 @@
         $("input[name='displaySeat']").val("");
         $("input[name='headCount']").val("");
         $("input[name='totalTicketPrice']").val("");
-	} 
-  	
+	}
 			
 	function listener(event){		
 		  document.getElementById('child').contentWindow.postMessage(event.data,"*");
@@ -219,7 +219,12 @@
 			  //alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
 			  
-		  } else if(event.data.length>100){
+		  }if(event.data.indexOf("countChanged")==0){
+			 //headCount지정이 바뀌었을때
+			 console.log('countChange')
+			 initializeSeat();	  
+			  
+		  }else if(event.data.length>100){
 			//alert('카카오페이관련 event 발생입니다.');
 			  
 		  } else if(event.data.indexOf("id")==0){
@@ -227,9 +232,8 @@
 			 
 		  }else if(event.data.indexOf("duplicated")==0){
 			  //내가 고른좌석을 다른사람이 예매한경우
-			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');			  
+			  alert('선택하신 자리가 매진되었습니다. 좌석을 다시선택해주세요.');
 			  self.location = "/booking/selectSeat?screenContentNo="+${screenContent.screenContentNo};
-			 
 			 
 		  } 
 		  else{	  	
@@ -237,14 +241,9 @@
 			  var no = ${screenContent.ticketPrice};
 			  
 			  if(event.data==null || event.data==""){
-				initializeSeat();
-				/* $("#seatNo").text("");
-               	$("#headCount").text("");
-               	$("#totalPrice").text("");
-               	
-               	$("input[name='displaySeat']").val("");
-               	$("input[name='headCount']").val("");
-              	$("input[name='totalTicketPrice']").val(""); */
+			  //좌석을 모두 선택해제 한경우 
+			  initializeSeat();
+			  
 			  }else{
 				  $.ajax(
 							{
@@ -300,6 +299,7 @@
 			<jsp:include page="/layout/topToolbar.jsp" />
 			<!-- ToolBar End /////////////////////////////////////-->
    		</header>
+   	   
    		
    		<br><br><br>
         
@@ -311,8 +311,7 @@
                     <img class="order__images" alt='' src="/images/tickets.png">
                     <p class="order__title">Book a ticket<br><span class="order__descript">and have fun movie time</span></p>
                     <div class="order__control">
-                        <a href="#" class="order__control-btn active">Booking</a>
-                        <!-- <a href="#" class="order__control-btn">Reserve</a> -->
+                        <a href="#" class="order__control-btn active">Booking</a>     						
                     </div>
                 </div>
             </div>
@@ -339,14 +338,14 @@
           <!--  only UI -->
 	
 
-			
-
 			<div class="col-sm-8 col-md-8">	
 			<c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>			
 				<iframe id="child" src= "http://${ip}:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
-				style='width:100%; height:550px'  frameborder='0'   align='center'>		 
+				style='width:100%; height:450px; overflow-x:scroll' scrolling="yes" frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
-				</iframe>	
+				</iframe>
+				<!-- style='width:100%' -->
+			
 			</div>
 			<div class="col-sm-4 col-md-4" style='padding-right:10%'>
 				<div class="category category--popular marginb-sm">
@@ -409,17 +408,21 @@
             $(document).ready(function() {
                 init_BookingOne();
                 
-                if($('html').height() < window.outerHeight){
-                	$('html').css('height', '100%');
-                }
+                $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)");
+                
             });
+            
+
+
+        
 		</script>
   
 
 		</body>
 		<style type="text/css">
-		html{
+		body{
 		  height: auto;
+
 		}
 
    .abc{ 
@@ -462,5 +465,10 @@
    .def{
    		font-family: 'Jeju Gothic', sans-serif;
    }
+   
+   
+   .tp-caption.boxshadow, .boxshadow {
+    box-shadow: 0 0 20px rgba(0,0,0,0);
+}
    </style>
 </html>

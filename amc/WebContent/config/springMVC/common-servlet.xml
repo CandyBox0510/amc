@@ -129,8 +129,7 @@
 
 	<bean id="uploadFilePath" class="org.springframework.core.io.FileSystemResource">
 		<constructor-arg>
-			<value>C:\Users\bang\git\amc\amc\WebContent\images\uploadFiles\
-			</value>
+			<value>C:\Users\bang\git\amc\amc\WebContent\images\uploadFiles\</value>
 		</constructor-arg>
 	</bean>
 

@@ -68,87 +68,88 @@
    		</header>
 
 		<div class="container" id="body">
-			<div class="page-header col-sm-offset-2 col-sm-10">
-				<h1>상품 등록</h1>
-			</div>
-			
-			<form class="add-product form-horizontal">
-				<div class="form-group">
-					<div class="form-group">
-			  			<label for="prodType" class="col-sm-3 control-label">상품 구분</label>
-			 	 			<div class="col-sm-3">			  		
-			  	  				<input type='radio' name='prodType' value='G' checked="checked">굿즈&emsp;&emsp;&emsp;&emsp;
-								<input type='radio' name='prodType' value='S'>스낵바
+			<div class="page-header text-center">
+				<h3 class="text-info">상 품 등 록</h3>
+			</div>					
+			<form class="form row add-product" id="formData"> 
+					<div class="row">
+			  			<label for="prodType" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품 구분</strong></label>
+			 	 			<div class="col-sm-4" style="display: inline">			  		
+			  	  				<select class="search-sort" name="prodType" id="prodType">
+									<option value="G">굿즈</option>
+									<option value="S">스낵바</option>
+								</select>	
 			  				</div>
 		  			</div>
-					<br/>
+		  			
 					<div class="row">
-						<label for="inputProdName" class="col-sm-3 control-label">상품명</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="inputProdName" name="prodName" placeholder="상품명">
+						<label for="inputProdName" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품명</strong></label>
+							<div class="col-sm-4">
+								<input type="text" class="inputtype" id="inputProdName" name="prodName" placeholder="상품명">
 							</div>
-							<span class="col-sm-6"></span>
 					</div>
-					<br/>
+					
+				
 					<div class="row">
-						<label for="inputProdDetail" class="col-sm-3 control-label">상품상세정보</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputProdDetail" name="prodDetail" placeholder="상세정보">
+						<label for="inputProdDetail" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품상세정보</strong></label>
+						<div class="col-sm-4">
+							<input type="text" class="inputtype" id="inputProdDetail" name="prodDetail" placeholder="상세정보">
 						</div>
 					</div>
-					<br/>
+					
 					<div class="row">
-						<label for="inputProdSetInfo" class="col-sm-3 control-label">상품구성정보</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="inputProdDetail" name="prodSetInfo" placeholder="상세정보">
+						<label for="inputProdSetInfo" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품구성정보</strong></label>
+						<div class="col-sm-4">
+							<input type="text" class="inputtype" id="inputProdDetail" name="prodSetInfo" placeholder="상세정보">
 						</div>
 					</div>
-					<br/>
+					
+					
 					<div class="row">
-						<label for="inputStock" class="col-sm-3 control-label">상품수량</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputStock" name="totalStock" placeholder="최소 수량은 1개 입니다.">
+						<label for="inputStock" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품수량</strong></label>
+						<div class="col-sm-4">
+							<input type="text" class="inputtype" id="inputStock" name="totalStock" placeholder="최소 수량은 1개 입니다.">
 	<!-- 					<input type="hidden"  class="form-control" id="inputStock" name="stock"> -->
 						</div>
-						<span class="col-sm-6"></span>
 					</div>
-					<br/>
+					
+				
 					<div class="row">
-						<label for="salesOpenDate" class="col-sm-3 control-label">판매시작일</label>
-						<div class="col-sm-3">
-							<input type="date" class="form-control" id="salesOpenDate" name="salesOpenDate" readonly>
+						<label for="salesOpenDate" class="col-sm-offset-1 col-sm-3 control-label"><strong>판매시작일</strong></label>
+						<div class="col-sm-2">
+							<input type="date" class="inputtype" id="salesOpenDate" name="salesOpenDate" readonly>
 						</div>
-						<label for="salesEndDate" class="col-sm-3 control-label">판매종료일</label>
-						<div class="col-sm-3">
-							<input type="date" class="form-control" id="salesEndDate" name="salesEndDate" readonly>
+						<label for="salesEndDate" class="col-sm-3 control-label"><strong>판매종료일</strong></label>
+						<div class="col-sm-2">
+							<input type="date" class="inputtype" id="salesEndDate" name="salesEndDate" readonly>
 						</div>
-						<span class="col-sm-6"></span>
 					</div>
-					<br/>
+					
+			
 					<div class="row">
-						<label for="inputPrice" class="col-sm-3 control-label">가격</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="prodPrice" name="prodPrice" >
+						<label for="inputPrice" class="col-sm-offset-1 col-sm-3 control-label"><strong>가격</strong></label>
+						<div class="col-sm-4">
+							<input type="text" class="inputtype" id="prodPrice" name="prodPrice" >
 						</div>
-						<span class="col-sm-6"></span>
 					</div>
-					<br/>
+					
+					
+<!-- 					<div class="row">
+						<label for="inputPrice" class="col-sm-offset-1 col-sm-3 control-label"><strong>유효 기간</strong></label>
+						<div class="col-sm-4">
+							<input type="text" class="inputtype" id="expiryDate" name="expiryDate" >
+						</div>
+					</div>
+ -->					
+					
 					<div class="row">
-						<label for="inputPrice" class="col-sm-3 control-label">유효 기간</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control" id="expiryDate" name="expiryDate" >
+						<label for="inputFile" class="col-sm-offset-1 col-sm-3 control-label"><strong>상품이미지</strong></label>
+						<div class="col-sm-4">
+							<input type="file" class="inputtype" id="inputFile" name="file" >
 						</div>
-						<span class="col-sm-6"></span>
 					</div>
-					<br/>
-					<div class="row">
-						<label for="inputFile" class="col-sm-3 control-label">상품이미지</label>
-						<div class="col-sm-6">
-							<input type="file" class="form-control" id="inputFile" name="file" >
-						</div>
-						<span class="col-sm-3"></span>
-					</div>
-					<br/>
+					
+					
 					<div class="row">
 						<div class="col-sm-offset-3 col-sm-9">
 							<button type="button" class="btn btn-success">
@@ -169,8 +170,6 @@
 		
 						</div>
 					</div>
-			
-				</div>
 			</form>
 		</div>
 	</div>
@@ -179,7 +178,6 @@
 
    <!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -219,6 +217,7 @@
 			var expiryDate = $('input[name="expiryDate"]').val();
 			var detail = $('input[name="prodDetail"]').val();
 			var setInfo = $('input[name="prodSetInfo"]').val();
+			var file = $('input[name="file"]').val();
 			
 			var formData = new FormData();
 			formData.append('file',$('input[name="file"]')[0].files[0]);
@@ -259,14 +258,14 @@
 			$('#myModal').modal('show');
 			if($('input[name="file"]')[0].files[0] != null){
 				$.ajax({
-					url : 'json/uploadFile',
+					url : '/product/json/uploadFile',
 					method : 'post',
 					data : formData,
 					contentType:false,
 					processData:false,
 					success : function(){
-						window.setTimeout(modalOut,5000);
-						window.setTimeout(sendForm,5000);						
+						window.setTimeout(modalOut,4000);
+						window.setTimeout(sendForm,4000);						
 					},
 					error : function(jqXHR, status, error){
 						modalOut();
@@ -329,7 +328,7 @@
 		}
 		
 		function sendForm(){
-			$('form.add-product').attr('method','post').attr('action','addProduct').attr('enctype','multipart/form-data').submit();
+			$("#formData").attr('method','post').attr('action','addProduct').attr('enctype','multipart/form-data').submit();
 		}
 		
 	</script>
@@ -338,6 +337,72 @@
 	 	html{
         	height: auto;
   		}
-	 
+	 #body {
+	/* background-color: #EDEDED; */
+	background-color: #e0e0e0;
+	margin-top: 100px;
+	margin-bottom: 5px;
+	padding-top: -50px;
+	/* padding-top: 10px;
+	    padding-bottom: 10px; */
+	/*padding-left: 20px;
+	    padding-right: 20px; */
+	/* margin-left: 1px;
+	    margin-right: 1px; */
+	padding-bottom: 10px;
+	border-radius: 15px;
+	border-color: #000000;
+	border-width: 30px;
+	box-shadow: inset 0 0 10px #a0a0a0;
+}
+
+html {
+	height: auto;
+}
+
+.inputtype {
+	margin-bottom: 10px;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+	position: relative;
+}
+
+input, #prodType {
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+}
+
+.ui-datepicker {
+	border: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding: 0;
+	margin-left: auto;
+	margin-top: 15px;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
+	position: relative;
+}
 	</style>
 </html>

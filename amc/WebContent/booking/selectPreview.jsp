@@ -16,8 +16,8 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 		
   <script type="text/javascript">
 //타이머셋팅
@@ -152,8 +152,8 @@
                            $(JSONData).each(
                               function(){
                             	  
-                           	   str+= '<li class="time-select__item abc" name="screenTime">시간 : '+this.screenOpenTime
-                           	   +     ' '+'&nbsp;'+' 티켓오픈시간 : '+this.ticketOpenDate
+                           	   str+= '<li class="time-select__item abc" name="screenTime">상영시간 : '+this.screenOpenTime
+                           	   +     ' '+'&nbsp;'+' 티켓오픈시간 : '+this.ticketOpenDate.substr(0,19)+'&nbsp;&nbsp;'
                            	   +'<input type="hidden" name="contNo" value="'+this.screenContentNo+'">'
                            	   +'<input type="hidden" name="ticketOpenDate" value="'+this.ticketOpenDate+'">'
                            	   +'<input type="hidden" name="screenTime" value="'+this.screenOpenTime+'">'
@@ -319,10 +319,8 @@
                
               <div class="time-select time-select--wide">
                         <div class="time-select__group group--first">
-                            <div class="col-sm-3">
-                                <p class="time-select__place abc">랜덤좌석수(선택) &nbsp;&nbsp;
-                                
-                                </p>
+                            <div class="col-sm-3" >
+                              <p class="time-select__place abc">랜덤좌석수(선택) &nbsp;&nbsp; </p>                                                           
                             </div>
                             
                             <div class="col-sm-6 items-wrap">				                            		  							  
@@ -331,6 +329,9 @@
 					              <option value="1">1석</option>
 					              <option value="2">2석</option>	                     
 					          </select>
+					          <div class="abc"> 
+					          	<br>랜덤으로 선택되는 좌석의 범위는 뒤에서 4번째 줄까지입니다.
+					          	<br>랜덤좌석은 결제페이지로 이동하지 않아도 바로 좌석이 홀딩됩니다.</div>
                             </div>                    
                         </div>
                    </div>
@@ -340,7 +341,7 @@
 				<br><br>
                 <div class="choose-indector choose-indector--time abc">
                 <div class="row" style="padding:10px;">
-                    <strong>Choosen &nbsp; </strong>
+                    <strong>Choosen : &nbsp; </strong>
                     <span class="choosen-area">
                     	<span class="item"></span>
 						<span class="item"></span>
@@ -349,7 +350,7 @@
 					</span>
 				</div >
 				<div class="row abc" style="padding:10px;">
-					<strong>티켓 오픈까지 남은시간 &nbsp; </strong>
+					<strong>티켓 오픈까지 남은시간 : &nbsp; </strong>
                     <span class="choosen-area">
                     	<span id="dpTime"></span>
 					</span>
@@ -492,7 +493,8 @@ a.disabled {
 
 }
 .abc{
-	  font-family: 'Hanna', sans-serif; 
+  /*font-family: 'Hanna', sans-serif;*/
+  font-family: 'Jeju Gothic', sans-serif; 
 }
 </style>
 </html>

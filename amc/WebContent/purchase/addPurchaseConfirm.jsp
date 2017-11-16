@@ -1,113 +1,505 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
-<%@ page pageEncoding="EUC-KR" %>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<% int index = (int)(java.lang.Math.random()*3.0); %>
-
-<!DOCTYPE html>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!doctype html>
 <html>
 <head>
-   <!-- Basic Page Needs -->
+	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMC ∞·¡¶øœ∑·</title>
+        <title>Americode Cinema-ProductConfirm</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+    
+    <!--  Í∏∞Ï°¥ src -->
+    	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	
+		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
+		<!--  font from googleApi -->
+		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
+
+<style>
+	.promo--short .promo__head {
+	  color: #4c4145;
+	  position: relative;
+	  display: inline-block;
+	  margin-bottom: 6px;
+	  margin-top: 8px;
+	}
+	.promo--short .promo__head:before {
+	  content: '';
+	  background-image: url(../images/components/wave-dark.svg);
+	  background-repeat: no-repeat;
+	  background-size: 84px 8px;
+	  width: 84px;
+	  height: 8px;
+	  position: absolute;
+	  top: 8px;
+	  left: -116px;
+	}
+	.promo--short .promo__head:after {
+	  content: '';
+	  background-image: url(../images/components/wave-dark.svg);
+	  background-repeat: no-repeat;
+	  background-size: 84px 8px;
+	  width: 84px;
+	  height: 8px;
+	  position: absolute;
+	  top: 8px;
+	  right: -116px;
+	}
+	.content__text{
+	 /*font-family: 'Jeju Gothic', sans-serif;*/
+	  font-family: 'Hanna', sans-serif; 
+	 
+	}
+	
+	 
+	 .contact-info {
+	  text-align: left;
+	}
+	.contact-info .contact-info__field {
+	  position: relative;
+	  width: 100%;
+	  display: inline-block;
+	  margin-right: 3px;
+	}
+	.contact-info .contact-info__field .form__mail {
+	  padding-left: 60px;
+	}
+	.contact-info .contact-info__field:before {
+	  content: '';
+	  width:70px; /* 39px; */ 
+	  height: 39px;
+	  -webkit-border-radius: 3px 0 0 3px;
+	  -moz-border-radius: 3px 0 0 3px;
+	  border-radius: 3px 0 0 3px;
+	  background-color: #4c4145;
+	  position: absolute;
+	  top: 0px;
+	  left: 0;
+	}
+	.contact-info .contact-info__field:after {
+	  content: '';
+	  color: #b4b1b2;
+	  font: 13px;
+	  position: absolute;
+	  top: 10px;
+	  left: 15px;
+	}
+	.contact-info .contact-info__field-mail:after {
+	  content: "\f0e0";
+	  left: 13px;
+	}
+	.contact-info .contact-info__field-tel:after {
+	  content: "\f095";
+	}
+	.ticket-control .list--download {
+	  border-radius: 3px 0 0 3px;
+	  margin-right: -5px;
+	}
+	.watchlist list--download {
+		margin-left : -10px;
+		color:white;
+	}
+	dl {
+	  margin-top: 0;
+	  margin-bottom: 20px;
+	}
+	dt,
+	dd {
+	  line-height: 1.42857143;
+	  
+	}
+	dt {
+	  font-weight: bold;
+	}
+	dd {
+	  margin-left: 0;
+	}
+	@media (min-width: 768px) {
+	  .dl-horizontal dt {
+	    float: left;
+	    width: 160px;
+	    clear: left;
+	    text-align: right;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    color: #ffffff;
+	  }
+	  .dl-horizontal dd {
+	    margin-left: 180px;
+	    color: #ffffff;
+	  }
+	}
+	@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 25px;
+	padding-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #4c4145;
+	text-transform: uppercase;
+	background-image: url(../images/components/scarf.png);
+	-webkit-background-size: 21px 6px;
+	background-size: 21px 6px;
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+html {
+	height: auto;
+}
+
+.movie__images {
+	width: 10px;
+}
+
+.slick-prev:before, .slick-next:before {
+	color: #ffd564;
+}
+
+.comment-form {
+	margin-bottom: 60px;
+}
+
+.comment-form .movieComment__text {
+	width: 100%;
+	min-height: 78px;
+	padding: 8px 19px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #ffffff;
+	border: solid 1px #dbdee1;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+.comment-form .movieComment__info {
+	margin-top: 19px;
+	font: 13px 'Roboto', sans-serif;
+	color: #969b9f;
+	display: inline-block;
+}
+
+.comment-form .movieComment__btn {
+	float: right;
+	margin-top: 9px;
+}
+
+.comment {
+	margin-bottom: 40px;
+}
+
+.comment .movieComment__text {
+	width: 100%;
+	min-height: 78px;
+	padding: 8px 19px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #ffffff;
+	border: solid 1px #dbdee1;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+.comment .movieComment__info {
+	margin-top: 19px;
+	font: 13px 'Roboto', sans-serif;
+	color: #969b9f;
+	display: inline-block;
+}
+
+.comment .movieComment__btn {
+	float: right;
+	margin-top: 9px;
+}
+
+.comment .comment__user {
+	font-size: 18px;
+	margin-bottom: 20px;
+	font-weight: bold;
+	position: relative;
+	overflow: hidden;
+}
+
+.comment .comment__movieComment {
+	font-size: 14px;
+	line-height: 14px;
+}
+
+.comment .comment__regDate {
+	font-size: 12px;
+	color: #969b9f;
+	line-height: 14px;
+}
+
+.trailer {
+	position: relative;
+	width: 100%;
+	height: 0;
+	padding-bottom: 56.25%;
+}
+
+#realTimeSearch {
+	width: 100%;
+	height: 250px;
+}
+
+section {
+	padding-top: 30px
+}
+
+#heartempty {
+	padding: 5px, 5px, 5px, 5px;
+	color: #fe505a;
+}
+
+#wish {
+	margin-top: 50px;
+}
+
+.movie .movie__title {
+	position: relative;
+	font-size: 20px;
+	font-family: 'Jeju Gothic', sans-serif;
+	color: #ffffff;
+	margin-bottom: 0px;
+}
+
+.movie .movie__time {
+	position: relative;
+	font-size: 13px;
+	color: #ffffff;
+	margin-bottom: 0px;
+	padding-left: 20px;
+}
+
+.getMovie {
+	margin-top: 50px;
+	/* width: 100%;
+	height: 100%;
+	padding: 15px 15px 15px 15px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #ffffff;
+	border: solid 1px #ffd564;
+	font-size: 13px;
+	color: #b4b1b2;
+	padding: 8px 19px;
+	-webkit-border-radius: 3px; */
+}
+.devider-huge {
+	width: 100%;
+	height: 3px;
+	background-color: #ffffff;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+img.movie__images {
+    vertical-align: middle;
+    width: 50px;
+    float-left:0px;
+    padding-left:0px;
+    position:relative;
+    left:1000px
+}
+
+#prodImage {
+    vertical-align: middle;
+    height:auto;
+    width: 50px;
+    position:relative;
+    right:100px
+}
+
+p {
+    font-size: 15px;
+    line-height: 28px;
+    color: #ffffff;
+    margin-bottom: 28px;
+}
+
+p.movie__time {
+    font-size: 15px;
+    line-height: 28px;
+    color: #ffffff;
+    margin-bottom: 28px;
+}
+
+b, strong {
+    font-weight: bolder;
+    color: #ffffff;
+}
+p.movie__option {
+    font-size: 15px;
+    line-height: 28px;
+    color: #ffffff;
+    margin-bottom: 28px;
+    text-align:left;
+}
+#purchasetext {
+	position: relative;
+	left: 300px;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+ }
+
+
+</style>
 </head>
-
+		
 <body>
-	<div class="wrapper">
-    	<!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div> 
-        <header class="header-wrapper header-wrapper--home">
-			<jsp:include page="/layout/topToolbar.jsp" />
-   		</header>
-	
-		<!-- ∏¥ﬁ ƒ¡≈Ÿ√˜∞° ≥™ø¿¥¬ ∫Œ∫– ¿Œ∞«∞° -->
-		<div class="ui thin info modal"> 
-		  <i class="close icon"></i>
-		    <div class="content" >
-		    </div>
-		</div>  
-
-<div class="modal-header"  align="right">
-	<button type="button" class="close" data-dismiss="modal" >
- 		<i class="close icon"></i>
- 	</button>
-</div>
-
-<div class="modal-body">
-		<div class="container" id="body">	
-			<div class="page-header col-sm-offset-2 col-sm-10">
-				<h1>¡÷πÆ¿Ã øœ∑·µ«æ˙Ω¿¥œ¥Ÿ.</h1>
-			</div>
-		<div align="center">	
-			<dl class="dl-horizontal">
-				<dt>ªÛ«∞∏Ì</dt>
-				<dd>${purchase.purchaseProd.prodName}</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>±∏∏≈ ºˆ∑Æ</dt>
-				<dd>${purchase.orderStock} ∞≥</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>∞°∞›</dt>
-				<dd>${purchase.totalProdPrice} ø¯</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>∞·¡¶ πÊπ˝</dt>
-				<dd>${purchase.paymentOption=='1'? '«ˆ±›±∏∏≈':'Ω≈øÎ±∏∏≈'}</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>πﬁ¿∏Ω« ∫–</dt>
-				<dd>${purchase.receiverName}</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>ø¨∂Ù√≥</dt>
-				<dd>${purchase.receiverPhone1}&emsp;${purchase.receiverPhone2}&emsp;${purchase.receiverPhone3}</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>πËº€¡ˆ</dt>
-				<dd>${purchase.addrDlvy}</dd>
-			</dl>
-			<dl class="dl-horizontal">
-				<dt>ªÛºº¡÷º“</dt>
-				<dd>${purchase.addrDlvyDetail}</dd>
-			</dl>
-			<div class="btn-group" role="group" algin="right">
-				<a href="#" class="add btn btn-success" role="button">»Æ¿Œ</a>
-			</div>
-			</div>
+ <!-- Banner -->
+         	<!-- Banner -->
+		<div class="banner-top">
+			<img alt='top banner' src="../images/banners/space.jpg">
 		</div>
+		<header class="header-wrapper header-wrapper--home">
+			<!-- ToolBar Start /////////////////////////////////////-->
+			<jsp:include page="/layout/topToolbar.jsp" />
+			<!-- ToolBar End /////////////////////////////////////-->
+		</header>
+   		<br><br><br>
+	<div class="container">
+	    <!-- Promo boxes -->
+    	<div class="content-wrapper">
+                  
+                
+                <div class="col-sm-3">
+                  <div class="promo promo-field">
+                      <div class="promo__head">A.Movie app</div>
+                      <div class="promo__describe">for all smartphones<br> and tablets</div>
+                      <div class="promo__content">
+                          <ul>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/apple-store.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/google-play.svg"></a></li>
+                              <li class="store-variant"><a href="#"><img alt='' src="/images/windows-store.svg"></a></li>
+                          </ul>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="promo promo--short">
+                      <img class="promo__images" alt='' src="/images/uploadFiles/images.jpg">
+                      <div class="promo__head">My Product</div>
+                      <div class="promo__describe"><span class="abc">Ï£ºÎ¨∏Ïù¥ ÏôÑÎ£åÎêòÏóàÏäµÎãàÎã§!</span></div>
+                      <div class="promo__content"></div>
+                  </div>
+                  <div class="promo promo--info">
+                      <div class="promo__content" align="right">
+                          <p class="content__text" >
+							<div class="movie__info ">
+								<div class="col-sm-4 col-md-3 movie-mobile">
+									<div class="movie__images" id="prodImage">
+										<img alt='' src="/images/uploadFiles/${purchase.purchaseProd.prodImage}" width=400px/>
+									</div>
+		
+								</div>
+		
+								<div class="col-sm-8 col-md-9" id="purchasetext">
+									<p class="movie__option">
+										<strong>ÏÉÅÌíàÎ™Ö : </strong>${purchase.purchaseProd.prodName}</p>
+									<p class="movie__option">
+										<strong>Íµ¨Îß§ÏàòÎüâ : </strong>${purchase.orderStock} Í∞ú</p>
+									<p class="movie__option">
+										<strong>Í∞ÄÍ≤© : </strong>${purchase.totalProdPrice} Ïõê</p>
+									<p class="movie__option">
+										<strong>Í≤∞Ï†úÎ∞©Î≤ï : </strong>${purchase.paymentOption=='1'? 'ÌòÑÍ∏àÍµ¨Îß§':'Ïã†Ïö©Íµ¨Îß§'}</p>
+									<p class="movie__option">
+										<strong>Î∞õÏúºÏã§ Î∂Ñ: </strong>${purchase.receiverName}</p>
+									<p class="movie__option">
+										<strong>Ïó∞ÎùΩÏ≤ò: </strong>${purchase.receiverPhone1}&emsp;${purchase.receiverPhone2}&emsp;${purchase.receiverPhone3}</p>
+									<p class="movie__option">
+										<strong>Î∞∞ÏÜ°ÏßÄ: </strong>${purchase.addrDlvy}</p>
+									<p class="movie__option">
+										<strong>ÏÉÅÏÑ∏Ï£ºÏÜå: </strong>${purchase.addrDlvyDetail}</p>
+								</div>
+							</div>
+						  </p>
+                      </div>
+   				
+		   				<div class="row" style="margin-left:2.3px; margin-top:5px; algin:right;" align="right">
+							<a href="#" class="btn btn-md btn--warning btn-wider btn--follow abc" role="button" id="success">Ìôï&nbsp;&nbsp;&nbsp;Ïù∏</a>
+						</div>
+                  </div>
+                </div>
+            	</div>
+		<!--  end of promo box -->
 	</div>
-</div>
 
-<div class="modal-footer"  align="right">
-<br/><br/><br/>
-</div>
-	
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
-	
 </body>
+<script type="text/javascript">
+      $(document).ready(function() {
+           if($('html').height() < window.outerHeight){
+          	$('html').css('height', '100%');
+          } 
+      });
+</script>
 	<script type="text/javascript">
 		$(function(){
-			$('a.btn-success:contains("»Æ¿Œ")').bind('click',function(){
+			$('#success').bind('click',function(){
 				self.location.href='getPurchaseList?searchKeyword=purchaseList&searchCondition=${sessionScope.user.userId}';
 			});
 		});
 	</script>
-	<style type="text/css">
-	 	#body{ padding-top: 100px; }
-		html{
-	        height: auto;
-	  	} 
-		 
-	</style>
-		
 
+
+<style type="text/css">
+ html{
+  height: auto;
+} 
+.abc{
+	  font-family: 'Hanna', sans-serif; 
+	 }
+</style>
 </html>
+

@@ -29,19 +29,25 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users	( user_id, user_name, password, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
-		VALUES	 	( #{userId}, #{userName}, #{password}, 'user', #{birth}, 
-						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
+		INTO users	( user_id, user_name, 
+						<if test="password!=null">password, deleteuser_flag,</if>
+						<if test='(password==null and snsLogin == "naver")'>deleteuser_flag,</if>
+						<if test='(password==null and snsLogin == "kakao")'>deleteuser_flag,</if>
+						role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
+		VALUES	 	( #{userId}, #{userName}, 
+						<if test="password!=null">#{password}, 'Y',</if>
+						<if test='(password==null and snsLogin == "naver")'>'R',</if>
+						<if test='(password==null and snsLogin == "kakao")'>'O',</if>
+						'user', #{birth}, #{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
 	 </insert>
 	 
 	<!-- SQL : INSERT -->
-	<insert 	id="snsAddUser"		parameterType="user" >
+<!-- 	<insert 	id="snsAddUser"		parameterType="user" >
 	 	INSERT
 		INTO users	( user_id, user_name, role, birth, phone1, phone2, phone3, sl_yn, gender, addr, addr_detail, user_regdate, user_no) 
-		VALUES	 	( #{userId}, #{userName}, 'user', #{birth}, 
-						#{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
+		VALUES	 	( #{userId}, #{userName}, 'user', #{birth}, #{phone1}, #{phone2}, #{phone3}, #{calendarType}, #{gender}, #{addr}, #{addrDetail}, SYSDATE, seq_user_no.nextval)
 	 </insert>
-	 
+ -->	 
 	 <!-- SQL : UPDATE (DeleteUser)-->
 	 <update	id="deleteUser"	parameterType="user" >
 	   	UPDATE users
@@ -64,15 +70,17 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="deleteCheck"	parameterType="user"	resultMap="userSelectMap">
-		SELECT deleteuser_flag 		
+		SELECT deleteuser_flag, role 		
 		FROM users 
-		WHERE user_name = #{userName} and user_id = #{value} and password = #{password}
+		WHERE user_name = #{userName} and 
+			  user_id = #{userId}  
+			  <if test="password!=''"> and password = #{password}</if>
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_id, user_name, birth, sl_yn, gender, password, role, phone1, phone2, phone3, user_regdate, addr, addr_detail, user_no  		
+		user_id, user_name, birth, sl_yn, gender, password, role, phone1, phone2, phone3, user_regdate, addr, addr_detail, user_no, deleteuser_flag  		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -105,7 +113,7 @@
 	   	UPDATE users
 	   		<set>
 		   		user_name 	= #{userName},
-		   		password	= #{password},
+		   		<if test="password !=null">password = #{password},</if>
 				phone1		= #{phone1},
 				phone2		= #{phone2},
 				phone3		= #{phone3},
@@ -118,9 +126,11 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getId"	parameterType="user"	resultMap="userSelectMap">
 		SELECT
-		user_id, password, role 		
+		user_id, password, role, deleteuser_flag 		
 		FROM users 
-		WHERE user_name = #{userName} and phone1 = #{phone1} and phone2 = #{phone2} and phone3 = #{phone3} and birth = #{birth}
+		WHERE user_name = #{userName} and phone1 = #{phone1} and phone2 = #{phone2} and phone3 = #{phone3} 
+		<if test="birth!=null">and birth = #{birth}</if>
+		<if test="userId!=null">and user_id = #{userId}</if>
 	 </select>
 	 
  	 <!-- SQL : SELECT ONE -->

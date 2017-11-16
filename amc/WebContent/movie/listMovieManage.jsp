@@ -57,8 +57,10 @@
 							<c:forEach var="movie" items="${list }">
 								<c:set var="i" value="${i+1 }" />
 
-								<div class="col-xs-6 col-sm-3 cinema-item">
-									<div class="cinema">
+								<!-- <div class="col-xs-6 col-sm-3 cinema-item"> -->
+									<div class="col-xs-12 col-sm-3">
+									 <div class=" cinema-item">
+									  <div class="cinema">
 										<a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=manage' class="cinema__images"> 
 											<img id="poster" alt='' src="${movie.postUrl }"> 
 										</a> 
@@ -68,20 +70,19 @@
 										</p>
 									</div>
 								</div>
+							  </div>
 
 							</c:forEach>
 						</div>
 					</div>
-
-
 
 					<div class="coloum-wrapper">
 							<div class="pagination paginatioon--full">
 								<c:if test="${resultPage.currentPage != 1 }">
 									<a href='#' class="pagination__prev">prev</a>
 								</c:if>
-							
-								<c:if test="${resultPage.endUnitPage !=  resultPage.currentPage}">
+
+								<c:if test="${resultPage.maxPage !=  resultPage.currentPage}">					
 									<a href='#' class="pagination__next">next</a>
 								</c:if>
 							</div>
@@ -123,7 +124,7 @@ function fncGetPageList(currentPage) {
 }
 
 
-    $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
+ 
     $(function() {
         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
         $("button[name='search']").on("click", function() {
@@ -164,21 +165,44 @@ function fncGetPageList(currentPage) {
   			});
   			
   		});
-           
+     });
+    
+    function changeCSS() {
+        if ($(document).innerWidth() < 768) {
 
-        
+            $(".cinema-item").css("width", "fit-content");
+        } else {
 
-    });
+            $(".cinema-item").css("width", "auto");
+        }
+
+        if ($(document).innerWidth() >= 768 && $(document).innerWidth() < 990) {
+   
+            $(".cinema-item").css("height", "500px");
+        } else {
+     
+            $(".cinema-item").css("height", "auto");
+        }
+
+    }
+
+    
 
     $(document).ready(function() {
         init_CinemaList();
         
-        if($('html').height() < window.outerHeight){
+        /* if($('html').height() < window.outerHeight){
         	$('html').css('height', '100%');
-        }
+        } */
         
+        $('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
         
-        $("#movie-search-sort").css("width", "200px");
+        $("#movie-search-sort").css("width", "200px");        
+        changeCSS()
+        $(window).resize(function() {
+            changeCSS();
+        })
+        
     });
 </script>
 
@@ -217,6 +241,11 @@ body {
 	margin-top: 5px;
 }
 
+.countPage {
+	font-size: 13px;
+	margin-top: 10px;
+}
+
 #poster {
 	height: calc(50vh - 100px);
 	width: auto;
@@ -227,6 +256,45 @@ body {
 }
 .page-heading {
 	margin-top: 100px
+}
+
+
+.search {
+	margin-right: 30px;
+}
+
+.page-heading {
+	margin-top: 100px
+}
+
+option {
+	width: 140px;
+	top: 37px !important;
+	border: none;
+	padding: 14px 7px;
+	z-index: 23;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+}
+
+
+input, select {
+	height: 30px;
+	width: auto;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+select {
+	font-family: 'Jeju Gothic', sans-serif;
 }
 
 .cinema .cinema__images:before {
@@ -244,10 +312,31 @@ body {
 	    -o-transition: 0.5s;
 	    transition: 0.5s;
 	   }
+
+
+.cinema-item {
+	border: dashed 1px #969b9f;
+	margin: 5px;
+	padding-top: 15px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 5px;
+	/* 	border-radius: 10px; */
+}
 	   
-html{
+/* html{
  	     height: auto;
       }
+       */
+
+p {
+	font-size: 13px;
+	font-weight: lighter;
+}
+
+p strong {
+	font-weight: nomal;
+}
       
 
 </style>

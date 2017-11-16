@@ -86,5 +86,10 @@ public class AlarmDAOImpl implements AlarmDAO {
 	public int deleteAlarm(Alarm alarm) {
 		return sqlSession.delete("AlarmMapper.deleteAlarm", alarm);
 	}
+
+	@Override
+	public List<Alarm> getCancelAlarmOfScreenContentNo(Map<String, Object> map) {
+		return sqlSession.selectList("AlarmMapper.getCancelAlarmOfScreenContentNo",map);
+	}
 	
 }

@@ -155,12 +155,16 @@ public class SNSController {
 		System.out.println("/sns/naverLogin : POST");
 		System.out.println("::"+userId);
 		User dbUser=userService.getUser(userId);
-		
+
 		if(dbUser==null){
 			System.out.println("naverLogin GET 널 값이다");
 			model.addAttribute("email",userId);
 			model.addAttribute("snslogin","naver");
-			
+			return "forward:/user/addUser.jsp";
+		}else if(dbUser.getDeleteUserFlag().equals("O")){
+			System.out.println("naverLogin GET 널 값이다");
+			model.addAttribute("email",userId);
+			model.addAttribute("snslogin","naver");
 			return "forward:/user/addUser.jsp";
 		}else{
 			session.setAttribute("user", dbUser);

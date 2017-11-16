@@ -1065,7 +1065,7 @@ function init_MovieList () {
                     $(this).parents('.movie--preview').find('.time-select').slideToggle(500);
                 });
 
-                $('.time-select__item').click(function (){
+               $('.time-select__item').click(function (){
                     $('.time-select__item').removeClass('active');
                     $(this).addClass('active');
                 });
