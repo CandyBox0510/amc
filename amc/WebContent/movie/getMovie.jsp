@@ -47,15 +47,15 @@
 						<h2 class="page-heading">영화 상세 정보</h2>
 					</c:if>
 
-					<div class="movie__info col-md-12 col-sm-12">
-						<div class="col-sm-4 col-md-3">
+					<div class="movie__info col-md-12">
+						<div class="col-md-4">
 							<div class="movie__images">
 								<img alt='' src="${movie. postUrl}">
 							</div>
 
 						</div>
 
-						<div class="col-sm-8 col-md-9">
+						<div class="col-md-8 movieOption">
 
 
 							<c:if test="${menu != 'preview' }">
@@ -67,7 +67,7 @@
 								</p>
 							</c:if>
 
-							<p class="movie__time">${movie.showTm }분</p>
+							<p class="movie__time">&nbsp; ${movie.showTm }분</p>
 
 							<p class="movie__option">
 								<strong>개봉일 : </strong>${movie.openDt }</p>
@@ -79,37 +79,58 @@
 								<strong>장르 : </strong>${movie.genres }</p>
 							<p class="movie__option">
 								<strong>관람등급: </strong>${movie.watchGradeNm }</p>
+							<p class="buttons movie__option">
+								<span id="wish">
+									<i class="fa fa-heart-o fa-2x" id="heartempty" onClick="javascript:addWishList()"></i>
+								</span>
+								<span id="ticketOpen">
+									<c:if test="${menu == 'preview' }">
+										<c:choose>
+											<c:when test="${checkOpenAlarm eq  1}">
+												<i class="fa fa-bell fa-2x" id="ticketIcon"></i>
+											</c:when>
+											<c:otherwise>
+												<i class="fa fa-bell-o fa-2x" id="ticketIcon"></i>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+								</span>
+								<span id="share">
+									<i class="fa fa-facebook fa-2x" onClick="javascript:posting()"></i>
+								</span>
+								<c:if test="${menu == 'preview' }">
+									<p class="movie__option text-center ticketOpenDate">
+										<span id="dpTime"> </span>
+									</p>
+								</c:if>
+							<div class=" movie__btns--full">
+								<c:if test="${menu != 'preview' }">
+									<a href="#" class="btn btn-md btn--danger" name="booking">예매하기</a>
+								</c:if>
 
-							<span id="wish">
-								<i class="fa fa-heart-o fa-2x" id="heartempty" onClick="javascript:addWishList()"></i>
-							</span>
-							<button class="btn btn-md btn--default" onClick="javascript:posting()">
-								<i class="fa fa-facebook"> &nbsp; </i>공유하기
-							</button>
-							<c:if test="${menu == 'preview' }">
-								<button class="btn btn-md btn--slow" name="ticketOpen">
-									<i class="fa fa-bell" id="ticketIcon"></i> &nbsp; 티켓오픈알림
-								</button>
-							</c:if>
-							<c:if test="${menu == 'preview' }">
-								<button class="btn btn-md btn--slow" onClick="location.href='/movie/getMovieList?menu=preview'">
-									<i class="fa fa-bars"></i> &nbsp; 목록으로
-								</button>
 
-							</c:if>
-							<c:if test="${menu != 'preview' }">
-								<button class="btn btn-md btn--slow" onClick="history.go(-1);">
-									<i class="fa fa-bars"></i> &nbsp; 목록으로
-								</button>
+								<c:choose>
+									<c:when test="${menu == 'preview' }">
+										<a href="#" class="btn btn-md btn--slow" name="listMovie" onClick="location.href='/movie/getMovieList?menu=preview'">
+											<i class="fa bars"></i>&nbsp; 목록으로
+										</a>
 
-							</c:if>
+									</c:when>
+									<c:otherwise>
+										<a href="#" class="btn btn-md btn--slow" name="listMovie" onClick="history.go(-1);">
+											<i class="fa fa-bars"></i>&nbsp; 목록으로
+										</a>
+									</c:otherwise>
+								</c:choose>
 
 
 
 
-							<div class="movie__btns movie__btns--full">
-								<a href="#" class="btn btn-md btn--danger" name="booking">예매하기</a>
 							</div>
+
+
+
+							<span id="listMovie"> </span>
 
 
 
@@ -227,6 +248,8 @@
 
 		<div class="clearfix">
 			<div id="hidden">
+
+				<input type="hidden" name='ticketOpenDate' value="${screenContent.ticketOpenDate }">
 				<input type="hidden" name='movieNm' value="${movie.movieNm }">
 				<input type="hidden" name='movieNo' value="${movie.movieNo }">
 				<input type="hidden" name='userId' value="${user.userId }">
@@ -246,7 +269,7 @@
 				<input type="hidden" name="age60s" value="${movie.age60s}" />
 				<input type="hidden" name="age60sMore" value="${movie.age60sMore}" />
 				<input type="hidden" name="buttonFlag" id="buttonFlag" value="">
-
+				<input type="hidden" name="previewFlag" id="previewFlag" value="">
 				<form class="search">
 					<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 					<input type="hidden" id="startRowNum" name="startRowNum" value="0" />
@@ -376,7 +399,7 @@
 
         window.fbAsyncInit = function() {
             FB.init({
-                // appId      : '688547171338913',
+                 appId      : '1956483321340947',
                 xfbml : true,
                 version : 'v2.10'
             });
@@ -390,7 +413,7 @@
             }
             js = d.createElement(s);
             js.id = id;
-            js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.10&appId=688547171338913';
+            js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.10&appId=1956483321340947';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
@@ -403,9 +426,7 @@
 
                         'og:title' : 'AMC',
                         'og:description' : '영화 ' + movieNm + '상세보기',
-                        'og:url' : 'http://192.168.0.32:8080/movie/getMovie?movieNo=' + movieNo + '&menu=' + menu,
-
-                        'og:image' : 'http://192.168.0.32:8080/images/common/AMC_Logo.png'
+                        'og:url' : 'http://183.98.215.171:8000/movie/getMovie?movieNo=' + movieNo + '&menu=' + menu
 
                     }
                 }),
@@ -415,6 +436,75 @@
             }, function(response) {
             });
 
+        }
+
+        function dpTime() {
+
+            console.log("open : " + ticketOpenDate);
+            var templist = ticketOpenDate.split('.');
+            console.log("오픈시간 : " + templist[0]);
+
+            var now = new Date();
+            var screenTime = new Date(templist[0]);
+            //var screenTime = new Date('17/10/22 12:00:00');
+            console.log("now : " + now); //mon oct 16 2017 10:51:31 GMT+0900
+            console.log("now.getTime() : " + now.getTime()); //1508118721142
+
+            var _second = 1000;
+            var _minute = _second * 60;
+            var _hour = _minute * 60;
+            var _day = _hour * 24;
+            var timer;
+
+            var diff = (screenTime.getTime() - now.getTime());
+
+            var days = Math.floor(diff / _day);
+            var hours = Math.floor((diff % _day) / _hour);
+            var minutes = Math.floor((diff % _hour) / _minute);
+            var seconds = Math.floor((diff % _minute) / _second);
+
+            if (diff < 1) {
+
+                $("#dpTime").html("현재 티켓 구매 가능합니다.");
+            }
+
+            if (days < 1) {
+                days = -1;
+            }
+
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+
+            if (diff < 1) {
+                display = '<a href="#" class="btn btn-md btn--danger" name="booking">예매하기</a>'
+                document.getElementById("dpTime").innerHTML = display;
+                $(".ticketOpenDate").css("background-color", "#ffffff");
+                $(".ticketOpenDate").removeClass().addClass("movie__option ticketOpenDate");
+                
+            } else {
+                display = '<strong>${screenContent.ticketOpenDate}</strong>' + ' 티켓 오픈!' + '	<br> <span class="emptyTime">'
+                if (days == -1) {
+                    display += hours + ":" + minutes + ":" + seconds
+
+                } else {
+
+                    display += days + "일 " + hours + ":" + minutes + ":" + seconds
+
+                }
+
+                display += '</span>'
+                document.getElementById("dpTime").innerHTML = display;
+                console.log("???" + display)
+            }
         }
 
         function addWishList() {
@@ -459,7 +549,7 @@
 
                 } else {
 
-                    $("#heartempty").removeClass().addClass("fa fa-heart-o fa-2x");
+                    $("#heartempty").removeClass().addClass("fa fa-heart-o fa-2x ");
 
                 }
 
@@ -474,12 +564,16 @@
             }).done(function(data) {
                 //정상 통신인 경우
                 if (data == 'add') {
-                    var msg = '오픈알림이 신청되었습니다.';
                     /* msg += '\n무슨영화 : ' + movie정보;
                      */
-                    alert(msg);
+
+                    display = '<i class="fa fa-bell fa-2x" id="ticketIcon"></i>'
+                    $("#ticketOpen").html(display);
+
                 } else {
-                    alert("오픈알림이 취소되었습니다.");
+
+                    display = '<i class="fa fa-bell-o fa-2x" id="ticketIcon"></i>'
+                    $("#ticketOpen").html(display);
                 }
             });
         } //end of addOpenAlarm function
@@ -691,6 +785,10 @@
         }
 
         $(document).ready(function() {
+            ticketOpenDate = $("input[name='ticketOpenDate']").val();
+
+            setInterval("dpTime();", 1000);
+
             movieNo = $("input[name='movieNo']").val();
             menu = $("input[name='menu']").val();
             userId = $("input[name='userId']").val();
@@ -762,7 +860,7 @@
                 }
 
             })
-            $("button[name='ticketOpen']").on("click", function() {
+            $("#ticketOpen").on("click", function() {
                 if (userId == "") {
                     alert('로그인 후 이용가능합니다')
                     $('.overlay').removeClass('close').addClass('open');
@@ -771,6 +869,22 @@
                 }
             })
         });
+
+        changeCSS()
+        $(window).resize(function() {
+            changeCSS();
+        })
+
+        function changeCSS() {
+            if ($(document).innerWidth() < 768) {
+
+                $(".movie__btns--full").css("position", "relative");
+            } else {
+
+                $(".movie__btns--full").css("position", "absolute");
+            }
+
+        }
     </script>
 
 
@@ -788,13 +902,6 @@
 	padding-left: 30px;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	color: #4c4145;
-	text-transform: uppercase;
-	background-image: url(../images/components/scarf.png);
-	-webkit-background-size: 21px 6px;
-	background-size: 21px 6px;
-	background-position: left center;
-	background-repeat: no-repeat;
 }
 
 body {
@@ -965,18 +1072,6 @@ section {
 
 .getMovie {
 	margin-top: 50px;
-	/* width: 100%;
-	height: 100%;
-	padding: 15px 15px 15px 15px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background-color: #ffffff;
-	border: solid 1px #ffd564;
-	font-size: 13px;
-	color: #b4b1b2;
-	padding: 8px 19px;
-	-webkit-border-radius: 3px; */
 }
 
 .fa-twitter {
@@ -989,6 +1084,57 @@ section {
 	background-color: #ffd564;
 	margin-bottom: 30px;
 	margin-top: 30px;
+}
+
+.buttons span {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top:20px;
+}
+
+#ticketIcon {
+	color: #4c4145;
+}
+
+#share {
+	color: #4267b2;
+}
+
+.movie__btns--full {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 10px;
+}
+
+.movieOption {
+	margin-top: 10px;
+}
+
+.ticketOpenDate {
+	background-color: #dbdee1;
+	padding: 10px 10px 10px 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	width: 50%;
+	margin-top: 10px;
+}
+
+.fa-2x {
+	font-size: 1.5em;
+}
+
+.movie .movie__images {
+	max-width: 100%;
+}
+
+.movie .movie__images img {
+	max-width: 100%;
+}
+
+.emptyTime {
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 18px;
 }
 </style>
 

@@ -1,6 +1,5 @@
 package com.amc.service.movie.impl;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,6 @@ import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieAPI;
 import com.amc.service.domain.MovieComment;
-import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
