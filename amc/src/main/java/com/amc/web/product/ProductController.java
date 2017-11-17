@@ -115,6 +115,7 @@ public class ProductController {
 		}
 		return "forward:getSnackProduct.jsp";
 	}
+
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.GET)
 	public String updateProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception{

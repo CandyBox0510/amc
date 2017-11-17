@@ -15,13 +15,8 @@
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
-<div class="modal-header"  align="right">
-	<button type="button" class="close" data-dismiss="modal" >
- 		<i class="close icon"></i>
- 	</button>
-</div>
 
-<div class="modal-body">	
+
 	<div class="wrapper">
 		<div class="container" id="body">
 			<div class="col-md-9" role="main" >
@@ -95,7 +90,10 @@
 				<!-- Progress bar -->
 	                <div class="col-sm-4">
 	                    <div class="progress">
-	                      <p class="progress__info">현재 판매량</p>
+	                      <!-- <p class="progress__info">현재 판매량</p> -->
+	                      <p class="progress__info">
+	                      	${param.menu eq 'search'? "현재 재고율" : "현재 판매율" }${product.salesStock}%
+	                      </p>
 	                      <div class="progress__bar" role="progressbar" data-level="${product.salesStock}">
 	                          <div class="progress__current" style="width: 0%;"></div>
 	                      </div>
@@ -105,11 +103,8 @@
 		</div>
 	</div>
 </div>	
-</div>
 
-<div class="modal-footer"  align="right">
-<br/><br/><br/>
-</div>
+
 
 <script src="../js/custom.js"></script>
 </body>
@@ -213,7 +208,7 @@
 	</script>
 
 <style type="text/css">
- 	#body{ padding-top: 0px; }
+ 	#body{ padding-top: 100px; }
  	.countPage {
 	  	font-size: 13px;
 	   	margin-top: 10px;
@@ -312,6 +307,24 @@ progress {
   border-radius: 3px;
   background-color: #4c4145;
 }
+.progress .progress__info {
+  font-weight: bold;
+  margin-bottom: 0px;
+    margin-top: 0px;
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #582cb9;
+    border-color: #582cb9;
+    position: relative;
+    left: 80px;
+}
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #be41e8;
+  border-color: #be41e8;
+}
+ 
 
 </style>
 

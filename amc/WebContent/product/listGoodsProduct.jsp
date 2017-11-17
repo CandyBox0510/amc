@@ -10,10 +10,9 @@
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>굿즈 상품목록</title>
-    <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="telephone=no" name="format-detection">
-     <!-- Select -->
+    <!-- Select -->
         <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
     
     <!-- Fonts -->
@@ -25,14 +24,14 @@
     <!-- Stylesheets -->
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-        <!--   semantic UI  / 모달창-->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-       	<script src="../semantic/semantic.min.js"></script>
-       	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+     
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
+		<!--아임포트 CDN -->
+		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 </head>
 
@@ -56,7 +55,8 @@
         	<!-- Search bar -->
         	<div class="col-sm-12">
                 <h2 class="page-heading">${param.menu eq 'search'? "상품 목록조회" : "상품관리" }</h2>
-                    <div class="tags-area tags-area--thin">
+                    <!-- <div class="tags-area tags-area--thin"> -->
+                    <div>
                     	<div class="container container--add">
                    			<div class="col-sm-6 text-left">
                    				<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
@@ -74,9 +74,9 @@
 		       					</button>	
 		      				</c:if> 
 		      				
-		      				 <div class="col-sm-6 text-right">
-				                <form id='search-form' method='get' class="search">
-				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}" onkeypress="if(event.keyCode==13) { fncGetPageList(1); return false;}"/>
+		      				 <div class="col-md-6 col-sm-6 text-right">
+				                <form id='search-form'>
+				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}" onkeypress="if(event.keyCode==13) { fncGetPageList(1); return false;}">
 				                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 				                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
 				                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
@@ -117,7 +117,29 @@
 		              </div>
  
 
-		
+<!-- 			<div class="row">
+				<h1 class="page-header">인기품목</h1>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:200px; height:200px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:150px; height:150px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:100px; height:100px;">
+					</div>
+					<div class="col-xs-12 col-sm-3 popular">
+						<h4><span class="badge"></span></h4>
+						<img src="../images/user/ajax_loader4.gif" class="img-responsive img-circle" style="width:80px; height:80px;">
+					</div>
+				</div>
+			</div>
+			<hr/>
+ -->
 					 <div class="cinema-wrap">
 		            	<div class="row">
 					 		<c:set var="i" value="0" />
@@ -132,7 +154,7 @@
 		                                        <input type="hidden" id="prodNo" value="${product.prodNo}"/>
 		                                    </a>
 		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="movieNm info-modal-link">${product.prodName }</a>
-		                                    <p><strong>가격</strong>  ${product.prodPrice }<br/><strong>판매시작일   </strong>${product.salesOpenDate}<br/><strong>판매마감일</strong>  ${product.salesEndDate }</p>	     
+		                                    <p><strong>가격  :  </strong>  ${product.prodPrice }<br/><strong>판매시작일  :     </strong>${product.salesOpenDate}<br/><strong>판매마감일  :  </strong>  ${product.salesEndDate }</p>	     
                                 	        <!-- <div class="col-sm-6"> -->
 							                    <div class="progress">
 								                	<p class="progress__info">
@@ -142,7 +164,6 @@
 								                          <div class="progress__current" style="width: 0%;"></div>
 								                      </div>
 							                    </div><br/><br/><br/>
-							                <!-- </div> -->
 		                             	</div>
 	                   		       	</div>
 	                		 </c:forEach>
@@ -151,7 +172,7 @@
  				</div>
  				
 					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
+					<div class="ui thin info modal" id="goodsmodal"> 
 					  <i class="close icon"></i>
 					    <div class="content" ></div>
 					</div>  
@@ -174,10 +195,8 @@
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 
-
 	<!-- JavaScript-->
         <!-- jQuery 3.1.1--> 
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
         <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate --> 
         <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
@@ -203,12 +222,9 @@
         <script src="../js/form.js"></script>
         <!-- Custom -->
         <script src="../js/custom.js"></script>
-        
-        
-        
+          	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
 </body>
 <script type="text/javascript">
-			   
 	$(function () {
 	    $('.info-modal-link').each(function () {
 	        $(this).on('click', function (e) {                   
@@ -217,6 +233,7 @@
 	            $.get(url, function (data) {
 	                $('.info.modal .content').html(data);
 	                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
+	                
 	            });
 	        });              
 	    });
@@ -229,7 +246,6 @@
 	}
 
 
-	    $('.boxshadow').css("box-shadow","0 0 0px rgba(0, 0, 0, 0)")
 	    $(function() {
 	        //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	        $("button[name='search']").on("click", function() {
@@ -290,7 +306,27 @@
 
 </script>
 <style type="text/css">
- 	
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	margin-top: 100px
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #582cb9;
+    border-color: #582cb9;
+    position: relative;
+    left: 80px;
+}
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #be41e8;
+  border-color: #be41e8;
+}
+ 	 
  	#body{ padding-top: 100px; }
  	.countPage {
 	  	font-size: 13px;
@@ -338,6 +374,8 @@ progress {
   /* 2 */
 }
 .progress__bar {
+position:relative;
+bottom: 30px;
   margin-bottm:30px;
   /* height: 15px; */
   padding: 1px;
@@ -348,16 +386,18 @@ progress {
 }
 
 .progress .progress__info {
+position:relative;
+bottom: 30px;
   font-weight: bold;
   margin-bottom: 0px;
     margin-top: 0px;
 }
 
-.ui.modal {
+ #goodsmodal{
   display: fade in;
   position: fixed;
+  bottom : 700px;
   z-index: 1001;
-  top: 0%;
   left: 50%;
   text-align: center;
   vertical-align: top;
@@ -373,12 +413,75 @@ progress {
   user-select: text;
   will-change: top, left, margin, transform, opacity;
 }
-
-.btn--info{
-	position : relative;
-	left : 160px;
-    background-color: #6dc5dd;
-    border: solid 1px #6ac7f7;
+.col-xs-7 {
+    position: relative;
+    width: 58.33333333%;
+    font-size: 13px;
+    left: 50px;
 }
+
+p {
+	font: 'Jeju Gothic', sans-serif;
+    font-size: 13px;
+    line-height: 28px;
+    color: #4c4145;
+    margin-bottom: 28px;
+}
+
+#search-form {
+    position: relative;
+       left: 525px;
+	display: block;
+	margin-top: 1em;
+}
+.search__button {
+	padding: 5px 5px 5px 5px;
+}
+
+input, select {
+	height: 30px;
+	width: auto;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+select {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+option {
+	width: 140px;
+	top: 37px !important;
+	border: none;
+	padding: 14px 7px;
+	z-index: 23;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+}
+
+
+.btn.btn-md.btn--info {
+	position:relative;
+
+    color: #ffffff;
+    background-color: #6dc5dd;
+    border-color: #6dc5dd;
+    position: relative;
+    right: -150px;
+}
+.btn.btn-md.btn--info:hover {
+  color: #ffffff;
+  background-color: #4474ff;
+  border-color: #4474ff;
+}
+
 </style>
 </html>

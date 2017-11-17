@@ -1218,10 +1218,6 @@ public class MovieRestController {
 		System.out.println("4. jsonObject   -> " + jsonObject);
 		// JSONObject json = (JSONObject)jsonObject.get("documents");
 		JSONArray array = (JSONArray) jsonObject.get("documents");
-		/*
-		 * JSONObject data = null; JSONArray jsonArray = new JSONArray();
-		 * JSONObject response = new JSONObject();
-		 */
 
 		JSONObject data = null;
 		JSONArray jsonArray = new JSONArray();
