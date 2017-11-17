@@ -108,6 +108,14 @@
                })
             return;
          }
+         
+         if( $("#seatNo").text() == "" || $("#seatNo").text() == null){
+        	 swal({
+        		type : "info",
+        		title : "최소 1자리 이상 신청해주세요"
+        	 })        	
+        	 return;
+         }
 
          $.ajax({
                    url: "/alarm/json/addCancelAlarm?"+
@@ -125,6 +133,7 @@
 		                		 "user.userId="+userId+
 		                		 "&screenContentNo="+$("input[name='screenContentNo']").val()
 		                }).done(function(result) {
+		                	$("#seatNo").html("");
 		                	$("#seats").text("");
 		                	$("#seats").text(result);
 		                	swal({
@@ -138,6 +147,8 @@
 		                     	  cancelButtonText: '취소'
 		                     	}).then(function () {
 		                     	  self.location = "/alarm/getCancelAlarmList?alarmFlag=C"
+		                     	},function(dismiss){
+		                     		selectClear();
 		                     	})
 		                })
                       
@@ -167,7 +178,14 @@
    function selectCancelAlarm(){
       $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
    }
-
+   
+   function selectClear(){
+		var ifra = document.getElementById('child').contentWindow.postMessage('reset', '*');	      
+	}
+   
+   function goBack(){
+		history.go(-1)	      
+	} 
 
    </script> 
 </head>
@@ -217,7 +235,8 @@
 
                 <div class="choose-sits__info">
                     <ul>
-                        <li class="sits-state sits-state--not">Not available</li>
+                    	<li class="sits-state sits-state--not">not available</li>
+                        <li class="sits-state sits-state--can">Available</li>
                         <li class="sits-state sits-state--your">Your choice</li>
                     </ul>
                 </div>
@@ -243,7 +262,10 @@
 						<li><span class="category__item hanna">신청된 좌석: <span id="seats">${seats}</span></span></li>
                       </ul>
             </div>
-            <button class="ui brown button" style="width:100%; height:50%;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <button class="ui brown button" style="width:100%; height:100%; padding-top:18px;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <br/>
+            <br/>
+            <button class="ui orange button" style="width:100%; height:100%; padding-top:15px; padding-bottom:15px; margin-top:-10px" onClick="javascript:goBack()"><font size="4px">뒤로가기</font></button>
             <br/>
             
          </div>
@@ -332,5 +354,14 @@
     .def{
     	font-family: 'Jeju Gothic', sans-serif;
     }
+    .sits-state--not:before {
+	  background-color: #808080;
+	}
+    .sits-state--can:before {
+	  background-color: #87ceeb;
+	}
+	.sits-state--your:before {
+	  background-color: #008000;
+	}
  </style>
 </html>

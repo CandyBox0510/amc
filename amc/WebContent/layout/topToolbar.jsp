@@ -572,8 +572,8 @@
                    <a href="#" class="btn btn--sign btn--singin">
                        	MyPage
                    </a>
-                     <ul class="auth__function">
-                         <li class="myInfo"><a href="#" class="auth__function-item">내 정보 보기</a></li>
+                     <ul class="auth__function jeju">
+                         <li class="myInfo myjeju"><a href="#" class="auth__function-item">내 정보 보기</a></li>
                          <li class="myBooking"><a href="#" class="auth__function-item">예매 목록</a></li>
                          <li class="myWish"><a href="#" class="auth__function-item">위시리스트</a></li>
                          <li class="myCancel"><a href="#" class="auth__function-item">취소표 알리미</a></li>
@@ -608,6 +608,9 @@
 
 </style>
 <style>
+
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
 a.no-uline { text-decoration:none }
 
 ul#navigation {
@@ -635,7 +638,7 @@ ul#user {
 }
 
 .btn--sign {
-  font: 13px 'Roboto', sans-serif;
+  font: 13px 'Jeju Gothic', sans-serif;
   font-weight: bold;
   line-height:0%
   text-transform: uppercase;
@@ -647,6 +650,7 @@ ul#user {
   -o-transition: 0.3s;
   transition: 0.3s;
   text-decoration:none;
+  top: 2px;
 }
 
 div#user {
@@ -660,13 +664,73 @@ div#user {
   margin-top: 25px;
 }
 
+
+.jeju{
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.auth .auth__function .auth__function-item:before {
+  content: "\f111";
+  color: #b4b1b2;
+  font: 5px "FontAwesome";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.auth .btn--singin {
+    position: absolute;
+    top: 14px;
+    left: 39px;
+    padding-right: 20px;
+    z-index: 15;
+    color: #B4B1B2;
+}
+
+ul#navigation a {
+    font: 16px 'Jeju Gothic', sans-serif;
+    color: #b4b1b2;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+
+/* 메뉴 위치 */ 
+ul#navigation > li {
+    padding: 3px 12px;
+}
+
+
+/* 메뉴 */ 
+#navigation .menu__nav-item:before {
+  content: "\f111";
+  color: #b4b1b2;
+  font: 5px "FontAwesome";
+  position: absolute;
+  top: 7px;
+  left: 0;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+
 </style>
-<!-- <script>
+<script>
 $( function() {
-	if( '${sessionScope.user.role}' == 'admin'){
-		$("ul#navigation").css("padding","0 0 0 20px");
-	}
+		if( '${sessionScope.user.role}' == 'admin'){
+			$("ul#navigation").css("padding","0 0 0 15px");
+		}		
+	$(window).resize(function name() {
+		if( '${sessionScope.user.role}' == 'admin'){
+			$("ul#navigation").css("padding","0 0 0 15px");
+		}
+	})
 })
-</script> -->
+</script>
 </html>
 

@@ -120,10 +120,10 @@
 											}
 								all +=    '">'
 								all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="width:100%; height:365px;"></a>'
-								all += 		'<div class="alert alert-success" role="alert">'
+								all += 		'<div class="alert alert-success jeju" role="alert">'
 								all +=			'<strong>취소표 신청 좌석</strong><br/>['
 								all +=           alarm[i].alarmSeatNo
-								all += 			' ]<span class="label label-success">'
+								all += 			' ]<span class="label label-success jeju">'
 								all +=          '<input type="hidden" value="'+alarm[i].alarmNo+'">'
 								all +=			'취소</span></a>'
 								all +=		'</div>'
@@ -135,7 +135,7 @@
 											}
 								all +=		'" class="gallery-item__descript gallery-item--success-link">'
 								all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
-								all += 	   '<p class="gallery-item__name">'
+								all += 	   '<p class="gallery-item__name jeju">'
 											if(alarm[i].screenContent.previewFlag == 'Y'){
 												all += alarm[i].screenContent.previewTitle
 											}else{
@@ -188,12 +188,9 @@
         </header>
         
         <!-- Main content -->
-        <section class="container" style="margin-top:10%">
+        <section class="container" style="margin-top:8%">
             <div class="col-sm-12">
-                    <p/>
-	               	<p/>
-	               	<p/>
-                <h2 class="page-heading">취소표 알림 리스트</h2>
+                <h2 class="page-heading jeju">취소표 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
@@ -205,26 +202,26 @@
 	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
 	                            </c:if>
 	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
-	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=movie">
 	                            </c:if>
 	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            </a>
-	                            <div class="alert alert-success" role="alert">
+	                            <div class="alert alert-success jeju" role="alert">
   									<strong>취소표 신청 좌석</strong><br/>[ ${alarm.alarmSeatNo}]
-  									<span class="label label-success"><input type="hidden" value="${alarm.alarmNo}">취소</span>
+  									<span class="label label-success jeju"><input type="hidden" value="${alarm.alarmNo}">취소</span>
 								</div>
 								<c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
-	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--success-link">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--success-link">
 	                            </c:if>
 	                            <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
-	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--success-link">
+	                            	<a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=movie" class="gallery-item__descript gallery-item--success-link">
 	                            </c:if>
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
                         	        <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
-	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
+	                                	<p class="gallery-item__name jeju">${alarm.screenContent.previewTitle}</p>
 	                                </c:if>
 	                                <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
-	                                	<p class="gallery-item__name">${alarm.screenContent.movie.movieNm}</p>
+	                                	<p class="gallery-item__name jeju">${alarm.screenContent.movie.movieNm}</p>
 	                                </c:if>
 	                            </a>
  	                         </div>       
@@ -299,6 +296,10 @@
       </script>
 </body>
  <style>
+ 	  @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+	  .jeju{
+		font-family: 'Jeju Gothic', sans-serif;
+	  }
       html{
  	     height: auto;
       } 

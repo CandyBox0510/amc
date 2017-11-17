@@ -43,9 +43,6 @@
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
    
-   		<!-- hanna font -->
-      <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
-    
   
   <script type="text/javascript">
    </script> 
@@ -120,11 +117,11 @@
 						<div class="col-xs-6 col-sm-4 col-md-3 mm">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search">
-	                                <img alt='' src="${movie.postUrl}" align="middle" width="100%" height="230px">
+	                                <img alt='' src="${movie.postUrl}" align="middle" width="100%" height="290px">
 	                            </a>
 	                            <a href="/movie/getMovie?movieNo=${movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
-	                                <p class="gallery-item__name">${movie.movieNm }</p>
+	                                <p class="gallery-item__name jeju">${movie.movieNm }</p>
 	                            </a>
 	                        </div>
 	                    </div>	
@@ -152,14 +149,14 @@
 						<div class="col-xs-6 col-sm-4 col-md-3 pp">
 	                        <div class="gallery-item">
 	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
-	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="100%"  height="230px">
+	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="100%"  height="290px">
 	                            </a>
 	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }
 	                            	<span class="label label-danger"></span>
 	                            </div>
 	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
-	                                <p class="gallery-item__name">${screenContent.previewTitle }</p>
+	                                <p class="gallery-item__name jeju">${screenContent.previewTitle }</p>
 	                            </a>
 	                        </div>
 	                    </div>	
@@ -187,11 +184,11 @@
 						<div class="col-xs-6 col-sm-4 col-md-3 gg">
 	                        <div class="gallery-item">
 	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}">
-	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="100%"  height="230px">
+	                                <img alt='' src="/images/uploadFiles/${goods.prodImage}" align="middle" width="100%"  height="290px">
 	                            </a>
 	                            <a href="/product/getGoodsProduct?prodNo=${goods.prodNo}" class="gallery-item__descript gallery-item--goods-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
-	                                <p class="gallery-item__name">${goods.prodName}</p>
+	                                <p class="gallery-item__name jeju">${goods.prodName}</p>
 	                            </a>
 	                        </div>
 	                    </div>	
@@ -219,11 +216,11 @@
 						<div class="col-xs-6 col-sm-4 col-md-3 ss">
 	                        <div class="gallery-item">
 	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}">
-	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="100%"  height="230px">
+	                                <img alt='' src="/images/uploadFiles/${snack.prodImage}" align="middle" width="100%"  height="290px">
 	                            </a>
 	                            <a href="/product/getSnackProduct?prodNo=${snack.prodNo}" class="gallery-item__descript gallery-item--photo-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-glass"></i></span>
-	                                <p class="gallery-item__name">${snack.prodName }</p>
+	                                <p class="gallery-item__name jeju">${snack.prodName }</p>
 	                            </a>
 	                        </div>
 	                    </div>	
@@ -296,6 +293,10 @@
      
 </body>
  <style>
+	  @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+	  .jeju{
+			font-family: 'Jeju Gothic', sans-serif;
+	  }
       html{
  	     height: auto;
       }
@@ -367,17 +368,21 @@
  	    box-shadow:inset 0 0 10px #fce86a; 
       }
       
-     .hanna{ 
-	  font-family: 'Hanna', sans-serif; 
-	  font-size: 120%;
-	   line-height:4.3em
-	 }
 	 .contact-form-wrapper-search{
 	  background-color: #dbdee1;
 	  overflow: hidden;
 	  margin: -30px 0 80px;
 	  padding: 56px 0 60px;
 	}
+	
+	.order-step-area .order-step {
+    font: 16px 'Jeju Gothic', sans-serif;
+    padding-left: 55px;
+    position: relative;
+    width: 33.2%;
+    display: inline-block;
+	}
+	
 	 
  </style>
 </html>
