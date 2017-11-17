@@ -350,7 +350,7 @@
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>
-                          <li><a class="category__item abc">${movie.movieNm} ${screenContent.previewTitle}</a></li>
+                          <li><a class="category__item abc" style="line-height:1.3em">${screenContent.movie.movieNm} ${screenContent.previewTitle}</a></li>
                           <li><a class="category__item abc">Tickets:<span id="headCount"></span></a></li>
                           <li><a class="category__item abc">Seats: <span id="seatNo"></span></a></li>
                           <li><a class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>
