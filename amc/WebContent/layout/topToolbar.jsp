@@ -701,7 +701,7 @@ ul#navigation a {
 
 /* 메뉴 위치 */ 
 ul#navigation > li {
-    padding: 3px 12px;
+    padding: 3px 12px 10px;
 }
 
 
@@ -723,11 +723,11 @@ ul#navigation > li {
 <script>
 $( function() {
 		if( '${sessionScope.user.role}' == 'admin'){
-			$("ul#navigation").css("padding","0 0 0 15px");
+			$("ul#navigation").css("padding","0 0 0 10px");
 		}		
 	$(window).resize(function name() {
 		if( '${sessionScope.user.role}' == 'admin'){
-			$("ul#navigation").css("padding","0 0 0 15px");
+			$("ul#navigation").css("padding","0 0 0 10px");
 		}
 	})
 })
