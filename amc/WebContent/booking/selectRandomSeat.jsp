@@ -21,7 +21,6 @@
 
 	<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 	
 	<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
@@ -381,7 +380,7 @@ $(document).ready(function() {
 		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
-		font: 18px 'Hanna';
+		font: 18px 'Jeju Gothic';
 		text-transform: uppercase;
 		-webkit-transition: 0.3s;
 		-o-transition: 0.3s;

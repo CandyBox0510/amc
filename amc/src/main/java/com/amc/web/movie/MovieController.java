@@ -1,6 +1,7 @@
 package com.amc.web.movie;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.common.util.CommonUtil;
+import com.amc.service.alarm.AlarmService;
+import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
@@ -48,6 +51,11 @@ public class MovieController {
 	@Autowired
 	@Qualifier("screenServiceImpl")
 	private ScreenService screenService;
+
+	/// Field 해림추가
+	@Autowired
+	@Qualifier("alarmServiceImpl")
+	private AlarmService alarmService;
 
 	// setter Method 구현 않음
 
@@ -78,11 +86,8 @@ public class MovieController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
-	
-		
-		User user = (User)session.getAttribute("user");		
-		
+
+		User user = (User) session.getAttribute("user");
 
 		System.out.println("pagesize " + search.getPageSize());
 
@@ -90,10 +95,8 @@ public class MovieController {
 
 		System.out.println("menu :" + request.getParameter("menu"));
 
-		if(request.getParameter("menu").equals("manage")) {
+		if (request.getParameter("menu").equals("manage")) {
 
-
-			
 			search.setSearchKeyword2("manage");
 			search.setSearchKeyword3("manage");
 
@@ -206,18 +209,14 @@ public class MovieController {
 
 		System.out.println("555555555555555");
 
-		
-		if(search.getCurrentPage() > 1) {
+		if (search.getCurrentPage() > 1) {
 			search.setSearchCondition(null);
 			search.setSearchKeyword(null);
 		}
-		
-		
+
 		System.out.println("search condition 2:: " + search.getSearchCondition());
 		System.out.println("search 2 " + search);
-		
-	
-		
+
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건
 		// "searchCondtion=7" 은 일반인 검색에 해당됨
@@ -336,6 +335,11 @@ public class MovieController {
 
 			movie.setOpenDt(convertOpenDate);
 			movie.setEndDt(convertEndDate);
+			
+			
+			System.out.println("synopsis ::" + movie.getSynopsis());
+			
+			
 
 			System.out.println("updateMovie.jsp called");
 			System.out.println(movie + "겟무비액션");
@@ -470,10 +474,11 @@ public class MovieController {
 			// modelAndView.setViewName("/movie/updateMovie.jsp");
 			// return modelAndView;
 
-			return "forward:/movie/getMovieList?menu=manage";
+			//return "forward:/movie/getMovieList?menu=manage";
+			return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&"+"menu=manage";
 
 		}
-		return "forward:/movie/getMovieList?menu=manage";
+		return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&menu=manage";
 	}
 
 	@RequestMapping(value = "deleteMovie", method = RequestMethod.POST)
@@ -485,22 +490,35 @@ public class MovieController {
 		System.out.println("/deleteMovie : GET");
 		// Business Logic
 		System.out.println("movieNo ::" + movieNo);
+		int return_code = 0;
+		
+		try {
+			 return_code = movieService.deleteMovie(movieNo);
 
-		int rtn = movieService.deleteMovie(movieNo);
+		} catch (SQLException e) {
+			System.out.println("Oracle Error Occurred...");
+			e.printStackTrace();
+			return_code = 2;
+					
+		}catch (Exception e) {	
+			e.printStackTrace();
+		}
+		System.out.println("return_code from movieDAO.addMovie" + return_code);		
 
-		System.out.println("return value :" + rtn);
+	
+		System.out.println("return value :" + return_code);
 
 		// modelAndView.setViewName("/movie/listMovieManage.jsp");
 		// return modelAndView;
 
-		return "/movie/listMovieManage.jsp";
+		return "forward:/movie/getMovieList?menu=manage";
 
 	}
 
 	// 해림
 	@RequestMapping(value = "getMovieCommentList/{movieNo}")
 	public String getMovieCommentList(@ModelAttribute("search") Search search,
-			@PathVariable(value = "movieNo") int movieNo, Model model) throws Exception {
+			@PathVariable(value = "movieNo") int movieNo, Model model, HttpSession session) throws Exception {
 
 		System.out.println("MovieController의 getMovieCommentList메소드 시작");
 
@@ -523,8 +541,29 @@ public class MovieController {
 			search.setCurrentPage(1);
 		}
 
-		
-		
+		System.out.println(screenContentNo);
+
+		if (session.getAttribute("user") != null) {
+			System.out.println(session.getAttribute("user"));
+			System.out.println("111111111111111111111111111111111111111111111111");
+			User user = (User) session.getAttribute("user");
+			System.out.println("22222222222222222222222222222222222222222222222222222222");
+			Alarm alarm = new Alarm();
+			System.out.println("333333333333333333333333333333333333333333");
+			alarm.setUser(user);
+			alarm.getUser().setUserId(user.getUserId());
+			System.out.println("4444444444444444444444444444444444444444444444444");
+			alarm.setScreenContent(screenContent);
+			alarm.getScreenContent().setScreenContentNo(screenContentNo);
+			System.out.println("55555555555555555555555555555555555555555555555555555");
+			System.out.println("여기의 alarm 잘들어오나 확인 해보기 ===> " + alarm);
+			System.out.println("666666666666666666666666666666666666666666666666");
+			String checkOpenAlarm = alarmService.checkOpenAlarm(alarm);
+			System.out.println("77777777777777777777777777777777777777777777777");
+			System.out.println("checkOpenAlarm    ===> " + checkOpenAlarm);
+			model.addAttribute("checkOpenAlarm", checkOpenAlarm);
+		}
+
 		screenContent.getMovie().setMovieNo(movieNo);
 
 		System.out.println("###. screenContent --> " + screenContent);

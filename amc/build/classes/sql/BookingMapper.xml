@@ -38,7 +38,7 @@
   	</insert>
   		
   	<select id="getBooking" parameterType="string" resultMap="bookingSelectMap" >
-  		SELECT b.*, m.movie_title, s.screen_date, s.screen_opentime, s.preview_flag, s.preview_title, s.invite_actor 
+  		SELECT b.*, m.movie_title, s.screen_date, s.screen_opentime, s.screen_theater, s.preview_flag, s.preview_title, s.invite_actor 
 		FROM booking b, screencontent s, movie m
 		WHERE b.booking_no = #{value}
  		AND b.screencontent_no = s. screencontent_no 

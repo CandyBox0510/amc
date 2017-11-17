@@ -334,39 +334,38 @@
 					  
 					  if(userId == null || userId == ''){
 							alert("로그인 후 이용 가능합니다.");
+							$('.overlay').removeClass('close').addClass('open');
 							return 
 						} else {
 						
-
-						alert($(this).attr('class'));
-						//var movieNo = $(this).next().val();		
-						//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
-		
-					
+	
+							alert($(this).attr('class'));
+							//var movieNo = $(this).next().val();		
+							//var movieNo = $($(this).find('glyphicon glyphicon-heart-empty')).val();					 
+			
 						
-						//alert("movieNo: " + movieNo); 					
-						//alert("userId: " + userId);  
-						
-				 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-					    
-									
-						$.ajax( 
-								{
-									url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
-									type : "GET" ,							
-								}).done(function(data) {
-							//정상 통신인 경우
-							if (data == 'add') {
-								var msg = '찜하기 신청 fa fa-heart-o인 경우';
-								alert(msg);
-							} else {
-								alert("찜하기 취소");
-							}
-						});
-						
+							
+							//alert("movieNo: " + movieNo); 					
+							//alert("userId: " + userId);  
+							
+					 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+						    
+										
+							$.ajax( 
+									{
+										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=preview",									
+										type : "GET" ,							
+									}).done(function(data) {
+								//정상 통신인 경우
+								if (data == 'add') {
+									var msg = '찜하기 신청 fa fa-heart-o인 경우';
+									alert(msg);
+								} else {
+									alert("찜하기 취소");
+								}
+							})
 						}
-					
-				})
+					})
 				 
 				 $(document).on("click", ".fa-heart", function () {
 					 
@@ -377,7 +376,7 @@
 				 if(userId == null || userId == ''){
 							alert("로그인 후 이용 가능합니다.");
 							exit();
-				} 
+				} else {
 						
 					 alert($(this).attr('class'));	
 					 //var movieNo = $(this).next().val();		
@@ -404,11 +403,10 @@
 						} else {
 							alert("찜하기 신청  fa-heart");
 						}
-					});
-				})
-			 
+					})
+				}
+			})
 		});
-					
 					 
 		//============= "예약  Event 처리"  Event  처리 =============	
 		$(function() {

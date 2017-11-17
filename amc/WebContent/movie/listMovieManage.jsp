@@ -36,15 +36,16 @@
 								<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
 							</div>
 							<div class="col-sm-6 text-right">
-								<form id='search-form' class="search ">
-										<input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-										<select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
-											<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
+								<form id='search-form'>
+									<input type="text" placeholder="검색어입력" name="searchKeyword" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+									<select name="searchCondition" id="movie-search-sort" class="" tabindex="0">
+										<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>영화제목</option>
 										<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>감독명</option>
 									</select>
 									<button type='submit' class="btn btn-md btn--danger search__button" name="search">검색하기</button>
 									<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}" />
 								</form>
+
 							</div>
 						</div>
 					</div>

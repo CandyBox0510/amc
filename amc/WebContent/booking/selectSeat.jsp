@@ -19,7 +19,6 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
   
   <!--  스크립트에서 rollbackSeat 함수는 더이상 사용하지 않음. 컨트롤러에서도. -->
@@ -47,7 +46,7 @@
 				}, function(rsp) {
 				    if ( rsp.success ){
 						
-				    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
+				    	//alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
 				    	console.log("impuid : "+rsp.imp_uid);
 				    	var impUid = rsp.imp_uid; 
 				    	
@@ -55,10 +54,10 @@
 				    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 				    		type: 'GET',
 				    	}).done(function(data) {
-				    		alert("data : " + data);
+				    		//alert("data : " + data);
 				    		var payStatusCheck = (data.split(','))[0];
 				    		var amountCheck = (data.split(','))[1];
-				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck+"\n 실제결제해야할 금액 : "+$("input[name='totalTicketPrice']").val());
+				    		//alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck+"\n 실제결제해야할 금액 : "+$("input[name='totalTicketPrice']").val());
 				    	
 				    		
 				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
@@ -72,7 +71,7 @@
 				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://127.0.0.1:8080/booking/getBooking?bookingNo="+impUid);
 				    			$("input[name='impId']").val(impUid);
 				    			
-				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
+				    			//alert("AJAX 후 결제완료 후 "+"\n"+msg);
 				    					    			
 				    			confirmSeat();
 				    			addBooking();
@@ -219,7 +218,7 @@
 			  //alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
 			  
-		  }if(event.data.indexOf("countChanged")==0){
+		  }else if(event.data.indexOf("countChanged")==0){
 			 //headCount지정이 바뀌었을때
 			 console.log('countChange')
 			 initializeSeat();	  
@@ -351,12 +350,12 @@
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>
-                          <li><a href="#" class="category__item abc">${movie.movieNm} ${screenContent.previewTitle}</a></li>
-                          <li><a href="#" class="category__item abc">Tickets:<span id="headCount"></span></a></li>
-                          <li><a href="#" class="category__item abc">Seats: <span id="seatNo"></span></a></li>
-                          <li><a href="#" class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>
-                          <li><a href="#" class="category__item abc">${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
-                          <li><a href="#" class="category__item abc">Total Price:<span id="totalPrice">0</span>원</a></li>
+                          <li><a class="category__item abc">${movie.movieNm} ${screenContent.previewTitle}</a></li>
+                          <li><a class="category__item abc">Tickets:<span id="headCount"></span></a></li>
+                          <li><a class="category__item abc">Seats: <span id="seatNo"></span></a></li>
+                          <li><a class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>
+                          <li><a class="category__item abc">${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</a></li>
+                          <li><a class="category__item abc">Total Price:<span id="totalPrice">0</span>원</a></li>
                       </ul>
                       
                   </div> 
@@ -426,8 +425,8 @@
 		}
 
    .abc{ 
-	  font-family: 'Hanna', sans-serif; 
-	  font-size: 120%;
+	   font-family: 'Jeju Gothic', sans-serif; 
+	   font-size: 120%;
 	   line-height:4.3em
 	 }
 	 .sits .sits__row .sits-state--your {
@@ -456,7 +455,7 @@
 		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
-		font: 18px 'Hanna';
+		font: 18px 'Jeju Gothic';
 		text-transform: uppercase;
 		-webkit-transition: 0.3s;
 		-o-transition: 0.3s;

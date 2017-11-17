@@ -17,7 +17,6 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
   
 </head>
 

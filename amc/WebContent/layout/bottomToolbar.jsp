@@ -5,24 +5,23 @@
             <section class="container">
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="/movie/getMovieList?menu=movie" class="nav-link__item">현재 상영 영화</a></li>
-                        <li><a href="/movie/getMovieList?menu=commingsoon" class="nav-link__item">상영 예정 영화</a></li>
-                        <li><a href="/movie/getMovieList?menu=preview" class="nav-link__item">시사회</a></li>
+                        <li><a href="/movie/getMovieList?menu=movie" class="nav-link__item jeju">현재 상영 영화</a></li>
+                        <li><a href="/movie/getMovieList?menu=commingsoon" class="nav-link__item jeju">상영 예정 영화</a></li>
+                        <li><a href="/movie/getMovieList?menu=preview" class="nav-link__item jeju">시사회</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="/booking/getScreenMovieList" class="nav-link__item">영화 예매</a></li>
-                        <li><a href="/booking/getPreviewList" class="nav-link__item">시사회 예매</a></li>
-                        <li><a href="/cinema/theaterInfo.jsp" class="nav-link__item">영화관 정보</a></li>
-                        <li><a href="/community/getFreeBoardList" class="nav-link__item">커뮤니티</a></li>
+                        <li><a href="/booking/getScreenMovieList" class="nav-link__item jeju">영화 예매</a></li>
+                        <li><a href="/booking/getPreviewList" class="nav-link__item jeju">시사회 예매</a></li>
+                        <li><a href="/cinema/theaterInfo.jsp" class="nav-link__item jeju">영화관 정보</a></li>
+                        <li><a href="/community/getFreeBoardList" class="nav-link__item jeju">커뮤니티</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="/product/getGoodsList?menu=search&searchProdType=G" class="nav-link__item">굿즈</a></li>
-                        <li><a href="/product/getSnackList?menu=search&searchProdType=S" class="nav-link__item">스낵바</a></li>
-
+                        <li><a href="/product/getGoodsList?menu=search&searchProdType=G" class="nav-link__item jeju">굿즈</a></li>
+                        <li><a href="/product/getSnackList?menu=search&searchProdType=S" class="nav-link__item jeju">스낵바</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-12 col-md-6">

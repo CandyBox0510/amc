@@ -25,6 +25,8 @@ import com.amc.service.alarm.AlarmService;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
+import com.amc.service.movie.MovieService;
+import com.amc.service.screen.ScreenService;
 import com.amc.web.booking.BookingRestController;
 
 @Controller
@@ -34,6 +36,14 @@ public class AlarmController {
 	@Autowired
 	@Qualifier("alarmServiceImpl")
 	private AlarmService alarmService;
+	
+	@Autowired
+	@Qualifier("screenServiceImpl")
+	private ScreenService screenService;
+
+	@Autowired
+	@Qualifier("movieServiceImpl")
+	private MovieService movieService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
@@ -47,9 +57,40 @@ public class AlarmController {
 	
 	@RequestMapping(value="selectCancelAlarm", method=RequestMethod.POST)
 	public String selectCancelAlarm(@ModelAttribute("screenContent") ScreenContent screenContent,
-									 Model model) throws Exception{
+								     HttpSession session, Model model) throws Exception{
+		Map<String,Object> tempMap = new HashMap<String,Object>();
 		
-		model.addAttribute("screeContent", screenContent);
+		User user = (User)session.getAttribute("user");
+		
+		screenContent = screenService.getScreenContent(screenContent.getScreenContentNo());
+		screenContent.setMovie(movieService.getMovie(screenContent.getMovie().getMovieNo()));
+		System.out.println("■■■■"+screenContent+"■■■■");
+		
+		tempMap.put("user", user);
+		tempMap.put("screenContent", screenContent);
+		
+		List<Alarm> alarmList = alarmService.getCancelAlarmOfScreenContentNo(tempMap);
+		System.out.println("유저의 해당 상영의 취소표알림 리스트"+alarmList);
+		BookingRestController brc = new BookingRestController();
+		JSONObject jsonObject = new JSONObject();
+		String seats = "";
+		
+		for(int i = 0; i < alarmList.size(); i++){
+			if(i-1 == alarmList.size()){
+				seats += alarmList.get(i).getAlarmSeatNo();
+			}else{
+				seats += alarmList.get(i).getAlarmSeatNo()+",";
+			}
+		}
+		jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(seats, 1000, null));
+		
+		seats = (String)jsonObject.get("seatNo");
+		
+		System.out.println("Seats::::::::::::::"+seats);
+		
+		model.addAttribute("screenContent", screenContent);
+		model.addAttribute("seats",seats);
+
 		return "forward:/booking/selectCancelAlarm.jsp";	
 	}
 	

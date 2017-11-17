@@ -35,32 +35,25 @@
       document.getElementById('child').contentWindow.postMessage(event.data,"*");
       $("input[name='seats']").val(event.data);
       
-      if(event.data==null || event.data==""){
-		  //좌석을 모두 선택해제 한경우
-    	  $("#seatNo").text("");
-           	
-          $("input[name='displaySeat']").val("");
-          $("input[name='headCount']").val("");
-          $("input[name='totalTicketPrice']").val("");
-		  
-	  }else{
-      
-        $.ajax({
-               url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
-               method : "GET" ,
-               dataType : "json" ,
-               headers : {
-                  "Accept" : "application/json",
-                  "Content-Type" : "application/json"
-               },                  
-               success : function(JSONData, status) {
-                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);
-                       if(JSONData != ""){
-                          $("#seatNo").html(JSONData.seatNo);
-                       }//end of if문
-               }
-        });//end of ajax
-	  }
+      if(event.data==null||event.data==""){
+    	  $("#seatNo").html("");
+      }else{
+	        $.ajax({
+	               url : "/booking/json/getDisplaySeatNo/"+event.data+"/500",                  
+	               method : "GET" ,
+	               dataType : "json" ,
+	               headers : {
+	                  "Accept" : "application/json",
+	                  "Content-Type" : "application/json"
+	               },                  
+	               success : function(JSONData, status) {
+	                  console.log('SeatNo 받아옴 : '+JSONData.seatNo);
+	                       if(JSONData != ""){
+	                          $("#seatNo").html(JSONData.seatNo);
+	                       }//end of if문
+	               }
+	      });//end of ajax
+      }
            
    }
 
@@ -115,6 +108,14 @@
                })
             return;
          }
+         
+         if( $("#seatNo").text() == "" || $("#seatNo").text() == null){
+        	 swal({
+        		type : "info",
+        		title : "최소 1자리 이상 신청해주세요"
+        	 })        	
+        	 return;
+         }
 
          $.ajax({
                    url: "/alarm/json/addCancelAlarm?"+
@@ -126,14 +127,31 @@
                 }).done(function(result) {
                    console.log("result : " + result);
                    if ( result == 'success' ) {
-                      var msg = '취소표 알림 신청 성공';
-                      swal({
-                           //position: 'top-right',
-                           type: 'success',
-                           title: '취소표 알림 신청 성공!',
-                           showConfirmButton: true,
-                           timer: 2000
-                         })
+					  $("#seatNo").text("");
+					  $.ajax({
+		                   url: "/alarm/json/getCancelAlarmOfScreenContentNo?"+
+		                		 "user.userId="+userId+
+		                		 "&screenContentNo="+$("input[name='screenContentNo']").val()
+		                }).done(function(result) {
+		                	$("#seatNo").html("");
+		                	$("#seats").text("");
+		                	$("#seats").text(result);
+		                	swal({
+		                     	  title: '취소표 알림 신청 성공',
+		                     	  text: "취소표 알림 신청 리스트를 확인하시겠습니까?",
+		                     	  type: 'success',
+		                     	  showCancelButton: true,
+		                     	  confirmButtonColor: '#3085d6',
+		                     	  cancelButtonColor: '#d33',
+		                     	  confirmButtonText: '이동',
+		                     	  cancelButtonText: '취소'
+		                     	}).then(function () {
+		                     	  self.location = "/alarm/getCancelAlarmList?alarmFlag=C"
+		                     	},function(dismiss){
+		                     		selectClear();
+		                     	})
+		                })
+                      
                    } else if( result == 'exceed'){
                       swal(
                               '취소표알림 자리 수 초과!',
@@ -160,7 +178,14 @@
    function selectCancelAlarm(){
       $("form").attr("method" , "POST").attr("action" , "/alarm/selectCancelAlarm").submit();
    }
-
+   
+   function selectClear(){
+		var ifra = document.getElementById('child').contentWindow.postMessage('reset', '*');	      
+	}
+   
+   function goBack(){
+		history.go(-1)	      
+	} 
 
    </script> 
 </head>
@@ -210,7 +235,8 @@
 
                 <div class="choose-sits__info">
                     <ul>
-                        <li class="sits-state sits-state--not">Not available</li>
+                    	<li class="sits-state sits-state--not">not available</li>
+                        <li class="sits-state sits-state--can">Available</li>
                         <li class="sits-state sits-state--your">Your choice</li>
                     </ul>
                 </div>
@@ -232,10 +258,24 @@
             <div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">CancelAlarm Info</span></h3>
                       <ul>
-						<li><span class="category__item hanna">Seats: <span id="seatNo"></span></span></li>
+						<li><span class="category__item hanna">신청할 좌석: <span id="seatNo"></span></span></li>
+						<li><span class="category__item hanna">신청된 좌석: <span id="seats">${seats}</span></span></li>
+						<c:if test="${screenContent.previewFlag eq 'Y' }">
+							<li><span class="category__item hanna">타이틀 : ${screenContent.previewTitle}</span></li>
+						</c:if>
+						<c:if test="${screenContent.previewFlag eq 'N' }">
+							<li><span class="category__item hanna">타이틀 : ${screenContent.movie.movieNm}</span></li>
+						</c:if>
+						<li><span class="category__item hanna">Theater: ${screenContent.screenTheater}상영관</span></li>
+                        <li><span class="category__item hanna">${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</span></li>
                       </ul>
             </div>
-            <button class="ui brown button" style="width:100%; height:50%;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <button class="ui brown button" style="width:100%; height:100%; padding-top:18px;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>
+            <br/>
+            <br/>
+            <button class="ui orange button" style="width:100%; height:100%; padding-top:15px; padding-bottom:15px; margin-top:-10px" onClick="javascript:goBack()"><font size="4px">뒤로가기</font></button>
+            <br/>
+            
          </div>
         </section>  
        
@@ -322,5 +362,14 @@
     .def{
     	font-family: 'Jeju Gothic', sans-serif;
     }
+    .sits-state--not:before {
+	  background-color: #808080;
+	}
+    .sits-state--can:before {
+	  background-color: #87ceeb;
+	}
+	.sits-state--your:before {
+	  background-color: #008000;
+	}
  </style>
 </html>

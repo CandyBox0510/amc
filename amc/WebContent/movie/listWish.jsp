@@ -109,19 +109,37 @@
 								all = '<div class="col-xs-6 col-sm-4 col-md-3">'
 								all += 	'<div class="gallery-item">'
 								all += 	 '<div style="overflow-y:hidden; height:365px;">'
-								all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu=movie">'
-								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="widht:100%; height:365px;"></a>'
+								all += 	  '<a href="/movie/getMovie?movieNo='+wishList[i].movie.movieNo+'&menu='
+											if(wishList[i].wishFlag == 'preview'){
+												all += 'preview'
+											}else{
+												all += 'movie'
+											}
+								all +=    ">'
+								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 								all +=    '</div>'
-								all += 		'<div class="alert alert-info" role="alert">'
-								all +=			'<strong>'+wishList[i].wishFlag+'</strong><br/>'
+								all += 		'<div class="alert alert-info jeju" role="alert">'
+								all +=			'<strong>'
+												if(wishList[i].wishFlag == 'preview'){
+													all += '시사회'
+												}else{
+													all += '영화'
+												}
+								all +=          '</strong><br/>'
 								all +=           wishList[i].movie.movieNm
-								all += 			'<span class="label label-info">'
+								all += 			'<span class="label label-info jeju">'
 								all +=          '<input type="hidden" value="'+wishList[i].wishNo+'">'
 								all += 			'취소</span></a>'
 								all +=		'</div>'
-								all += 	   '<a href="/movie/getMovie?movieNo='+wishList[i].movie.postUrl+'&menu=movie" class="gallery-item__descript gallery-item--info-link">'
+								all += 	   '<a href="/movie/getMovie?movieNo='+wishList[i].movie.postUrl+'&menu='
+												if(wishList[i].wishFlag == 'preview'){
+													all += 'preview'
+												}else{
+													all += 'movie'
+												}
+								all +=     '" class="gallery-item__descript gallery-item--info-link">'
 								all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
-								all += 	   '<p class="gallery-item__name">'+wishList[i].movie.movieNm+'</p></a>'
+								all += 	   '<p class="gallery-item__name jeju">등록일 : '+wishList[i].wishRegDate+'</p></a>'
 								all +=	'</div>'
 								all +='</div>'
 									
@@ -169,12 +187,10 @@
         </header>
         
         <!-- Main content -->
-        <section class="container" style="margin-top:10%">
+        <section class="container" style="margin-top:8%">
             <div class="col-sm-12">
-                <h2 class="page-heading">나의 위시 리스트</h2>
+                <h2 class="page-heading jeju">나의 위시 리스트</h2>
                 <div class="row">
-                    <p/>
-                	<p/>
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
 					  <c:forEach var="wishList" items="${list}">
@@ -183,19 +199,34 @@
         				<div class="col-xs-6 col-sm-4 col-md-3" id="${wishList.wishNo}">
 						     <div class="gallery-item">
 						     	<!-- <div style="overflow-y:hidden; height:365px;"> -->
-		                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie">
+						     		<c:if test="${wishList.wishFlag eq 'preview'}">
+		                            	<a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=preview">
+		                            </c:if>
+		                            <c:if test="${wishList.wishFlag eq 'movie'}">
+		                            	<a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie">
+		                            </c:if>
 		                                <%-- <img src="${wishList.movie.postUrl}" style="widht:524px; height:365px"> --%>
 		                                <img src="${wishList.movie.postUrl}" style="width:100%; height:365px;">
 		                            </a>
 	                            <!-- </div> -->
-	                            <div class="alert alert-info" role="alert">
-  									<strong>${wishList.wishFlag}</strong><br/>
+	                            <div class="alert alert-info jeju" role="alert">
+	                            	<c:if test="${wishList.wishFlag eq 'preview'}">
+	                            		<strong>시사회</strong><br/>
+	                            	</c:if>
+	                            	<c:if test="${wishList.wishFlag eq 'movie'}">
+	                            		<strong>영화</strong><br/>
+	                            	</c:if>
   									${wishList.movie.movieNm}
-  										<span class="label label-info"><input type="hidden" value="${wishList.wishNo }">취소</span>
+  										<span class="label label-info jeju"><input type="hidden" value="${wishList.wishNo }">취소</span>
 								</div>
+									<c:if test="${wishList.wishFlag eq 'preview'}">
+		                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--info-link">
+		                            </c:if>
+		                            <c:if test="${wishList.wishFlag eq 'movie'}">
 		                            <a href="/movie/getMovie?movieNo=${wishList.movie.movieNo}&menu=movie" class="gallery-item__descript gallery-item--info-link">
+		                            </c:if>
 		                                <span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>
-		                                <p class="gallery-item__name">개봉일 : ${wishList.movie.openDt}</p>
+		                                <p class="gallery-item__name jeju">등록일 : ${wishList.wishRegDate}</p>
 		                            </a>
  	                         </div>       
 	                    </div>
@@ -209,10 +240,20 @@
        
        
        
-       <!-- bottomToolBar Start /////////////////////////////////////-->
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-	   <!-- bottomToolBar End /////////////////////////////////////-->
+       <jsp:include page="/layout/loginModal.jsp" />
      </div>
+     <div class="here">
+     	<c:if test="${list.size() < 1}">
+        <br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	<br/><br/>
+     	</c:if>
+     </div>
+  	 <jsp:include page="/layout/bottomToolbar.jsp" />
   
 
 d
@@ -253,6 +294,10 @@ d
       </script>
 </body>
  <style>
+ 	 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+	  .jeju{
+		font-family: 'Jeju Gothic', sans-serif;
+	  }
       html{
  	     height: auto;
       }

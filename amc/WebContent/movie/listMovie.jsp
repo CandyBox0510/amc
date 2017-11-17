@@ -429,36 +429,32 @@
 								
 								if(userId == null || userId == ''){
 									alert("로그인 후 이용 가능합니다.");
-									exit();
-								}
-								
+									$('.overlay').removeClass('close').addClass('open');
+									//exit();
+								} else {
 								
 								
 								// alert("movieNo: " + movieNo); 					
 								// alert("userId: " + userId); 
 								
-						 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
-							    
-									
-								
-							
-								
-											
-								$.ajax( 
-										{
-											url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-											type : "GET" ,							
-										}).done(function(data) {
-									//정상 통신인 경우
-									if (data == 'add') {
-										var msg = '찜하기 신청';
-										alert(msg);
-									} else {
-										alert("찜하기 취소");
-									}
-								});
-							
-						})
+							 	    $(this).removeClass('fa fa-heart-o').addClass('fa fa-heart');
+													
+									$.ajax( 
+											{
+												url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+												type : "GET" ,							
+											}).done(function(data) {
+										//정상 통신인 경우
+										if (data == 'add') {
+											var msg = '찜하기 신청';
+											alert(msg);
+										} else {
+											alert("찜하기 취소");
+										}
+									})
+								}
+							})
+						//})
 						 
 						 $(document).on("click", ".fa-heart", function () {
 								
@@ -472,34 +468,34 @@
 							// alert("movieNo: " + movieNo); 					
 							// alert("userId: " + userId); 
 							
-							
-							$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
-						
 							if(userId == null || userId == ''){
-								alert("로그인 후 이용 가능합니다.");
-								return;
-							}
-							
+								alert("로그인 후 이용 가능합니다.");							
+								$('.overlay').removeClass('close').addClass('open');
+								exit();
+							} else { 
+
+								$(this).removeClass('fa fa-heart').addClass('fa fa-heart-o');
 										
-							$.ajax( 
-									{
-										url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
-										type : "GET" ,							
-									}).done(function(data) {
-								//정상 통신인 경우
-								if (data == 'add') {
-									var msg = '찜하기 신청';
-									alert(msg);
-								} else {
-									alert("찜하기 취소");
-								}
-							});
+								$.ajax( 
+										{
+											url : "/movie/json/switchWishList?movie.movieNo="+movieNo+"&user.userId="+userId+"&wishFlag=movie",									
+											type : "GET" ,							
+										}).done(function(data) {
+									//정상 통신인 경우
+									if (data == 'add') {
+										var msg = '찜하기 신청';
+										alert(msg);
+									} else {
+										alert("찜하기 취소");
+									}
+								})
+							}
 						})
+					});
+				//});
 				
-				});
-					
-					 
-				//============= "예약  Event 처리"  Event  처리 =============	
+				
+			//============= "예약  Event 처리"  Event  처리 =============	
 				$(function() {
 					 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 					$("span:contains('예매')" ).on("click" , function() {

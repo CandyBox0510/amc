@@ -161,5 +161,12 @@
 		  AND alarm_flag = 'O'
 		  </if> 
 	</select>
+	
+	
+	<select  id="getCancelAlarmOfScreenContentNo"  parameterType="map"	 resultMap="alarmSelectMap">
+		SELECT *
+		FROM alarm
+		WHERE user_id = #{user.userId} AND screencontent_no = #{screenContent.screenContentNo} AND alarm_flag = 'C'
+ 	</select>
 
 </mapper>

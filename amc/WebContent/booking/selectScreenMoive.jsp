@@ -11,12 +11,9 @@
     <meta name="keywords" content="HTML, CSS, JavaScript">
     <meta name="author" content="Gozha.net">
         
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>   
     
-	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
-		
 
    
     <script type="text/javascript">

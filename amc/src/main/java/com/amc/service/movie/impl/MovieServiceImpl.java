@@ -6,7 +6,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -208,6 +212,30 @@ public class MovieServiceImpl implements MovieService {
 					e1.printStackTrace();
 				}
 			
+				// 개봉날짜 + 7일 더하는 로직
+			    
+			    System.out.println("openDt 7일전 전환전 날짜      ::" + openDt);
+			    
+			    DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			    Date date = null;
+			    
+			    try {
+					date = dateFormat.parse(openDt);
+				} catch (java.text.ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			    Calendar cal = Calendar.getInstance();
+			    cal.setTime(date);
+			    cal.add(Calendar.DATE, 7);
+			    System.out.println(date);
+			    System.out.println(cal.getTime());
+			    
+			    openDt = dateFormat.format(cal.getTime());
+			    
+			    System.out.println("OpenDT 개봉일 + 7 " + openDt);
+			    
+				
 				// 가져온 API 영화를 등록하기 전에 우리 DB에 있는지 중복 Check하는 작업
 				// 영화 Title와 감독이 같은 영화는 DAO에 Call하기전에 ServiceImp에  
 				// Return -1 과 Message로 "이미 DB에 등록된 영화" 메시지 전달 
@@ -428,7 +456,7 @@ public class MovieServiceImpl implements MovieService {
 							   	         jsonObject = itemsArray.getJSONObject(index);
 							   	         postUrl = jsonObject.getString("image");
 							   	         
-							   	         if(postUrl.length() == 0){
+							   	         if(postUrl.length() == 0){							   	        	
 							   	        	 return -1;
 							   	         }
 							   	         System.out.println("postUrl :" + postUrl  );  
@@ -459,10 +487,26 @@ public class MovieServiceImpl implements MovieService {
 						    movie.setActors(actorNms);
 						    movie.setDirector(directorNms);	
 						    movie.setGenres(genreNms);
-						    movie.setWatchGradeNm(watchGradeNm);
+						    
+						    if (movie.getWatchGradeNm() != null) {
+						    	movie.setWatchGradeNm(watchGradeNm);
+						    }
+						    else {
+						    	movie.setWatchGradeNm("전체 이용가능가");
+						    }
+						    
 						    movie.setMovieNm(movieNm);
-						    movie.setPostUrl(postUrl);	  
-						    movie.setShowTm(showTm);
+						    movie.setPostUrl(postUrl);	
+						    
+						    if (movie.getShowTm() != null) {
+						    	 movie.setShowTm(showTm);
+						    }
+						    else {
+						    	movie.setShowTm("90");
+						    }
+						    
+					
+						
 						    //movie.setEndDt(movieEndDate);
 						    movie.setSynopsis(syonpsis);
 						    movie.setTrailer(trailer);

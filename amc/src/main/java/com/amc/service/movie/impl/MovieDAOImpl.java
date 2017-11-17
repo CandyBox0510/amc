@@ -1,6 +1,10 @@
 package com.amc.service.movie.impl;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -18,7 +23,6 @@ import com.amc.common.Search;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieAPI;
 import com.amc.service.domain.MovieComment;
-import com.amc.service.domain.User;
 import com.amc.service.domain.WishList;
 import com.amc.service.domain.onetime.MovieList;
 import com.amc.service.domain.onetime.MovieOnScheule;
@@ -126,7 +130,21 @@ public class MovieDAOImpl implements MovieDAO {
 	// 영화 삭제
 	public int deleteMovie(int movieNo) throws Exception{
 		System.out.println("MovieDAOImpl deleteMovie movieNo ===>>>>"  + movieNo);
-		return sqlSession.insert("MovieMapper.deleteMovie",movieNo);
+		int sql_return_code = 0;
+			
+		try {
+		       sql_return_code =  sqlSession.insert("MovieMapper.deleteMovie",movieNo);
+	    	
+		    }
+		catch (Exception e) {
+			
+		
+		    sql_return_code = 2292;
+		    System.out.println("sql return code ::" + sql_return_code);
+		}	
+		
+		return sql_return_code;
+		
 	}
 
 	
@@ -215,6 +233,11 @@ public class MovieDAOImpl implements MovieDAO {
 	    System.out.println("directorNms  ::" + movie.getDirector());
 	    System.out.println("genreNms     ::" + movie.getGenres());
 	    System.out.println("movieNm      ::" + movie.getMovieNm());
+	    
+	    if(movie.getPostUrl().length() == 0){							   	        	
+	        	 movie.setPostUrl("없음");
+	    } 
+	    
 	    System.out.println("postUrl      ::" + movie.getPostUrl());
 	    System.out.println("watchGradeNm ::" + movie.getWatchGradeNm());
 	    
@@ -224,8 +247,11 @@ public class MovieDAOImpl implements MovieDAO {
 	    	movie.setWatchGradeNm("청소년 관람가");
 	    }
 	 
+	  
 	    System.out.println("showTm       ::" + movie.getShowTm());
-	    System.out.println("openDt       ::" + movie.getOpenDt());
+	    System.out.println("openDt  전환 + 7일 후 날짜     ::" + movie.getOpenDt());
+	    
+	    
 	    /*  System.out.println("movieEndDate ::" + movie.getEndDt());*/
 	    System.out.println("syonpsis     ::" + movie.getSynopsis());
 	    System.out.println("trailer      ::" + movie.getTrailer());
