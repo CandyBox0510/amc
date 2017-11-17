@@ -260,6 +260,14 @@
                       <ul>
 						<li><span class="category__item hanna">신청할 좌석: <span id="seatNo"></span></span></li>
 						<li><span class="category__item hanna">신청된 좌석: <span id="seats">${seats}</span></span></li>
+						<c:if test="${screenContent.previewFlag eq 'Y' }">
+							<li><span class="category__item hanna">타이틀 : ${screenContent.previewTitle}</span></li>
+						</c:if>
+						<c:if test="${screenContent.previewFlag eq 'N' }">
+							<li><span class="category__item hanna">타이틀 : ${screenContent.movie.movieNm}</span></li>
+						</c:if>
+						<li><span class="category__item hanna">Theater: ${screenContent.screenTheater}상영관</span></li>
+                        <li><span class="category__item hanna">${screenContent.screenDate}&nbsp; ${screenContent.screenOpenTime}</span></li>
                       </ul>
             </div>
             <button class="ui brown button" style="width:100%; height:100%; padding-top:18px;" onClick="javascript:addCancelAlarm()"><font size="4px">취소표 알리미</font><p/><font size="4px" color="white">신&nbsp;청</font></button>

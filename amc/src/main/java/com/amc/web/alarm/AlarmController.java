@@ -25,6 +25,8 @@ import com.amc.service.alarm.AlarmService;
 import com.amc.service.domain.Alarm;
 import com.amc.service.domain.ScreenContent;
 import com.amc.service.domain.User;
+import com.amc.service.movie.MovieService;
+import com.amc.service.screen.ScreenService;
 import com.amc.web.booking.BookingRestController;
 
 @Controller
@@ -34,6 +36,14 @@ public class AlarmController {
 	@Autowired
 	@Qualifier("alarmServiceImpl")
 	private AlarmService alarmService;
+	
+	@Autowired
+	@Qualifier("screenServiceImpl")
+	private ScreenService screenService;
+
+	@Autowired
+	@Qualifier("movieServiceImpl")
+	private MovieService movieService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
@@ -51,6 +61,10 @@ public class AlarmController {
 		Map<String,Object> tempMap = new HashMap<String,Object>();
 		
 		User user = (User)session.getAttribute("user");
+		
+		screenContent = screenService.getScreenContent(screenContent.getScreenContentNo());
+		screenContent.setMovie(movieService.getMovie(screenContent.getMovie().getMovieNo()));
+		System.out.println("¡á¡á¡á¡á"+screenContent+"¡á¡á¡á¡á");
 		
 		tempMap.put("user", user);
 		tempMap.put("screenContent", screenContent);
@@ -74,7 +88,7 @@ public class AlarmController {
 		
 		System.out.println("Seats::::::::::::::"+seats);
 		
-		model.addAttribute("screeContent", screenContent);
+		model.addAttribute("screenContent", screenContent);
 		model.addAttribute("seats",seats);
 
 		return "forward:/booking/selectCancelAlarm.jsp";	
