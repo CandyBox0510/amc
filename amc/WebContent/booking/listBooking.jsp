@@ -114,7 +114,7 @@
 											   }
 									all +=	   '">'
 									all += 	  '<img src="' +booking[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
-									all += 		'<div class="alert alert-success" role="alert">'
+									all += 		'<div class="alert alert-success jeju" role="alert">'
 									all +=			'<strong><td align="left">'
 											   if(booking[i].screenContent.previewFlag == 'Y'){
 												    all += booking[i].screenContent.previewTitle
@@ -122,15 +122,16 @@
 													all += booking[i].movie.movieNm												   
 											   }
 									all +=	 		'</td></strong>'
-									all +=          '<br/>상영관 : '+booking[i].screenContent.screenThater+' 관'
+									all +=			'<br/>'+booking[i].screenContent.screenOpenTime 
+									all +=          '<br/>상영관 : '+booking[i].screenContent.screenTheater+' 관'
 									all +=          '<br/>티켓수 : '+booking[i].headCount+' ( '+booking[i].bookingSeatNo+')'
-									all += 			'<span class="label label-success">'
+									all += 			'<span class="label label-success jeju">'
 									all +=          '<input type="hidden" value="'+booking[i].bookingNo+'">'
-									all += 			'예매내역</span></a>'
+									all += 			'예매내역</span>'
 									all +=		'</div>'
 									all += 	   '<a href="/booking/getBooking?bookingNo='+booking[i].bookingNo+'" class="gallery-item__descript gallery-item--success-link">'
 									all +=     '<span class="gallery-item__icon"><i class="fa fa-tag"></i></span>'
-									all += 	   '<p class="gallery-item__name">예매 상세 조회'
+									all += 	   '<p class="gallery-item__name jeju">예매 상세 조회'
 									all += 	   '</p></a>'
 									all +=	'</div>'
 									all +='</div>'
@@ -162,14 +163,12 @@
         
         
         <!-- Main content -->
-        <section class="container" style="margin-top:10%">
+        <section class="container" style="margin-top:8%">
             <div class="col-sm-12">
             	<p/>
-            	<p/>
-            	<p/>
-                <h2 class="page-heading">나의 예매 리스트</h2>
-                <p class="btn btn-md btn--danger" id="now">현재 예매 내역</p>
-                <p class="btn btn-md btn--danger" id="past">지난 예매 내역</p>
+                <h2 class="page-heading jeju">나의 예매 리스트</h2>
+                <p class="btn btn-md btn--danger jeju" id="now">현재 예매 내역</p>
+                <p class="btn btn-md btn--danger jeju" id="past">지난 예매 내역</p>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
@@ -187,7 +186,7 @@
 	                            <a href="/movie/getMovie?movieNo=${booking.movie.movieNo}&menu=${what}">
 	                                <img alt='' src="${booking.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            </a>
-	                            <div class="alert alert-success" role="alert">
+	                            <div class="alert alert-success jeju" role="alert">
   									<strong>
   										<td align="left">
   										<c:if test="${booking.screenContent.previewFlag eq 'Y'}">
@@ -201,11 +200,11 @@
   									<br/>${booking.screenContent.screenOpenTime}
   									<br/>상영관 : ${booking.screenContent.screenTheater} 관
   									<br/>티켓수 : ${booking.headCount} ( ${booking.bookingSeatNo})
-  									<span class="label label-success"><input type="hidden" value="${booking.bookingNo}">예매내역</span>
+  									<span class="label label-success jeju"><input type="hidden" value="${booking.bookingNo}">예매내역</span>
 								</div>
 	                            <a href="/booking/getBooking?bookingNo=${booking.bookingNo}" class="gallery-item__descript gallery-item--success-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-tag"></i></span>
-	                                <p class="gallery-item__name">예매 상세 조회</p>
+	                                <p class="gallery-item__name jeju">예매 상세 조회</p>
 	                            </a>
  	                         </div>       
 	                    </div>
@@ -266,6 +265,10 @@
       </script>
 </body>
  <style>
+	 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+	  .jeju{
+		font-family: 'Jeju Gothic', sans-serif;
+	  }
       html{
  	     height: auto;
       }

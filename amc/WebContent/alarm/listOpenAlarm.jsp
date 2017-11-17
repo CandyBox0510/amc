@@ -120,7 +120,7 @@
 									all += 	'<div class="gallery-item">'
 									all += 	  '<a href="/movie/getMovie?movieNo='+alarm[i].screenContent.movie.movieNo+'&menu=search">'
 									all += 	  '<img src="' +alarm[i].screenContent.movie.postUrl+ '" style="width:100%; height:365px;"></a>'
-									all += 		'<div class="alert alert-danger" role="alert">'
+									all += 		'<div class="alert alert-danger jeju" role="alert">'
 									all +=			'<strong>티켓 오픈 일자</strong><br/>'
 									all +=			'<p class="'+alarm[i].alarmNo+'">'
 									all +=           alarm[i].screenContent.ticketOpenDate
@@ -133,7 +133,7 @@
 									all +=		'</div>'
 									all += 	   '<a href="'+alarm[i].screenContent.movie.postUrl+ '" class="gallery-item__descript gallery-item--video-link">'
 									all +=     '<span class="gallery-item__icon"><i class="fa fa-shopping-cart"></i></span>'
-									all += 	   '<p class="gallery-item__name">'
+									all += 	   '<p class="gallery-item__name jeju">'
 												if(alarm[i].screenContent.previewFlag == 'Y'){
 													all += alarm[i].screenContent.previewTitle
 												}else{
@@ -219,7 +219,11 @@
 	     
 	      if(diff<1){
 	      }else{
-	    	  	$(".a"+alarmNo).text(days+ "일 " + hours + ":" + minutes + ":" + seconds);
+	    	  if(days==""){
+	    		  $(".a"+alarmNo).text(hours + ":" + minutes + ":" + seconds);  
+	    	  }else{
+	    		  $(".a"+alarmNo).text(days + "일" + hours + ":" + minutes + ":" + seconds);
+	    	  }
 	      }
 	  }
   	}
@@ -248,12 +252,9 @@
         </header>
         
         <!-- Main content -->
-        <section class="container" style="margin-top:10%">
+        <section class="container" style="margin-top:8%">
             <div class="col-sm-12">
-            		<p/>
-                	<p/>
-                	<p/>
-                <h2 class="page-heading">티켓 오픈 알림 리스트</h2>
+                <h2 class="page-heading jeju">티켓 오픈 알림 리스트</h2>
                 <div class="row">
 	                <div class="gallery-wrapper">
 	                 <c:set var="i" value="0" />
@@ -265,7 +266,7 @@
 	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview">
 	                                <img alt='' src="${alarm.screenContent.movie.postUrl}" style="width: 100%; height: 365px;">
 	                            </a>
-	                            <div class="alert alert-danger" role="alert">
+	                            <div class="alert alert-danger jeju" role="alert">
   									<strong>티켓 오픈 일자</strong><br/><p class="${alarm.alarmNo}">${alarm.screenContent.ticketOpenDate}</p>
   									<strong>남은시간</strong><br/><p class="a${alarm.alarmNo}"></p>
   									<span class="label label-danger"><input type="hidden" value="${alarm.alarmNo}">알림취소</span>
@@ -273,10 +274,10 @@
 	                            <a href="/movie/getMovie?movieNo=${alarm.screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-bell-o"></i></span>
 	                                <c:if test="${alarm.screenContent.previewFlag eq 'Y'}">
-	                                	<p class="gallery-item__name">${alarm.screenContent.previewTitle}</p>
+	                                	<p class="gallery-item__name jeju">${alarm.screenContent.previewTitle}</p>
 	                                </c:if>
 	                                <c:if test="${alarm.screenContent.previewFlag eq 'N'}">
-	                                	<p class="gallery-item__name">${alarm.screenContent.movie.movieNm}</p>
+	                                	<p class="gallery-item__name jeju">${alarm.screenContent.movie.movieNm}</p>
 	                                </c:if>
 	                            </a>
  	                         </div>       
@@ -347,6 +348,10 @@
       </script>
 </body>
  <style>
+  	  @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+	  .jeju{
+		font-family: 'Jeju Gothic', sans-serif;
+	  }
       html{
  	     height: auto;
       }

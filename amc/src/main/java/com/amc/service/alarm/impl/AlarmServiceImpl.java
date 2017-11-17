@@ -203,14 +203,24 @@ public class AlarmServiceImpl implements AlarmService {
 		if(header != null){
 			body.clear();	
 		}
-		body.put("type", "sms");
+		
+		if(type.equals("booking")){
+			body.put("type", "lms");
+		}else{
+			body.put("type", "sms");
+		}
+		
 		body.put("from", fromPhoneNo);
 
 		// userId가 있다 = 한사람에게 보낸다 <-----> userId가 없다 한사람or여러사람에게 보낸다
 		if (!userId.equals("")) {
 			System.out.println("AlarmServiceImpl :: userId 는 Not Null");
 			User user = userDAO.getUser(userId);
-			body.put("to", user.getPhone1()+user.getPhone2()+user.getPhone3());
+			
+			List<String> list = new ArrayList<>();
+			list.add(user.getPhone1()+user.getPhone2()+user.getPhone3());
+			
+			body.put("to", list);
 		} else {
 			System.out.println("AlarmServiceImpl :: userId 는 Null");
 			List<String> list = new ArrayList<>(); 
@@ -392,9 +402,12 @@ public class AlarmServiceImpl implements AlarmService {
 				}else{
 					pushValue.put("content", "[예매 확인]\n"+
 							"예매번호 : "+booking.getBookingNo()+
-							"\n영화명 : "+booking.getScreenContent().getPreviewTitle()+
+							"\n영화명 : "+booking.getMovie().getMovieNm()+
 							"\n상영일 : "+booking.getScreenContent().getScreenOpenTime()+
-							"\n좌석 : "+(String)jsonObject.get("seatNo")+ 
+							"\n좌석 : "+(String)jsonObject.get("seatNo")+
+							"\nQRqode : "+"https://chart.googleapis.com/" +
+							  			   "chart?chs=150x150&cht=qr&chl=" +
+							  			   "http://183.98.215.171:8080/booking/getBooking?bookingNo="+serialNo +
 							"\n예매가 완료되었습니다.");
 				}
 			break;
