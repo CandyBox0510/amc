@@ -219,7 +219,7 @@
 			  //alert('카카오페이 결제요청이왔습니다.');
 			  kakaoPay();	  
 			  
-		  }if(event.data.indexOf("countChanged")==0){
+		  }else if(event.data.indexOf("countChanged")==0){
 			 //headCount지정이 바뀌었을때
 			 console.log('countChange')
 			 initializeSeat();	  
@@ -227,7 +227,7 @@
 		  }else if(event.data.length>100){
 			//alert('카카오페이관련 event 발생입니다.');
 			  
-		  } else if(event.data.indexOf("id")==0){
+		  }else if(event.data.indexOf("id")==0){
 			  $("input[name='clientId']").val(event.data.split(",")[1]); 
 			 
 		  }else if(event.data.indexOf("duplicated")==0){
