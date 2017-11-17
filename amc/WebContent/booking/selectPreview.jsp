@@ -16,7 +16,6 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 		
   <script type="text/javascript">
@@ -80,6 +79,15 @@
     		  document.getElementById("dpTime").innerHTML =days+ "일 " + hours + ":" + minutes + ":" + seconds;  
     	  }		
       }
+      
+     /*  if(minutes < 10){ */
+	      if(seconds%2==0){
+	    	  console.log('ㅁ');
+	    	  $("#dpTime").css("color","#ff0000");
+	      }else{
+	    	  $("#dpTime").css("color","#ffffff");
+	      }
+      /* } */
   }
   
   
@@ -349,7 +357,7 @@
 						<input type="hidden" class="item"></input>
 					</span>
 				</div >
-				<div class="row abc" style="padding:10px;">
+				<div class="row abc important" style="padding:10px;">
 					<strong>티켓 오픈까지 남은시간 : &nbsp; </strong>
                     <span class="choosen-area">
                     	<span id="dpTime"></span>
@@ -493,8 +501,11 @@ a.disabled {
 
 }
 .abc{
-  /*font-family: 'Hanna', sans-serif;*/
   font-family: 'Jeju Gothic', sans-serif; 
 }
+.important{
+	font-size: 29px; 
+}
+
 </style>
 </html>

@@ -46,7 +46,6 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		
 		<!--  font from googleApi -->
-		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 
 <style>
@@ -81,7 +80,7 @@
 	}
 	.content__text{
 	 /*font-family: 'Jeju Gothic', sans-serif;*/
-	  font-family: 'Hanna', sans-serif; 
+	  font-family: 'Jeju Gothic', sans-serif; 
 	 
 	}
 	
@@ -498,7 +497,7 @@ p.movie__option {
   height: auto;
 } 
 .abc{
-	  font-family: 'Hanna', sans-serif; 
+	  font-family: 'Jeju Gothic', sans-serif; 
 	 }
 </style>
 </html>
