@@ -102,11 +102,12 @@ public class PurchaseController {
 	
 	@RequestMapping( value="getSaleList" )
 	public String getSaleList(	@ModelAttribute("search") Search search, Model model) throws Exception{
-		System.out.println("purchaseController의 getSaleList 메소드의 search :" + search + model);
-		System.out.println("search ::" + search);
-		System.out.println("model ::" + model);
+		System.out.println("::::::::purchaseController의 getSaleList 메소드의 search :" + search + model);
+		System.out.println(":::::::::search ::" + search);
+		System.out.println("::::::::::model ::" + model);
 		
 		this.getList(search, model);
+		
 		return "forward:listSale.jsp";
 	}
 
@@ -141,5 +142,8 @@ public class PurchaseController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		System.out.println("**************"+map.get("list"));
+		System.out.println("**************"+resultPage);
+		System.out.println("**************"+search);
 	}
 }

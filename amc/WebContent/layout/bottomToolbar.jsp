@@ -20,8 +20,8 @@
                 </div>
                 <div class="col-xs-4 col-md-2 footer-nav">
                     <ul class="nav-link">
-                        <li><a href="/product/getGoodsList?menu=search&searchKeyword=G" class="nav-link__item">±ÂÁî</a></li>
-                        <li><a href="/product/getSnackList?menu=search&searchKeyword=S" class="nav-link__item">½º³¼¹Ù</a></li>
+                        <li><a href="/product/getGoodsList?menu=search&searchProdType=G" class="nav-link__item">±ÂÁî</a></li>
+                        <li><a href="/product/getSnackList?menu=search&searchProdType=S" class="nav-link__item">½º³¼¹Ù</a></li>
 
                     </ul>
                 </div>

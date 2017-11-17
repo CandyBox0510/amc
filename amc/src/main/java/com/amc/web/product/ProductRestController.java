@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,7 +72,7 @@ public class ProductRestController {
 		
 		return product;
 	}
-	
+		
 	@RequestMapping( value="getGoodsProduct/{prodNo}", method=RequestMethod.GET )
 	public Product getGoodsProduct( @PathVariable int prodNo ) throws Exception{
 		return productService.getProduct(prodNo);

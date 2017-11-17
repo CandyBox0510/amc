@@ -10,146 +10,94 @@
 	   <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>Americode Cinema UpdateProduct</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Roboto -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    
-    <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
-
-        <!-- Modernizr --> 
-        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
-    
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-   
-        <!--   Sweetalert2 CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-        <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.js"></script>
 </head>
 <body bgcolor="#ffffff" text="#000000">
-	<div class="wrapper">
-    	<!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div> 
-        <header class="header-wrapper header-wrapper--home">
-			<jsp:include page="/layout/topToolbar.jsp" />
-   		</header>
+	
 
+	<div class="wrapper">
 		<div class="container" id="body">
-			<div class="page-header col-sm-offset-2 col-sm-10">
-				<h1>상품 정보 수정</h1>
-			</div>
+			<div class="row updateheader">
+				<h3 class="text-info">상품정보수정</h3>
+			</div> 
 			<form class="update-product form-horizontal">
 				<div class="form-group">
 					<input type="hidden" name="prodNo" value="${product.prodNo }"/>
-					
-					<div class="row">
-						<label for="prodType" class="col-sm-3 control-label">상품 구분</label>
-				 		<div class="col-sm-3">			  		
-				  	  		<input type='radio' name='prodType' value='G' checked="checked">굿즈&emsp;&emsp;&emsp;&emsp;
-							<input type='radio' name='prodType' value='S'>스낵바
+					<br/>
+					<div class="row" id="selectbox">
+						<label for="inputprodType" class="col-sm-2 control-label">상품 구분</label>
+				 		<div class="col-sm-3">		
+							<select class="search-sort" name="prodType" id="prodType">
+								<option value="G">굿즈</option>
+								<option value="S">스낵바</option>
+							</select>
 				  		</div>
 				  	</div>
 					<br/>
 					
 					<div class="row">
-						<label for="inputProdName" class="col-sm-3 control-label">상품명</label>
+						<label for="inputProdName" class="col-sm-2 control-label">상품명</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputProdName" name="prodName" value="${product.prodName}" placeholder="상품명">
-						</div>
-						<span class="col-sm-6"></span>
-					</div>
-					<br/>
-					
-					<div class="row">
-						<label for="inputProdDetail" class="col-sm-3 control-label">상품상세정보</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="inputProdDetail" name="prodDetail" value="${product.prodDetail}" placeholder="상품상세정보">
+							<input type="text" class="form-control-static" id="inputProdName" name="prodName" value="${product.prodName}" placeholder="상품명">
 						</div>
 					</div>
 					<br/>
 					
 					<div class="row">
-						<label for="inputProdSetInfo" class="col-sm-3 control-label">상품구성정보</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="inputProdSetInfo" name="prodSetInfo" value="${product.prodSetInfo}" placeholder="상품구성정보">
-						</div>
-					</div>
-					<br/>
-					
-					<div class="row">
-						<label for="inputStock" class="col-sm-3 control-label">추가수량</label>
+						<label for="inputProdDetail" class="col-sm-2 control-label">상품상세정보</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputStock" name="stock" >
+							<input type="text" class="form-control-static" id="inputProdDetail" name="prodDetail" value="${product.prodDetail}" placeholder="상품상세정보">
 						</div>
-						<span class="col-sm-6">(현재 수량 : ${product.stock})</span>
 					</div>
 					<br/>
 					
 					<div class="row">
-						<label for="salesOpenDate" class="col-sm-3 control-label">판매시작일</label>
+						<label for="inputProdSetInfo" class="col-sm-2 control-label">상품구성정보</label>
 						<div class="col-sm-3">
-							<input type="date" class="form-control" id="salesOpenDate" name="salesOpenDate" value="${product.salesOpenDate}">
+							<input type="text" class="form-control-static" id="inputProdSetInfo" name="prodSetInfo" value="${product.prodSetInfo}" placeholder="상품구성정보">
 						</div>
-						<label for="salesEndDate" class="col-sm-3 control-label">판매종료일</label>
-						<div class="col-sm-3">
-							<input type="date" class="form-control" id="salesEndDate" name="salesEndDate" value="${product.salesEndDate}">
-						</div>
-						<span class="col-sm-6"></span>
 					</div>
 					<br/>
 					
 					<div class="row">
-						<label for="inputPrice" class="col-sm-3 control-label">가격</label>
+						<label for="inputStock" class="col-sm-2 control-label" >추가수량</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" id="inputPrice" name="prodPrice" value="${product.prodPrice}">
+							<input type="text" class="form-control-static" id="inputStock" name="stock" >
 						</div>
-						<span class="col-sm-6"></span>
+						<span class="col-sm-6" id="stocktext">(현재 수량 : ${product.stock})</span>
 					</div>
 					<br/>
 					
 					<div class="row">
-						<label for="inputFile" class="col-sm-3 control-label">상품이미지</label>
+						<label for="salesOpenDate" class="col-sm-2 control-label">판매시작일</label>
+						<div class="col-sm-3">
+							<input type="date" class="form-control-static" id="salesOpenDate" name="salesOpenDate" value="${product.salesOpenDate}">
+						</div>
+						<label for="salesEndDate" class="col-sm-2 control-label" id="salesEndDatetext">판매종료일</label>
+						<div class="col-sm-3">
+							<input type="date" class="form-control-static" id="salesEndDate" name="salesEndDate" value="${product.salesEndDate}">
+						</div>
+					</div>
+					<br/>
+					
+					<div class="row">
+						<label for="inputPrice" class="col-sm-2 control-label">가격</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control-static" id="inputPrice" name="prodPrice" value="${product.prodPrice}">
+						</div>
+					</div>
+					<br/>
+					
+					<div class="row">
+						<label for="inputFile" class="col-sm-2 control-label">상품이미지</label>
 						<div class="col-sm-6">
-							<input type="file" class="form-control" id="inputFile" name="file">
+							<input type="file" class="form-control-static" id="inputFile" name="file">
 						</div>
-						<span class="col-sm-3"></span>
 					</div>
 					<br/>
 					
 					<div class="row">
-						<label for="inputCurrent" class="col-sm-3 control-label">현재 이미지</label>
+						<label for="inputCurrent" class="col-sm-2 control-label">현재 이미지</label>
 						<div class="col-sm-6">
 							<c:if test="${!empty product.prodImage}">
 								<img src="../images/uploadFiles/${product.prodImage}" style="height: 200px; width: 100%;"/>
@@ -158,65 +106,36 @@
 								등록된 파일이 없습니다.
 							</c:if>
 						</div>
-						<span class="col-sm-3"></span>
 					</div>
 					<br/>
 					
-					<div class="row">
-						<div class="col-sm-offset-3 col-sm-9">
-							<button type="button" id="update" class="btn btn-success">
-								수정하기
-							</button>
-							<button type="button" id="delete" class="btn btn-success">
-								삭제하기
-							</button>
-							<!-- Modal -->
-							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-body">
-											<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-											<h4 class="modal-title" id="myModalLabel">상품 정보 수정 중입니다..</h4>
+						<div class="row">
+							<div class="col-sm-offset-3 col-sm-9">
+								<button type="button" id="update" class="btn btn-success">
+									수정하기
+								</button>
+								<button type="button" id="delete" class="btn btn-success">
+									삭제하기
+								</button>
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-body">
+												<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+												<h4 class="modal-title" id="myModalLabel">상품 정보 수정 중입니다..</h4>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
 			</form>
 		</div><!-- //container 끝 -->
 	</div><!-- //wrapper 끝 -->
 		
-		<jsp:include page="/layout/bottomToolbar.jsp" />
-		<jsp:include page="/layout/loginModal.jsp" />
 
-   <!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
-
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
-	
 </body>
 	<script type="text/javascript">
 		function fncUpdateProduct(){
@@ -357,10 +276,208 @@
 
 	</script>
 	<style type="text/css">
-	 	#body{ padding-top: 100px; }
- 		html{
-        height: auto;
-  		}
+ 	#body{ padding-top: 0px; }
+ 	.countPage {
+	  	font-size: 13px;
+	   	margin-top: 10px;
+	}
+	 
+/*  	.search{
+		margin-right : 30px;
+	}  */
+	
+ 	section{
+		margin-bottom : 30px
+	}
+	
+	.movieNm {
+		  font-size: 0px;
+		  font-weight: bold;
+		  display: block;
+		  margin-bottom: 0px;
+		  margin-top: 0px;
+	}
+		html{
+	        height: auto;
+	  	}
+	  	
+.ui.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  z-index: 1;
+  opacity: 0.8;
+  font-size: 1.25em;
+  color: #FFFFFF;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.625rem 0rem 0rem 0rem;
+}  	  
+
+
+.ui.modal > .header {
+  display: block;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background: #FFFFFF;
+  margin: 0em;
+  padding: 1.25rem 1.5rem;
+  box-shadow: none;
+  color: rgba(0, 0, 0, 0.85);
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 0px dotted ButtonText;
+}
+
+.ui.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  top: 00%;
+  left: 50%;
+  text-align: left;
+  background: #000000;
+  border: none;
+  /* box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2); */
+  -webkit-transform-origin: 00% 25%;
+  transform-origin: 50% 25%;
+  border-radius: 0.28571429rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  will-change: top, left, margin, transform, opacity;
+}
+
+.col-xs-7 {
+  width: 58.33333333%;
+  font-size: 15px;
+}
+#body {
+	/* background-color: #EDEDED; */
+	padding:100px;
+	position:relative;
+	text : center;
+	/* background-color: rgba(224, 103, 103, 0.1); */
+	margin-bottom: 5px;
+	padding-top: -50px;
+	/* padding-top: 10px;
+	    padding-bottom: 10px; */
+	/*padding-left: 20px;
+	    padding-right: 20px; */
+	/* margin-left: 1px;
+	    margin-right: 1px; */
+	padding-bottom: 10px;
+	border-radius: 15px;
+	border-color: #000000;
+	border-width: 30px;
+	/* box-shadow: inset 0 0 10px #a0a0a0; */
+}
+
+html {
+	height: auto;
+}
+
+.inputtype {
+	margin-bottom: 10px;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+	position: relative;
+}
+
+input, #phone1,#gender {
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+}
+input, #prodType{
+	position::fixed;
+	right:50px;
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+}
+input, #salesEndDate{
+	position::relative;
+	left:500px;
+	margin-bottom: 10px;
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #000000;
+	padding: 9px 18px 10px !important;
+}
+.col-sm-2 {
+	position : relative;
+	bottom:-10px;
+    width: 12%;
+   	font-size: 14px;
+}
+#salesEndDatetext{
+    width: 10%;
+}
+#stocktext{
+	position:relative;
+	bottom:-10px;
+	left:-10px;
+    width: 12%;
+    font-size: 14px;
+    
+}
+.updateheader{
+	position:relative;
+	left:-110px;
+}
+ .btn-success {
+    color: #ffffff;
+    background-color: #582cb9;
+    border-color: #582cb9;
+    position: relative;
+    left: 30px;
+}
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #be41e8;
+  border-color: #be41e8;
+}
+
 	</style>
 	
 </html>
