@@ -46,17 +46,18 @@
 	</insert>
 	
 	<!-- SQL : SELECT ONE -->	
-	<select id="getProduct" parameterType="int" resultMap="productSelectMap">
+	<select id="getProduct" parameterType="map" resultMap="productSelectMap">
 		SELECT	
 			p.prod_no, p.prod_name, p.prod_detail, p.prod_regdate, p.prod_price, p.prod_image, p.stock-NVL(COUNT(t.IMP_ID),0) stock, 
-			p.prod_type, p.sales_stock, p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock
+			p.prod_type, p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock, 
+			(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock
 		FROM product p, transaction t
 		<where>
 			p.prod_no=t.prod_no(+)
 			AND p.prod_no=#{prodNo}
 		</where>
-		GROUP BY p.prod_no, p.prod_name, p.prod_detail, p.prod_regdate, p.prod_price, p.prod_image, p.stock, p.prod_type, p.sales_stock, 
-				p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock
+		GROUP BY p.prod_no, p.prod_name, p.prod_detail, p.prod_regdate, p.prod_price, p.prod_image, p.stock, p.prod_type, 
+				p.stock, p.prod_set_info, p.sales_opendate, p.sales_enddate, p.total_stock, p.sales_stock
 	</select>
 	
  	<!-- SQL : UPDATE -->		
@@ -79,9 +80,11 @@
 	
 	<sql id="productList">
 		SELECT
-			<if test='(searchKeyword2 == "search")'>p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, (p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
-			<if test='(searchKeyword2 == "manage")'>p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, 100-(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
-		FROM product p, transaction t
+			p.prod_type, p.prod_no, p.prod_name, p.prod_price, p.prod_regdate, p.prod_detail, p.stock-NVL(COUNT(t.IMP_ID),0) stock, 
+ 			p.prod_image, p.sales_opendate, p.sales_enddate, p.total_stock, 
+ 			<if test='(searchKeyword2 == "search")'>(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
+ 			<if test='(searchKeyword2 == "manage")'>100-(p.stock-NVL(COUNT(t.IMP_ID),0))/p.total_stock*100 sales_stock</if>
+ 		FROM product p, transaction t
 		<where>
 			p.prod_no=t.prod_no(+) AND p.sales_enddate>=SYSDATE
 			<if test='(searchProdType == "G")'>
