@@ -160,27 +160,34 @@
 				<!-- <a class='thumbnail' style="text-decoration:none;"> -->
 				<!-- <img src="file:C:/amcPoster/${movie.steelCut1}" width="160px" height="180px" align="left"/>  -->
 				<div class="col-xs-2 col-md-3 ">
-					<img src="../images/movie/${movie.steelCut1}" />
+			
+					<img src="../images/movie/${movie.steelCut1}" width="200" height="150"/>
 				</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
 				<div class="col-xs-2 col-md-3 ">
-					<img src="../images/movie/${movie.steelCut2}" />
+					<img src="../images/movie/${movie.steelCut2}" width="200" height="150"/>
 				</div>
+			    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<div class="col-xs-2 col-md-3 ">
-					<img src="../images/movie/${movie.steelCut3}" />
+					<img src="../images/movie/${movie.steelCut3}" width="200" height="150" />
 				</div>
+				
 			</div>
 
 
+			<br/><br/>
 			<hr />
+			
 
 			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file1" name="file" required="required" />
+				<input class="ui-button ui-widget ui-corner-all" type="file" id="file1" name="${movie.steelCut1}" required="required" value="${movie.steelCut1}"/>
 			</div>
 			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" />
+				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" value="${movie.steelCut2}"/>
 			</div>
 			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" />
+				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" value="${movie.steelCut3}"/>
 			</div>
 
 			<hr />
