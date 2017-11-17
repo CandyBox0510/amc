@@ -43,7 +43,7 @@
  	<select  id="getWishList"  parameterType="map"	 resultMap="wishListSelectMap">
  	SELECT *							
 	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
-		 	 FROM 		(SELECT w.wish_no, w.wish_regdate, w.wish_flag,
+		 	 FROM 		(SELECT w.wish_no, to_char(w.wish_regdate, 'YYYY-MM-DD HH24:MI') wish_regdate, w.wish_flag,
 		 	 					m.poster, m.movie_no, m.movie_title, to_char(m.movie_opendate, 'YYYY-MM-DD') movie_opendate
 						FROM wishlist w, movie m 
 						WHERE w.movie_no = m.movie_no  AND user_id = #{user.userId}) inner_table
@@ -54,7 +54,7 @@
  	<select  id="getPreviewWishList"  parameterType="map"	 resultMap="wishListSelectMap">
  	SELECT *							
 	FROM	(SELECT 	inner_table.* , ROWNUM AS row_seq				
-		 	 FROM 		(SELECT w.wish_no, w.wish_regdate, w.wish_flag,s.movie_no
+		 	 FROM 		(SELECT w.wish_no, to_char(w.wish_regdate, 'YYYY-MM-DD HH24:MI') wish_regdate, w.wish_flag,s.movie_no
 						FROM wishlist w, screencontent s 
 						WHERE w.movie_no = s.movie_no  AND user_id = #{user.userId}) inner_table
 			 WHERE ROWNUM &lt;=#{search.endRowNum} )

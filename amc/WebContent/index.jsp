@@ -431,7 +431,7 @@
                  <div class="col-sm-12 change--col">
                  <c:forEach var="count" begin="1" end="6">
                  <c:if test="${count <=2 }">
-                     <div class="movie-beta__item ">
+                     <div class="movie-beta__item jeju">
                      	<c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
@@ -441,7 +441,7 @@
                         <img alt='' src="${indexList.mainMovieList[count-1].postUrl}" style="width:100%; height:264px;">
                         </a>
                         <ul class="movie-beta__info">
-                             <li><span class="best-voted jeju"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
+                             <li><span class="best-voted"><strong>${indexList.mainMovieList[count-1].movieNm}</strong></span></li>
                              <li>
                                 <p class="movie__time">${indexList.mainMovieList[count-1].showTm} min</p>
                                 <p>${indexList.mainMovieList[count-1].genres}</p>
@@ -456,7 +456,7 @@
                      </div>
                  </c:if>
                  <c:if test="${count == 3 }">
-                     <div class="movie-beta__item third--item">
+                     <div class="movie-beta__item third--item jeju">
                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
@@ -480,7 +480,7 @@
                      </div>
                  </c:if>
 				 <c:if test="${count == 4}">
-                     <div class="movie-beta__item hidden-xs">
+                     <div class="movie-beta__item hidden-xs jeju">
                          <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
@@ -504,7 +504,7 @@
                      </div>
                 </c:if>
                 <c:if test="${count > 4 }">
-                     <div class="movie-beta__item hidden-xs hidden-sm">
+                     <div class="movie-beta__item hidden-xs hidden-sm jeju">
                         <c:if test="${indexList.mainMovieList[count-1].postUrl eq null}">
                      	<img alt='' src="../images/comming_soon.jpg" style="width:100%; height:264px;">
                      	</c:if>
@@ -543,7 +543,7 @@
                       <div class="mega-select pull-right">
                           <span class="mega-select__point">Search by</span>
                           <ul class="mega-select__sort">
-                              <li class="filter-wrap"><a href="#" class="mega-select__filter filter--active" data-filter='location'>통합검색</a></li>
+                              <li class="filter-wrap"><a href="#" class="mega-select__filter filter--active jeju" data-filter='location'>통합검색</a></li>
                           </ul>
 
 						  <form id='search-form' action="/cinema/unifiedSearch" method='post' class="search" accept-charset="EUC-KR">
@@ -597,7 +597,7 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <a href='movie-page-left.html' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
                                     <c:if test="${movie.watchGradeNm eq 'ageAll'}">
                                     	<img src="/images/ageAll.png" style="width:25px; height:25px;">
                                     </c:if>
@@ -612,18 +612,16 @@
                                     </c:if>
 									<br/>
 									
-                                    <p class="movie__time">${movie.showTm} Min</p>
+                                    <p class="movie__time jeju">${movie.showTm} Min</p>
 
-                                    <p class="movie__option">${movie.genres}</p>
+                                    <p class="movie__option jeju">${movie.genres}</p>
                                     
-                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    <p class="movie__option jeju">${movie.openDt} 개봉</p>
                                     
-                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <p class="movie__option jeju">${requestScope.indexList.commentCount[i]} comments</p>
                                     <c:set var="i" value="${i+1}"/>
                                     
-                                    <p class="movie__option">감독 : ${movie.directors}</p>
-                                    
-                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
+                                    <p class="movie__option jeju">감독 : ${movie.directors}</p>
                                     
                                 </div>
                             </div>
@@ -640,7 +638,7 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <a href='movie-page-left.html' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
                                     <c:if test="${movie.watchGradeNm eq 'ageAll'}">
                                     	<img src="/images/ageAll.png" style="width:25px; height:25px;">
                                     </c:if>
@@ -655,18 +653,16 @@
                                     </c:if>
 									<br/>
 									
-                                    <p class="movie__time">${movie.showTm} Min</p>
+                                    <p class="movie__time jeju">${movie.showTm} Min</p>
 
-                                    <p class="movie__option">${movie.genres}</p>
+                                    <p class="movie__option jeju">${movie.genres}</p>
                                     
-                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    <p class="movie__option jeju">${movie.openDt} 개봉</p>
                                     
-                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <p class="movie__option jeju">${requestScope.indexList.commentCount[i]} comments</p>
                                     <c:set var="i" value="${i+1}"/>
                                     
-                                    <p class="movie__option">감독 : ${movie.directors}</p>
-                                    
-                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
+                                    <p class="movie__option jeju">감독 : ${movie.directors}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -682,7 +678,7 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                    <a href='movie-page-left.html' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
                                     <c:if test="${movie.watchGradeNm eq 'ageAll'}">
                                     	<img src="/images/ageAll.png" style="width:25px; height:25px;">
                                     </c:if>
@@ -697,18 +693,16 @@
                                     </c:if>
 									<br/>
 									
-                                    <p class="movie__time">${movie.showTm} Min</p>
+                                    <p class="movie__time jeju">${movie.showTm} Min</p>
 
-                                    <p class="movie__option">${movie.genres}</p>
+                                    <p class="movie__option jeju">${movie.genres}</p>
                                     
-                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    <p class="movie__option jeju">${movie.openDt} 개봉</p>
                                     
-                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <p class="movie__option jeju">${requestScope.indexList.commentCount[i]} comments</p>
                                     <c:set var="i" value="${i+1}"/>
                                     
-                                    <p class="movie__option">감독 : ${movie.directors}</p>
-                                    
-                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
+                                    <p class="movie__option jeju">감독 : ${movie.directors}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->
@@ -724,7 +718,7 @@
                                 </div>
 
                                 <div class="movie__info">
-                                   <a href='movie-page-left.html' class="movie__title">${movie.movieNm}</a>&nbsp;
+                                   <a href='movie-page-left.html' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
                                    <c:if test="${movie.watchGradeNm eq 'ageAll'}">
                                     	<img src="/images/ageAll.png" style="width:25px; height:25px;">
                                     </c:if>
@@ -739,18 +733,16 @@
                                     </c:if>
 									<br/>
 									
-                                    <p class="movie__time">${movie.showTm} Min</p>
+                                    <p class="movie__time jeju">${movie.showTm} Min</p>
 
-                                    <p class="movie__option">${movie.genres}</p>
+                                    <p class="movie__option jeju">${movie.genres}</p>
                                     
-                                    <p class="movie__option">${movie.openDt} 개봉</p>
+                                    <p class="movie__option jeju">${movie.openDt} 개봉</p>
                                     
-                                    <p class="movie__option">${requestScope.indexList.commentCount[i]} comments</p>
+                                    <p class="movie__option jeju">${requestScope.indexList.commentCount[i]} comments</p>
                                     <c:set var="i" value="${i+1}"/>
                                     
-                                    <p class="movie__option">감독 : ${movie.directors}</p>
-                                    
-                                    <p class="movie__option">누적관객 : ${movie.maleCnt+movie.femaleCnt}</p>
+                                    <p class="movie__option jeju">감독 : ${movie.directors}</p>
                                 </div>
                             </div>
                          <!-- Movie variant with time -->

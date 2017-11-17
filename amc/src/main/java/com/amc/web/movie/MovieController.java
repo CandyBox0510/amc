@@ -1,6 +1,7 @@
 package com.amc.web.movie;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -334,6 +335,11 @@ public class MovieController {
 
 			movie.setOpenDt(convertOpenDate);
 			movie.setEndDt(convertEndDate);
+			
+			
+			System.out.println("synopsis ::" + movie.getSynopsis());
+			
+			
 
 			System.out.println("updateMovie.jsp called");
 			System.out.println(movie + "°Ù¹«ºñ¾×¼Ç");
@@ -468,10 +474,11 @@ public class MovieController {
 			// modelAndView.setViewName("/movie/updateMovie.jsp");
 			// return modelAndView;
 
-			return "forward:/movie/getMovieList?menu=manage";
+			//return "forward:/movie/getMovieList?menu=manage";
+			return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&"+"menu=manage";
 
 		}
-		return "forward:/movie/getMovieList?menu=manage";
+		return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&menu=manage";
 	}
 
 	@RequestMapping(value = "deleteMovie", method = RequestMethod.POST)
@@ -483,15 +490,28 @@ public class MovieController {
 		System.out.println("/deleteMovie : GET");
 		// Business Logic
 		System.out.println("movieNo ::" + movieNo);
+		int return_code = 0;
+		
+		try {
+			 return_code = movieService.deleteMovie(movieNo);
 
-		int rtn = movieService.deleteMovie(movieNo);
+		} catch (SQLException e) {
+			System.out.println("Oracle Error Occurred...");
+			e.printStackTrace();
+			return_code = 2;
+					
+		}catch (Exception e) {	
+			e.printStackTrace();
+		}
+		System.out.println("return_code from movieDAO.addMovie" + return_code);		
 
-		System.out.println("return value :" + rtn);
+	
+		System.out.println("return value :" + return_code);
 
 		// modelAndView.setViewName("/movie/listMovieManage.jsp");
 		// return modelAndView;
 
-		return "/movie/listMovieManage.jsp";
+		return "forward:/movie/getMovieList?menu=manage";
 
 	}
 

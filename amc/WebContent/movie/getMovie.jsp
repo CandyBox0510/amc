@@ -19,7 +19,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
 <script src="/js/external/modernizr.custom.js"></script>
-
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<style type="text/css">
+.ticketOpenDate {
+	background-color: #dbdee1;
+	margin-bottom: 10px;
+	/* 	padding: 10px 10px 10px 10px;
+	
+	border-radius: 5px;*/
+	width: 50%;
+	margin-top: 10px;
+}
+</style>
 </head>
 
 <body>
@@ -79,29 +90,59 @@
 								<strong>장르 : </strong>${movie.genres }</p>
 							<p class="movie__option">
 								<strong>관람등급: </strong>${movie.watchGradeNm }</p>
+							<c:if test="${menu == 'preview' }">
+								<p class="movie__option">
+
+									<strong>상영시간 : </strong>${screenContent.ticketOpenDate }
+								</p>
+							</c:if>
 							<p class="buttons movie__option">
 								<span id="wish">
 									<i class="fa fa-heart-o fa-2x" id="heartempty" onClick="javascript:addWishList()"></i>
 								</span>
-								<span id="ticketOpen">
-									<c:if test="${menu == 'preview' }">
-										<c:choose>
-											<c:when test="${checkOpenAlarm eq  1}">
-												<i class="fa fa-bell fa-2x" id="ticketIcon"></i>
-											</c:when>
-											<c:otherwise>
-												<i class="fa fa-bell-o fa-2x" id="ticketIcon"></i>
-											</c:otherwise>
-										</c:choose>
-									</c:if>
-								</span>
+
+
 								<span id="share">
 									<i class="fa fa-facebook fa-2x" onClick="javascript:posting()"></i>
 								</span>
 								<c:if test="${menu == 'preview' }">
 									<p class="movie__option text-center ticketOpenDate">
-										<span id="dpTime"> </span>
+										<span id="dpTime">
+											시간계산 중 입니다
+											<br>
+											잠시만 기다려주세요
+										</span>
 									</p>
+								</c:if>
+								<c:if test="${menu == 'preview' }">
+									<div class="ticketOpenButton text-center">
+										<div class="ui segment">
+											<span class="noticeOpen text-center">
+												<i class="fa fa-quote-left" aria-hidden="true"></i> 티켓오픈시간 30분 전 알림을 받고싶다면? <i class="fa fa-quote-right" aria-hidden="true"></i>
+											</span>
+											<br>
+
+											<span id="ticketOpen">
+												<c:choose>
+													<c:when test="${checkOpenAlarm eq  1}">
+
+														<a class="ui primary button" tabindex="0" style="font-size: 10pt">
+															<i class="fa fa-bell fa-2x" id="ticketIcon" style="color: #ffffff;"></i> 티켓오픈신청알림취소
+														</a>
+
+													</c:when>
+													<c:otherwise>
+
+														<a class="ui  basic button" tabindex="0">
+															<i class="fa fa-bell-o fa-2x" id="ticketIcon"></i> 티켓오픈신청알림
+														</a>
+
+													</c:otherwise>
+												</c:choose>
+											</span>
+
+										</div>
+									</div>
 								</c:if>
 							<div class=" movie__btns--full">
 								<c:if test="${menu != 'preview' }">
@@ -301,13 +342,9 @@
 	<script src="/js/external/jquery.selectbox-0.2.min.js"></script>
 
 
-	<!-- Custom -->
-	<script src="/js/custom.js"></script>
 
 
-
-
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
 
 	<script src="/js/custom.js"></script>
 	<script type="text/javascript" src="http://kenwheeler.github.io/slick/slick/slick.min.js"></script>
@@ -399,7 +436,7 @@
 
         window.fbAsyncInit = function() {
             FB.init({
-                 appId      : '1956483321340947',
+                appId : '1956483321340947',
                 xfbml : true,
                 version : 'v2.10'
             });
@@ -489,9 +526,14 @@
                 document.getElementById("dpTime").innerHTML = display;
                 $(".ticketOpenDate").css("background-color", "#ffffff");
                 $(".ticketOpenDate").removeClass().addClass("movie__option ticketOpenDate");
-                
+
+                $(".ticketOpenButton").html("");
+
             } else {
-                display = '<strong>${screenContent.ticketOpenDate}</strong>' + ' 티켓 오픈!' + '	<br> <span class="emptyTime">'
+
+                display = '<div class="column">' + '<div class="ui top attached info message"><strong>' + '${screenContent.ticketOpenDate}' + '</strong> 티켓오픈!</div>' + '<div class="ui bottom attached segment"><span class="emptyTimeText">남은시간<span><br> <span class="emptyTime">'
+
+                // display = '<strong>${screenContent.ticketOpenDate}</strong>' + ' 티켓 오픈!' + '	<br> ' + ' 남은 시간 <br>' + '<span class="emptyTime">'
                 if (days == -1) {
                     display += hours + ":" + minutes + ":" + seconds
 
@@ -501,7 +543,8 @@
 
                 }
 
-                display += '</span>'
+                // display += '</span>'
+                display += '</div>' + '</div>'
                 document.getElementById("dpTime").innerHTML = display;
                 console.log("???" + display)
             }
@@ -567,12 +610,12 @@
                     /* msg += '\n무슨영화 : ' + movie정보;
                      */
 
-                    display = '<i class="fa fa-bell fa-2x" id="ticketIcon"></i>'
+                    display = '<a class="ui primary button" tabindex="0" style="font-size:10pt">' + '<i class="fa fa-bell fa-2x" id="ticketIcon" style="color: #ffffff; "></i> 티켓오픈신청알림취소' + '</a>'
                     $("#ticketOpen").html(display);
 
                 } else {
 
-                    display = '<i class="fa fa-bell-o fa-2x" id="ticketIcon"></i>'
+                    display = '<a class="ui basic button" tabindex="0">' + '<i class="fa fa-bell-o fa-2x" id="ticketIcon" ></i> 티켓오픈신청알림' + '</a>'
                     $("#ticketOpen").html(display);
                 }
             });
@@ -608,15 +651,15 @@
                         if (userId == val.user.userId || userRole == 'admin') {
                             displayValue += '<span class="comment__update" >'
                             if (val.blindCommentFlag == 'N') {
-                                displayValue += '<i class="fa fa-eraser">  </i>'
+                                displayValue += '<i class="fa fa-eraser fa-2x">  </i>'
                             }
-                            displayValue += '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> ' + '<input type="hidden" id="movieComment" value="'+val.movieComment+'"></span>' + '<span class="comment__delete" ><i class="fa fa-times">  </i>' + '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
+                            displayValue += '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"> ' + '<input type="hidden" id="movieComment" value="'+val.movieComment+'"></span>' + '<span class="comment__delete" ><i class="fa fa-times fa-2x">  </i>' + '<input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'"></span>'
                             if (userRole == 'admin') {
-                                displayValue += '<span class="comment__blind" >' + ' <input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'">' + '<input type="hidden" id="blindCommentFlag" value="'+val.blindCommentFlag+'">'
+                                displayValue += '<span class="comment__blind " >' + ' <input type="hidden" id="movieCommentNo" value="'+val.movieCommentNo+'">' + '<input type="hidden" id="blindCommentFlag" value="'+val.blindCommentFlag+'">'
                                 if (val.blindCommentFlag == 'Y') {
-                                    displayValue += '<i class="fa fa-eye"> </i>'
+                                    displayValue += '<i class="fa fa-eye fa-2x"> </i>'
                                 } else {
-                                    displayValue += '<i class="fa fa-eye-slash"> </i>'
+                                    displayValue += '<i class="fa fa-eye-slash fa-2x"> </i>'
                                 }
                                 displayValue += ' </span>'
                             }
@@ -876,12 +919,27 @@
         })
 
         function changeCSS() {
+
+            imgwidth = $(".movie .movie__images img").css("width").split('px');
+
+            if (parseInt(imgwidth[0]) < 200) {
+
+                $(".movie .movie__images img").css("width", "265px")
+            } else {
+                $(".movie .movie__images img").css("width", "100%")
+            }
+
             if ($(document).innerWidth() < 768) {
 
                 $(".movie__btns--full").css("position", "relative");
+                $(".ticketOpenDate").css("width", "100%");
+                $(".ticketOpenButton").css("width", "100%")
+
             } else {
 
                 $(".movie__btns--full").css("position", "absolute");
+                $(".ticketOpenDate").css("width", "50%");
+                $(".ticketOpenButton").css("width", "50%")
             }
 
         }
@@ -1089,11 +1147,12 @@ section {
 .buttons span {
 	padding-left: 10px;
 	padding-right: 10px;
-	margin-top:20px;
+	margin-top: 20px;
 }
 
 #ticketIcon {
 	color: #4c4145;
+	padding-right: 10px;
 }
 
 #share {
@@ -1111,15 +1170,6 @@ section {
 	margin-top: 10px;
 }
 
-.ticketOpenDate {
-	background-color: #dbdee1;
-	padding: 10px 10px 10px 10px;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	width: 50%;
-	margin-top: 10px;
-}
-
 .fa-2x {
 	font-size: 1.5em;
 }
@@ -1134,7 +1184,40 @@ section {
 
 .emptyTime {
 	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 25px;
+}
+
+.emptyTimeText {
+	font-family: 'Jeju Gothic', sans-serif;
 	font-size: 18px;
+}
+
+#dpTime {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+.noticeOpen {
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 12px;
+	color: #969b9f;
+}
+
+.ticketOpenButton {
+	width: 50%;
+	margin-top: 10px;
+}
+
+#ticketOpen {
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 15px;
+}
+
+.ui.button, .ui.buttons .button, .ui.buttons .or {
+	font-size: 13px;
+	width: 210px;
+	height: 45px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 </style>
 
