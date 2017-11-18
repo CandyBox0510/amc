@@ -555,10 +555,12 @@
 	                     </li>
 	                     </c:if>
                      </c:if>
+                     <c:if test="${!empty sessionScope.user}">
                      <li class="visible-xs hidden-sm hidden-md hidden-lg">
                      	<a href="#" class="btn--sign">[${sessionScope.user.userName}] ´Ô&emsp;</a>
                      	<a href="/user/logoutUser" class="btn--sign">·Î±×¾Æ¿ô</a> 
                      </li>
+                     </c:if>
                  </ul>
              </nav>
              
