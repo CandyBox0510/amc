@@ -1,6 +1,8 @@
 package com.amc.web.movie;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -8,6 +10,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -367,6 +370,10 @@ public class MovieController {
 		// Tomcat 서버가 실제 구동되는 위치 파일
 		// D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp2\wtpwebapps\amc\images\movie
 
+		
+		// 실제 directory 경로로 파일을 영구적으로 저장하기 위함이다.
+		String amcFilePath = "C:\\Users\\jeung\\git\\amc\\amc\\WebContent\\images\\movie\\";
+		// 실제 folder가 아닌 tomcat의 임시 서버로서 add후 바로 get을 했을때 이미지를 볼 수 있도록 한다.
 		String PATH = session.getServletContext().getRealPath("/") + "\\images\\movie\\";
 
 		/**
@@ -402,51 +409,85 @@ public class MovieController {
 
 		System.out.println("request.getFileNames() :" + multiPartRequest.getFileNames().toString());
 		String dbFileNames = "";
+		
+		
 
 		if (itr.hasNext()) {
 			List<MultipartFile> mpf = multiPartRequest.getFiles(itr.next());
-
+			
+			
+			System.out.println("mpf.size ()"  + mpf.size());
+			
+		
 			for (int i = 0; i < mpf.size(); i++) {
+				
+				if (mpf.get(i).getOriginalFilename().length() > 0 ) {
 
 				System.out.println("mpf.size()" + mpf.size());
 
-				String fileNames = mpf.get(i).getOriginalFilename();
+				//String fileNames = mpf.get(i).getOriginalFilename();
+				
+				String fileNames = UUID.randomUUID().toString()+System.currentTimeMillis()+mpf.get(i).getOriginalFilename().substring(mpf.get(i).getOriginalFilename().lastIndexOf("."), mpf.get(i).getOriginalFilename().length());
 
 				/**
 				 * 실제 배포시 comment를 풀어야 함.
 				 */
 
+				System.out.println("fileNames : " + fileNames);
+				
 				// String fullPath = uploadFiles + "\\" + fileNames;
 				// System.out.println("fullPath"+fullPath);
 
 				String delimeter = ",";
 
-				fileNames = new String(fileNames.getBytes("8859_1"), "utf-8");
+				//fileNames = new String(fileNames.getBytes("8859_1"), "utf-8");
 
 				dbFileNames += fileNames + delimeter;
+				
+				System.out.println("before DB insert fileNames : " + fileNames);
 
-				// File file = new File(PATH +
-				// mpf.get(i).getOriginalFilename());
+	
+				//1st Path : Tomcat의 temporary folder 경로+fileName
+				File file1 = new File(PATH+fileNames); 
+				
+				//2nd Path : Tomcat의 temporary folder 경로+fileName
+				File file2 = new File(amcFilePath+fileNames); 
+			
+				if(file1.exists())
+	            {
+	               System.out.println("file delete execute...");
+	               file1.delete();
 
-				// 한글꺠짐 방지
-				/**
-				 * 실제 배포시 comment를 풀어야 함.
-				 */
-				// File file = new File(fullPath);
+	            } else {
+	                
+	               // logger.info(file.getAbsolutePath());
+	               mpf.get(i).transferTo(file1);
+	                
+	               System.out.println("fileName :: " + fileNames);
+	            }
+				
+				FileInputStream fis = null;
+				FileOutputStream fos = null; 
 
-				File file = new File(PATH + fileNames);
-
-				if (file.exists()) {
-					System.out.println("file delete execute...");
-					file.delete();
-
-				} else {
-
-					// logger.info(file.getAbsolutePath());
-					mpf.get(i).transferTo(file);
-
-					System.out.println("fileName :: " + fileNames);
+				try {
+					fis = new FileInputStream(file1);	// 원본파일
+					fos = new FileOutputStream(file2);	// 복사위치
+					   
+					byte[] buffer = new byte[1024];
+					int readcount = 0;
+					  
+					while((readcount=fis.read(buffer)) != -1) {
+						fos.write(buffer, 0, readcount);				// 파일 복사 
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				} finally {
+					fis.close();
+					fos.close();
 				}
+				
+			   }
+				
 			}
 
 			System.out.println("dbFileNames testing....  " + dbFileNames);
@@ -476,7 +517,7 @@ public class MovieController {
 
 			//return "forward:/movie/getMovieList?menu=manage";
 			return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&"+"menu=manage";
-
+			
 		}
 		return "forward:/movie/getMovie?/movieNo="+movie.getMovieNo()+"&menu=manage";
 	}

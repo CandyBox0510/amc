@@ -162,7 +162,8 @@ function fncGetPageList(currentPage) {
   		$(function() {
   			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
   			$( "button.btn.btn-register" ).on("click" , function() {
-  				 self.location = "/movie/addMovie.jsp";
+  				self.location = "/movie/addMovie.jsp";
+  				
   			});
   			
   		});

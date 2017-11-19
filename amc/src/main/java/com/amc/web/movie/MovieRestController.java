@@ -118,7 +118,9 @@ public class MovieRestController {
 		movieJson.setTotal(12);
 		movieJson.setRecords(10);
 		movieJson.setRows(list);
-
+		
+		
+		
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(movieJson);
 
@@ -131,9 +133,12 @@ public class MovieRestController {
 		out.write(json);
 		out.flush();
 		out.close();
+		
+		
 
 	}
 
+	//JQGrid에서 Operation에 따른 값을 추출해서 Add (영화등록)을 하는 로직 
 	@RequestMapping(value = "json/addMovie", method = RequestMethod.POST)
 	public int addMovie(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -336,6 +341,7 @@ public class MovieRestController {
 		}
 	}
 
+	// 상영 예정 영화 일정을 추출하는 로직
 	@RequestMapping(value = "json/movieOnSchedule", method = RequestMethod.POST)
 	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model,
 			@ModelAttribute("search") Search search) throws Exception {
@@ -588,6 +594,7 @@ public class MovieRestController {
 		}
 	}
 
+	// 시사회 영화 일정을 추출하는 로직
 	@RequestMapping(value = "json/movieOnSchedule_preview", method = RequestMethod.POST)
 	public void movieOnSchedule_preview(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute("search") Search search, Model model) throws Exception {

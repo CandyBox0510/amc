@@ -21,59 +21,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
    
-<html lang="UTF-8">
-	
+<html lang="UTF-8">	
 
 <head>
    <meta charset="UTF-8">
    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">   -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-/1.7.1/css/bootstrap-datepicker.css" />
-  
-     
-    
-  <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width,initial-scale=1">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/sunny/jquery-ui.css">
+	    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-/1.7.1/css/bootstrap-datepicker.css" />
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/css/ui.jqgrid.min.css">
 
       <!-- Mobile Specific Metas-->
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <!--  <meta content="telephone=no" name="format-detection"> -->
-    
-    <!-- Fonts -->
-        <!-- Font awesome - icon font -->
-       <!--  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
-  <!--       Roboto
-        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700' rel='stylesheet' type='text/css'> -->
-        <!-- Open Sans -->
-        <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'> -->
-    
-    <!-- Stylesheets -->
+   
+   	  <!-- Stylesheets -->
 
         <!-- Mobile menu -->
         <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-       <!--  <link href="/css/external/jquery.selectbox.css" rel="stylesheet" /> -->
-
-        <!-- Slider Revolution CSS Files -->
-        <!--  <link rel="stylesheet" type="text/css" href="/revolution/css/settings.css">
-        <link rel="stylesheet" type="text/css" href="/revolution/css/layers.css">
-        <link rel="stylesheet" type="text/css" href="/revolution/css/navigation.css"> -->
-    
-        <!-- Custom -->
+         <!-- Custom -->
         <link href="/css/jqGridStyle.css?v=1" rel="stylesheet" /> 
-
-
         <!-- Modernizr --> 
          <script src="/js/external/modernizr.custom.js"></script> 
         
         <!-- JavaScript-->
 		<!-- jQuery 3.1.1 --> 
-      <!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
-        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+          <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
         <!-- Migrate  -->
         <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
         <!-- Bootstrap 3 --> 
@@ -82,28 +56,11 @@
         <!-- Slider Revolution core JavaScript files -->
         <script type="text/javascript" src="/revolution/js/jquery.themepunch.tools.min.js"></script>
         <script type="text/javascript" src="/revolution/js/jquery.themepunch.revolution.min.js"></script>
-
        
         <!-- Mobile menu -->
         <script src="/js/jquery.mobile.menu.js"></script>
-        <!-- Select -->
-        <!-- <script src="/js/external/jquery.selectbox-0.2.min.js"></script> -->
-        <!-- Stars rate -->
-        <!-- <script src="/js/external/jquery.raty.js"></script> -->
-        
-        <!-- Form element -->
-        <!--  <script src="/js/external/form-element.js"></script> -->
-        <!-- Form validation -->
-        <!-- <script src="/js/form.js"></script> -->
-   		<!--이거주석처리안하면 로그인 안됨 -->
-
-        <!-- Twitter feed -->
-        <!-- <script src="/js/external/twitterfeed.js"></script> -->
-	   
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
+        <!-- Bootstrap Dropdown Hover JS -->
+   		<script src="/javascript/bootstrap-dropdownhover.min.js"></script>   
    
  </head>
  
@@ -314,11 +271,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqgrid/4.6.0/js/i18n/grid.locale-kr.js"></script>  
     <!--  <script src="/javascript/trirand/i18n/grid.locale-kr.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.14.1/jquery.jqgrid.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>    
        
  <script type="text/javascript">
-
  
 	//============= "로그인"  Event 연결 =============
 	$( function() {
