@@ -43,8 +43,7 @@
 
 		<div class="container">
 
-			<br />
-			<br />
+			<br /> <br />
 
 			<div class="page-header">
 				<h2 class=" page-heading">${movie.movieNm}</h2>
@@ -160,35 +159,23 @@
 				<!-- <a class='thumbnail' style="text-decoration:none;"> -->
 				<!-- <img src="file:C:/amcPoster/${movie.steelCut1}" width="160px" height="180px" align="left"/>  -->
 				<div class="col-xs-2 col-md-3 ">
-			
-					<img src="../images/movie/${movie.steelCut1}" width="200" height="150"/>
+					<img src="../images/movie/${movie.steelCut1}" width="220" height="190" />
 				</div>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
 				<div class="col-xs-2 col-md-3 ">
-					<img src="../images/movie/${movie.steelCut2}" width="200" height="150"/>
+					<img src="../images/movie/${movie.steelCut2}" width="220" height="190" />
 				</div>
-			    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<div class="col-xs-2 col-md-3 ">
-					<img src="../images/movie/${movie.steelCut3}" width="200" height="150" />
+					<img src="../images/movie/${movie.steelCut3}" width="220" height="190" />
 				</div>
-				
 			</div>
 
 
-			<br/><br/>
 			<hr />
-			
 
-			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file1" name="${movie.steelCut1}" required="required" value="${movie.steelCut1}"/>
-			</div>
-			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" value="${movie.steelCut2}"/>
-			</div>
-			<div>
-				<input class="ui-button ui-widget ui-corner-all" type="file" id="file2" name="file" value="${movie.steelCut3}"/>
-			</div>
+			<div><input class="ui-button ui-widget ui-corner-all"  type="file" id="file1" name="file" required="required" /></div>
+			<div><input class="ui-button ui-widget ui-corner-all"  type="file" id="file2" name="file"  /></div>
+			<div><input class="ui-button ui-widget ui-corner-all"  type="file" id="file3" name="file"  /></div>   
+			
 
 			<hr />
 
@@ -267,7 +254,6 @@
 				</div>
 			</div>
 
-
 			<div class="listPoster scrolling content"></div>
 			<input type="hidden" name="movieNm" value="${movie.movieNm}" />
 		</div>
@@ -302,7 +288,11 @@
         /* $(self.location).attr("href","/cinema/unifiedSearch"); */
     }
 
-    function searchTrailerResult() {
+    function searchTrailer() {
+
+        searchTrailer = movieNm + ' 예고편';
+      
+        searchTrailer =   encodeURI(encodeURIComponent(searchTrailer));
 
         $.ajax({
             url : "/movie/json/searchTrailer/" + searchTrailer,
@@ -316,7 +306,7 @@
                 displayValue = "";
                 for (var i = 0; i < JSONData.list.length; i++) {
 
-                    displayValue += '<div class="col-md-12 getTrailer">' + '<div class="col-md-3"><img src="'+JSONData.list[i].thumbnail+'"></div>' + '<div class="col-md-9">' + '<div class="title">' + JSONData.list[i].title + '</div>' + '<div class="url">' + JSONData.list[i].url + '</div>' + '	</div></div>'
+                    displayValue += '<div class="col-md-12 getTrailer"><div class="col-md-3"><img src="'+JSONData.list[i].thumbnail+'"></div>' + '<div class="col-md-9">' + '<div class="title">' + JSONData.list[i].title + '</div>' + '<div class="url">' + JSONData.list[i].url + '</div>' + '	</div></div>'
                 }
 
                 $(".listTrailer").html(displayValue);
@@ -336,7 +326,6 @@
             success : function(JSONData, status) {
 
                 displayValue = '<div class="row">';
-
                 for (var i = 0; i < JSONData.list.length; i++) {
 
                     displayValue += '<div class="col-md-3 col-sm-3 getPoster"><img class="searchThumbnail" src="'+JSONData.list[i].thumbnail_url+'">' + '<input type="hidden" name="postUrlSearch" class="imageUrl" value="' + JSONData.list[i].image_url  + '"></div>'
@@ -354,59 +343,10 @@
 
         movieNm = $("input[name='movieNm']").val();
 
-        $(".searchTrailerModal").modal({
-            autofocus : false,
-            closable : true,
-            observeChanges : true,
-            onApprove : function() {
-
-                return false;
-            },
-            selector : {
-                close : '.close.icon'
-            }
-
-        });
-
-        $(".searchPosterModal").modal({
-            autofocus : false,
-            closable : true,
-            observeChanges : true,
-            onApprove : function() {
-
-                return false;
-            },
-            selector : {
-                close : '.close.icon'
-            }
-
-        });
-
         $(document).on('click', '.searchTrailer', function() {
-            searchTrailer = movieNm + ' 예고편';
-
-            searchTrailer = encodeURI(encodeURIComponent(searchTrailer));
-
-            searchTrailerResult();
             $(".searchTrailerModal").modal('show');
-
+            searchTrailer();
         });
-
-        $(document).on('click', '.searchPoster', function() {
-            searchPoster = movieNm;
-            searchPoster = encodeURI(encodeURIComponent(searchPoster));
-
-            searchPosterResult();
-            $(".searchPosterModal").modal('show');
-
-        });
-
-        $(document).on("click", "button[name='searchClick']", function() {
-            searchPoster = $("input[name='searchPoster']").val();
-            searchPoster = encodeURI(encodeURIComponent(searchPoster))
-
-            searchPosterResult();
-        })
 
         $(document).on('click', '.getTrailer', function() {
             url = $(".url", $(this)).html();
@@ -426,6 +366,53 @@
             $(".poster").removeAttr("src");
             $(".poster").attr("src", image_url);
             $(".searchPosterModal").modal('hide');
+        });
+
+        $(".searchTrailerModal").modal({
+            autofocus : false,
+            closable : true,
+            observeChanges : true,
+            onApprove : function() {
+
+                return false;
+            },
+            selector : {
+                close : '.close.icon'
+            }
+
+        });
+
+        $(document).on('click', '.searchPoster', function() {
+
+            $(".searchPosterModal").modal('show');
+            searchPoster = movieNm;
+            searchPoster = encodeURI(encodeURIComponent(searchPoster));
+
+            searchPosterResult();
+
+        });
+
+        $(document).on("click", "button[name='searchClick']", function() {
+            searchPoster = $("input[name='searchPoster']").val();
+            searchPoster =  encodeURI(encodeURIComponent(searchPoster))
+            alert(searchPoster)
+         
+
+            searchPosterResult();
+        })
+
+        $(".searchPosterModal").modal({
+            autofocus : false,
+            closable : true,
+            observeChanges : true,
+            onApprove : function() {
+
+                return false;
+            },
+            selector : {
+                close : '.close.icon'
+            }
+
         });
 
     })
@@ -514,7 +501,7 @@ input {
 	overflow: auto;
 }
 
-.listTrailer>div, .listPoster>div {
+.listTrailer>div {
 	margin-bottom: 5px
 }
 
@@ -531,7 +518,7 @@ input {
 	color: #4c4145;
 }
 
-#trailerId {
+#trailer {
 	width: 100%;
 	min-height: 50px;
 	padding: 8px 19px;
@@ -558,12 +545,20 @@ input {
     $(function() {
         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
         //==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-        $(".btn.btn-md.btn--info").on("click", function() {
+        $("#updateMoviebtn").on("click", function() {
             //alert("수정 버튼 클릭 확인");
             //Debug..
             // <!-- <a href="javascript:history.go(-1)"></a> -->
             fncUpdateMovie()
         });
+        
+        $("#list").on("click", function() {
+            //alert("수정 버튼 클릭 확인");
+            //Debug..
+            // <!-- <a href="javascript:history.go(-1)"></a> -->
+        	self.location = "/movie/getMovieList?menu=manage"
+        });
+        
     });
 
     $(function() {
@@ -595,25 +590,31 @@ input {
 
         var defaultposterUrl = $(".poster").attr("src");
         var defaulttrainerUrl = $("#trailerId").val();
-
+        var imgVal1 = $('#file1').val(); 
+        var imgVal2 = $('#file2').val(); 
+        var imgVal3 = $('#file3').val();         
+ 
+  
         // $("#postUrlCheck").val(image_url); 
         // $("#trailerCheck").val(url);
 
         if (pster != null) {
 
         } else {
-     	pster = defaultposterUrl;
+        	pster = defaultposterUrl;
         	//alert("pster url" + pster);
         	$("#postUrlCheck").val(pster);
-
+               
+         
         }
 
         if (trailer != null) {
 
         } else {
-             	trailer = defaulttrainerUrl;
+        	trailer = defaulttrainerUrl;
         	//alert("trailer url" + trailer);
         	$("#trailerCheck").val(trailer); 
+               
           
         }
 
@@ -645,6 +646,23 @@ input {
             alert("상영마감은  반드시 입력하셔야 합니다.");
             return;
         }
+        
+        if (imgVal1 == null || imgVal1.length < 1) {
+            alert("스킬컷 파일1은   반드시   입력하셔야 합니다.");
+            return;
+        } 
+        
+        /*
+        if (imgVal2 == null || imgVal2.length < 1) {
+            alert("스킬컷 파일2은   반드시  3개 입력하셔야 합니다.");
+            return;
+        }
+        
+        if (imgVal3 == null || imgVal3.length < 1) {
+            alert("스킬컷 파일3은   반드시  3개 입력하셔야 합니다.");
+            return;
+        } */
+        
 
         /*   var $updateMovie = $('#updateMovie');
         	  var postUrl = $("input[name='postUrl']").val();
@@ -657,8 +675,14 @@ input {
     function fncDeleteMovie() {
 
         var movieNo = $("input[name='movieNo']").val();
+        //alert("movieNo" + movieNo);
+       
+        if(confirm("정말 삭제 하시겠습니까?")) {
+        	alert("삭제버튼을 누르셨습니다.");
+        	$("form").attr("method", "POST").attr("action", "/movie/deleteMovie?movieNo=" + movieNo).submit();
+        }
 
-        $("form").attr("method", "POST").attr("action", "/movie/deleteMovie?movieNo=" + movieNo).submit();
+      
     }
 </script>
 

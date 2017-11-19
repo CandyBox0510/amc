@@ -24,8 +24,6 @@
 
 		<div class="container">
 
-
-
 			<!-- Main content -->
 			<section class="container">
 
