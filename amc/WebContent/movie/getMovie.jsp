@@ -250,7 +250,8 @@
 								${movie.movieNm} 실시간 트위터 검색
 							</h2>
 							<div class='col-md-12'>
-								<iframe id="realTimeSearch" src="http://183.98.215.171:1337/${movie.movieNm }" frameborder="0">
+								<iframe id="realTimeSearch" src="http://127.0.0.1:1337/${movie.movieNm }" frameborder="0">
+									<%-- <iframe id="realTimeSearch" src="http://183.98.215.171:1337/${movie.movieNm }" frameborder="0"> --%>
 									<p>Your browser does not support iframes.</p>
 								</iframe>
 							</div>
@@ -392,7 +393,7 @@
 
             datasets : [ {
 
-                label : '성별',
+                label : '예매인원수',
                 data : [ age10s, age20s, age30s, age40s, age50s, age60s, age60sMore ],
                 backgroundColor : '#808080',
 
@@ -640,7 +641,7 @@
                     $.each(result, function(idx, val) {
                         displayValue += '<p class="comment__user">' + val.user.userId + '</p>' + '<p class="comment__movieComment" id="movieComment'+val.movieCommentNo+'" >'
                         if (val.blindCommentFlag == 'Y') {
-                            displayValue += ' <span style="color:gray">블라인드 처리된 게시글입니다.</span>'
+                            displayValue += ' <span style="color:gray; font-size:12pt;">블라인드 처리된 게시글입니다.</span>'
                             if (userRole == 'admin') {
                                 displayValue += '<br> ' + val.movieComment
                             }

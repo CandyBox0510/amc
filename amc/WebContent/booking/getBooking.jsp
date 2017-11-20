@@ -26,14 +26,14 @@
   
    //이메일이나 문자로 받은 QR코드를 통해 예매 상세정보페이지에 접근할 때는  예매한회원으로 로그인되어있어야한다.
 	$(document).ready(function(e){
-		
+		//alert( ${sessionScope.user.role});
 		 //로그인 여부 체크
 		if( ${sessionScope.user==null} ){
 	        $('.overlay').removeClass('close').addClass('open');
 
 		}else{
 		 
-			if( ${sessionScope.user.userId!= booking.userId } ){
+			if( ${sessionScope.user.userId!= booking.userId} && ${sessionScope.user.role==admin}  ){
 		        self.location="/";
 				
 			}else{
@@ -307,10 +307,10 @@
                       <div class="promo__head"><!-- Join <br> --><span class="abc">${booking.movie.movieNm}</span></div>
                       <div class="promo__content">
                           <p class="content__text abc">
-                          	${booking.screenContent.previewTitle}&nbsp;영화제목 : ${booking.movie.movieNm}&nbsp;&nbsp;
-                          	&nbsp;&nbsp;상영일자 : ${booking.screenContent.screenOpenTime}&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                          	&nbsp;상영관 : ${booking.screenContent.screenTheater}상영관&nbsp;&nbsp;&nbsp;&nbsp;좌석번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                          	&nbsp;예매번호 : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
+                          	${booking.screenContent.previewTitle}&nbsp;&nbsp;&nbsp;&nbsp;<br>영화제목 : ${booking.movie.movieNm}&nbsp;&nbsp;
+                          	&nbsp;&nbsp;상영일시 : ${booking.screenContent.screenOpenTime}&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                          	상영관 : ${booking.screenContent.screenTheater}상영관&nbsp;&nbsp;&nbsp;&nbsp;좌석번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                          	예매번호 : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
                           	예매일시 : ${booking.bookingRegDate}&nbsp;&nbsp;&nbsp;&nbsp;
                           	예매가격 : ${booking.totalTicketPrice}원&nbsp;&nbsp;&nbsp;&nbsp;
                           	
@@ -363,11 +363,11 @@
 	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
 
 
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+		
 		<jsp:include page="/layout/loginModal.jsp" />
 
 </div>
-
+<jsp:include page="/layout/bottomToolbar.jsp" />
 
 </body>
 <!-- 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">

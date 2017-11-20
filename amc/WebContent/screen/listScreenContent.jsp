@@ -37,8 +37,7 @@
 						</div>
 					</div>
 					<div class="col-sm-8 col-md-9">
-						<p class="movie__title">
-							${movie.movieNm }</p>
+						<p class="movie__title" style="font-size: 18px;">${movie.movieNm }</p>
 						<p class="movie__time">
 							<input type="hidden" name='showTm' value="${movie.showTm }">
 							${movie.showTm }분
@@ -94,208 +93,13 @@
 		</div>
 
 
-
-
 		<jsp:include page="/layout/bottomToolbar.jsp" />
 		<jsp:include page="/layout/loginModal.jsp" />
 	</div>
 
+	<jsp:include page="/screen/addScreenContent.jsp" />
 
-
-
-
-
-
-	<div class="ui  tiny modal addScreenContentModal">
-
-
-		<div class="ui header">상영등록</div>
-
-		<div class="addScreenContentWrapper col-md-12 col-sm-12">
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영일자</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" name="screenDate" readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영관</div>
-				<div class="col-md-6 col-sm-6">
-					<select name="screenTheater" disabled="disabled">
-						<option value="1">1상영관</option>
-						<option value="2">2상영관</option>
-					</select>
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영시작시간</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="time" name='screenContentOpenTime' readonly="readonly">
-				</div>
-			</div>
-			<div class="endTime">
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">상영종료시간</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="time" name='screenContentEndTime' readonly="readonly">
-				</div>
-			</div>
-
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">가격</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="가격" name='ticketPrice'>
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">시사회</div>
-				<div class="col-md-1 col-sm-1">
-					<input type="checkbox" class="checkbox styled" name='previewChecked'>
-				</div>
-				<div class="col-md-5 col-sm-5 checkPreviewWrapper"></div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">시사회제목</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="시사회제목" name='previewTitle' readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">티켓오픈날짜</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" name='previewOpenDate' readonly="readonly">
-					<input type="time" name='previewOpenTime' readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 addScreenContentTitle">초대배우</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="초대배우" name='inviteActor' readonly="readonly">
-				</div>
-			</div>
-
-		</div>
-
-
-		<div class="actions">
-			<div class="ui positive right labeled icon button actionAddButton">
-				등록 <i class="checkmark icon"></i>
-			</div>
-			<div class="ui black deny button actionCancleButton">취소</div>
-
-		</div>
-
-	</div>
-
-
-
-
-
-
-
-
-	<div class="ui  tiny modal updateScreenContentModal">
-
-
-
-		<div class="ui header">상영수정</div>
-
-		<div class="updateScreenContentWrapper col-md-12 col-sm-12">
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영일자</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" name="screenDate" readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영관</div>
-				<div class="col-md-6 col-sm-6">
-					<select name="screenTheater" disabled="disabled">
-						<option value="1">1상영관</option>
-						<option value="2">2상영관</option>
-					</select>
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영시작시간</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="time" name='screenContentOpenTime' readonly="readonly">
-				</div>
-			</div>
-			<div class="endTime">
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">상영종료시간</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="time" name='screenContentEndTime' readonly="readonly">
-				</div>
-			</div>
-
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">가격</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="가격" name='ticketPrice'>
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회</div>
-				<div class="col-md-3 col-sm-3 checkFlag">
-					<!-- <input type="checkbox" class="checkbox styled" name='previewChecked' id="previewChecked"> -->
-				</div>
-				<div class="col-md-3 col-sm-3 checkPreviewWrapper"></div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">시사회제목</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="시사회제목" name='previewTitle' readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">티켓오픈날짜</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" name='previewOpenDate' readonly="readonly">
-					<input type="time" name='previewOpenTime' readonly="readonly">
-				</div>
-			</div>
-			<div>
-				<div class="col-md-6 col-sm-6 updateScreenContentTitle">초대배우</div>
-				<div class="col-md-6 col-sm-6">
-					<input type="text" placeholder="초대배우" name='inviteActor' readonly="readonly">
-				</div>
-			</div>
-
-		</div>
-
-
-		<div class="actions">
-			<div class="ui positive right labeled icon button actionUpdateButton">
-				수정 <i class="checkmark icon"></i>
-			</div>
-			<div class="ui black deny button actionCancleButton">취소</div>
-
-		</div>
-
-
-
-
-	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<jsp:include page="/screen/updateScreenContent.jsp" />
 
 
 </body>
@@ -397,37 +201,36 @@
             }
         })
     }
-    /* 
-     //등록이나 수정완료시 input박스 지우기
-     function funClearInputBox() {
-     $("input[name='screenDate']").val(null);
-     $("select[name='screenTheater']").val("1");
-     $("input[name='screenContentOpenTime']").val(null);
-     $(".screenContentEndTime").val(null);
 
-     $("span .checkbox").css("background-position","0px 0px") 
-    
+    //등록이나 수정완료시 input박스 지우기
+    function funClearInputBox() {
+        $("input[name='screenDate']").val(null);
+        $("select[name='screenTheater']").val("1");
+        $("input[name='screenContentOpenTime']").val(null);
+        $(".screenContentEndTime").val(null);
 
-     $("input[name='previewTitle']").val(null);
-     $("input[name='previewOpenDate']").val(null);
-     $("input[name='previewOpenTime']").val(null);
-     $("input[name='inviteActor']").val(null);
+        $("span .checkbox").css("background-position", "0px 0px")
 
-     $("input[name='ticketPrice']").val(null);
-     $("input[name='previewFlag']").val(null);
-     $("input[name='ticketOpenDate']").val(null);
+        $("input[name='previewTitle']").val(null);
+        $("input[name='previewOpenDate']").val(null);
+        $("input[name='previewOpenTime']").val(null);
+        $("input[name='inviteActor']").val(null);
 
-     $("input[name='previewTitle']").attr("readonly", true);
-     $("input[name='previewOpenTime']").attr("readonly", true);
-     $("input[name='inviteActor']").attr("readonly", true);
+        $("input[name='ticketPrice']").val(null);
+        $("input[name='previewFlag']").val(null);
+        $("input[name='ticketOpenDate']").val(null);
 
-     $("select[name='screenTheater']").attr("disabled", "disabled");
-     $("input[name='screenContentOpenTime']").attr("readonly", true);
-     $(".dupTime").remove();
-     $(".checkPreview").remove();
+        $("input[name='previewTitle']").attr("readonly", true);
+        $("input[name='previewOpenTime']").attr("readonly", true);
+        $("input[name='inviteActor']").attr("readonly", true);
 
-     $("input[name='previewOpenDate']").datepicker("option", "disabled", true);
-     } */
+        $("select[name='screenTheater']").attr("disabled", "disabled");
+        $("input[name='screenContentOpenTime']").attr("readonly", true);
+        $(".dupTime").remove();
+        $(".checkPreview").remove();
+
+        $("input[name='previewOpenDate']").datepicker("option", "disabled", true);
+    }
 
     function fncAddScreenContent() {
         movieNo = $("input[name='movieNo']").val();
@@ -524,18 +327,18 @@
             success : function(JSONData, status) {
 
                 if (JSONData == -1) {
-                    alert("상영시간이 중복되었습니다. 다시 선택해주세요");
+                    swal("<span style='font-size:15px;'>상영시간이 중복되었습니다. 다시 선택해주세요</span>");
                 } else if (JSONData == -2) {
-                    alert("이미 이영화에 시사회가 등록되어 있습니다.");
+                    swal("<span style='font-size:15px;'>이미 이영화에 시사회가 등록되어 있습니다.</span>");
 
                 } else if (JSONData == -3) {
-                    alert("몽고DB연결실패!");
+                    swal("<span style='font-size:15px;'>몽고DB연결실패!</span>");
 
                 } else {
                     // fncGetScreenContentList();
-                    alert("등록완료");
+                    swal("<span style='font-size:15px;'>등록완료</span>");
                     fncGetScreenContentList();
-                    /*  funClearInputBox() */
+                    funClearInputBox()
 
                 }
 
@@ -573,12 +376,12 @@
                     $(".updateScreenContentModal input[name='screenContentOpenTime' ]").removeAttr("readonly");
                     $(".updateScreenContentModal select[name='screenTheater']").removeAttr("disabled");
 
-                    display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 시사회'
+                    display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i>'
                     $("input[name='previewFlag']").val("on");
                     $(".checkFlag").html(display);
 
                 } else {
-                    display = '<i class="fa fa-square-o" aria-hidden="true"></i> 시사회'
+                    display = '<i class="fa fa-square-o" aria-hidden="true"></i>'
                     $("input[name='previewFlag']").val(null);
                     $(".checkFlag").html(display);
                 }
@@ -641,8 +444,6 @@
 
         screenContentNo = $("input[name='screenContentNo']").val();
 
-        alert("screenContentNo" + screenContentNo);
-
         screenEndTime = $("input:hidden[name='screenEndTime2']").val();
 
         screenEndTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentEndTime']").val();
@@ -694,7 +495,7 @@
             }
         }
         previewFlagCheck = $("input[name='previewFlag']").val();
-        alert("previewFlagCheck    " + previewFlagCheck)
+
         if (previewFlagCheck == "on") {
             var previewFlag = "Y";
         } else {
@@ -731,15 +532,18 @@
             success : function(JSONData, status) {
 
                 if (JSONData == -1) {
-                    alert("상영시간이 중복되었습니다. 다시 선택해주세요");
+                    swal("<span style='font-size:15px;'>상영시간이 중복되었습니다. 다시 선택해주세요</span>");
                 } else if (JSONData == -2) {
-                    alert("이미 이영화에 시사회가 등록되어 있습니다.");
+                    swal("<span style='font-size:15px;'>이미 이영화에 시사회가 등록되어 있습니다.</span>");
+
                 } else if (JSONData == -3) {
-                    alert('DB연결에 실패하였습니다.')
+                    swal("<span style='font-size:15px;'>몽고DB연결실패!</span>");
+
                 } else {
-                    alert("수정완료");
+                    // fncGetScreenContentList();
+                    swal("<span style='font-size:15px;'>수정완료</span>");
                     fncGetScreenContentList();
-                    /*  funClearInputBox() */
+
                 }
 
                 window.location.reload()
@@ -763,6 +567,12 @@
 
                     fncGetScreenContentList();
                 },
+                error : function(error, status) {
+                    console.log(error);
+                    console.log(status);
+                    swal("<span style='font-size:15px;'>이 영화/시사회에 대해 삭제가 불가능합니다</span>");
+
+                }
             })
         } else {
             return;
@@ -786,7 +596,15 @@
                 result = JSONData;
                 $.each(result, function(idx, val) {
 
-                    display += '<tr class="row col-md-12 col-sm-12 listData text-center">' + '<td class="col-md-2 col-sm-2">' + val.screenContentNo + '<i class="fa fa-eraser"> </i> <i class="fa fa-times"> </i>' + '<input type="hidden" name="screenContentNo" value="'+val.screenContentNo+'">' + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenDate + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenOpenTime + '-' + val.screenEndTime + '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenTheater + '</td>' + '<td class="col-md-1 col-sm-1">' + val.ticketPrice + '</td>' + '<td class="col-md-1 col-sm-1">' + val.previewFlag + '</td>' + '<td class="col-md-2 col-sm-2">'
+                    display += '<tr class="row col-md-12 col-sm-12 listData text-center">' +
+                    '<td class="col-md-2 col-sm-2">' + 
+                    val.screenContentNo + '<i class="fa fa-eraser"> </i> <i class="fa fa-times"> </i>' + 
+                    '<input type="hidden" name="screenContentNo" value="'+val.screenContentNo+'">' + 
+                    '</td>' + '<td class="col-md-1 col-sm-1">' + val.screenDate + '</td>' +
+                    '<td class="col-md-1 col-sm-1">' + val.screenOpenTime + '-' + val.screenEndTime + '</td>' + 
+                    '<td class="col-md-1 col-sm-1">' + val.screenTheater + '</td>' + 
+                    '<td class="col-md-1 col-sm-1">' + val.ticketPrice + '</td>' + 
+                    '<td class="col-md-1 col-sm-1">' + val.previewFlag + '</td>' + '<td class="col-md-2 col-sm-2">'
                     if (val.previewTitle != null) {
                         display += val.previewTitle
                     }
@@ -814,7 +632,7 @@
 
         $(document).on("click", ".fa-square-o", function() {
 
-            display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i> 시사회'
+            display = ' <i class="fa fa-check-square-o" aria-hidden="true"></i>'
 
             $("input[name='previewTitle']").removeAttr("readonly");
             $("input[name='previewOpenTime']").removeAttr("readonly");
@@ -831,7 +649,7 @@
         })
 
         $(document).on("click", ".fa-check-square-o", function() {
-            display = '<i class="fa fa-square-o" aria-hidden="true"></i> 시사회'
+            display = '<i class="fa fa-square-o" aria-hidden="true"></i>'
             $("input[name='previewFlag']").val(null);
             $(".checkFlag").html(display);
             $("input[name='previewTitle']").attr("readonly", true);
@@ -877,7 +695,7 @@
 
         $(document).on("click", ".ui-state-disabled", function() {
 
-            swal('<span style="font-size:15px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</sapn>');
+            swal('<span style="font-size:18px">선택하신 날짜는 상영/티켓오픈날짜 등록이 불가능 합니다</span><br>' + '<span style="color:red;font-size:12px;font-weight:normal"><상영일자><br>개봉 전 영화 - 개봉일 부터 마감일 까지 등록가능' + '<br>개봉 영화 - 익일 이후부터 마감일까지 등록 가능' + '<br><티켓오픈날짜><br>오늘부터 선택한 상영일자 이전까지 등록가능' + '</span>');
         })
 
         $(document).on("change", "input[name='screenDate']", function() {
@@ -939,11 +757,12 @@
             if ($("input[name='screenDate']").val().length == 0) {
 
                 screenOpenTime = $(".updateScreenContentModal input[name='screenDate']").val() + " " + $(".updateScreenContentModal input[name='screenContentOpenTime']").val();
-
+                fncAddTime();
+            } else {
+                fncAddTime();
+                fncCheckScreenDupTime()
             }
 
-            fncAddTime();
-            fncCheckScreenDupTime()
         })
 
         $(document).on("click", ".actionAddButton", function() {
@@ -1016,6 +835,19 @@
     });
 </script>
 <style type="text/css">
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	font-size: 25px;
+}
+
+body {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
 .movie .movie__images {
 	position: relative;
 	border: 3px solid #ffd564;
@@ -1133,6 +965,10 @@ input[readonly="readonly"], select[disabled="disabled"] {
 	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.17);
 	position: relative;
+}
+
+.checkFlag {
+	font-size: 1.5em;
 }
 </style>
 </html>

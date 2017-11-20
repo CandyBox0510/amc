@@ -77,7 +77,7 @@
 				    			addBooking();
 				    			
 				    		} else {
-				    			alert("111 AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
+				    			//alert("111 AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
 				    			kakaoPayCancel(impUid);
 				    			//[3] 아직 제대로 결제가 되지 않았습니다.
 				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
@@ -92,7 +92,7 @@
 				    } else {
 				        var msg = '결제에 실패하였습니다.';
 				        var errorMsg = '실패사유 : ' + rsp.error_msg;
-				        alert(msg+"\n"+errorMsg);
+				        //alert(msg+"\n"+errorMsg);
 				        
 				        /**************************************/
 				        //node서버에 롤백 요청하기
@@ -181,7 +181,7 @@
 	  		    			msg += '\n결제 금액 : ' + rsp.paid_amount;
 	  		    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
 
-	  		    			alert("아작스 취소 후 "+"\n"+msg);
+	  		    			//alert("아작스 취소 후 "+"\n"+msg);
 	  		    			
 	  		    			//location.href="/index.jsp"
 	  		    			location.href="/#"
@@ -350,7 +350,10 @@
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>
-                          <li><a class="category__item abc">${movie.movieNm} ${screenContent.previewTitle}</a></li>
+                      	<c:if test="${screenContent.previewTitle !=null }">
+                      	 <li><a class="category__item abc" style="line-height:1.3em">${screenContent.previewTitle}</a></li>
+                      	</c:if>
+                          <li><a class="category__item abc" style="line-height:1.3em">Movie: ${movie.movieNm}</a></li>
                           <li><a class="category__item abc">Tickets:<span id="headCount"></span></a></li>
                           <li><a class="category__item abc">Seats: <span id="seatNo"></span></a></li>
                           <li><a class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>

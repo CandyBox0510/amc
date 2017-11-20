@@ -6,7 +6,7 @@
 <head>
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMovie - (Preview)Booking step 1</title>
+        <title>시사회선택하기</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -20,9 +20,9 @@
 		
   <script type="text/javascript">
 //타이머셋팅
-	var ticketOpenDate="";
-  function dpTime(){
-  	
+  var ticketOpenDate="";
+  var runCount;
+  function dpTime(){  	
   	
   	console.log("open : "+ticketOpenDate);
   	var templist = ticketOpenDate.split('.');
@@ -100,6 +100,12 @@
 			$(".item").eq(1).html("");
 			$(".item").eq(2).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
+			
+			$("#gotoSeat").addClass("disabled");
+	      	$("#randomSeat").addClass("disabled");
+	      	clearInterval(runCount);
+	      	$("#dpTime").html("");
+	      	//ticketOpenDate  = '0,0';
 
 			var flag = $("input:hidden[name='flag']").val();
 			
@@ -189,7 +195,7 @@
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
 		
-		setInterval("dpTime();",1000);
+		runCount = setInterval("dpTime();",1000);
 	});
 		
 	

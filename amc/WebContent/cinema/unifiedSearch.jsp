@@ -7,7 +7,7 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
+        <title>Americode Cinema-unifiedSearch</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -148,13 +148,13 @@
 						<c:set var="i" value="${ i+1 }" />
 						<div class="col-xs-6 col-sm-4 col-md-3 pp">
 	                        <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=preview">
 	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="100%"  height="290px">
 	                            </a>
 	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }
 	                            	<span class="label label-danger"></span>
 	                            </div>
-	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
 	                                <p class="gallery-item__name jeju">${screenContent.previewTitle }</p>
 	                            </a>
@@ -304,8 +304,7 @@
 		  background-color: #4c4145;
 	  }
 	  .mm{
-      	/* background-color: #EDEDED; */
-      	background-color: #ffbfbf;
+      	/* background-color: #ffbfbf; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -320,8 +319,7 @@
  	    box-shadow:inset 0 0 10px #ff9696; 
       }
       .pp {
-      	/* background-color: #EDEDED; */
-      	background-color: #ffbfbf;
+      	/* background-color: #ffbfbf; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -336,8 +334,7 @@
  	    box-shadow:inset 0 0 10px #ff9696; 
       }
       .gg{
-      	/* background-color: #EDEDED; */
-      	background-color: #b7b7b7;
+      	/* background-color: #b7b7b7; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -352,8 +349,7 @@
  	    box-shadow:inset 0 0 10px #606060; 
       }
       .ss{
-      	/* background-color: #EDEDED; */
-      	background-color: #f9ed98;
+      	/* background-color: #f9ed98; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;

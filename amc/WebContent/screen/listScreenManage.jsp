@@ -64,12 +64,12 @@
 								<c:set var="i" value="${i+1 }" />
 								<div class="col-xs-12 col-sm-3">
 									<div class=" cinema-item">
-										<div class="cinema">
+										<div class="cinema" >
 											<a href='/screen/getScreenContentList/${screen.movieNo}' class="cinema__images">
 												<img id="poster" alt='' src="${screen.postUrl }">
 											</a>
 											<a href="/screen/getScreenContentList/${screen.movieNo}" class="movieNm">${screen.movieNm }</a>
-											<p>
+											<p  style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 												<strong>∞≥∫¿¿œ</strong>
 												${screen.openDt }
 												<br>
@@ -77,7 +77,7 @@
 												${screen.endDt }
 												<br>
 												<strong>∞®µ∂</strong>
-												${screen.director }
+												<span>${screen.director }</span>
 											</p>
 										</div>
 									</div>
@@ -93,7 +93,7 @@
 							<c:if test="${resultPage.currentPage != 1 }">
 								<a href='#' class="pagination__prev">prev</a>
 							</c:if>
-						
+
 							<c:if test="${resultPage.maxPage !=  resultPage.currentPage}">
 								<a href='#' class="pagination__next">next</a>
 							</c:if>
@@ -172,10 +172,10 @@
             }
 
             if ($(document).innerWidth() >= 768 && $(document).innerWidth() < 990) {
-       
+
                 $(".cinema-item").css("height", "500px");
             } else {
-         
+
                 $(".cinema-item").css("height", "auto");
             }
 
@@ -226,9 +226,12 @@ body {
 	margin-top: 100px
 }
 
+
+
 #search-form {
 	display: block;
 	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .search__button {
@@ -251,6 +254,7 @@ input, select {
 select {
 	font-family: 'Jeju Gothic', sans-serif;
 }
+
 
 .movieNm {
 	font-size: 16px;

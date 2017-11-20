@@ -20,7 +20,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
 
 
-
+/**
+ * @brief Rest서버 이용시 사용한 유틸 클래스
+ * @details url, post&get, header, body 를 받아서 rest서버에 요청하여 string을 반환하는 유틸 (3rd 라이브러리 필요)
+ * @author Ko
+ *
+ */
 public class RestApiUtil {
 	
 	URL url;
@@ -41,11 +46,26 @@ public class RestApiUtil {
 	@SuppressWarnings("unused")
 	private RestApiUtil() throws IOException {}
 	
+	/**
+	 * 
+	 * @brief 생성자
+	 * @param url Rest API 주소
+	 * @param requestType GET or POST
+	 * @throws IOException
+	 */
 	public RestApiUtil(String url, String requestType) throws IOException {
 		this.om = new ObjectMapper();
 		this.settingConnection(url, requestType);
 	}
 	
+	/**
+	 * 
+	 * @brief 초기값 세팅을 위한 메서드
+	 * @details url을 http와 https로 구분하여 그에 맞는 connection을 준비
+	 * @param url
+	 * @param requestType
+	 * @throws IOException
+	 */
 	public void settingConnection(String url,String requestType) throws IOException{
 		this.con = null;
 		this.httpGet = null;
@@ -71,22 +91,53 @@ public class RestApiUtil {
 		}
 	}
 	
+	/**
+	 * @brief RestAPI 요청 결과를 반환하는 메서드
+	 * @details 헤더만 필요
+	 * @param header
+	 * @return RestAPI 요청 결과
+	 * @throws IOException
+	 */
 	public String restApiResponse(Map<String,String> header) throws IOException{
 
 		return this.getResponseString(header, null, false);
 	}
-	
+
+	/**
+	 * @brief RestAPI 요청 결과를 반환하는 메서드
+	 * @details 헤더 바디 필요
+	 * @param header 헤더 값 key=value
+	 * @param body 바디 값 key=value
+	 * @return RestAPI 요청 결과
+	 * @throws IOException
+	 */
 	public String restApiResponse(Map<String,String> header,Map<String,Object> body) throws IOException{
 
 		return this.getResponseString(header, body, false);
 	}
-	
+
+	/**
+	 * @brief RestAPI 요청 결과를 반환하는 메서드
+	 * @details 헤더 바디 필요 , JsonString이면 true
+	 * @param header 헤더 값 key=value
+	 * @param body 바디 값 key=value
+	 * @return RestAPI 요청 결과
+	 * @throws IOException
+	 */
 	public String restApiResponse(Map<String,String> header,Map<String,Object> body, boolean isJson) throws IOException{
 
 		return this.getResponseString(header, body, true);
 	}
 	
-	
+	/**
+	 * @brief RestAPI 요청 핵심 메서드
+	 * @details 입력값에 따라서 Rest서버에 요청한다
+	 * @param header
+	 * @param body
+	 * @param isJson
+	 * @return RestAPI 요청 결과
+	 * @throws IOException
+	 */
 	private String getResponseString(Map<String,String> header,Map<String,Object> body, boolean isJson) throws IOException{
 		//기존의 헤드,바디 설정 초기화
 		if(this.header != null){ this.header.clear(); }
@@ -195,6 +246,10 @@ public class RestApiUtil {
 		}
 	}
 	
+	/**
+	 * @brief http일 경우 Rest 통신 담당
+	 * @details http일 경우의 Rest 통신을 담당한다
+	 */
 	private String httpResponseString(HttpEntity httpResponse) throws IllegalStateException, IOException{
 		responseHttpEntity = httpResponse;
 		InputStream is = responseHttpEntity.getContent();
@@ -204,6 +259,10 @@ public class RestApiUtil {
 		return serverData;
 	}
 	
+	/**
+	 * @brief 초기화
+	 * @details Connection, header, body 초기화
+	 */
 	public void disConnection(){
 		if(this.header != null){ this.header.clear(); }
 		if(this.body != null){	this.body.clear(); }
