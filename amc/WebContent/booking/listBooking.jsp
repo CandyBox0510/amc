@@ -7,7 +7,7 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
+        <title>Americode Cinema-listBooking</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -273,8 +273,7 @@
  	     height: auto;
       }
       .col-sm-4{
-      	/* background-color: #EDEDED; */
-      	background-color: #c1ffbc;
+      	/* background-color: #c1ffbc; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;

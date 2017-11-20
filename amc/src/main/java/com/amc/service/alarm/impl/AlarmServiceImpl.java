@@ -453,8 +453,8 @@ public class AlarmServiceImpl implements AlarmService {
 			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(alarmSeatNo, 1000, null));
 			
 			pushValue.put("subject", "티켓 취소 알림!");
-			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
-			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
+			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 : "+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
+			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 : "+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
 			break;
 			
 		case "userCertification":

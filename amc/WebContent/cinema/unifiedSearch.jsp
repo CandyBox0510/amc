@@ -7,7 +7,7 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
+        <title>Americode Cinema-unifiedSearch</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -304,8 +304,7 @@
 		  background-color: #4c4145;
 	  }
 	  .mm{
-      	/* background-color: #EDEDED; */
-      	background-color: #ffbfbf;
+      	/* background-color: #ffbfbf; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -320,8 +319,7 @@
  	    box-shadow:inset 0 0 10px #ff9696; 
       }
       .pp {
-      	/* background-color: #EDEDED; */
-      	background-color: #ffbfbf;
+      	/* background-color: #ffbfbf; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -336,8 +334,7 @@
  	    box-shadow:inset 0 0 10px #ff9696; 
       }
       .gg{
-      	/* background-color: #EDEDED; */
-      	background-color: #b7b7b7;
+      	/* background-color: #b7b7b7; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;
@@ -352,8 +349,7 @@
  	    box-shadow:inset 0 0 10px #606060; 
       }
       .ss{
-      	/* background-color: #EDEDED; */
-      	background-color: #f9ed98;
+      	/* background-color: #f9ed98; */
       	margin-top:5px;
       	margin-bottom:5px;
  	    /* padding-top: 10px;

@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	
+	<title>Americode Cinema-theaterInfo</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- 파노라마 -->
