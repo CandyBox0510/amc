@@ -226,7 +226,9 @@
 	            <div class="col-sm-11 col-md-11" id="change">
 	                 <figure>
 						<div class="panorama" data-paver data-start-position="0" style="width:100%;">
-							<img src="../images/theater/theater1.jpg"/>
+						 	<img src="../images/theater/pano.jpg"/>
+					
+							<!-- <img src="../images/theater/theater1.jpg"/> -->
 						</div>
 					 </figure>
 	            </div>
@@ -236,7 +238,8 @@
 	            <div class="col-sm-11 col-md-11" id="change">
 	                 <figure>
 						<div class="panorama" data-paver data-start-position="0" style="width:100%;">
-							<img src="../images/theater/theater2.jpg"/>
+						<img src="../images/theater/pano2.jpg"/>
+							<!--  <img src="../images/theater/theater2.jpg"/> -->
 						</div>
 					</figure>
 	            </div>
@@ -261,6 +264,8 @@
 						
 						<div>
 							<div class="image"><img class="steelCut" src="../images/theater/screenTheaterEnter.jpg" width="1000px" height="400px"/></div>
+					
+					
 						</div>
 						
 						<div>

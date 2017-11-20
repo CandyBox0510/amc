@@ -355,6 +355,7 @@ body {
 #search-form {
 	display: block;
 	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 .search__button {
