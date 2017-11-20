@@ -476,6 +476,17 @@
 	 	naver_id_login.get_naver_userprofile("naverSignInCallback()");
  */
 		
+ 
+	 $( function() {
+			if( '${sessionScope.user.role}' == 'admin'){
+				$("ul#navigation").css("padding","0 0 0 10px");
+			}		
+		$(window).resize(function name() {
+			if( '${sessionScope.user.role}' == 'admin'){
+				$("ul#navigation").css("padding","0 0 0 10px");
+			}
+		})
+	})
 		
 	</script>		
 
@@ -720,8 +731,8 @@ ul#navigation > li {
 
 
 </style>
-<script>
-$( function() {
+<!-- <script>
+ $( function() {
 		if( '${sessionScope.user.role}' == 'admin'){
 			$("ul#navigation").css("padding","0 0 0 10px");
 		}		
@@ -730,7 +741,7 @@ $( function() {
 			$("ul#navigation").css("padding","0 0 0 10px");
 		}
 	})
-})
-</script>
+}) 
+</script> -->
 </html>
 

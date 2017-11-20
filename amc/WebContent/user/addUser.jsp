@@ -56,7 +56,9 @@
 							<input type="text" class="inputtype" value="${email}" id="userId" name="userId" placeholder="ID입력" aria-describedby="helpBlock" readonly />
 						</c:if>
 					</div>
-					<span id="helpBlock" class="help-block col-sm-6"></span>
+					<div class="col-sm-3" style="display: inline">
+						<span id="helpBlock" class="help-block col-sm-6"></span>
+					</div>
 				</div>
 				<%-- <c:if test="${sessionScope.user.role == 'admin'}"> --%>
 				<c:if test="${empty snslogin}">
@@ -89,7 +91,7 @@
 				<div class="row">
 					<label for="birth" class="col-sm-offset-1 col-sm-3 control-label"><strong>생 년 월 일</strong></label>
 					<div class="col-sm-4" style="display: inline">
-						<input type="text" class="inputtype" name="birth" id="birth" placeholder="생년월일">
+						<input type="text" class="inputtype" name="birth" id="birth" placeholder="생년월일" readonly>
 					</div>
 				</div>
 
@@ -158,12 +160,13 @@
 						</div>
 					</div>
 				</c:if>
-
+				<br/><br/>
 				<div class="row">
 					<div class="col-sm-offset-4  col-sm-4 text-center">
 						<button id="addUser" type="button" class="btn btn-md btn--info">가 &nbsp;입</button>
 					</div>
 				</div>
+				<br/><br/>
 			</form>
 		</div>
 	</div>
@@ -201,15 +204,15 @@
 
     });
 
-    /* 		//============= "취소"  Event 처리 및  연결 =============
-     $(function() {
+     		//============= "취소"  Event 처리 및  연결 =============
+/*      $(function() {
      //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
      $("a[href='#' ]").on("click" , function() {
      $("form")[0].reset();
      });
      });	
     
-     */
+      */
     function fncAddUser() {
         var id = $("input[name='userId']").val();
         var pw = $("input[name='password']").val();
@@ -221,7 +224,6 @@
         var phone3 = $("#phone3").val();
         var snslogin = $("#snslogin").val();
         var check = true
-        alert("snslogin :"+snslogin);
         
         if (id == null || id.length < 1) {
             alert("아이디는 반드시 입력하셔야 합니다.");
@@ -301,10 +303,9 @@
                 phone3 : phone3
             }),
             success : function(JSONData, status) {
-            	alert("여긴 들어오는 거니?");
                 if (JSONData == '') {
                     if (check == true) {
-                        swal('회원가입을 축하합니다.');
+                        alert('회원가입을 축하합니다.');
                         $("#addUser-form").attr("method", "POST").attr("action", "/user/addUser").submit();
                     }
                 } else {
@@ -320,58 +321,78 @@
         /* $("form").attr("method" , "POST").attr("action" , "/user/addUser").submit(); */
     }
 
-    /*  		$(function(){
-     $('#email_select').change(function(){
-     if($('#email_select').val() == "1"){
-     $('#last_email').val(""); //값 초기화
-     $('#last_email').prop("readonly",false); //활성화
-     } else if($('#email_select').val()==""){
-     $('#last_email').val(""); //값 초기화
-     $('#last_email').prop("readonly",true); //textBox 비활성화
-     } else {
-     $('#last_email').val($('#email_select').val()); //선택값 입력
-     $('#last_email').prop("readonly",true); //비활성화
-     }
-     });
-     });
-     */
 
     //==>""이메일" 유효성Check / ID중복확인" Event 처리 및 연결
-    /* 		$(function(){					
+$(function(){					
      $('#userId').bind('keyup', function(){
-     var userId = $(this).val().trim();
-     var tempId = userId.split(".");
-     console.log("userId :: " + userId);
-     console.log("tempId :: " + tempId);
-     $.ajax({
-     url : 'json/checkDuplication/'+tempId,
-     method : 'get',
-     dataType : 'json', 
-     headers : {
-     'Accept' : 'application/json',
-     'Content-Type' : 'application/json'
-     }, 
-     success : function(JSONData , status){
-     /* alert("JSONData" + JSONData); */
-    /*if(JSONData){
-    	$('span.help-block').html('사용가능한 아이디 입니다.').css('color','blue');
-    	check = true;
-    }else{
-    	$('span.help-block').html('이미 존재하는 아이디 입니다.').css('color','red');
-    	check = false;
-    }
-    }
-    });
+	     var userId = $(this).val().trim();
+	     var tempId = userId.split(".");
+	     console.log("userId :: " + userId);
+	     console.log("tempId :: " + tempId);
+	     $.ajax({
+	     url : 'json/checkDuplication/'+tempId,
+	     method : 'get',
+	     dataType : 'json', 
+	     headers : {
+	     'Accept' : 'application/json',
+	     'Content-Type' : 'application/json'
+	     }, 
+	     success : function(JSONData , status){
+	    if(JSONData){
+	    	$('span.help-block').html('사용가능한 아이디 입니다.').css('color','blue');
+	    	check = true;
+	    }else{
+	    	$('span.help-block').html('이미 존재하는 아이디 입니다.').css('color','red');
+	    	check = false;
+	    }
+	    }
+	    });
+	    
+	    if(userId == ''){
+	    $('span.help-block').html('');
+	    }
+	    
+	    });
+	    });
     
-    if(userId == ''){
-    $('span.help-block').html('');
-    }
+//==>""이메일" 유효성Check / ID중복확인" Event 처리 및 연결
+$(function(){					
+	$('#userId').bind('keyup', function(){
+		var userId = $(this).val().trim();
+		var tempId = userId.split(".");
+    	console.log("email :: " + email);
+     	console.log("tempId :: " + tempId);
+			$.ajax({
+				url : 'json/checkDuplication/'+tempId,
+				method : 'get',
+				dataType : 'json', 
+				 headers : {
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json'
+				}, 
+				success : function(JSONData , status){
+					/* alert("JSONData" + JSONData); */
+					if(JSONData){
+						$('span.help-block').html('사용가능한 아이디 입니다.').css('color','blue');
+						check = true;
+					}else{
+						$('span.help-block').html('이미 존재하는 아이디 입니다.').css('color','red');
+						check = false;
+					}
+				}
+			});
+		
+			if(userId == ''){
+				$('span.help-block').html('');
+			}
+	      
+	});
+});		
+
     
-    });
-    });
     
-     */
-    function fncCheckUser() {
+     
+     function fncCheckUser() {
         var userId = $("input[name='userId']").val().trim();
         var tempId = userId.split(".");
         console.log("userId :: " + userId);
@@ -379,18 +400,20 @@
         $.ajax({
             url : '/user/json/checkDuplication/' + tempId,
             method : 'get',
-            async : false,
+             async : false,
             dataType : 'json',
             headers : {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
             },
             success : function(JSONData, status) {
-                alert("JSONData" + JSONData);
                 if (JSONData) {
+                	$('span.help-block').html('사용가능한 아이디 입니다.').css('color','blue');
+                	check = true;
                     fncAddUser();
-                    check = true;
+                    
                 } else {
+                	$('span.help-block').html('이미 존재하는 아이디 입니다.').css('color','red');
                     alert("이미 존재하는 아이디입니다.");
                     check = false;
                     return;
@@ -401,7 +424,7 @@
         if (userId == '') {
             $('span.help-block').html('');
         }
-    }
+    } 
 
     $(function() {
         $('#password2').bind('keyup', function() {
@@ -476,7 +499,7 @@
 <style type="text/css">
 #body {
 	/* background-color: #EDEDED; */
-	background-color: #e0e0e0;
+	background-color: #ffffff;
 	margin-top: 100px;
 	margin-bottom: 5px;
 	padding-top: -50px;

@@ -64,6 +64,8 @@ public class ProductController {
 			product.setProdImage(file.getOriginalFilename());
 		}
 		
+		product.setStock(product.getTotalStock());
+		product.setExpiryDate(1);
 		productService.addProduct(product);
 		
 		return "forward:addProductConfirm.jsp";

@@ -10,13 +10,8 @@
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
         <title>AMC 판매목록</title>
-        <meta name="description" content="A Template by Gozha.net">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <meta name="author" content="Gozha.net">
-    
-    <!-- Mobile Specific Metas-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="telephone=no" name="format-detection">
+    <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
     
     <!-- Fonts -->
         <!-- Font awesome - icon font -->
@@ -25,36 +20,95 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Stylesheets -->
-    <!-- jQuery UI --> 
-        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
-
-        <!-- Mobile menu -->
-        <link href="/css/gozha-nav.css" rel="stylesheet" />
-        <!-- Select -->
-        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
-        <!-- Swiper slider -->
-        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
-    
-        <!-- Custom -->
-        <!-- <link href="/css/style.css?v=1" rel="stylesheet" /> -->
-
-        <!-- Modernizr --> 
-        <!-- <script src="/js/external/modernizr.custom.js"></script> -->
-    
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-   
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-   
-        <!--   semantic UI  -->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+     
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-        <script src="../semantic/semantic.min.js"></script>
+		<!--아임포트 CDN -->
+		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+	<div class="wrapper">
+    	<!-- Banner -->
+        <div class="banner-top">
+            <img alt='top banner' src="../images/banners/space.jpg">
+        </div> 
+        <header class="header-wrapper header-wrapper--home">
+			<jsp:include page="/layout/topToolbar.jsp" />
+   		</header>
+		<div class="container" id="body">
+			<div class="text-info">
+				<h2 class="page-heading">판매목록조회</h2><br/><br/>
+		    </div>
+	
+			<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
+			<input type="hidden" value="${sale.buyer.userId}">			
+		
+			
+			<table class="table table-hover table-striped" >
+				<thead> </thead>
+				   <tbody> 
+					<tr id="tablename" >
+						<th>No</th>
+						<th>상품명</th>
+						<th>구매자 ID</th>
+						<th>배송 희망일</th>
+						<th>현재상태</th>
+						<th>배송현황</th>
+					</tr>
+					</tbody> 
+		
+	      	</table>
+	      	
+	      						<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
+					<div class="ui thin info modal" id="goodsmodal"> 
+					  <i class="close icon"></i>
+					    <div class="content" ></div>
+					</div>  
+	      	
+		</div>
+	</div>
+		
+		<jsp:include page="/layout/bottomToolbar.jsp" /> 
+		<jsp:include page="/layout/loginModal.jsp" />
+
+
+	<!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> 
+        <!-- Inview -->
+        <!-- <script src="js/external/jquery.inview.js"></script> -->
+        <script src="../js/external/jquery.waypoints.min.js"></script>
+        <script src="../js/external/inview.min.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+        <!-- Mobile menu -->
+        <script src="../js/jquery.mobile.menu.js"></script>
+        <!-- Select -->
+        <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Form element -->
+        <script src="../js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="../js/form.js"></script>
+        <!-- Custom -->
+        <script src="../js/custom.js"></script>
+          	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+	
+</body>
         <script type="text/javascript">
 		var currentPage = 0,
 			searchKeyword = 'saleList';
@@ -63,12 +117,24 @@
 
 			$('td:nth-child(1)')
 				.bind('click',function(){
-					self.location = 'getPurchase?impId='+$(this).find('input:hidden').val();
+					/* self.location = 'getPurchase?impId='+$(this).find('input:hidden').val(); */
+					var url = 'getPurchase?impId='+$(this).find('input:hidden').val();
+		            $.get(url, function (data) {
+		                $('.info.modal .content').html(data);
+		                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
+		                
+		            });
 				});
 			
 			$('td:nth-child(2)')
 				.bind('click',function(){
-					self.location = '/product/getProduct?prodNo='+$(this).find('input:hidden').val()+'&menu=manage';
+					/* self.location = '/product/getGoodsProduct?prodNo='+$(this).find('input:hidden').val()+'&menu=manage'; */
+		            var url = "/product/getGoodsProduct?prodNo="+$(this).find('input:hidden').val()+'&menu=manage';
+		            $.get(url, function (data) {
+		                $('.info.modal .content').html(data);
+		                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
+		                
+		            });
 				});
 			
 			$('td:nth-child(3)')
@@ -103,11 +169,11 @@
 						i--;
 						var sale = JSON.list[x];
 						var list = '<tr>';
-						list += '<td><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
-						list += '<td><input type="hidden" name="prodNo" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+' (수량 : '+sale.orderStock+')</td>';
-						list += '<td>'+sale.buyer.userId+'</td>';
-						list += '<td>'+sale.orderRegDate+'</td>';
-						list += '<td>'
+						list += '<td class="text-center" height="40px"><input type="hidden" name="impId" value="'+sale.impId+'">'+i+'</td>';
+						list += '<td class="text-center" height="40px"><input type="hidden" name="prodNo" class="info-modal-link" value="'+sale.purchaseProd.prodNo+'">'+sale.purchaseProd.prodName+'</td>';
+						list += '<td class="text-center" height="40px">'+sale.buyer.userId+'</td>';
+						list += '<td class="text-center" height="40px">'+sale.orderRegDate+'</td>';
+						list += '<td class="text-center" height="40px">'
 						if(sale.tranCode == '1'){
 							list += '구매완료';
 						}else if(sale.tranCode == '2'){
@@ -116,7 +182,7 @@
 							list += '배송완료';
 						}
 						list += '</td>';
-						list += '<td>';
+						list += '<td class="text-center" height="40px">';
 						if(sale.tranCode == '1'){
 							list += '<input type="hidden" name="impId" value="'+sale.impId+'">배송하기';
 						}
@@ -167,111 +233,29 @@
 			}
 		});
 		
-	</script>
-        
-        
-</head>
-
-<body bgcolor="#ffffff" text="#000000">
-	<div class="wrapper">
-    	<!-- Banner -->
-        <div class="banner-top">
-            <img alt='top banner' src="../images/banners/space.jpg">
-        </div> 
-        <header class="header-wrapper header-wrapper--home">
-			<jsp:include page="/layout/topToolbar.jsp" />
-   		</header>
-		<div class="container" id="body">
-			<div class="text-info">
-				<h3>판매목록조회</h3>
-		    </div>
-	
-			<input type="hidden" name="maxPage" value="${resultPage.maxPage}"/>
-			<input type="hidden" value="${sale.buyer.userId}">			
 		
-			
-			<table class="table table-hover table-striped" >
-				<thead> </thead>
-				   <tbody> 
-					<tr>
-						<th>No</th>
-						<th>상품명</th>
-						<th>구매자 ID</th>
-						<th>배송 희망일</th>
-						<th>현재상태</th>
-						<th>배송현황</th>
-					</tr>
-					</tbody> 
+		$(function () {
+		    $('.info-modal-link').each(function () {
+		        $(this).on('click', function (e) {                   
+		            e.preventDefault();
+		            var url = "/product/getGoodsProduct?prodNo="+$(this).find('input:hidden').val()+'&menu=manage';
+		            $.get(url, function (data) {
+		                $('.info.modal .content').html(data);
+		                $(".info.modal").modal({closable:true,observeChanges:true}).modal('show'); 
+		                
+		            });
+		        });              
+		    });
+		});			
 		
-	      	</table>
-		</div>
-	</div>
-		
-		<jsp:include page="/layout/bottomToolbar.jsp" /> 
-		<jsp:include page="/layout/loginModal.jsp" />
-
-   <!-- JavaScript-->
-        <!-- jQuery 3.1.1--> 
-       <!--  <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script> -->
-        <!-- Migrate --> 
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
-        <!-- jQuery UI -->
-        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Bootstrap 3--> 
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-
-        <!-- Mobile menu -->
-        <script src="/js/jquery.mobile.menu.js"></script>
-         <!-- Select -->
-        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
-        <!-- Swiper slider -->
-        <script src="/js/external/idangerous.swiper.min.js"></script>
-
-        <!-- Form element -->
-        <script src="/js/external/form-element.js"></script>
-        <!-- Form validation -->
-        <script src="/js/form.js"></script>
-
-        <!-- Custom -->
-        <script src="/js/custom.js"></script>
-        
-  	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-        
-	
-</body>
-	<script type="text/javascript">
-
-/* 		$(function(){
-			
-			$.ajax({
-				url : '/product/json/getIndexProductList',
-				method : 'get',
-				dataType : 'json',
-				headers : {
-					'Accept' : 'application/json',
-					'Content-Type' : 'application/json'
-				},
-				success : function(data){
-					var i;
-					for(i=0; i<4 ; i++){
-						$($('.popular')[i]).find('img').attr('src','../images/uploadFiles/'+(data.HP[i].prodImage!=null ? data.HP[i].prodImage : 'empty'+Math.floor(3*Math.random())+'.GIF'));
-						$($('.popular')[i]).find('span').text(data.HP[i].stock);
-						$($('.popular')[i]).find('h4').append(data.HP[i].prodName);
-					}
-				}
-			});
-		});
-*/
-	</script>
-<style>
+	</script><style>
 #body{ padding-top: 100px; }
-/* html{
-     height: auto;
-} */
+
+html {
+	height: auto;
+}
+
+
 label {
 	display: inline-block;
 	width: 10em;
@@ -286,9 +270,6 @@ label {
 	margin-top: 100px
 }
 
-#body {
-	padding-top: 100px;
-}
 
 .listTitle, .listTitleXs {
 	font-size: 10px;
@@ -306,10 +287,6 @@ label {
 
 .listTitleXs  div {
 	padding: 5px 0px 5px 0px
-}
-
-html {
-	height: auto;
 }
 
 section {
@@ -438,6 +415,25 @@ hr {
 
 .xsDisplay {
 	margin: 20px 0px 20px 0px
+}
+
+
+#tablename {
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+    vertical-align: middle;
+    padding-top: 5px;
+    color: #FFFFFF;
+    background-color: #4C4145;
+    style="border-bottom: 1px solid #dddddd";
+}
+.footer-wrapper {
+    background-color: #fafafa;
+    background-image: url(../images/components/price-pattern.jpg);
+    background-repeat: repeat;
+    overflow: hidden;
+    margin-top: 260px;
 }
 </style>
 </html>

@@ -15,7 +15,7 @@
 <body bgcolor="#ffffff" text="#000000">
 	
 
-	<div class="wrapper">
+	<div class="wrapper text-center">
 		<div class="container" id="body">
 			<div class="row updateheader">
 				<h3 class="text-info">상품정보수정</h3>
@@ -454,10 +454,10 @@ input, #salesEndDate{
     width: 10%;
 }
 #stocktext{
-	position:relative;
-	bottom:-10px;
-	left:-10px;
-    width: 12%;
+	position:fixed;
+	bottom:530px;
+	right:340px;
+    width: 15%;
     font-size: 14px;
     
 }
@@ -478,6 +478,13 @@ input, #salesEndDate{
   border-color: #be41e8;
 }
 
+.text-info {
+    /* color: #31708f; */
+    color: #000000;
+    position: fixed;
+    left: 100px;
+    bottom: 830px;
+}
 	</style>
 	
 </html>

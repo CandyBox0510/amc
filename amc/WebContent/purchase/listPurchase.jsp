@@ -79,7 +79,7 @@
 									<td>${ i }</td>
 									<td>
 										<input type="hidden" value="${purchase.impId}" id="ImpId">
-										<button type="button" class="btn btn-link" name="${purchase.impId}" id="update">${purchase.purchaseProd.prodName}&nbsp;&nbsp;(수량 : ${purchase.orderStock})</button>
+										<button type="button" class="btn btn-link" name="${purchase.impId}" id="update">${purchase.purchaseProd.prodName}&nbsp;&nbsp;<%-- (수량 : ${purchase.orderStock}) --%></button>
 										<div class="modal fade" id="${purchase.impId}" tabindex="-1" role="dialog" aria-labelledby="${purchase.purchaseProd.prodName}" aria-hidden="true"></div>
 									</td>
 									<td>${purchase.addrDlvy} ${purchase.addrDlvyDetail}</td>
@@ -99,8 +99,9 @@
 									</td>
 									<td>
 										<c:if test="${purchase.tranCode=='2'}">
-											<%-- <input type="hidden" name="impId" value="${purchase.impId}"/> --%>
-											<a href="#" class="btn btn-link text-success" >물건도착</a>
+											<input type="hidden" name="impId" value="${purchase.impId}"/> 
+											<!-- <a href="#" class="btn btn-link text-success" >물건도착</a> -->
+											<a href="#" id="abcd">물건도착</a> 
 										</c:if>
 									</td>
 								</tr>
@@ -140,7 +141,7 @@
 
 			<div class="updateScreenContentWrapper col-md-12 col-sm-12">
 				<input type="hidden" name="tranCode" value="${purchase.tranCode}">
-				<input type="hidden" name="impId" value="${purchase.impId}">
+				<input type="hidden" name="impId" value="${purchase.impId}" id="updateTranCode">
 				<input type="hidden" name="buyer.userId" value="${purchase.buyer.userId}">
 				
 				<div>
@@ -154,7 +155,7 @@
 				<div title="수정하려면 클릭하세요">
 					<div class="col-md-6 col-sm-6 updateScreenContentTitle">결제방법</div>
 					<div class="col-md-6 col-sm-6">
-						<input type="text" name="paymentOption" readonly="readonly">
+						<input type="text" name="paymentOption" readonly="readonly"> 
 					</div>
 				</div>
 			
@@ -209,7 +210,7 @@
 			</div>
 				
 			<div class="actions">
-				<div class="ui positive right labeled icon button actionUpdateButton">
+				<div class="ui positive right labeled icon button actionUpdateButton" id="fix">
 					수정 <i class="checkmark icon"></i>
 				</div>
 				<div class="ui black deny button actionCancleButton">취소</div>
@@ -224,9 +225,9 @@
 
    <!-- JavaScript-->
         
-        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- <script src="/js/external/jquery-migrate-1.2.1.min.js"></script> -->
 		<!-- jQuery UI -->
-		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
 		
 		<!-- Custom -->
 		<script src="/js/custom.js"></script>
@@ -242,15 +243,16 @@
 			$("#search-form").attr("method" , "POST").attr("action" , "/purchase/getPurchaseList").submit(); 
 		}
 
-		
 		$(function(){
 			$('.boxshadow').css("box-shadow", "0 0 0px rgba(0, 0, 0, 0)")
 			
- 			$('td:nth-child(6) a:contains("물건도착")').bind('click',function(){
+				$('#abcd').bind('click',function(){
  				var anchor = $(this);
+ 				var impId = $('input[name="impId"]').val();
  				if(confirm("정말 도착하였습니까? (수정불가)")){
 	 				$.ajax({
-	 					url : 'json/updateTranCode/'+$(this).parent().find('input:hidden').val()+'/3',
+	 					/* url : '/purchase/json/updateTranCode/'+$(this).parent().find('input:hidden').val()+'/3', */
+	 					url : '/purchase/json/updateTranCode/'+impId+'/3',
 	 					method : 'get',
 	 					success : function(data){
 	 						$(anchor.parent().parent().find('td')[4]).text("배송완료");
@@ -353,104 +355,51 @@
 		}); */
 		
 		
-	    function fncUpdatePurchase() { //상영정보 수정 
+	    function UpdatePurchase() { //상영정보 수정 
+			alert("fncUpdatePurchase");
 			receiverName = $(".updateScreenContentModal input[name='receiverName' ]").val();
 			receiverPhone1 = $(".updateScreenContentModal input[name='receiverPhone1' ]").val();
 			receiverPhone2 = $(".updateScreenContentModal input[name='receiverPhone2' ]").val();
 			receiverPhone3 = $(".updateScreenContentModal input[name='receiverPhone3' ]").val();
 			addrDlvy = $(".updateScrenContentModal input[name='addrDlvy' ]").val();
 			addrDlvyDetail = $(".updateScreenContentModal input[name='addrDlvyDetail' ]").val();
-
-	        if (screenDate == null || screenDate.length < 1) {
-	            alert("상영일자를 입력해주세요");
-	            return;
-	        }
-	        if (screenContentOpenTime == null || screenContentOpenTime.length < 1) {
-	            alert("상영시작 시간을 입력해주세요");
-	            return;
-	        }
-	        if (screenContentEndTime == null || screenContentEndTime.length < 1) {
-	            alert("상영종료 시간을 입력해주세요");
-	            return;
-	        }
-	        if (ticketPrice == null || ticketPrice.length < 1) {
-	            alert("가격을 입력해 주세요");
-	            return;
-	        }
-	        if (!$.isNumeric(orderStock)) {
-	            alert(' 구매수 숫자만 입력이 가능합니다');
-	            return;
-	        }
-	        var previewTitle = $(".updateScreenContentModal input[name='previewTitle']").val();
-	        var previewOpenDate = $(".updateScreenContentModal input[name='previewOpenDate']").val();
-	        var previewOpenTime = $(".updateScreenContentModal input[name='previewOpenTime']").val();
-
-	        if (previewChecked == true) {
-
-	            if (previewTitle == null || previewTitle.length < 1) {
-	                alert("시사회 제목을 입력해 주세요");
-	                return;
-	            }
-	            if (previewOpenDate == null || previewOpenDate.length < 1) {
-	                alert("티켓 오픈 날짜를 입력해 주세요");
-	                return;
-	            }
-	            if (previewOpenTime == null || previewOpenTime.length < 1) {
-	                alert("티켓 오픈 시간을 입력해 주세요");
-	                return;
-	            }
-	            if (inviteActor == null || inviteActor.length < 1) {
-	                alert("초대배우를 입력해 주세요");
-	                return;
-	            }
-	        }
-
-	        if (previewChecked == true) {
-	            var previewFlag = "Y";
-	        } else {
-	            var previewFlag = "N";
-	        }
-	        $("input:hidden[name='screenOpenTime']").val(screenOpenTime);
-	        $("input:hidden[name='screenEndTime2']").val(screenEndTime);
-	        $("input:hidden[name='previewFlag']").val(previewFlag);
-	        $("input:hidden[name='ticketOpenDate']").val(ticketOpenDate);
-
+			orderStock = $(".updateScreenContentModal input[name='orderStock' ]").val();
+			paymentOption : $(".updateScreenContentModal input[name='paymentOption' ]").val();
+			paymentOption : $(".updateScreenContentModal input[name='tranCode' ]").val();
+			
 	        $.ajax({
-	            url : "/screen/json/updateScreenContent/",
+	            url : "/purchase/json/updatePurchase",
 	            method : 'POST',
+	            async : false,
+	            dataType : "json",
 	            headers : {
 	                "Accept" : "application/json",
 	                "Content-Type" : "application/json"
 	            },
 	            data : JSON.stringify({
-	                screenContentNo : screenContentNo,
-	                screenDate : screenDate,
-	                screenOpenTime : screenOpenTime,
-	                screenEndTime : screenEndTime,
-	                screenTheater : screenTheater,
-	                ticketPrice : ticketPrice,
-	                previewTitle : previewTitle,
-	                ticketOpenDate : ticketOpenDate,
-	                inviteActor : inviteActor,
-	                previewFlag : previewFlag,
-	                movie : {
-	                    movieNo : movieNo
-	                }
+					impId : $("#ImpId").val(),
+					receiverName : $('input[name="receiverName"]').val(),
+					receiverPhone1 : $('input[name="receiverPhone1"]').val(),
+					receiverPhone2 : $('input[name="receiverPhone2"]').val(),
+					receiverPhone3 : $('input[name="receiverPhone3"]').val(),
+					addrDlvy : $('input[name="addrDlvy"]').val(),
+					addrDlvyDetail : $('input[name="addrDlvyDetail"]').val(),
+					tranCode : $('input[name="tranCode"]').val(),
+/* 					orderStock : $('input[name="orderStock"]').val(), */
+						
 	            }),
-	            dataType : "text",
 	            success : function(JSONData, status) {
+	            	alert("성공"+JSONData.tranCode);
+					 
+ 	                $(".updateScreenContentModal input[name='receiverName' ]").val(JSONData.receiverName);
+	                $(".updateScreenContentModal input[name='receiverPhone1' ]").val(JSONData.receiverPhone1);
+	                $(".updateScreenContentModal input[name='receiverPhone2' ]").val(JSONData.receiverPhone2);
+	                $(".updateScreenContentModal input[name='receiverPhone3' ]").val(JSONData.receiverPhone3);
+	                $(".updateScreenContentModal input[name='addrDlvy' ]").val(JSONData.addrDlvy);
+	                $(".updateScreenContentModal input[name='addrDlvyDetail' ]").val(JSONData.addrDlvyDetail);
+	                $(".updateScreenContentModal input[name='tranCode' ]").val(JSONData.tranCode);
+ 	                /* $(".updateScreenContentModal input[name='orderStock' ]").val(JSONData.orderStock); */
 
-	                if (JSONData == -1) {
-	                    alert("상영시간이 중복되었습니다. 다시 선택해주세요");
-	                } else if (JSONData == -2) {
-	                    alert("이미 이영화에 시사회가 등록되어 있습니다.");
-	                } else if (JSONData == -3) {
-	                    alert('DB연결에 실패하였습니다.')
-	                } else {
-	                    alert("수정완료");
-	                    fncGetScreenContentList();
-	                    /*  funClearInputBox() */
-	                }
 	            }
 	        });
 
@@ -479,21 +428,31 @@
 	                $(".updateScreenContentModal input[name='addrDlvy' ]").val(JSONData.addrDlvy);
 	                $(".updateScreenContentModal input[name='addrDlvyDetail' ]").val(JSONData.addrDlvyDetail);
 	                $(".updateScreenContentModal input[name='orderRegDate' ]").val(JSONData.orderRegDate);
+	                $(".updateScreenContentModal input[name='tranCode' ]").val(JSONData.tranCode);
+	                $(".updateScreenContentModal input[name='impId' ]").val(JSONData.impId);
 
 	            },
 	        })
 
 	    }
 
-		
-        $(document).on("click", ".btn-link", function() {
+	
+	     
+/*         $(document).on("click", ".btn-link", function() {
         	ImpId = ($("#ImpId").val());
         	alert(ImpId);
         	fncGetPurchase();
         	
             $(".updateScreenContentModal").modal('show');
+        }); */
+        
+        $(document).on("click", ".btn-link", function() {
+        	ImpId = ($("#ImpId").val());
+        	fncGetPurchase();
+        	
+            $(".updateScreenContentModal").modal('show');
         });
-
+        
         $(".updateScreenContentModal").modal({
             autofocus : false,
             closable : false,
@@ -503,11 +462,14 @@
             },
             onDeny : function() {
                 /* funClearInputBox() */
-                window.location.reload()
+                window.location.reload();
             }
             
         });
 
+        $("#fix").on("click", function() {
+	    	 UpdatePurchase();
+      	 });
 	</script>
 <style>
 #body{ padding-top: 100px; }
@@ -781,6 +743,11 @@ input[readonly="readonly"], select[disabled="disabled"] {
 
 .col-md-6.col-sm-6{
 	color:#000000;
+}
+input[type=email], input[type=password], input[type=search], input[type=text] {
+    color: #000000;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 </style>
 </html>
