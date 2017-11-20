@@ -78,6 +78,9 @@ public class AlarmServiceImpl implements AlarmService {
 
 	ObjectMapper om = new ObjectMapper();
 
+	/**
+	 * 
+	 */
 	@Override
 	public String addCancelAlarm(Alarm alarm) {
 
@@ -204,6 +207,7 @@ public class AlarmServiceImpl implements AlarmService {
 			body.clear();	
 		}
 		
+		//booking의 경우 메세지 내용이 많아서 sms는 내용이 다 안나오기에 lms 설정
 		if(type.equals("booking")){
 			body.put("type", "lms");
 		}else{
@@ -323,6 +327,24 @@ public class AlarmServiceImpl implements AlarmService {
 		System.out.println(body);
 		
 		String response = restApiUtil.restApiResponse(header, body);
+		
+		//푸시 완료 후 알람 삭제를 위한 logic
+		if(type.equals("openAlarm") || type.equals("cancelAlarm")){
+			Alarm alarm = new Alarm();
+			ScreenContent screenContent = new ScreenContent();
+			screenContent.setScreenContentNo(Integer.parseInt(serialNo));
+			
+			alarm.setAlarmFlag("O");
+			alarm.setScreenContent(screenContent);
+			
+			if(type.equals("cancelAlarm")){
+				alarm.setAlarmSeatNo(alarmSeatNo);
+				alarm.setAlarmFlag("C");
+			}
+				
+			alarmDAO.deleteAfterPush(alarm);
+			
+		}
 		
 		return null;
 	}

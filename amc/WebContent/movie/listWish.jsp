@@ -115,7 +115,7 @@
 											}else{
 												all += 'movie'
 											}
-								all +=    ">'
+								all +=    '">'
 								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 								all +=    '</div>'
 								all += 		'<div class="alert alert-info jeju" role="alert">'

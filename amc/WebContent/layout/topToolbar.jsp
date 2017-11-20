@@ -555,10 +555,12 @@
 	                     </li>
 	                     </c:if>
                      </c:if>
+                     <c:if test="${!empty sessionScope.user}">
                      <li class="visible-xs hidden-sm hidden-md hidden-lg">
                      	<a href="#" class="btn--sign">[${sessionScope.user.userName}] 님&emsp;</a>
                      	<a href="/user/logoutUser" class="btn--sign">로그아웃</a> 
                      </li>
+                     </c:if>
                  </ul>
              </nav>
              
@@ -573,7 +575,7 @@
                        	MyPage
                    </a>
                      <ul class="auth__function jeju">
-                         <li class="myInfo myjeju"><a href="#" class="auth__function-item">내 정보 보기</a></li>
+                         <li class="myInfo"><a href="#" class="auth__function-item">내 정보 보기</a></li>
                          <li class="myBooking"><a href="#" class="auth__function-item">예매 목록</a></li>
                          <li class="myWish"><a href="#" class="auth__function-item">위시리스트</a></li>
                          <li class="myCancel"><a href="#" class="auth__function-item">취소표 알리미</a></li>

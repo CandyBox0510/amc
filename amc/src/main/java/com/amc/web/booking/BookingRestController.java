@@ -179,15 +179,37 @@ public class BookingRestController {
 			String qrUrl = "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=http://"+nodeServerIp+":8000/booking/getBooking?bookingNo="+impUid;
 			booking.setQrUrl(qrUrl);
 			
-			//1. ADD booking
-			System.out.println("insert하려는 booking : "+booking);
+			//1. ADD booking SPRING + ORACLE DB
+			System.out.println("◆ (1.1) addBooking start :: insert하려는 booking : "+booking);
 			bookingService.addBooking(booking);
+			
+			//1.2 ADD booking NODE + MONGO DB
+			System.out.println("◆ (1.2) addBooking node.js start ::");
+			String urlStr = "http://"+nodeServerIp+":52273/android_addBooking";
+			String body = "seatsNo="+bookingSeatNo+"&screenNo="+screenContentNo;
+			
+			try {
+				int responseCode = HttpRequestToNode.httpRequest(urlStr, body);
+				if(responseCode ==200){
+					System.out.println("몽고DB에서 예매확정을 성공하였습니다.");
+					//return 1;
+				}else{
+					
+					System.out.println("몽고DB에서 예매확정을 실패하였습니다.");
+					//return -1;
+				}				
+			} catch (Exception e) {
+				//node.js에서 response코드를 적절히 보내지 못해서 생기는 문제일 경우가 있다. Refactoring필요.
+				System.out.println("몽고DB에서 적절한 응답을 받지 못함");
+				//return -1;
+			}
 			
 			//2. GET booking
 			booking = bookingService.getBookingByInfo(booking);
-			System.out.println("add 후 no까지 포함된 booking : " + booking);
+			System.out.println("◆ (2) getBooking start :: add 후 no까지 포함된 booking : " + booking);
 			
 			//3. ADD statistic
+			System.out.println("◆ (3) addStatictic start");
 			User user = userService.getUser(userId);
 			bookingService.updateStatistic(user, booking);
 			

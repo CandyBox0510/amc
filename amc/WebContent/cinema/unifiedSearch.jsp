@@ -148,13 +148,13 @@
 						<c:set var="i" value="${ i+1 }" />
 						<div class="col-xs-6 col-sm-4 col-md-3 pp">
 	                        <div class="gallery-item">
-	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search">
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=preview">
 	                                <img alt='' src="${screenContent.movie.postUrl }" align="middle" width="100%"  height="290px">
 	                            </a>
 	                            <div class="alert alert-danger"><strong>티켓 오픈 일자</strong><br/> ${screenContent.ticketOpenDate }
 	                            	<span class="label label-danger"></span>
 	                            </div>
-	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=search" class="gallery-item__descript gallery-item--video-link">
+	                            <a href="/movie/getMovie?movieNo=${screenContent.movie.movieNo}&menu=preview" class="gallery-item__descript gallery-item--video-link">
 	                                <span class="gallery-item__icon"><i class="fa fa-video-camera"></i></span>
 	                                <p class="gallery-item__name jeju">${screenContent.previewTitle }</p>
 	                            </a>

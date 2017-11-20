@@ -67,7 +67,7 @@
 								<th align="left">배송지</th>
 								<th align="left">전화번호</th>
 								<th align="left">배송현황</th>
-								<th align="left">정보수정</th>
+								<th align="left">비고</th>
 							</tr>
 						</thead>
 			       
@@ -291,14 +291,14 @@
 			
 			$('.form-group .form-control').addClass('hidden');
 			
-			$('.btn-primary:contains("정보수정")').attr('disabled','disabled');
+			$('.btn-primary:contains("비고")').attr('disabled','disabled');
 			
 			$('div.form-group[title="수정하려면 클릭하세요"] p').removeClass('hidden').unbind('click').bind('click',function(){
 				if($('input:hidden[name="tranCode"]').val() == '1'){
 					$(this).addClass('hidden');
 					$(this).parent().find('.form-control').removeClass('hidden');
-					if($('.btn-primary:contains("정보수정")').attr('disabled')=='disabled'){
-						$('.btn-primary:contains("정보수정")').removeAttr('disabled');
+					if($('.btn-primary:contains("비고")').attr('disabled')=='disabled'){
+						$('.btn-primary:contains("비고")').removeAttr('disabled');
 					}
 				}else if($('input:hidden[name="tranCode"]').val() == '2'){
 					alert('배송 중인 상품은 정보를 수정할 수 없습니다!');
@@ -315,7 +315,7 @@
 			
 			init();
 			
-			$('.btn-primary:contains("정보수정")').bind('click',function(){
+			$('.btn-primary:contains("비고")').bind('click',function(){
 				$.ajax({
 					url : '/purchase/json/updatePurchase',
 					method : 'post',

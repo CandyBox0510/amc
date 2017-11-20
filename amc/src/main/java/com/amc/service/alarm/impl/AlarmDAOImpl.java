@@ -66,6 +66,12 @@ public class AlarmDAOImpl implements AlarmDAO {
 	public int deleteOpenAlarm(Alarm alarm) {
 		return sqlSession.delete("AlarmMapper.deleteAlarm", alarm);
 	}
+	
+
+	@Override
+	public int deleteAfterPush(Alarm alarm) {
+		return sqlSession.delete("AlarmMapper.deleteAfterPush",alarm);
+	}
 
 	@Override
 	public String checkOpenAlarm(Alarm alarm) {

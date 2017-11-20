@@ -12,15 +12,51 @@
     <meta name="author" content="Gozha.net">
 	 
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-		
-	<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>		
-	<!--  font from googleApi -->
-	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+
 	<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">	
+	
+	<!--  perhaps, modal? -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.css">
+	
+	
+
 		
   <script type="text/javascript">
+  
+   //이메일이나 문자로 받은 QR코드를 통해 예매 상세정보페이지에 접근할 때는  예매한회원으로 로그인되어있어야한다.
+	$(document).ready(function(e){
+		//alert( ${sessionScope.user.role});
+		 //로그인 여부 체크
+		if( ${sessionScope.user==null} ){
+	        $('.overlay').removeClass('close').addClass('open');
+
+		}else{
+		 
+			if( ${sessionScope.user.userId!= booking.userId} && ${sessionScope.user.role==admin}  ){
+		        self.location="/";
+				
+			}else{
+				$("#hideInformation").removeClass("hidden-lg");
+				$("#hideInformation").removeClass("hidden-xs");
+				$("#hideInformation").removeClass("hidden-sm");
+				$("#hideInformation").removeClass("hidden-md");
+			}
+		} 
+		 
+		 //로그인모달창에서 닫기를 눌렀을 경우 메인으로 이동한다.
+		$('.overlay-close').click(function (e) {
+	        /*e.preventDefault;
+	        $('.overlay').removeClass('open').addClass('close');
+
+	        setTimeout(function(){
+	            $('.overlay').removeClass('close');},
+	           500);*/
+	         self.location="/";
+	    });
+		 
+	});
+	
 	$( function() {
 		
 		$("#deleteBooking").on("click" , function() {
@@ -57,16 +93,14 @@
 	});
 	
 	function fncSendSMS(){
-		var phone = $("#email").val().trim();
 		var bookingNo = "${booking.bookingNo}";
-		alert("문자를 보낼 번호 : "+phone+", 예매번호 : "+bookingNo);//confirm으로 변경하기
 		
 		$.ajax(
 				{
-					url : "/booking/json/sendSMSQR?bookingNo="+bookingNo+"&phone="+phone,
+					url : "/booking/json/sendSMSQR?bookingNo="+bookingNo+"&phone=000",
 					method : "GET" ,
 					success : function(JSONData, status) {								
-                       alert('이메일로  QR코드를 전송했습니다.');             
+                       alert('회원님의 휴대폰으로 QR코드를 전송했습니다.');             
 					}
 			  });//end of ajax 
 
@@ -103,6 +137,7 @@
 	function modalOut(){
 		$('#myModal').modal('hide');	
 	}
+	
 	
 	
 
@@ -207,6 +242,8 @@
 			<!-- ToolBar End /////////////////////////////////////-->
 		</header>
    		<br><br><br>
+   		
+   	
 	<div class="container">
 	            <!-- Promo boxes -->
             <div class="content-wrapper">
@@ -226,7 +263,8 @@
                   </div>
                 </div>
                  -->
-                
+    
+   	       
                 <aside class="col-sm-3">
                         <div class="sitebar first-banner--left">
                         	<div class="banner-wrap first-banner--left">
@@ -239,10 +277,6 @@
 
                              <div class="banner-wrap">
                                 <img alt='banner' src="../images/uploadFiles/${bestProductList[1].prodImage}">
-                            </div>
-
-                             <div class="banner-wrap banner-wrap--last">
-                                <img alt='banner' src="../images/uploadFiles/${bestProductList[2].prodImage}">
                             </div>
 
                             <div class="promo marginb-sm">
@@ -258,9 +292,10 @@
                         </div>
                     </aside>
                 
+    <!-- 로그인되어있지 않을 시에는 예매상세내역을 확인할 수 없음 -->
+   	<div class="hidden-xs hidden-sm hidden-md hidden-lg" id="hideInformation">         
                 
-                
-                
+       
                 <div class="col-sm-9">
                   <div class="promo promo--short">
                       <img class="promo__images" alt='' src="/images/tickets.png">
@@ -271,14 +306,15 @@
                   <div class="promo promo--info">
                       <div class="promo__head"><!-- Join <br> --><span class="abc">${booking.movie.movieNm}</span></div>
                       <div class="promo__content">
-                          <p class="content__text">
-                          	${booking.screenContent.previewTitle}&nbsp;영화제목 : ${booking.movie.movieNm}&nbsp;&nbsp;&nbsp;&nbsp;
+                          <p class="content__text abc">
+                          	${booking.screenContent.previewTitle}&nbsp;영화제목 : ${booking.movie.movieNm}&nbsp;&nbsp;
                           	&nbsp;&nbsp;상영일자 : ${booking.screenContent.screenOpenTime}&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                          	&nbsp;상영관 : ${booking.screenContent.screenTheater}상영관&nbsp;&nbsp;&nbsp;&nbsp;좌석번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;<br>
                           	&nbsp;예매번호 : ${booking.bookingNo}&nbsp;&nbsp;&nbsp;&nbsp;
                           	예매일시 : ${booking.bookingRegDate}&nbsp;&nbsp;&nbsp;&nbsp;
                           	예매가격 : ${booking.totalTicketPrice}원&nbsp;&nbsp;&nbsp;&nbsp;
-                          	좌석번호 : ${booking.bookingSeatNo}&nbsp;&nbsp;&nbsp;&nbsp;	
-                          	<br>
+                          	
+                          	<br><br>
                           </p>
                                             
                       </div>
@@ -289,14 +325,14 @@
 			                   <div class="contact-info__field row"  style="width:100%">
 			                   	<div class="col-sm-7" >
 			                        <input type='text' id="email" name='user-mail' value="" placeholder='QR코드를 받을 이메일주소' 
-			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
+			                        class="form__mail abc" style="width:100%; color:black; font-size:17.3px" autofocus autocomplete="off" required >
 			                    </div><div class="col-sm-5">		                     
 			                        <a href="#" id="sendQR" class="btn btn-md btn--warning btn-wider btn--shine abc">이메일 QR전송</a>
 							   </div>
 			                    </div> 	
 			                     <div class="contact-info__field row"  style="width:100%">
 			                   	<div class="col-sm-7" >
-			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='회원이신 경우 회원가입시에 입력하신 번호로 보내드립니다.' 
+			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='회원님의 등록된 번호로 보내드립니다.' 
 			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
 			                    </div><div class="col-sm-5">		                     
 			                         <a href="#" id="sendSMS" class="btn btn-md btn--warning btn-wider btn--shine abc">문자&nbsp;&nbsp;&nbsp;&nbsp;QR전송</a>						   
@@ -310,68 +346,73 @@
                 	
                   </div>
                 </div>
-                
-                <!--  모달 -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-body">
-								<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-								<h4 class="modal-title abc" id="myModalLabel"><span id="sendingAdress"></span>로 QR코드를 발송중입니다.</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-                <!-- 모달 -->
-                
-                
-                
-            </div>
-		<!--  end of promo box -->
-	
-	<!--  yena made -->
-	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
-	<!--  yena made -->
+      
+   <!--  모달 -->          
+	<div class="ui  tiny modal addScreenContentModal "  id="myModal">
 
-		<jsp:include page="/layout/bottomToolbar.jsp" />
+		<div class="modal_message abc"><span id="sendingAdress"></span>로 QR코드를 보내는 중입니다.</div>
+
+	</div>
+	<!--  모달 THE END -->
+                
+                
+     </div><!-- end of hidden  -->	          
+     </div><!--  end of promo box -->
+	
+	
+	<input type="hidden" name="bookingNo" value="${booking.bookingNo}">
+
+
+		
 		<jsp:include page="/layout/loginModal.jsp" />
 
 </div>
+<jsp:include page="/layout/bottomToolbar.jsp" />
 
 </body>
-	<!--  for modal -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-
+<!-- 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.js"></script>
+	
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<!--  end -->
+	 end
 	
-	<!-- JavaScript-->
-	<script src="/js/external/modernizr.custom.js"></script>
-	
-	<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
 
-    <!-- jQuery UI -->
-    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!-- Bootstrap 3--> 
+    Bootstrap 3 
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
-    <!-- Mobile menu -->
+    Mobile menu
     <script src="/js/jquery.mobile.menu.js"></script>
-     <!-- Select -->
-    <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+     Select
+    <script src="/js/external/jquery.selectbox-0.2.min.js"></script> -->
+    
+    
+<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+<!-- jQuery UI -->
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-    <!-- Custom -->
-    <script src="/js/custom.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>	
+
+
+<script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
+	<!-- Custom -->
+<script src="/js/custom.js"></script>
+<script src="/js/external/modernizr.custom.js"></script>
+
 	<script type="text/javascript">
       $(document).ready(function() {
            if($('html').height() < window.outerHeight){
           	$('html').css('height', '100%');
           } 
       });
+
 </script>
 
 
@@ -381,8 +422,20 @@
   height: auto;
 } 
 .abc{
-	  font-family: 'Hanna', sans-serif; 
+	  font-family: 'Jeju Gothic', sans-serif; 
 	 }
+.modal_message{
+	
+	  width:700px; 
+	  height: 139px;
+	  -webkit-border-radius: 3px 0 0 3px;
+	  -moz-border-radius: 3px 0 0 3px;
+	  border-radius: 3px 0 0 3px;
+	  position: absolute;
+	  text-align: center;
+	  font-size: 20px;
+	  color: #F8F8FF;
+}
 </style>
 </html>
 
