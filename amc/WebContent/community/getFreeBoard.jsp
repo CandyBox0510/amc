@@ -396,12 +396,12 @@
               		'</span>'
               		if(userId == val.user.userId || role == 'admin'){
               			displayValue += '<span class="comment__update" >'+
-                   		'<i class="fa fa-eraser"></i> '+
+                   		'<i class="fa fa-eraser fa-2x"></i> '+
                    		'<input type="hidden" id="commentNo" value="'+val.commentNo+'">'+
                     	'<input type="hidden" id="comment" value="'+val.commentContent+'">'+
                      '</span>'+
                      '<span class="comment__delete" >'+
-                     '<i class="fa fa-times"></i>'+
+                     '<i class="fa fa-times fa-2x"></i>'+
                    	'<input type="hidden" id="commentNo" value="'+val.commentNo+'">'+
                      '</span>'
               		}
@@ -793,6 +793,10 @@ hr {
 
 #watchlist:hover {
 	background-color: #dbdee1;
+}
+
+.fa-2x {
+    font-size: 1.5em;
 }
 </style>
 
