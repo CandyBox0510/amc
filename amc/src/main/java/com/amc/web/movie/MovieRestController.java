@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -192,6 +195,7 @@ public class MovieRestController {
 		String watchGradeNm = "";
 		String movieName = "";
 		String genreNms = "";
+		String openDate = "";
 		String postUrl = "";
 		// String movieEndDate = "";
 		String syonpsis = "";
@@ -204,14 +208,16 @@ public class MovieRestController {
 			// movieName = itemList[1];
 			movieContry = itemList[2];
 			// movieEndDate = itemList[3];
-			syonpsis = itemList[3];
-			trailer = itemList[4];
+			openDate = itemList[3];
+			syonpsis = itemList[4];
+			trailer = itemList[5];
 		}
 		System.out.println("movieName : " + movieName);
 		System.out.println("movieCd : " + movieCd);
 		// System.out.println("movieName : " + movieName);
 		System.out.println("movieContry : " + movieContry);
-		// System.out.println("movieEndDate : " + movieEndDate);
+		
+		System.out.println("openDate : " + openDate);
 		System.out.println("syonpsis : " + syonpsis);
 		System.out.println("trailer : " + trailer);
 
@@ -219,7 +225,7 @@ public class MovieRestController {
 
 		Movie movie = new Movie();
 		movie.setMovieCd(movieCd);
-		// movie.setEndDt(movieEndDate);
+		movie.setOpenDt(openDate);
 		movie.setSynopsis(syonpsis);
 		movie.setTrailer(trailer);
 
@@ -1239,10 +1245,6 @@ public class MovieRestController {
 		System.out.println("4. jsonObject   -> " + jsonObject);
 		// JSONObject json = (JSONObject)jsonObject.get("documents");
 		JSONArray array = (JSONArray) jsonObject.get("documents");
-		/*
-		 * JSONObject data = null; JSONArray jsonArray = new JSONArray();
-		 * JSONObject response = new JSONObject();
-		 */
 
 		JSONObject data = null;
 		JSONArray jsonArray = new JSONArray();

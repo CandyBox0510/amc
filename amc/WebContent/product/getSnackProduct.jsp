@@ -8,7 +8,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.5/sweetalert2.all.js"></script>
+   <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+        <!--   Sweetalert2 CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+     
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+		<!--아임포트 CDN -->
+		<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -32,12 +55,14 @@
 			<div class="col-md-9" role="main">
 				<ul>	
 					<li>
+					<h1 class="page-heading"> 
 						<c:if test="${param.menu=='search'}">
 							상품상세정보
 						</c:if>
 						<c:if test="${param.menu=='manage'}">
 							수정된 정보
 						</c:if>
+					</h1> 
 					</li>
 				</ul>
 			
@@ -94,7 +119,6 @@
 							</div>
 						</div>
 					</div>
-				
 					<!-- Progress bar -->
 	                <div class="col-sm-4">
 	                    <div class="progress">
@@ -115,8 +139,33 @@
 </div>
 
 
-<!-- Form element -->
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="../js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script> 
+        <!-- Inview -->
+        <!-- <script src="js/external/jquery.inview.js"></script> -->
+        <script src="../js/external/jquery.waypoints.min.js"></script>
+        <script src="../js/external/inview.min.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+        <!-- Mobile menu -->
+        <script src="../js/jquery.mobile.menu.js"></script>
+        <!-- Select -->
+        <script src="../js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Form element -->
         <script src="../js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="../js/form.js"></script>
+        <!-- Custom -->
+        <script src="../js/custom.js"></script>
+          	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+
 
 </body>
 
@@ -187,7 +236,7 @@
 		
 		
 
-    	//6. Progressbar
+     	//6. Progressbar
   		//Count function for progressbar
   		function init_progressBar(duration) {
              $('.progress').each(function() {
@@ -203,12 +252,12 @@
              });
           }
 
-//           inview progress bars
-//            $('.progress').one('inview', function (event, visible) {
-//                if (visible == true) {
+/*            inview progress bars
+            $('.progress').one('inview', function (event, visible) {
+                if (visible == true) {
                      
-//                }
-//            });
+                }
+            }); */
 
           var inview = new Waypoint.Inview({
             element: $('.progress')[0],
@@ -216,7 +265,7 @@
               init_progressBar(2000);
             }
           });
-	</script>
+ 	</script>
 
 <style type="text/css">
  	#body{ padding-top: 0px; }
@@ -279,9 +328,10 @@ button:-moz-focusring,
 
 .ui.modal {
   display: none;
-  position: fixed;
+  position: relative;
+  bottom:300px;
   z-index: 1001;
-  top: 00%;
+  top: 50%;
   left: 50%;
   text-align: left;
   background: #000000;
@@ -309,7 +359,7 @@ progress {
   /* 2 */
 }
 .progress__bar {
-  margin-bottm:30px;
+  /* margin-bottm:30px; */
   /* height: 15px; */
   padding: 1px;
   -webkit-border-radius: 3px;
@@ -317,7 +367,18 @@ progress {
   border-radius: 3px;
   background-color: #4c4145;
 }
-
-
+.progress .progress__info {
+  font-weight: bold;
+  margin-bottom: 0px;
+    margin-top: 0px;
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #ff96f3;
+    border-color: #ff96f3;
+    position: relative;
+    left: 200px;
+}
+ 
 </style>
 </html>

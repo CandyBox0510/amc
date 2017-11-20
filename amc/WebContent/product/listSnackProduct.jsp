@@ -25,10 +25,8 @@
     <!-- Stylesheets -->
         <!--   Sweetalert2 CDN  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.0/sweetalert2.all.min.js"></script>
-        <!--   semantic UI  / 모달창-->
-        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
-       	<script src="../semantic/semantic.min.js"></script>
-       	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+     
         <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -58,7 +56,7 @@
         	<!-- Search bar -->
         	<div class="col-sm-12">
                 <h2 class="page-heading">${param.menu eq 'search'? "상품 목록조회" : "상품관리" }</h2>
-                    <div class="tags-area tags-area--thin">
+                    <div>
                     	<div class="container container--add">
                    			<div class="col-sm-6 text-left">
                    				<p class="countPage">전체 ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage } 페이지</p>
@@ -77,7 +75,7 @@
 		      				</c:if> 
 				            	
  			            	<div class="col-sm-6 text-right">
-				                <form id='search-form' method='get' class="search">
+				                <form id='search-form'>
 				                    <input type="text" class="search__field" placeholder="검색어입력" name="searchKeyword" value="${search.searchKeyword}" onkeypress="if(event.keyCode==13) { fncGetPageList(1); return false;}"/>
 					                    <select name="searchCondition" id="movie-search-sort" class="select__sort" tabindex="0">
 					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
@@ -105,12 +103,6 @@
 		                    </div> -->
 		              </div>
  
-					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
-					  <i class="close icon"></i>
-					    <div class="content" ></div>
-					</div>  
-		
 					 <div class="cinema-wrap">
 		            	<div class="row">
 					 		<c:set var="i" value="0" />
@@ -119,7 +111,7 @@
 		                 
 		                            <div class="col-xs-6 col-sm-3 cinema-item">
 		                                <div class="cinema">
-		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}" class="cinema__images info-modal-link">
+		                                    <a href="/product/getGoodsProduct?prodNo=${product.prodNo}&menu=${param.menu}&prodMenu=${param.menu}" class="cinema__images info-modal-link">
 		                                    <!-- //모달 ui를 클래스에 넣어줌 -->
 		                                        <img id="poster"alt='' src="../images/uploadFiles/${product.prodImage }" >
 		                                        <input type="hidden" id="prodNo" value="${product.prodNo}"/>
@@ -144,7 +136,7 @@
  				</div>
  					
  					<!-- 모달 컨텐츠가 나오는 부분 인건가 -->
-					<div class="ui thin info modal"> 
+					<div class="ui thin info modal" id="snackmodal"> 
 					  <i class="close icon"></i>
 					    <div class="content" ></div>
 					</div>  
@@ -195,6 +187,7 @@
         <script src="../js/form.js"></script>
         <!-- Custom -->
         <script src="../js/custom.js"></script>
+          	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
 </body>
 <script type="text/javascript">
 			   
@@ -279,7 +272,27 @@
 
 </script>
 <style type="text/css">
- 	
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.page-heading {
+	font-family: 'Jeju Gothic', sans-serif;
+	margin-top: 100px
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #582cb9;
+    border-color: #582cb9;
+    position: relative;
+    left: 80px;
+}
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #be41e8;
+  border-color: #be41e8;
+}
+ 	 
  	#body{ padding-top: 100px; }
  	.countPage {
 	  	font-size: 13px;
@@ -327,6 +340,8 @@ progress {
   /* 2 */
 }
 .progress__bar {
+position:relative;
+bottom: 30px;
   margin-bottm:30px;
   /* height: 15px; */
   padding: 1px;
@@ -337,16 +352,18 @@ progress {
 }
 
 .progress .progress__info {
+position:relative;
+bottom: 30px;
   font-weight: bold;
   margin-bottom: 0px;
     margin-top: 0px;
 }
 
-.ui.modal {
+ #goodsmodal{
   display: fade in;
   position: fixed;
+  bottom : 700px;
   z-index: 1001;
-  top: 0%;
   left: 50%;
   text-align: center;
   vertical-align: top;
@@ -362,5 +379,57 @@ progress {
   user-select: text;
   will-change: top, left, margin, transform, opacity;
 }
+.col-xs-7 {
+    position: relative;
+    width: 58.33333333%;
+    font-size: 13px;
+    left: 50px;
+}
+
+p {
+	font: 'Jeju Gothic', sans-serif;
+    font-size: 13px;
+    line-height: 28px;
+    color: #4c4145;
+    margin-bottom: 28px;
+}
+#search-form {
+	display: block;
+	margin-top: 1em;
+}
+.search__button {
+	padding: 5px 5px 5px 5px;
+}
+
+input, select {
+	height: 30px;
+	width: auto;
+	border: none;
+	box-shadow: none;
+	border: 1px solid #dbdee1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	font-size: 13px;
+	color: #b4b1b2;
+}
+
+select {
+	font-family: 'Jeju Gothic', sans-serif;
+}
+
+option {
+	width: 140px;
+	top: 37px !important;
+	border: none;
+	padding: 14px 7px;
+	z-index: 23;
+	background-color: #4c4145;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+}
+
+ 
 </style>
 </html>

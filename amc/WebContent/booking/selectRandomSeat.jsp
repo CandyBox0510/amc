@@ -21,7 +21,6 @@
 
 	<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  	<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 	
 	<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
@@ -68,10 +67,10 @@ function kakaoPay(){
 			    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 			    		type: 'GET',
 			    	}).done(function(data) {
-			    		alert("data : " + data);
+			    		//alert("data : " + data);
 			    		var payStatusCheck = (data.split(','))[0];
 			    		var amountCheck = (data.split(','))[1];
-			    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
+			    		//alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
 			    		
 			    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 			    		if (  payStatusCheck == 'paid' && amountCheck == $("input[name='totalTicketPrice']").val()) {
@@ -84,7 +83,7 @@ function kakaoPay(){
 			    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
 			    			$("input[name='impId']").val(impUid);
 			    			
-			    			alert("AJAX 후 결제완료 후 "+"\n"+msg);			    			
+			    			//alert("AJAX 후 결제완료 후 "+"\n"+msg);			    			
 			    			
 			    			confirmSeat();
 			    			addBooking();
@@ -301,7 +300,7 @@ function kakaoPay(){
 				<div class="category category--popular marginb-sm">
                       <h3 class="category__title">Selected<br><span class="title-edition">Ticket Info</span></h3>
                       <ul>
-                          <li><a href="#" class="category__item abc">Title: ${movie.movieNm} ${screenContent.previewTitle}</a></li>
+                          <li><a href="#" class="category__item abc" style="line-height:1.3em">Title: ${movie.movieNm} ${screenContent.previewTitle}</a></li>
                           <li><a href="#" class="category__item abc">Tickets:<span id="headCount"></span></a></li>
                           <li><a href="#" class="category__item abc">Seats: <span id="seatNo"></span></a></li>
                           <li><a href="#" class="category__item abc">Theater: ${screenContent.screenTheater}상영관</a></li>
@@ -381,7 +380,7 @@ $(document).ready(function() {
 		-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		-moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.16), inset 0 2px rgba(255, 255, 255, 0.2);
-		font: 18px 'Hanna';
+		font: 18px 'Jeju Gothic';
 		text-transform: uppercase;
 		-webkit-transition: 0.3s;
 		-o-transition: 0.3s;

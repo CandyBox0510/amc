@@ -6,7 +6,7 @@
 <head>
 	<!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>AMovie - (Preview)Booking step 1</title>
+        <title>시사회선택하기</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -16,14 +16,13 @@
 	
 		<!--  ///////////////////////// Sweetalert CDN ////////////////////////// -->
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 		<link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
 		
   <script type="text/javascript">
 //타이머셋팅
-	var ticketOpenDate="";
-  function dpTime(){
-  	
+  var ticketOpenDate="";
+  var runCount;
+  function dpTime(){  	
   	
   	console.log("open : "+ticketOpenDate);
   	var templist = ticketOpenDate.split('.');
@@ -80,6 +79,15 @@
     		  document.getElementById("dpTime").innerHTML =days+ "일 " + hours + ":" + minutes + ":" + seconds;  
     	  }		
       }
+      
+     /*  if(minutes < 10){ */
+	      if(seconds%2==0){
+	    	  console.log('ㅁ');
+	    	  $("#dpTime").css("color","#ff0000");
+	      }else{
+	    	  $("#dpTime").css("color","#ffffff");
+	      }
+      /* } */
   }
   
   
@@ -92,6 +100,12 @@
 			$(".item").eq(1).html("");
 			$(".item").eq(2).html("");
 			$(".item").eq(0).html("&nbsp;&nbsp;"+movieName);
+			
+			$("#gotoSeat").addClass("disabled");
+	      	$("#randomSeat").addClass("disabled");
+	      	clearInterval(runCount);
+	      	$("#dpTime").html("");
+	      	//ticketOpenDate  = '0,0';
 
 			var flag = $("input:hidden[name='flag']").val();
 			
@@ -181,7 +195,7 @@
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
 		
-		setInterval("dpTime();",1000);
+		runCount = setInterval("dpTime();",1000);
 	});
 		
 	
@@ -349,7 +363,7 @@
 						<input type="hidden" class="item"></input>
 					</span>
 				</div >
-				<div class="row abc" style="padding:10px;">
+				<div class="row abc important" style="padding:10px;">
 					<strong>티켓 오픈까지 남은시간 : &nbsp; </strong>
                     <span class="choosen-area">
                     	<span id="dpTime"></span>
@@ -493,8 +507,11 @@ a.disabled {
 
 }
 .abc{
-  /*font-family: 'Hanna', sans-serif;*/
   font-family: 'Jeju Gothic', sans-serif; 
 }
+.important{
+	font-size: 29px; 
+}
+
 </style>
 </html>

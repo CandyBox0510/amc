@@ -38,7 +38,9 @@
   	</insert>
   		
   	<select id="getBooking" parameterType="string" resultMap="bookingSelectMap" >
-  		SELECT b.*, m.movie_title, s.screen_date, s.screen_opentime, s.preview_flag, s.preview_title, s.invite_actor 
+  		SELECT b.booking_no, b.imp_id, b.user_id, b.screencontent_no,  b.head_count, b.total_ticketprice, b.bookingseat_no, b.qr_url, m.movie_title, 
+  				s.screen_date, TO_CHAR(s.screen_opentime,'YYYY/MM/DD HH24:MI') as screen_opentime, 
+  				TO_CHAR(b.booking_regdate,'YYYY/MM/DD HH24:MI') as booking_regdate, s.screen_theater, s.preview_flag, s.preview_title, s.invite_actor 
 		FROM booking b, screencontent s, movie m
 		WHERE b.booking_no = #{value}
  		AND b.screencontent_no = s. screencontent_no 
@@ -54,7 +56,9 @@
   	</select>
   	
   	<sql id="bookingList">
-  	 SELECT	b.*, m.movie_title, m.movie_no, s.screen_date, TO_CHAR(s.screen_opentime,'YYYY/MM/DD HH24:MI'), s.preview_flag, s.preview_title, s.invite_actor 
+  	 SELECT	b.booking_no, b.imp_id, b.user_id, b.screencontent_no, TO_CHAR(b.booking_regdate,'YYYY/MM/DD HH24:MI') as booking_regdate,
+  	  b.head_count, b.total_ticketprice, b.bookingseat_no, b.qr_url,
+  	  m.movie_title, m.movie_no, s.screen_date, TO_CHAR(s.screen_opentime,'YYYY/MM/DD HH24:MI') as screen_opentime, s.preview_flag, s.preview_title, s.invite_actor 
 		FROM booking b, screencontent s, movie m
   		<where>
   			b.screencontent_no = s.screencontent_no
