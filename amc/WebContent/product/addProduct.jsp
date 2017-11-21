@@ -264,8 +264,8 @@
 					contentType:false,
 					processData:false,
 					success : function(){
-						window.setTimeout(modalOut,4000);
-						window.setTimeout(sendForm,4000);						
+						window.setTimeout(modalOut,5000);
+						window.setTimeout(sendForm,5000);						
 					},
 					error : function(jqXHR, status, error){
 						modalOut();
@@ -339,7 +339,7 @@
   		}
 	 #body {
 	/* background-color: #EDEDED; */
-	background-color: #e0e0e0;
+	background-color: #ffffff;
 	margin-top: 100px;
 	margin-bottom: 5px;
 	padding-top: -50px;

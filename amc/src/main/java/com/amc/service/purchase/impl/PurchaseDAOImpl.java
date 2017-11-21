@@ -30,10 +30,8 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 
 	@Override
 	public void addPurchase(Purchase purchase) throws Exception {
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2"+purchase);
 		sqlSession.insert("PurchaseMapper.addPurchase", purchase);
 		for(int i=1;i<purchase.getOrderStock();i++){
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"+purchase);
 			sqlSession.insert("PurchaseMapper.addPurchaseCount", purchase);
 		}
 	}
@@ -45,13 +43,9 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 
 	@Override
 	public Map<String, Object> getPurchaseList(Search search) throws Exception {
-		System.out.println("purchaseDAOImpl 의 getPurchaseList 메소드의 search :"+search);
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		map.put("totalCount", sqlSession.selectOne("PurchaseMapper.getTotalCount", search));
-		System.out.println("::::: getTotalCount return 값 :"+map);
 		map.put("list", sqlSession.selectList("PurchaseMapper.getPurchaseList", search));
-		System.out.println("purchaseDAOImpl 의 getPurchaseList 메소드의 map :"+ map);
 		return map;
 	}
 

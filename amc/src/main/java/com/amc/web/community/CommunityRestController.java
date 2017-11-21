@@ -23,7 +23,7 @@ public class CommunityRestController {
 	@Autowired
 	@Qualifier("communityServiceImpl")
 	private CommunityService communityService;
-	
+
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -31,9 +31,7 @@ public class CommunityRestController {
 	@Value("#{commonProperties['pageSize']}")
 	// @Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
-	
-	
-	
+
 	// 해림 추가
 	@RequestMapping(value = "json/addComment", method = RequestMethod.POST)
 	public void addComment(@RequestBody Comment comment) {
@@ -45,23 +43,7 @@ public class CommunityRestController {
 		/// screenService.addScreenContent(screenContent);
 		System.out.println("communityRestController addComment :: POST 끝.....");
 
-
 	};
-
-	/*// 해림 추가
-	@RequestMapping(value = "json/getMovieComment/{movieCommentNo}", method = RequestMethod.GET)
-	public MovieComment getMovieComment(@PathVariable int movieCommentNo) {
-
-		System.out.println("movieRestController의 getMovieComment시작 ");
-
-		System.out.println("1.movieCommentNo ==> " + movieCommentNo);
-
-		/// screenService.addScreenContent(screenContent);
-		System.out.println("screen/json/getMovieComment :: POST 끝.....");
-
-		return movieService.getMovieComment(movieCommentNo);
-
-	};*/
 
 	// 해림 추가
 	@RequestMapping(value = "json/updateComment", method = RequestMethod.POST)
@@ -74,8 +56,6 @@ public class CommunityRestController {
 		/// screenService.addScreenContent(screenContent);
 		System.out.println("communityRestController updateComment :: POST 끝.....");
 
-		
-
 	};
 
 	// 해림 추가
@@ -85,58 +65,49 @@ public class CommunityRestController {
 		System.out.println("communityRestController의 deleteComment시작 ");
 
 		System.out.println("1.commentNo ==> " + commentNo);
-		int deleteComment = communityService.deleteComment(commentNo);	
+		int deleteComment = communityService.deleteComment(commentNo);
 		/// screenService.addScreenContent(screenContent);
 		System.out.println(" communityRestController deleteComment :: POST 끝.....");
-		System.out.println(communityService.deleteComment(commentNo)+"+++++++++++++");
-		return deleteComment;	
-		
+		System.out.println(communityService.deleteComment(commentNo) + "+++++++++++++");
+		return deleteComment;
 
 	};
-	
+
 	// 해림 추가
-@RequestMapping(value = "json/getCommentList/{freeBoardNo}")
-	public List<Comment> getCommentList(@ModelAttribute("search") Search search, @PathVariable int freeBoardNo) throws Exception {
+	@RequestMapping(value = "json/getCommentList/{freeBoardNo}")
+	public List<Comment> getCommentList(@ModelAttribute("search") Search search, @PathVariable int freeBoardNo)
+			throws Exception {
 		System.out.println("communityRestController의 getCommentList시작 ");
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		System.out.println("???????????????????????????????????????????????? " +search.getStartRowNum());
+		System.out.println("???????????????????????????????????????????????? " + search.getStartRowNum());
 		if (search.getStartRowNum() == 2) {
 			search.setStartRowNum(2);
-		}else if (search.getStartRowNum() == 1) {
+		} else if (search.getStartRowNum() == 1) {
 			search.setStartRowNum(2);
-		}else{
+		} else {
 			search.setStartRowNum(0);
 		}
-		
-		
 
 		search.setPageSize(pageSize);
 
-		System.out.println("1. search ==> "+ search);
-		System.out.println("2. freeBoardNo ==> "+ freeBoardNo);
-		
+		System.out.println("1. search ==> " + search);
+		System.out.println("2. freeBoardNo ==> " + freeBoardNo);
 
-		
 		List<Comment> list = communityService.getCommentList(search, freeBoardNo);
 
-		
-		
 		System.out.println("4. list ==> ?" + list);
-		
+
 		System.out.println("communityRestController의 getCommentList :: POST 끝.....");
-		
+
 		return list;
 	}
 
-
-
-
 	@RequestMapping(value = "json/getFreeBoardTotalCount/{freeBoardNo}")
-	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, 
-			@PathVariable int freeBoardNo) throws Exception {		
-		
+	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, @PathVariable int freeBoardNo)
+			throws Exception {
+
 		System.out.println("communityRestController의 getFreeBoardTotalCount 시작...");
 		System.out.println("1. search값 ==> " + search);
 		System.out.println("2. freeBoardNo ==> " + freeBoardNo);
@@ -150,38 +121,16 @@ public class CommunityRestController {
 		search.setPageSize(pageSize);
 
 		System.out.println("4. search ==> " + search);
-		
 
 		System.out.println("5. getFreeBoardTotalCount ==> " + getFreeBoardTotalCount);
 
 		Page resultPage = new Page(search.getCurrentPage(), getFreeBoardTotalCount, pageUnit, pageSize);
 		System.out.println("6. resultPage ==> " + resultPage);
 
-
 		System.out.println("communityRestController의 freeBoardCommentList메소드 끝");
-		
-		
+
 		return resultPage;
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

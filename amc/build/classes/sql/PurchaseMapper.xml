@@ -112,6 +112,26 @@
 			(SELECT order_no FROM transaction WHERE IMP_ID=#{impId}),
 			(SELECT prod_no FROM transaction WHERE IMP_ID=#{impId}),
 			#{buyer.userId},
+			#{paymentOption}, 
+			#{receiverName},
+			#{receiverPhone1},
+			#{receiverPhone2},
+			#{receiverPhone3},
+			#{addrDlvy},
+			#{addrDlvyDetail},
+			(SELECT tran_code FROM transaction WHERE IMP_ID=#{impId}),
+			(SELECT ORDER_REGDATE FROM transaction WHERE IMP_ID=#{impId})	)
+	</insert>
+
+	
+<!-- 		<insert id="insertPurchaseForUpdate" parameterType="com.amc.service.domain.Purchase">
+		INSERT INTO 
+			transaction
+		VALUES
+		(	seq_transaction_IMP_ID_no.nextval,
+			(SELECT order_no FROM transaction WHERE IMP_ID=#{impId}),
+			(SELECT prod_no FROM transaction WHERE IMP_ID=#{impId}),
+			#{buyer.userId},
 			#{paymentOption},
 			#{receiverName},
 			#{receiverPhone1},
@@ -122,6 +142,7 @@
 			(SELECT tran_code FROM transaction WHERE IMP_ID=#{impId}),
 			(SELECT ORDER_REGDATE FROM transaction WHERE IMP_ID=#{impId})	)
 	</insert>
+ -->	
 		
 	<sql id="purchaseList">
 		SELECT 

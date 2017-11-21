@@ -78,7 +78,6 @@ public class CommunityController {
 		// System.out.println("date == > " + date);
 
 		fileName = URLEncoder.encode(fileName, "EUC-KR");
-		// fileName= new String(fileName.getBytes(), "iso_8859_1");
 
 		System.out.println("???>>>>>>>>" + fileName.indexOf("%"));
 		long date = new Date().getTime();
@@ -103,16 +102,6 @@ public class CommunityController {
 			freeBoard.setFreeBoardImage("");
 		}
 
-		/*
-		 * if(!(imageFile.isEmpty())){ FileOutputStream fos = new
-		 * FileOutputStream(new File(fsr.getPath(),
-		 * imageFile.getOriginalFilename())); fos.write(imageFile.getBytes());
-		 * fos.flush(); fos.close();
-		 * 
-		 * freeBoard.setFreeBoardImage(imageFile.getOriginalFilename()); }else{
-		 * freeBoard.setFreeBoardImage(""); }
-		 * 
-		 */
 		User user = new User();
 		user.setUserId(userId);
 		freeBoard.setUser(user);
@@ -274,14 +263,6 @@ public class CommunityController {
 
 		Page resultPage = new Page(search.getCurrentPage(), totalCount, pageUnit, pageSize);
 		System.out.println("5. resultPage ==> " + resultPage);
-		/*
-		 * Map<String, Object> map = new HashMap<String, Object>();
-		 * 
-		 * map.put("list", list); map.put("totalCount", totalCount);
-		 * map.put("resultPage", resultPage); map.put("search", search);
-		 * 
-		 * System.out.println("5. Map ==> " + map);
-		 */
 
 		Map<String, Object> map = new HashMap<String, Object>();
 

@@ -144,7 +144,7 @@
 						<div class="form-group">
 							<div class="row">
 								<label for="inputPaymentOption" class="col-sm-3 control-label">결제방법</label>
-								<div class="col-sm-3">
+								<div class="col-sm-6">
 									<select class="form-control" id="inputPaymentOption" name="paymentOption">
 										<option value="1">카카오페이</option>								
 									</select>
@@ -154,7 +154,7 @@
 							
 							<div class="row">
 								<label for="inputPurchaseCount" class="col-sm-3 control-label">구매수량</label>
-								<div class="col-sm-3">
+								<div class="col-sm-6">
 									<select class="form-control" id="inputPurchaseCount" name="orderStock" onchange="calc(this.form.prodPrice, this.form.orderStock, this.form.totalProdPrice)">
 										<c:forEach var="i" begin="1" end="${product.stock>10? 10 : product.stock}">
 											<option value="${i}">${i}</option>
@@ -166,7 +166,7 @@
 							
 							<div class="row">
 								<label for="inputReceiverName" class="col-sm-3 control-label">받는사람</label>
-								<div class="col-sm-3">
+								<div class="col-sm-6">
 									<input type="text" class="form__name" id="inputReceiverName" name="receiverName" value="${user.userName}">
 								</div>
 							</div>
@@ -174,7 +174,7 @@
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">배송지</label>
-							 	<div class="col-sm-3">
+							 	<div class="col-sm-6">
 									<input type="text" class="form__name" id="inputDlvyAddr" name="addrDlvy" value="${user.addr}" >
 								</div>
 							 </div>
@@ -182,7 +182,7 @@
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">상세주소</label>
-							 	<div class="col-sm-3">
+							 	<div class="col-sm-6">
 							 		<input type="text" class="form__name" id="inputDlvyAddr" name="addrDlvyDetail" value="${user.addrDetail}" >
 							 	</div>
 							 	<span class="col-sm-6"></span>
@@ -191,7 +191,7 @@
 							
 							 <div class="row">
 							 	<label for="inputDlvyAddr" class="col-sm-3 control-label">총 구매 가격</label>
-							 	<div class="col-sm-3">
+							 	<div class="col-sm-6">
 							 		<input type="text" class="form__name" id="inputtotalProdPrice" name="totalProdPrice" value="${product.prodPrice}" readonly>
 							 		<input type=hidden name="prodPrice" value="${product.prodPrice}"> 
 							 	</div>
@@ -377,8 +377,8 @@
 		$(function(){
 			
 		 	$('.row .btn--purchase:contains("구매")').bind('click',function(){
-				$('#purchase').attr('method','post').attr('action','addPurchase').submit(); 
-				//kakaoPay();
+				//$('#purchase').attr('method','post').attr('action','addPurchase').submit(); 
+				kakaoPay();
 			}); 
 			
 			$('.row .btn--info:contains("취소")').bind('click',function(){

@@ -98,13 +98,13 @@
 			  		<div class="row">
 			    		<label for="password" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호</strong></label>
 			    		<div class="col-sm-3">
-			      			<input type="password" class="form__name" id="password" name="password" placeholder="변경비밀번호">
+			      			<input type="password" class="form__name" id="password" name="password" placeholder="비밀번호 8자리 이상~12자리 이하" maxlength="12">
 			    		</div>
 			  		</div><br/>
 			  		<div class="row">
 			    		<label for="password2" class="col-sm-offset-1 col-sm-3 control-label"><strong>비밀번호 확인</strong></label>
 			    		<div class="col-sm-3">
-			      			<input type="password" class="form__name" id="password2" name="password2" placeholder="변경비밀번호 확인">
+			      			<input type="password" class="form__name" id="password2" name="password2" placeholder="변경비밀번호 확인" maxlength="12">
 			    		</div>
 			     			<span id="helpBlock2" class="help-block2 col-sm-2"></span>
 			  		</div><br/>
@@ -155,14 +155,14 @@
 				<div class="row">
 					<label for="addr" class="col-sm-offset-1 col-sm-3 control-label"><strong>주소</strong></label>
 						<div class="col-sm-3" style="display:inline">
-							<input type="text" name='addr' class="inputtype" id="address" placeholder="주소">
+							<input type="text" name='addr' class="inputtype" id="address" value="${user.addr}" placeholder="주소">
 						</div>
 				</div><br/>
 					
 				<div class="row">
 					<label for="addrDetail" class="col-sm-offset-1 col-sm-3 control-label"><strong>상세주소</strong></label>
 						<div class="col-sm-3" style="display:inline">			
-							<input type="text" name='addrDetail' class="inputtype" id="address_detail" placeholder="상세주소">
+							<input type="text" name='addrDetail' class="inputtype" id="address_detail" value="${user.addrDetail}" placeholder="상세주소">
 						</div>
 				</div><br/>
  
@@ -189,13 +189,16 @@
 		    		<div class="col-sm-2">
 		      			<input type="text" class="form__name" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="변경번호">
 		    		</div>
-	  			</div><br/><br/><br/>
+	  			</div><br/><br/>
 			  	<div class="form-group">
 			    	<div class="col-sm-offset-4  col-sm-4 text-center">
 			      		<button type="button" class="btn btn-md btn--info" id="update">수 &nbsp;정</button>
 				  		<button type="button" class="btn btn-md btn--info" id="back" role="button">취 &nbsp;소</button>
+			    		<br/><br/><br/>
 			    	</div>
+			    		
 			  	</div>
+			  
 			</form>
  		</div>
 	</div>
@@ -244,8 +247,23 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#back").on("click" , function() {
-				alert("수정을 취소하시겠습니까?");
-				  history.back();
+				/* alert("수정을 취소하시겠습니까?"); */
+				swal({
+					  title: '수정을 취소하시겠습니까?',
+					  text: "Yes를 누르시면 회원정보조회로 이동합니다.",
+					  type: 'warning',
+					  showCancelButton: true,
+					  confirmButtonColor: '#3085d6',
+					  cancelButtonColor: '#d33',
+					  confirmButtonText: 'Yes!'
+					
+					}).then(function (result) {
+					  if (result.value) {
+						 
+						
+					  }  history.back();
+					})
+				  /* history.back(); */
 			});
 		});	
 		
@@ -285,6 +303,11 @@
 				return;
 			}
 			if(snslogin != ''){
+	            if (pw == null || pw.length < 8) {
+	                alert("패스워드는  반드시 8자리 이상 입력하셔야 합니다.");
+	                /* return check=false; */
+	                return;
+	            }
 				if(pw == null || pw.length <1){
 					alert("패스워드는  반드시 입력하셔야 합니다.");
 					/* return check=false; */
@@ -295,6 +318,12 @@
 					/* return check=false; */
 					return;
 				}
+	            if (pw != pw_confirm) {
+	                alert("비밀번호 확인이 일치하지 않습니다.");
+	                $("input:text[name='password2']").focus();
+	                /* return check=false; */
+	                return;
+	            }
 				$("#form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 				return;
 			}
@@ -366,7 +395,7 @@
  	#body{	 	
  	
  	/* background-color: #EDEDED; */
-      	background-color: #e0e0e0;
+      	background-color: #ffffff;
       	margin-top:100px;
       	margin-bottom:5px;
       	padding-top: -50px;
@@ -405,11 +434,13 @@
 	  -moz-user-select: none;
 	  -ms-user-select: none;
 	  user-select: none;
+	    margin-left: 30px;
 	}	
 	.btn-info {
 	  color: #ffffff;
 	  background-color: #1B516E;
 	  border-color: #3A199C;
+	  margin-left: 30px;
 	}
 		  	
 	.form .form__name {
