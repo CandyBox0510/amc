@@ -333,7 +333,7 @@ public class AlarmRestController {
 	}
 	
 	@RequestMapping(value="/json/getCancelAlarmOfScreenContentNo")
-	public String selectCancelAlarm(@RequestParam("screenContentNo") String screenContentNo,
+	public String getCancelAlarmOfScreenContentNo(@RequestParam("screenContentNo") String screenContentNo,
 								     HttpSession session, Model model) throws Exception{
 		Map<String,Object> tempMap = new HashMap<String,Object>();
 		
