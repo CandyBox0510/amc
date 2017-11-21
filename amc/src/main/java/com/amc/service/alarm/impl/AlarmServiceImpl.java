@@ -78,6 +78,9 @@ public class AlarmServiceImpl implements AlarmService {
 
 	ObjectMapper om = new ObjectMapper();
 
+	/**
+	 * 
+	 */
 	@Override
 	public String addCancelAlarm(Alarm alarm) {
 
@@ -204,6 +207,7 @@ public class AlarmServiceImpl implements AlarmService {
 			body.clear();	
 		}
 		
+		//booking의 경우 메세지 내용이 많아서 sms는 내용이 다 안나오기에 lms 설정
 		if(type.equals("booking")){
 			body.put("type", "lms");
 		}else{
@@ -324,6 +328,24 @@ public class AlarmServiceImpl implements AlarmService {
 		
 		String response = restApiUtil.restApiResponse(header, body);
 		
+		//푸시 완료 후 알람 삭제를 위한 logic
+		if(type.equals("openAlarm") || type.equals("cancelAlarm")){
+			Alarm alarm = new Alarm();
+			ScreenContent screenContent = new ScreenContent();
+			screenContent.setScreenContentNo(Integer.parseInt(serialNo));
+			
+			alarm.setAlarmFlag("O");
+			alarm.setScreenContent(screenContent);
+			
+			if(type.equals("cancelAlarm")){
+				alarm.setAlarmSeatNo(alarmSeatNo);
+				alarm.setAlarmFlag("C");
+			}
+				
+			alarmDAO.deleteAfterPush(alarm);
+			
+		}
+		
 		return null;
 	}
 
@@ -431,8 +453,8 @@ public class AlarmServiceImpl implements AlarmService {
 			jsonObject = (JSONObject)JSONValue.parse(brc.getSeatNo(alarmSeatNo, 1000, null));
 			
 			pushValue.put("subject", "티켓 취소 알림!");
-			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
-			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 :"+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
+			pushValue.put("content", "[티켓 취소 알림 영화]\n"+title+"\n좌석 : "+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
+			pushValue.put("appContent", "[티켓 취소 알림 영화]"+title+",  좌석 : "+(String)jsonObject.get("seatNo")+" 취소되었습니다!");
 			break;
 			
 		case "userCertification":

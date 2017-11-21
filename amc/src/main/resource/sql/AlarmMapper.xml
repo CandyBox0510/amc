@@ -79,6 +79,17 @@
 			WHERE alarm_no = #{alarmNo}
 		</if>
 	</delete>
+	
+	<delete id="deleteAfterPush" parameterType="alarm">
+		DELETE
+		FROM alarm
+		<if test="alarmSeatNo != null">
+		WHERE alarm_flag = 'C' AND screencontent_no = #{screenContent.screenContentNo} AND alarmseat_no = #{alarmSeatNo}
+		</if>
+		<if test="alarmSeatNo == null">
+		WHERE alarm_flag = 'O' AND screencontent_no = #{screenContent.screenContentNo}
+		</if>
+	</delete>
 	 
 	<select id="checkOpenAlarm"	parameterType="alarm" resultType="string">
 	 	SELECT count(*) 

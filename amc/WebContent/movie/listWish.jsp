@@ -7,7 +7,7 @@
 <head>
    <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Americode Cinema-booking2</title>
+        <title>Americode Cinema-listWish</title>
         <meta name="description" content="A Template by Gozha.net">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <meta name="author" content="Gozha.net">
@@ -115,7 +115,7 @@
 											}else{
 												all += 'movie'
 											}
-								all +=    ">'
+								all +=    '">'
 								all += 	  '<img src="' +wishList[i].movie.postUrl+ '" style="width:100%; height:365px;"></a>'
 								all +=    '</div>'
 								all += 		'<div class="alert alert-info jeju" role="alert">'
@@ -302,8 +302,7 @@ d
  	     height: auto;
       }
       .col-sm-4{
-      	/* background-color: #EDEDED; */
-      	background-color: #d3fbff;
+      	/* background-color: #d3fbff; */
       	margin-top:5px;
       	margin-bottom:5px;
 /* 	    padding-top: 10px;

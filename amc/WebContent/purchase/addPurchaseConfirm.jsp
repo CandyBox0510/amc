@@ -191,7 +191,7 @@ html {
 }
 
 .movie__images {
-	width: 10px;
+	width: 5px;
 }
 
 .slick-prev:before, .slick-next:before {
@@ -341,7 +341,7 @@ section {
 
 img.movie__images {
     vertical-align: middle;
-    width: 50px;
+    width: 20px;
     float-left:0px;
     padding-left:0px;
     position:relative;
@@ -351,9 +351,9 @@ img.movie__images {
 #prodImage {
     vertical-align: middle;
     height:auto;
-    width: 50px;
+    width: 40px;
     position:relative;
-    right:100px
+    right:130px
 }
 
 p {
@@ -375,19 +375,14 @@ b, strong {
     color: #ffffff;
 }
 p.movie__option {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 28px;
     color: #ffffff;
     margin-bottom: 28px;
     text-align:left;
+    word-break:break-all;
 }
-#purchasetext {
-	position: relative;
-	left: 300px;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px;
- }
+
 
 
 </style>
@@ -436,12 +431,12 @@ p.movie__option {
 							<div class="movie__info ">
 								<div class="col-sm-4 col-md-3 movie-mobile">
 									<div class="movie__images" id="prodImage">
-										<img alt='' src="/images/uploadFiles/${purchase.purchaseProd.prodImage}" width=400px/>
+										<img alt='' src="/images/uploadFiles/${purchase.purchaseProd.prodImage}" width=350px/>
 									</div>
 		
 								</div>
 		
-								<div class="col-sm-8 col-md-9" id="purchasetext">
+								<div class="col-sm-9 col-md-9" id="purchasetext">
 									<p class="movie__option">
 										<strong>상품명 : </strong>${purchase.purchaseProd.prodName}</p>
 									<p class="movie__option">
@@ -454,7 +449,7 @@ p.movie__option {
 										<strong>받으실 분: </strong>${purchase.receiverName}</p>
 									<p class="movie__option">
 										<strong>연락처: </strong>${purchase.receiverPhone1}&emsp;${purchase.receiverPhone2}&emsp;${purchase.receiverPhone3}</p>
-									<p class="movie__option">
+									<p class="movie__option" id="addrtext">
 										<strong>배송지: </strong>${purchase.addrDlvy}</p>
 									<p class="movie__option">
 										<strong>상세주소: </strong>${purchase.addrDlvyDetail}</p>
@@ -493,12 +488,21 @@ p.movie__option {
 
 
 <style type="text/css">
+#purchasetext {
+	font-size:5px;
+	position: relative;
+	left: 200px;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+ }
  html{
   height: auto;
 } 
 .abc{
 	  font-family: 'Jeju Gothic', sans-serif; 
 	 }
+
 </style>
 </html>
 
