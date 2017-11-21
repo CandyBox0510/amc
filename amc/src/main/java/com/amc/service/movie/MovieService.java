@@ -64,7 +64,7 @@ public interface MovieService {
 
 	public MovieComment getMovieComment(int movieCommentNo);
 	
-	int dupMovieChk(Search search) throws Exception;
+	public int dupMovieChk(Search search) throws Exception;
 	
 	// 위시리스트 체크 온오프
 	public String switchWishList(WishList wishList);
@@ -74,13 +74,14 @@ public interface MovieService {
 
 	public Map<String,Object> getWishList(Map<String,Object> map);
 
-	String checkWishList(WishList wishList);
+	public String checkWishList(WishList wishList);
 
-	int getTotalCount(int movieNo) throws Exception;
 
-	String searchTrailer(String searchTrailer) throws Exception;
+	public String searchTrailer(String searchTrailer) throws Exception;
 
-	String searchPoster(String searchPoster) throws Exception;
+	public String searchPoster(String searchPoster) throws Exception;
+
+	public int getTotalCount(int movieNo) throws Exception;
 
 	
 	// 현재 상영영화와 상영예정 영화목록에서  위시리스트 불러오기
