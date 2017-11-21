@@ -59,7 +59,7 @@
 								</div>
 								<div class='col-md-1' id="title">첨부파일</div>
 								<div class='col-md-11'>
-									<input type="text" name="getNoticeListCount" value="${getNoticeListCount}">
+									<input type="hidden" name="getNoticeListCount" value="${getNoticeListCount}">
 									<span class="notice">이미지 파일(jpg, jpeg, png, gif)만 업로드 가능합니다</span>
 									<input type="file" id="imageFile" name="imageFile" class="add__input" value="${freeBoard.freeBoardImage }">
 								</div>

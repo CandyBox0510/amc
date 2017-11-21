@@ -254,6 +254,9 @@ public class MovieController {
 		} else if (request.getParameter("menu").equals("voiceRegniiton")) {
 			// modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/speechMovie.jsp";
+		} else if (request.getParameter("menu").equals("add")) {
+			// modelAndView.setViewName("/movie/listMovie.jsp");
+			return "forward:/movie/addMovie.jsp";
 		}
 
 		return "forward:/movie/listMovie.jsp";

@@ -63,13 +63,13 @@
                    			</div>
                    			
 	                   		<c:if test="${param.menu=='manage'}">
-		       					<button type="button" class="btn btn-primary pull-right"  
+		       					<button type="button" class="btn btn-md btn--info"  id="btn1" 
 		       						 onclick="location.href='/product/addProduct'">상 품 등 록
 		       					</button>&emsp;
-		       					<button type="button" class="btn btn-primary pull-right"  
+		       					<button type="button" class="btn btn-md btn--info"  id="btn2" 
 		       						 onclick="location.href='/product/getSnackList?menu=manage&searchProdType=S'">스낵 상 품 관 리
 		       					</button>&emsp;
-		       					<button type="button" class="btn btn-primary pull-right" 
+		       					<button type="button" class="btn btn-md btn--info" id="btn3" 
 		       						 onclick="location.href='/product/getGoodsList?menu=manage&searchProdType=G'">굿즈 상 품 관 리
 		       					</button>	
 		      				</c:if> 
@@ -280,6 +280,34 @@
 	font-family: 'Jeju Gothic', sans-serif;
 	margin-top: 100px
 }
+#btn1 {
+    position: absolute;
+    background-color: #6dc5dd;
+    border: solid 1px #6ac7f7;
+    left: 1050px;
+    bottom:50px;
+}
+#btn2 {
+    position: absolute;
+    background-color: #6dc5dd;
+    border: solid 1px #6ac7f7;
+    left: 900px;
+    bottom:50px;
+}
+#btn3 {
+    position: absolute;
+    background-color: #6dc5dd;
+    border: solid 1px #6ac7f7;
+    left: 750px;
+    bottom:50px;
+}
+#search-form {
+    position: static;
+    display: block;
+    margin-top: 1em;
+    right: 300px;
+}
+
 .btn-success {
     color: #ffffff;
     background-color: #582cb9;
@@ -293,7 +321,7 @@
   border-color: #be41e8;
 }
  	 
- 	#body{ padding-top: 100px; }
+ 	#body{ padding-top: 100px; } 
  	.countPage {
 	  	font-size: 13px;
 	   	margin-top: 10px;
@@ -314,10 +342,10 @@
 		  margin-bottom: 5px;
 		  margin-top: 5px;
 	} 
-	html{
+ 	html{
         height: auto;
   	}
-
+ 
 
 .cinema .cinema__images:before {
     content: '';
@@ -359,10 +387,10 @@ bottom: 30px;
     margin-top: 0px;
 }
 
- #goodsmodal{
+ #snackmodal{
   display: fade in;
-  position: fixed;
-  bottom : 700px;
+    position: fixed;
+  bottom : 750px;
   z-index: 1001;
   left: 50%;
   text-align: center;
@@ -393,10 +421,7 @@ p {
     color: #4c4145;
     margin-bottom: 28px;
 }
-#search-form {
-	display: block;
-	margin-top: 1em;
-}
+
 .search__button {
 	padding: 5px 5px 5px 5px;
 }

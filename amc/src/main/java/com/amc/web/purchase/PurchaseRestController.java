@@ -2,6 +2,8 @@ package com.amc.web.purchase;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.domain.Product;
 import com.amc.service.domain.Purchase;
+import com.amc.service.domain.User;
 import com.amc.service.product.ProductService;
 import com.amc.service.purchase.PurchaseService;
 
@@ -71,10 +74,15 @@ public class PurchaseRestController {
 	
 	@RequestMapping( value="updatePurchase", method=RequestMethod.POST )
 	public Purchase updatePurchase(	@RequestBody Purchase purchase	) throws Exception{
-		System.out.println(":::PurchaseController의 updatePurchase 메소드 시작");
+		System.out.println("::::::::::::::::::::::::::::::::PurchaseController의 updatePurchase 메소드 시작");
+/*		User user = (User)session.getAttribute("user");
+		purchase.setBuyer(user);
+		*/
 		purchaseService.updatePurchase(purchase);
 		
-		return purchaseService.getPurchase(purchase);
+		System.out.println("+++++++++getpurchase"+purchaseService.getPurchase(purchase) );
+		Purchase updatePurchase = purchaseService.getPurchase(purchase);
+		return updatePurchase;
 	}
 	
 	@RequestMapping( value="listPurchase" )
@@ -111,7 +119,7 @@ public class PurchaseRestController {
 		updatePurchase.setImpId(impId);
 		updatePurchase = purchaseService.getPurchase(updatePurchase);
 		updatePurchase.setTranCode(tranCode);
-		
+		System.out.println("______________________"+tranCode);
 		purchaseService.updatePurchase(updatePurchase);
 		
 		return true;

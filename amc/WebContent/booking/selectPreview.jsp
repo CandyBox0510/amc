@@ -21,6 +21,7 @@
   <script type="text/javascript">
 //타이머셋팅
   var ticketOpenDate="";
+  var runCount;
   function dpTime(){  	
   	
   	console.log("open : "+ticketOpenDate);
@@ -102,7 +103,9 @@
 			
 			$("#gotoSeat").addClass("disabled");
 	      	$("#randomSeat").addClass("disabled");
-	      	ticketOpenDate  = '0,0';
+	      	clearInterval(runCount);
+	      	$("#dpTime").html("");
+	      	//ticketOpenDate  = '0,0';
 
 			var flag = $("input:hidden[name='flag']").val();
 			
@@ -192,7 +195,7 @@
 		$(".item").eq(2).html("&nbsp;&nbsp;"+screenTime);
 		$(".item").eq(3).text(contNo);
 		
-		setInterval("dpTime();",1000);
+		runCount = setInterval("dpTime();",1000);
 	});
 		
 	

@@ -174,7 +174,7 @@ public class BookingController {
             k+=2;
         }
         booking.setBookingSeatNo(displaySeat);
-		model.addAttribute("booking", booking);
+        model.addAttribute("booking", booking);
 		
 		/****************************************/
 		//¿ÞÂÊ¹è³Ê¿¡ ±¤°íÃß°¡
