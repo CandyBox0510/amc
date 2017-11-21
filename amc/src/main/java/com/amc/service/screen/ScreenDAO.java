@@ -17,7 +17,7 @@ public interface ScreenDAO {
 
 	// 상영 내용 리스트 불러오기
 	public Map<String, Object> getScreenContentList(Search search, int movieNo);
-	
+
 	// [예매1단계용] 상영 내용 리스트 불러오기
 	public List<ScreenContent> getScreenContentList2(Search search, int movieNo);
 
@@ -35,23 +35,22 @@ public interface ScreenDAO {
 
 	// 상영 내용 삭제
 	public int deleteScreenContent(int screenContentNo);
-	
-	public Map<String, Object> getWishList(Map<String,Object> map);
 
+	public Map<String, Object> getWishList(Map<String, Object> map);
 
-	int getTotalCount(Search search) throws Exception;
-	
-	int getTotalCount(int movieNo)throws Exception;
-	
+	public int getTotalCount(Search search) throws Exception;
+
+	public int getTotalCount(int movieNo) throws Exception;
+
 	public int checkScreenDupPreview(ScreenContent screenContent);
-		
+
 	// 오늘 티켓 오픈하는 리스트 불러오기
 	public List<ScreenContent> getTodayTicketOpenList(Search search);
 
-	int getScreenNo(ScreenContent screenContent);
+	public int getScreenNo(ScreenContent screenContent);
 
-	int getTotalPreviewCount(Search search) throws Exception;
+	public int getTotalPreviewCount(Search search) throws Exception;
 
-	Map<String, Object> getPreviewList(Search search);
+	public Map<String, Object> getPreviewList(Search search);
 
 }

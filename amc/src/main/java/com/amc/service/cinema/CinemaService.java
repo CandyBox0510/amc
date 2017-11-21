@@ -8,8 +8,6 @@ public interface CinemaService {
 		
 		public Map<String, Object> index() throws Exception;
 		
-		public String getPanorama(int theaterNo);
-		
 		public String checkPay(String impUid) throws Exception;
 		
 		public String cancelPay(String impUid) throws Exception;

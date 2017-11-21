@@ -42,10 +42,10 @@ public interface ScreenService {
 	// 오늘 티켓 오픈하는 리스트 불러오기
 	public List<ScreenContent> getTodayTicketOpenList(Search search);
 
-	int checkScreenDupPreview(ScreenContent screenContent);
+	public int checkScreenDupPreview(ScreenContent screenContent);
 
-	int getScreenNo(ScreenContent screenContent);
+	public int getScreenNo(ScreenContent screenContent);
 
-	Map<String, Object> getPreviewList(Search search) throws Exception;
+	public Map<String, Object> getPreviewList(Search search) throws Exception;
 
 }

@@ -26,15 +26,15 @@ public interface CommunityDAO {
 
 	public int updateComment(Comment comment);
 
-	int getTotalCount(Search search) throws Exception;
+	public int getTotalCount(Search search) throws Exception;
 
-	List<Comment> getCommentList(Search search, int freeBoardNo);
+	public List<Comment> getCommentList(Search search, int freeBoardNo);
 
-	List<Comment> getReplyList(Search search, int parentCommentNo);
+	public List<Comment> getReplyList(Search search, int parentCommentNo);
 
-	int getFreeBoardTotalCount(int freeBoardNo);
+	public int getFreeBoardTotalCount(int freeBoardNo);
 
-	List<FreeBoard> getNoticeList();
+	public List<FreeBoard> getNoticeList();
 
 
 	int getNoticeListCount(int freeBoardNo) throws Exception;

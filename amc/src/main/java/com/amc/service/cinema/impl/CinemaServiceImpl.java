@@ -138,11 +138,6 @@ public class CinemaServiceImpl implements CinemaService {
 		return index;
 	}
 	
-	@Override
-	public String getPanorama(int theaterNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public String checkPay(String impUid) throws Exception{
