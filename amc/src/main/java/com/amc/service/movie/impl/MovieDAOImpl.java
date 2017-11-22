@@ -156,10 +156,7 @@ public class MovieDAOImpl implements MovieDAO {
 		
 	}
 	
-	// 차트목록 가져오기
-	public List<Movie> getChart(int movieNo) {
-		return null;
-	}
+
 
 
 	// RESTCONTROLLER 타는 부분

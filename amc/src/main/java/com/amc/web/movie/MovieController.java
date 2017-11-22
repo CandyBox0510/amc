@@ -375,7 +375,7 @@ public class MovieController {
 
 		
 		// 실제 directory 경로로 파일을 영구적으로 저장하기 위함이다.
-		String amcFilePath = "C:\\Users\\jeung\\git\\amc\\amc\\WebContent\\images\\movie\\";
+		String amcFilePath = "C:\\Users\\bitCamp\\git\\amc\\amc\\WebContent\\images\\movie\\";
 		// 실제 folder가 아닌 tomcat의 임시 서버로서 add후 바로 get을 했을때 이미지를 볼 수 있도록 한다.
 		String PATH = session.getServletContext().getRealPath("/") + "\\images\\movie\\";
 
@@ -393,6 +393,7 @@ public class MovieController {
 																					// 폴더의
 																					// 최상위
 																					// 경로
+		System.out.println("PATH +++++ " + PATH);
 		// System.out.println(this.getClass().getResource("/com/amc/config/config.properties").getPath());
 
 		/**
@@ -454,6 +455,7 @@ public class MovieController {
 				File file1 = new File(PATH+fileNames); 
 				
 				//2nd Path : Tomcat의 temporary folder 경로+fileName
+				//File file2 = new File(amcFilePath+fileNames); 
 				File file2 = new File(amcFilePath+fileNames); 
 			
 				if(file1.exists())

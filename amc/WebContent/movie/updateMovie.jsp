@@ -395,7 +395,7 @@
         $(document).on("click", "button[name='searchClick']", function() {
             searchPoster = $("input[name='searchPoster']").val();
             searchPoster =  encodeURI(encodeURIComponent(searchPoster))
-            alert(searchPoster)
+            
          
 
             searchPosterResult();
@@ -678,7 +678,6 @@ input {
         //alert("movieNo" + movieNo);
        
         if(confirm("정말 삭제 하시겠습니까?")) {
-        	alert("삭제버튼을 누르셨습니다.");
         	$("form").attr("method", "POST").attr("action", "/movie/deleteMovie?movieNo=" + movieNo).submit();
         }
 

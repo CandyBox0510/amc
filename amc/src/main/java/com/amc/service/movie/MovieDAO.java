@@ -80,17 +80,15 @@ public interface MovieDAO {
 
 	// 회원이 하트를 눌렀을때 위시리스트에 존재 하는지 안하는지 확인(Count로)
 	public int existWish(int moiveNo, String userId);
-	
-	// 차트목록 가져오기
-	public List<Movie> getChart(int movieNo);
+
 
 	// 모든 영화 가져오기(통합검생, 예매1단계)
 	public List<Movie>	uniMovieList(Search search);
 
-	int getTotalCount(int movieNo) throws Exception;
+	public int getTotalCount(int movieNo) throws Exception;
 	
 		
-	int dupMovieChk(Search search) throws Exception;
+	public int dupMovieChk(Search search) throws Exception;
 
 	public MovieComment getMovieComment(int movieCommentNo);
 	

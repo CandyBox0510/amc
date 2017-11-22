@@ -293,7 +293,7 @@
 				}, function(rsp) {
 				    if ( rsp.success ){
 						
-				    	alert("impuid : " + rsp.imp_uid); //결제되서 여기는 뜸
+				    	
 				    	console.log("impuid : "+rsp.imp_uid);
 				    	var impUid = rsp.imp_uid; 
 				    	
@@ -301,28 +301,28 @@
 				    		url: "/cinema/json/checkPay/"+impUid, //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 				    		type: 'GET',
 				    	}).done(function(data) {
-				    		alert("data : " + data);
+				    		
 				    		var payStatusCheck = (data.split(','))[0];
 				    		var amountCheck = (data.split(','))[1];
-				    		alert("payStatusCheck : "+payStatusCheck+"\n"+"amountCheck : "+amountCheck);
+				    		
 				    		
 				    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
 				    		if (  payStatusCheck == 'paid' && amountCheck == '${product.prodPrice}') {
 				    			var msg = '결제가 완료되었습니다.';
-				    			msg += '\n고유ID : ' + rsp.imp_uid;
+				    			/* msg += '\n고유ID : ' + rsp.imp_uid;
 				    			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
 				    			msg += '\n결제 금액 : ' + rsp.paid_amount;
-				    			msg += '\n카드 승인번호 : ' + rsp.apply_num;
+				    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
 
 				    			$("input[name='qrUrl']").val("https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl="+impUid);
 				    			$("input[name='impId']").val(impUid);
 				    			
-				    			alert("AJAX 후 결제완료 후 "+"\n"+msg);
+				    			alert(msg);
 				    			
 				    			addPurchase();
 				    			
 				    		} else {
-				    			alert("AJAX 후 실패\n 결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
+				    			alert("결제 금액이 요청한 금액과 달라 결제를 자동취소처리 하였습니다");
 				    			kakaoPayCancel(impUid);
 				    			//[3] 아직 제대로 결제가 되지 않았습니다.
 				    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
@@ -332,7 +332,7 @@
 				    } else {
 				        var msg = '결제에 실패하였습니다.';
 				        var errorMsg = '실패사유 : ' + rsp.error_msg;
-				        alert("AJAX 전 실패"+"\n"+msg+"\n"+errorMsg);
+				        alert(errorMsg);
 				    }//end of rsp.success else 
 				}); //end of Imp.request_pay
 			}//end of kakaoPay function
@@ -351,7 +351,7 @@
 		    			msg += '\n결제 금액 : ' + rsp.paid_amount;
 		    			msg += '\n카드 승인번호 : ' + rsp.apply_num; */
 
-		    			alert("아작스 취소 후 "+"\n"+msg);
+		    			alert(msg);
 		    			
 		    			//location.href="/index.jsp"
 		    			location.href="/#"

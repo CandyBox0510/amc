@@ -332,7 +332,7 @@
 			                    </div> 	
 			                     <div class="contact-info__field row"  style="width:100%">
 			                   	<div class="col-sm-7" >
-			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='회원님의 등록된 번호로 보내드립니다.' 
+			                        <input type='text' id="SMS" name='user-mail' value="" placeholder='회원님의 등록된 번호로 보내드립니다.' disabled style="background-Color:#aaaaaa" 
 			                        class="form__mail abc" style="width:100%" autofocus autocomplete="off" required >
 			                    </div><div class="col-sm-5">		                     
 			                         <a href="#" id="sendSMS" class="btn btn-md btn--warning btn-wider btn--shine abc">문자&nbsp;&nbsp;&nbsp;&nbsp;QR전송</a>						   

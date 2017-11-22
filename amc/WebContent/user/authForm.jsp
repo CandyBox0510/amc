@@ -323,13 +323,13 @@
 		//============= "인증Code발송"  Event 연결 =============
 		 $(function() {
 			$( "#sendCode" ).on("click" , function() {
-				alert("인증코드발송 버튼 누름");
+				
 				fncSendCode();
 			});
 		});	
 		
 		function fncSendCode() {
-			alert("fncSendCode 펑션으로 들어옴");
+		
 			var userName=$("input[name='userName']").val();
 			var phone1=$('#phone1').val();
 			var phone2=$('#phone2').val();
@@ -381,7 +381,7 @@
 							//alert("status : "+ status );
 								//alert(JSONData.role);
 								console.log(JSONData.userId);
-								alert(JSONData.userId);
+								///alert(JSONData.userId);
 								//alert("로그인유저");
 								
 								if( JSONData.userId == null ){

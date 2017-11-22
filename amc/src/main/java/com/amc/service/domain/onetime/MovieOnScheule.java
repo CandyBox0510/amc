@@ -1,8 +1,5 @@
 package com.amc.service.domain.onetime;
 
-import java.util.List;
-
-
 public class MovieOnScheule {	
 	private int id;
 	private String name;

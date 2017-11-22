@@ -1,8 +1,8 @@
 package com.amc.web.product;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
+import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.amc.service.product.ProductService;
 import com.amc.common.Page;
 import com.amc.common.Search;
 import com.amc.service.domain.Product;
+import com.amc.service.product.ProductService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -55,14 +54,47 @@ public class ProductController {
 	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)
 	public String addProduct( @ModelAttribute("product") Product product,
-							@RequestParam(value="file", required=false) MultipartFile file,
-							 HttpSession session) throws Exception {
+							@RequestParam(value="file", required=false) MultipartFile mFile,
+							 HttpSession session, HttpServletRequest request) throws Exception {
 		
-		System.out.println("producController의 addProduct 메소드 : file"+file);
+		System.out.println("producController의 addProduct 메소드 : file"+mFile);
 		product.setProdImage("");
-		if(file != null && !file.isEmpty()){
-			product.setProdImage(file.getOriginalFilename());
+		
+
+		String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath => " + rootPath);
+		String attachPath = "images/uploadFiles/";
+		String fileName = mFile.getOriginalFilename();
+	
+		fileName = URLEncoder.encode(fileName, "EUC-KR");
+
+		System.out.println("???>>>>>>>>" + fileName.indexOf("%"));
+		long date = new Date().getTime();
+
+		String time = String.valueOf(date);
+		System.out.println("time === > " + time);
+
+		if (fileName.indexOf("%") != -1) {
+			fileName = fileName.replaceAll("%", "");
 		}
+
+		fileName = time + fileName;
+		File file = new File(rootPath + attachPath + fileName);
+		System.out.println("fileName===> " + fileName);
+
+		System.out.println("file ==> " + file);
+
+		if (!(mFile.isEmpty())) {
+			mFile.transferTo(file);
+			product.setProdImage(fileName);
+		
+		} else {
+			product.setProdImage("");
+		}
+		
+		
+		
+		
 		
 		product.setStock(product.getTotalStock());
 		product.setExpiryDate(1);
@@ -77,6 +109,7 @@ public class ProductController {
 		System.out.println("/product/deleteProduct : GET");
 		productService.deleteProduct(prodNo);
 		model.addAttribute("menu", "manage");
+		
 		
 		return "forward:/product/getGoodsList";
 	}
@@ -148,7 +181,7 @@ public class ProductController {
 			
 	@RequestMapping(value="getGoodsList")
 	public String getGoodsList( @ModelAttribute("search") Search search , Model model , 								
-								@RequestParam("menu") String menu, @RequestParam("searchProdType") String searchProdType,
+								@RequestParam("menu") String menu, @RequestParam(value="searchProdType",defaultValue="G") String searchProdType,
 								HttpSession session) throws Exception{
 		
 		System.out.println("ProductController의 getGoodsList 메소드 시작");

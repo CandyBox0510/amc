@@ -597,7 +597,7 @@
                                 </div>
 
                                 <div class="movie__info">
-                                    <a href='movie-page-left.html' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
+                                    <a href='/movie/getMovie?movieNo=${movie.movieNo}&menu=${who}' class="movie__title jeju">${movie.movieNm}</a>&nbsp;
                                     <c:if test="${movie.watchGradeNm eq 'ageAll'}">
                                     	<img src="/images/ageAll.png" style="width:25px; height:25px;">
                                     </c:if>

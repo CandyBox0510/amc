@@ -35,6 +35,6 @@ public interface CommunityService {
 
 	public List<FreeBoard> getNoticeList();
 
-	int getNoticeListCount(int freeBoardNo) throws Exception;
+	public int getNoticeListCount(int freeBoardNo) throws Exception;
 
 }

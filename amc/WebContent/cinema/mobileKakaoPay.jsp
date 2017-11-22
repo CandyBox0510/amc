@@ -60,7 +60,7 @@
   	
 	 function kakaoPay(){
 		    var screenContentNo = '${param.screenContentNo}' 
-		  	var bookingSeatNo = '${param.bookingSeatNo}'
+		  	var bookingSeatNo = '${originSeat}'
 		  	var price = '${param.totalTicketPrice}'
 		  	var title = '${title}'
 

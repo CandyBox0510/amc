@@ -187,13 +187,6 @@ public class MovieApiDAOImpl implements MovieDAO {
 		return 0;
 	}
 
-	@Override
-	public List<Movie> getChart(int movieNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	// submit을 누른후 외부 영화 API 상세 + 네이버 영화 포스터 API를 가져온 후 DB등록
 	public int addMovie(Movie movie) 	 {

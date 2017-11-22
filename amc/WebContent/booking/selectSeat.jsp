@@ -258,7 +258,7 @@
 									console.log('SeatNo 받아옴 : '+JSONData.seatNo);								
 			                      if(JSONData != ""){
 			                      	$("#seatNo").text(JSONData.seatNo);
-			                      	$("#headCount").text(JSONData.headCount);
+			                      	$("#headCount").text(JSONData.headCount+"명");
 			                      	$("#totalPrice").text(JSONData.totalPrice);
 			                      	
 			                      	$("input[name='displaySeat']").val(JSONData.seatNo);
@@ -340,7 +340,7 @@
 			<div class="col-sm-8 col-md-8">	
 			<c:set var="ip"><spring:eval expression="@commonProperties.getProperty('nodeServerIP')"></spring:eval></c:set>			
 				<iframe id="child" src= "http://${ip}:52273/selectSeat?screenNo=${screenContent.screenContentNo}"
-				style='width:100%; height:450px; overflow-x:scroll' scrolling="yes" frameborder='0'   align='center'>		 
+				style='width:100%; height:480px; overflow-x:scroll' scrolling="yes" frameborder='0'   align='center'>		 
 						  <p>Your browser does not support iframes.</p>
 				</iframe>
 				<!-- style='width:100%' -->

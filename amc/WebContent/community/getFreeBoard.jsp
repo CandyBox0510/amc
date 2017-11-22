@@ -308,6 +308,8 @@
 
 
 						fncGetPageList(currentPage) 
+						$("input[name='commentNo2']").val(commentNo);
+						$("input[name='comment2']").val(comment);
 						
 					}
 				})

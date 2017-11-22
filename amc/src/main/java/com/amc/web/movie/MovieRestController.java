@@ -5,12 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,10 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ObjectNode;
-import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -32,7 +24,6 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,8 +39,6 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.amc.common.Page;
 import com.amc.common.Search;
-import com.amc.common.util.CommonUtil;
-import com.amc.service.domain.Alarm;
 import com.amc.service.domain.Movie;
 import com.amc.service.domain.MovieComment;
 import com.amc.service.domain.ScreenContent;
@@ -62,8 +51,6 @@ import com.amc.service.screen.ScreenService;
 import com.amc.service.user.UserService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import net.sf.json.JSONSerializer;
 
 //==> MovieAPI RestController
 @RestController
@@ -118,9 +105,7 @@ public class MovieRestController {
 		movieJson.setTotal(12);
 		movieJson.setRecords(10);
 		movieJson.setRows(list);
-		
-		
-		
+
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(movieJson);
 
@@ -133,8 +118,6 @@ public class MovieRestController {
 		out.write(json);
 		out.flush();
 		out.close();
-		
-		
 
 	}
 
@@ -221,7 +204,7 @@ public class MovieRestController {
 		System.out.println("movieCd : " + movieCd);
 		// System.out.println("movieName : " + movieName);
 		System.out.println("movieContry : " + movieContry);
-		
+
 		System.out.println("openDate : " + openDate);
 		System.out.println("syonpsis : " + syonpsis);
 		System.out.println("trailer : " + trailer);
@@ -343,8 +326,7 @@ public class MovieRestController {
 
 	// 상영 예정 영화 일정을 추출하는 로직
 	@RequestMapping(value = "json/movieOnSchedule", method = RequestMethod.POST)
-	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model,
-			@ModelAttribute("search") Search search) throws Exception {
+	public void movieOnSchedule(HttpServletRequest request, HttpServletResponse response, Model model, @ModelAttribute("search") Search search) throws Exception {
 
 		System.out.println("json/movieOnSchedule called RestControl ");
 
@@ -369,8 +351,7 @@ public class MovieRestController {
 		// Business logic 수행
 		Map<String, Object> map = movieService.getMovieList(search);
 
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 
 		System.out.println(resultPage);
 
@@ -596,8 +577,7 @@ public class MovieRestController {
 
 	// 시사회 영화 일정을 추출하는 로직
 	@RequestMapping(value = "json/movieOnSchedule_preview", method = RequestMethod.POST)
-	public void movieOnSchedule_preview(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute("search") Search search, Model model) throws Exception {
+	public void movieOnSchedule_preview(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("search") Search search, Model model) throws Exception {
 
 		System.out.println("json/movieOnSchedule_preview called RestControl ");
 
@@ -616,8 +596,7 @@ public class MovieRestController {
 
 		Map<String, Object> map = screenService.getPreviewList(search);
 
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 
 		model.addAttribute("search", map.get("search"));
 		model.addAttribute("list", map.get("list"));
@@ -684,7 +663,6 @@ public class MovieRestController {
 			movieObject = new JSONObject();
 		}
 
-	
 		System.out.println("movieArray values : " + screenContentArray.toString());
 
 		monthlynfo.put("monthly", screenContentArray);
@@ -784,8 +762,7 @@ public class MovieRestController {
 
 	// 해림 추가
 	@RequestMapping(value = "json/getMovieCommentList/{movieNo}")
-	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo)
-			throws Exception {
+	public List<MovieComment> getMovieCommentList(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
 		System.out.println("movieRestController의 getMovieCommentList시작 ");
 		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -844,8 +821,7 @@ public class MovieRestController {
 	// 해림추가
 
 	@RequestMapping(value = "json/getTotalCount/{movieNo}")
-	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, @PathVariable int movieNo)
-			throws Exception {
+	public Page getFreeBoardTotalCount(@ModelAttribute("search") Search search, @PathVariable int movieNo) throws Exception {
 
 		System.out.println("communityRestController의 getFreeBoardTotalCount 시작...");
 		System.out.println("1. search값 ==> " + search);
@@ -916,8 +892,7 @@ public class MovieRestController {
 	}
 
 	@RequestMapping(value = "/json/getInfiWishList/{userId:.+}")
-	public Map<String, Object> getInfiWishList(@ModelAttribute("Search") Search search, HttpSession session,
-			Model model, @PathVariable("userId") String userId, @RequestBody String jsonString) throws Exception {
+	public Map<String, Object> getInfiWishList(@ModelAttribute("Search") Search search, HttpSession session, Model model, @PathVariable("userId") String userId, @RequestBody String jsonString) throws Exception {
 
 		Map<String, Object> tempMap = new HashMap<String, Object>();
 
@@ -941,8 +916,7 @@ public class MovieRestController {
 
 		Map<String, Object> map = movieService.getWishList(tempMap);
 
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 
 		System.out.println("■■■위시리스트 확인■■■ : " + map.get("listWish"));
 
@@ -957,8 +931,7 @@ public class MovieRestController {
 	}
 
 	@RequestMapping(value = "/json/deleteWishList/{wishNo}")
-	public int deleteWishList(HttpSession session, Model model, @PathVariable("wishNo") String wishNo)
-			throws Exception {
+	public int deleteWishList(HttpSession session, Model model, @PathVariable("wishNo") String wishNo) throws Exception {
 		WishList wishList = new WishList();
 		Movie movie = new Movie();
 		User user = new User();
@@ -969,7 +942,7 @@ public class MovieRestController {
 		wishList.setWishNo(Integer.parseInt(wishNo));
 		return movieService.deleteWishList(wishList);
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -977,204 +950,189 @@ public class MovieRestController {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/json/androidGetMovieList")
-	public String getMovieList(@ModelAttribute("search") Search search,								
-								  Model model , HttpSession session,
-								  HttpServletRequest request) 
-								  throws Exception{
-		
+	@RequestMapping(value = "/json/androidGetMovieList")
+	public String getMovieList(@ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+
 		System.out.println("/getMovieList  GET ");
-				
-		if(search.getCurrentPage() ==0 ){			
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
+
 		pageSize = 1000000;
-		
+
 		search.setPageSize(pageSize);
-		
-		User user =  userService.getUser(request.getParameter("userId"));
-		
+
+		User user = userService.getUser(request.getParameter("userId"));
+
 		System.out.println("pagesize " + search.getPageSize());
-		
+
 		System.out.println("search " + search);
-		
+
 		System.out.println("menu :" + request.getParameter("menu"));
-		
-		
-		if(request.getParameter("menu").equals("manage")) {
-			
+
+		if (request.getParameter("menu").equals("manage")) {
+
 			search.setSearchKeyword2("manage");
 			search.setSearchKeyword3("manage");
-			
-		
+
 			//System.out.println("search.setSearchKeyword2 [[manage]]" + search.getSearchKeyword2());
 		} else {
 			// 현재 상영 영화인 경우 로직
-			if((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search")))  {
-				
+			if ((request.getParameter("menu").equals("movie")) || (request.getParameter("menu").equals("search"))) {
+
 				System.out.println("현재 상영 영화 콜 !!!!");
-				
-				search.setSearchKeyword2("4");				
-				
-				if (search.getSearchKeyword() != null) {				
-					search.setSearchCondition("1");					
+
+				search.setSearchKeyword2("4");
+
+				if (search.getSearchKeyword() != null) {
+					search.setSearchCondition("1");
 				}
 			}
-			
+
 			// 현재 상영 예정 영화인  경우 로직
-			if(request.getParameter("menu").equals("commingsoon")) {
+			if (request.getParameter("menu").equals("commingsoon")) {
 				search.setSearchKeyword2("5");
-				
+
 				System.out.println("상영 예정 영화 콜 !!!!");
-				
-				if (search.getSearchKeyword() != null) {				
-					search.setSearchCondition("1");	
+
+				if (search.getSearchKeyword() != null) {
+					search.setSearchCondition("1");
 				}
-			}	
+			}
 		}
-		
-			
+
 		if (user != null) {
 			System.out.println("User not null ....");
-			
-			Map<String,Object> tempMap = new HashMap<String,Object>();		
-			
+
+			Map<String, Object> tempMap = new HashMap<String, Object>();
+
 			tempMap.put("search", search);
 			tempMap.put("user", user);
-			
-			List<WishList> listWish = ((List<WishList>)movieService.getWishList(tempMap).get("listWish"));
-			
-			System.out.println("listWish  length::" + listWish.size()  + "listWish  :: " + listWish);
-		
-			Map<String , Object> map= movieService.getMovieList(search);
-			List<Movie> movieList = (List) map.get("list");	
+
+			List<WishList> listWish = ((List<WishList>) movieService.getWishList(tempMap).get("listWish"));
+
+			System.out.println("listWish  length::" + listWish.size() + "listWish  :: " + listWish);
+
+			Map<String, Object> map = movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");
 			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
-			
-			for (int i = 0 ; i < movieList.size(); i++) {			
-				for (int j = 0; j < listWish.size() ; j++) {				
-						if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
-							movieList.get(i).setWishList(listWish.get(j));
-							System.out.println("movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
-						}
-				  }
+
+			for (int i = 0; i < movieList.size(); i++) {
+				for (int j = 0; j < listWish.size(); j++) {
+					if (movieList.get(i).getMovieNo() == listWish.get(j).getMovie().getMovieNo()) {
+						movieList.get(i).setWishList(listWish.get(j));
+						System.out.println("movieList wishList exists (WishNo) :" + movieList.get(i).getWishList().getWishNo());
+					}
+				}
 			}
-		
-			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-			System.out.println(resultPage);		
-			
+
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);
+
 			System.out.println("search condition :: " + search.getSearchCondition());
-			
+
 			// Model 과 View 연결
 			model.addAttribute("list", map.get("list"));
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			
-			System.out.println("list show ::"  + map.get("list"));
-			
+
+			System.out.println("list show ::" + map.get("list"));
+
 			JSONObject data = null;
 			JSONArray jsonArray = new JSONArray();
 			JSONObject response = new JSONObject();
-			
-			for(int i = 0; i< movieList.size(); i++){
-				 data = new JSONObject();
-				 data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(),"UTF-8"));
-				 data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(),"UTF-8"));
-				 data.put("movieNo", movieList.get(i).getMovieNo());
-				 if(movieList.get(i).getTrailer() != null && !movieList.get(i).getTrailer().equals("")){
-					 data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(),"UTF-8"));
-				 }
-				 data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(),"UTF-8"));
-				 data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(),"UTF-8"));
-				 data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(),"UTF-8"));
-				 if(movieList.get(i).getSteelCut() != null && !movieList.get(i).getSteelCut().equals("")){
-					 data.put("steelCut", URLEncoder.encode(movieList.get(i).getSteelCut(),"UTF-8"));
-				 }
-				 jsonArray.add(data);
+
+			for (int i = 0; i < movieList.size(); i++) {
+				data = new JSONObject();
+				data.put("movieNm", URLEncoder.encode(movieList.get(i).getMovieNm(), "UTF-8"));
+				data.put("openDt", URLEncoder.encode(movieList.get(i).getOpenDt(), "UTF-8"));
+				data.put("movieNo", movieList.get(i).getMovieNo());
+				if (movieList.get(i).getTrailer() != null && !movieList.get(i).getTrailer().equals("")) {
+					data.put("trailer", URLEncoder.encode(movieList.get(i).getTrailer(), "UTF-8"));
+				}
+				data.put("genres", URLEncoder.encode(movieList.get(i).getGenres(), "UTF-8"));
+				data.put("watchGradeNm", URLEncoder.encode(movieList.get(i).getWatchGradeNm(), "UTF-8"));
+				data.put("postUrl", URLEncoder.encode(movieList.get(i).getPostUrl(), "UTF-8"));
+				if (movieList.get(i).getSteelCut() != null && !movieList.get(i).getSteelCut().equals("")) {
+					data.put("steelCut", URLEncoder.encode(movieList.get(i).getSteelCut(), "UTF-8"));
+				}
+				jsonArray.add(data);
 			}
 			response.put("list", jsonArray);
-			
+
 			return response.toJSONString();
-			
+
 		} else {
-			Map<String , Object> map= movieService.getMovieList(search);
-			List<Movie> movieList = (List) map.get("list");	
+			Map<String, Object> map = movieService.getMovieList(search);
+			List<Movie> movieList = (List) map.get("list");
 			System.out.println("listMovie length::" + movieList.size() + "listMovie :: " + movieList);
-			
-			Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-			System.out.println(resultPage);	
-			
+
+			Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+			System.out.println(resultPage);
+
 			System.out.println("search condition :: " + search.getSearchCondition());
-			
+
 			// Model 과 View 연결
 			model.addAttribute("list", map.get("list"));
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			
-			System.out.println("list show ::"  + map.get("list"));
+
+			System.out.println("list show ::" + map.get("list"));
 		}
-		
-		
+
 		// Business logic 수행
 		// 관리자 검색인지 일반인 검색인지 확인하기 위한 조건 
 		// "searchCondtion=7" 은 일반인 검색에  해당됨 		
-		
-		if(request.getParameter("menu").equals("movie")) {
+
+		if (request.getParameter("menu").equals("movie")) {
 			System.out.println("listMovie.jsp called");
 			//modelAndView.setViewName("/movie/listMovie.jsp"); 
 			return "forward:/movie/listMovie.jsp";
 			// return modelAndView;
-		}
-		else  if(request.getParameter("menu").equals("manage")) {
+		} else if (request.getParameter("menu").equals("manage")) {
 			System.out.println("listMovieManage.jsp called");
 			//modelAndView.setViewName("/movie/listMovieManage.jsp");
 			return "forward:/movie/listMovieManage.jsp";
-		}
-		else  if(request.getParameter("menu").equals("calendar")) {
+		} else if (request.getParameter("menu").equals("calendar")) {
 			System.out.println("calendar.jsp called");
 			//modelAndView.setViewName("/movie/calendar.jsp");
 			return "forward:/movie/calendar.jsp";
-		}
-		else if (request.getParameter("menu").equals("commingsoon")) {
+		} else if (request.getParameter("menu").equals("commingsoon")) {
 			//modelAndView.setViewName("/movie/listCommingSoon.jsp");
 			return "forward:/movie/listCommingSoon.jsp";
-		}
-		else if (request.getParameter("menu").equals("preview")) {
+		} else if (request.getParameter("menu").equals("preview")) {
 			System.out.println("????????");
 			//modelAndView.setViewName("/movie/listMoviePreview.jsp");
 			return "forward:/movie/getPreviewList";
-		}
-		else if (request.getParameter("menu").equals("search")) {
+		} else if (request.getParameter("menu").equals("search")) {
 			//modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/listMovie.jsp";
-		}
-		else if (request.getParameter("menu").equals("voiceRegniiton")) {
+		} else if (request.getParameter("menu").equals("voiceRegniiton")) {
 			//modelAndView.setViewName("/movie/listMovie.jsp");
 			return "forward:/movie/speechMovie.jsp";
 		}
-	
+
 		return "forward:/movie/listMovie.jsp";
 	}
-	
-	
-	@RequestMapping(value="/json/androidGetMovie")
-	public String getMovie(@RequestParam(value = "menu", required = true) String menu,
-			@RequestParam(value = "movieNo", required = true) Integer movieNo) throws Exception {
+
+	@RequestMapping(value = "/json/androidGetMovie")
+	public String getMovie(@RequestParam(value = "menu", required = true) String menu, @RequestParam(value = "movieNo", required = true) Integer movieNo) throws Exception {
 
 		// Business Logic
 		System.out.println("movieNo ::" + movieNo);
 
 		Movie movie = movieService.getMovie(movieNo);
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
-		
-		String jsonString = URLEncoder.encode(objectMapper.writeValueAsString(movie),"UTF-8");
-		
+
+		String jsonString = URLEncoder.encode(objectMapper.writeValueAsString(movie), "UTF-8");
+
 		return jsonString;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/androidGetPreviewList")
 	public String getPreviewList(@ModelAttribute("search") Search search, Model model) throws Exception {
@@ -1184,41 +1142,39 @@ public class MovieRestController {
 		}
 
 		pageSize = 1000000;
-		
+
 		search.setPageSize(pageSize);
 
 		System.out.println("search값 확인" + search);
 
 		Map<String, Object> map = screenService.getPreviewList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue(),pageUnit,pageSize);
-		
-		model.addAttribute("search",map.get("search"));
-		model.addAttribute("list",map.get("list"));
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+		model.addAttribute("search", map.get("search"));
+		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 
-		List<ScreenContent> previewList = (List<ScreenContent>)map.get("list");
-		
-		
+		List<ScreenContent> previewList = (List<ScreenContent>) map.get("list");
+
 		org.json.simple.JSONArray jsonArray = new org.json.simple.JSONArray();
 		JSONObject response = new JSONObject();
 		ObjectMapper objectMapper = new ObjectMapper();
-		
-		for(int i = 0; i< previewList.size(); i++){
 
-			 objectMapper = new ObjectMapper();
-			 
-			 jsonArray.add(objectMapper.writeValueAsString(previewList.get(i)));
+		for (int i = 0; i < previewList.size(); i++) {
+
+			objectMapper = new ObjectMapper();
+
+			jsonArray.add(objectMapper.writeValueAsString(previewList.get(i)));
 		}
-		
+
 		response.put("list", jsonArray);
-		
-		String jsonString = URLEncoder.encode(response.toJSONString(),"UTF-8");
-		
-		
+
+		String jsonString = URLEncoder.encode(response.toJSONString(), "UTF-8");
+
 		return jsonString;
 	};
-	
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1226,21 +1182,13 @@ public class MovieRestController {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/json/searchTrailer/{searchTrailer}", method = RequestMethod.GET)
 	public String searchTrailer(@PathVariable("searchTrailer") String searchTrailer) throws Exception {
 		// searchTrailer = URLDecoder.decode(searchTrailer, "euc-kr");
 		//searchTrailer = new String(searchTrailer.getBytes("8859_1"), "UTF-8");
-		searchTrailer = URLDecoder.decode(searchTrailer,"UTF-8");
+		searchTrailer = URLDecoder.decode(searchTrailer, "UTF-8");
 		System.out.println("2. searchTrailer => " + searchTrailer);
 
 		String result = movieService2.searchTrailer(searchTrailer);
@@ -1295,10 +1243,10 @@ public class MovieRestController {
 	@RequestMapping(value = "/json/searchPoster/{searchPoster}", method = RequestMethod.GET)
 	public String searchPoster(@PathVariable("searchPoster") String searchPoster) throws Exception {
 		//searchPoster = URLDecoder.decode(searchPoster.getBytes("8859_1"), "UTF-8");
-		
+
 		System.out.println("searchPoster 디코딩 전" + searchPoster);
 		//searchPoster = new String(searchPoster.getBytes("8859_1"), "UTF-8");
-		searchPoster = URLDecoder.decode(searchPoster,"UTF-8");
+		searchPoster = URLDecoder.decode(searchPoster, "UTF-8");
 		System.out.println("2. searchPoster => " + searchPoster);
 
 		String result = movieService2.searchPoster(searchPoster);
@@ -1323,8 +1271,6 @@ public class MovieRestController {
 
 			int count = image_url.lastIndexOf("type");
 
-	
-
 			if (count == -1) {
 				if (width > 500 && width < height) {
 					data.put("thumbnail_url", thumbnail_url);
@@ -1338,7 +1284,6 @@ public class MovieRestController {
 		}
 		System.out.println("2. searchPoster => " + searchPoster);
 		response.put("list", jsonArray);
-
 
 		return response.toString();
 
